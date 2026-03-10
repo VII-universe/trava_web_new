@@ -5,33 +5,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Honza Trávníček | Poutník mezi světy</title>
+  <meta name="description"
+    content="Horolezec, poutník a vypravěč. 5 osmitisícovek. Český pub v Káthmándú. Přednášky, expedice, příběhy.">
 
-  <!-- Bootstrap 5.3.3 CSS -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Oswald:wght@700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Oswald:wght@400;700&display=swap"
     rel="stylesheet">
 
   <style>
+    /* ═══════════ TOKENS ═══════════ */
     :root {
       --ivory: #FDFBF7;
+      --sand: #E8DFC8;
       --gold: #D4AF37;
+      --gold-dim: rgba(212, 175, 55, 0.25);
+      --slate-900: #0f172a;
       --slate-800: #1e293b;
       --slate-600: #475569;
-      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --glass-bg: rgba(253, 251, 247, 0.45);
+      --blur: blur(25px) saturate(160%);
+      --radius: 1.5rem;
+    }
+
+    /* ═══════════ RESET ═══════════ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       padding: 0;
-      background-color: var(--ivory);
+      background: var(--ivory);
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       color: var(--slate-800);
@@ -45,11 +59,182 @@
       font-family: 'Oswald', sans-serif;
     }
 
-    /* Scrollytelling Setup */
+    /* ═══════════ LOADING SCREEN ═══════════ */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--ivory);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #loading-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-compass {
+      width: 56px;
+      height: 56px;
+      border: 2px solid var(--sand);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--slate-600);
+    }
+
+    /* ═══════════ HAMBURGER MENU ═══════════ */
+    #menu-btn {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 1100;
+      background: none;
+      border: none;
+      cursor: pointer;
+      mix-blend-mode: difference;
+      color: white;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px;
+    }
+
+    .menu-line {
+      width: 28px;
+      height: 2px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    #menu-btn.open .menu-line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    #menu-btn.open .menu-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    #menu-btn.open .menu-line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    #nav-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1090;
+      width: 280px;
+      height: 100vh;
+      background: var(--slate-900);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+      padding: 5rem 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    #nav-panel.open {
+      transform: translateX(0);
+    }
+
+    .nav-link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--sand);
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: color 0.2s;
+    }
+
+    .nav-link-item:hover {
+      color: var(--gold);
+    }
+
+    .nav-alt {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--slate-400);
+      margin-left: auto;
+    }
+
+    #nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1080;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s, visibility 0.4s;
+    }
+
+    #nav-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ═══════════ ALTIMETER ═══════════ */
+    #altimeter {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      mix-blend-mode: difference;
+      color: white;
+    }
+
+    .alt-line {
+      height: 120px;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      position: relative;
+    }
+
+    #alt-progress {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: var(--gold);
+      height: 0%;
+    }
+
+    /* ═══════════ SCROLLYTELLING SHELL ═══════════ */
     #scrolly-container {
       position: relative;
       height: 1050vh;
-      /* Extended for 7 sections */
     }
 
     #viewport {
@@ -72,7 +257,6 @@
       justify-content: center;
       pointer-events: none;
       opacity: 0;
-      /* Hidden by default, GSAP will show */
     }
 
     #hero-section {
@@ -84,96 +268,22 @@
       pointer-events: auto !important;
     }
 
-    /* Shared Components */
-    .mask-ivory-top {
-      mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
-    }
-
-    .mask-icefall {
-      mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
-    }
-
-    .mask-climb {
-      mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
-    }
-
-    /* Hero */
-    #hero-bg-gradient {
+    /* ═══════════ SHARED ═══════════ */
+    .abs-fill {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, #FDFBF7, #E2E8F0);
-      z-index: 0;
     }
 
-    #everest-img {
-      width: 100%;
-      height: 100%;
-      -o-object-fit: cover;
-      object-fit: cover;
-      -o-object-position: center;
-      object-position: center;
-      opacity: 0.4;
-      mix-blend-mode: multiply;
-      filter: contrast(125%) saturate(50%);
-      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    }
-
-    /* Altimeter */
-    #altimeter {
-      position: fixed;
-      right: 1.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      mix-blend-mode: difference;
-      color: #fff;
-      /* Difference will flip this */
-    }
-
-    .alt-line {
-      height: 120px;
-      width: 1px;
-      background: rgba(255, 255, 255, 0.3);
-      position: relative;
-    }
-
-    #alt-progress {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      background: var(--gold);
-      height: 0%;
-    }
-
-    /* Mist Layers */
-    .mist-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 30;
-      filter: blur(80px);
-      background: #fff;
-      border-radius: 50%;
-      opacity: 0.6;
-    }
-
-    /* Content Cards */
     .glass-card {
-      background: rgba(253, 251, 247, 0.45);
-      backdrop-filter: blur(25px) saturate(160%);
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
       border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 1.5rem;
+      border-radius: var(--radius);
       box-shadow: 0 30px 60px -12px rgba(45, 55, 72, 0.18);
     }
 
-    .gold-border-top {
+    .gold-bar {
       position: absolute;
       top: 0;
       left: 0;
@@ -181,29 +291,14 @@
       height: 2px;
       background: linear-gradient(to right, transparent, var(--gold), transparent);
       opacity: 0.5;
+      border-radius: var(--radius) var(--radius) 0 0;
     }
 
-    .inset-0 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-
-    /* Stats Grid */
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.25rem;
-    }
-
-    .stat-icon {
-      color: var(--slate-500);
-      width: 2rem;
-      height: 2rem;
-      margin-bottom: 0.5rem;
+    .label-alt {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-weight: 600;
     }
 
     .bounce {
@@ -229,159 +324,666 @@
       }
     }
 
-    /* Text Shadow for better contrast */
-    .drop-shadow {
-      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    /* ───── S1: HERO ───── */
+    #hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, #FDFBF7, #E8DFC8);
+    }
+
+    #everest-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      mix-blend-mode: multiply;
+      filter: contrast(125%) saturate(50%);
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    }
+
+    .mist-layer {
+      position: absolute;
+      z-index: 30;
+      filter: blur(80px);
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    /* ───── S2: O MNĚ ───── */
+    .mask-ivory-top {
+      mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+    }
+
+    #honza-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* ───── S3: PARTNEŘI ───── */
+    .rope-svg {
+      position: absolute;
+      top: 35%;
+      left: 0;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .tibetan-flag {
+      cursor: pointer;
+      transform-origin: top center;
+      transition: filter 0.3s;
+    }
+
+    .tibetan-flag:hover {
+      filter: brightness(1.2);
+    }
+
+    .flag-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      color: var(--slate-800);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .flag-wrap {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flag-wrap:hover .flag-tooltip {
+      opacity: 1;
+    }
+
+    .flag-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 4px;
+    }
+
+    /* ───── S4: PROJEKTY ───── */
+    #projekty-section .split-left {
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+    }
+
+    #projekty-section .split-right {
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+
+    /* ───── S5: EXPEDICE ───── */
+    .cloud-layer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to bottom, transparent, rgba(200, 220, 240, 0.25));
+      animation: cloudDrift 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes cloudDrift {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-20px);
+      }
+    }
+
+    .hotspot-btn {
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 2rem;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .hotspot-btn:hover,
+    .hotspot-btn.active {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: var(--gold);
+    }
+
+    .hotspot-info {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .hotspot-info.open {
+      max-height: 120px;
+      opacity: 1;
+    }
+
+    .utrpeni-bar {
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+    }
+
+    .utrpeni-fill {
+      height: 100%;
+      background: linear-gradient(to right, #D4AF37, #ff6b47);
+      border-radius: 3px;
+    }
+
+    /* ───── S6: PŘEDNÁŠKY ───── */
+    #prednasky-section {
+      background: linear-gradient(160deg, #0a1628 0%, #1a2744 50%, #0d2040 100%);
+    }
+
+    .cloud-below {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.12), transparent);
+      filter: blur(20px);
+    }
+
+    .tour-date {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .action-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+    }
+
+    /* ───── S7: PATIČKA ───── */
+    #footer-section {
+      background: var(--slate-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-divider {
+      width: 1px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .social-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sand);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .social-icon:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .newsletter-input {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.5rem 0 0 0.5rem;
+      color: white;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      flex: 1;
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--gold);
+    }
+
+    .newsletter-btn {
+      background: var(--gold);
+      border: none;
+      border-radius: 0 0.5rem 0.5rem 0;
+      color: var(--slate-900);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Altimeter Counter -->
+  <!-- ═══════════ LOADING SCREEN ═══════════ -->
+  <div id="loading-screen">
+    <div class="loading-compass"></div>
+    <div class="loading-text">Balím batoh&hellip;</div>
+  </div>
+
+  <!-- ═══════════ HAMBURGER ═══════════ -->
+  <button id="menu-btn" aria-label="Menu">
+    <div class="menu-line"></div>
+    <div class="menu-line"></div>
+    <div class="menu-line"></div>
+  </button>
+
+  <div id="nav-overlay"></div>
+  <nav id="nav-panel">
+    <a href="#" class="nav-link-item" data-target="hero-section">
+      O výstupu <span class="nav-alt">0 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="omne-section">
+      O mně <span class="nav-alt">800 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="partneri-section">
+      Partneři <span class="nav-alt">3000 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="projekty-section">
+      Projekty v Nepálu <span class="nav-alt">4500 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="expedice-section">
+      Expedice <span class="nav-alt">7000 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="prednasky-section">
+      Přednášky <span class="nav-alt">8848 m</span>
+    </a>
+    <a href="#" class="nav-link-item" data-target="footer-section">
+      Kontakt <span class="nav-alt">Sestup</span>
+    </a>
+  </nav>
+
+  <!-- ═══════════ ALTIMETER ═══════════ -->
   <div id="altimeter">
     <div class="alt-line">
       <div id="alt-progress"></div>
     </div>
     <div class="text-center">
       <div id="alt-number" class="oswald h3 mb-0">0</div>
-      <small class="text-uppercase tracking-wider opacity-60" style="font-size: 0.6rem;">m n.m.</small>
+      <small style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.6;">m n.m.</small>
     </div>
     <div class="alt-line"></div>
   </div>
 
+  <!-- ═══════════ SCROLLY CONTAINER ═══════════ -->
   <div id="scrolly-container">
     <div id="viewport">
 
-      <!-- SECTION 1: HERO -->
+      <!-- ─────────────────────────────────────────────
+           SECTION 1: HERO  (0 m – Mlha)
+           ───────────────────────────────────────────── -->
       <section id="hero-section" class="vh-100">
-        <div id="hero-bg-gradient"></div>
+        <div id="hero-bg"></div>
 
-        <!-- Everest Layer -->
-        <div id="hero-everest-container" class="absolute inset-0 w-100 h-100" style="transform-origin: 50% 80%;">
+        <!-- Everest silhouette -->
+        <div id="hero-everest-container" class="abs-fill" style="transform-origin: 50% 80%;">
           <img id="everest-img" src="./assets/mount_everest_ivory-BFK1vzc2.png" alt="Everest">
         </div>
 
-        <!-- Text Layer -->
+        <!-- Mist layers (opona effect) -->
+        <div id="mist-left" class="mist-layer" style="width:55vw;height:55vh;left:-10%;top:35%;"></div>
+        <div id="mist-right" class="mist-layer" style="width:55vw;height:55vh;right:-10%;top:25%;"></div>
+        <div id="mist-lo-l" class="mist-layer"
+          style="width:65vw;height:85vh;left:-15%;bottom:-20%;background:linear-gradient(to top right,white,transparent);opacity:0.95;">
+        </div>
+        <div id="mist-lo-r" class="mist-layer"
+          style="width:65vw;height:85vh;right:-15%;bottom:-20%;background:linear-gradient(to top left,white,transparent);opacity:0.95;">
+        </div>
+
+        <!-- Text -->
         <div id="hero-text" class="position-relative z-2 text-center px-4">
-          <h2 class="text-uppercase tracking-widest text-warning small mb-4">Poutník mezi světy</h2>
-          <h1 class="serif display-1 fw-bold text-slate-800 mb-5">HONZA<br>TRÁVNÍČEK</h1>
-          <div class="mt-5 d-flex flex-column align-items-center opacity-75">
-            <span class="small text-uppercase tracking-widest text-muted mb-2">Začni výstup</span>
+          <p class="label-alt text-warning mb-4">Poutník mezi světy</p>
+          <h1 class="serif fw-bold mb-5" style="font-size:clamp(3rem,9vw,7rem);line-height:1;letter-spacing:-.02em;">
+            HONZA<br>TRÁVNÍČEK</h1>
+          <div class="d-flex flex-column align-items-center opacity-75 mt-5">
+            <span class="label-alt text-muted mb-2">Začni výstup</span>
             <i data-lucide="chevron-down" class="text-warning bounce"></i>
           </div>
         </div>
-
-        <!-- Mist Layers -->
-        <div id="mist-left" class="mist-layer" style="width: 50vw; height: 50vh; left: -10%; top: 40%;"></div>
-        <div id="mist-right" class="mist-layer" style="width: 50vw; height: 50vh; right: -10%; top: 30%;"></div>
-        <div id="mist-close-left" class="mist-layer"
-          style="width: 60vw; height: 80vh; left: -15%; bottom: -20%; background: linear-gradient(to top right, white, transparent); opacity: 0.9;">
-        </div>
-        <div id="mist-close-right" class="mist-layer"
-          style="width: 60vw; height: 80vh; right: -15%; bottom: -20%; background: linear-gradient(to top left, white, transparent); opacity: 0.9;">
-        </div>
       </section>
 
-      <!-- SECTION 2: BASE CAMP -->
-      <section id="base-camp-section" class="vh-100 flex-column justify-content-center align-items-start px-md-5">
-        <div id="base-camp-container" class="w-100 h-100 position-relative">
-
-          <!-- Backgrounds -->
-          <div class="position-absolute inset-0 w-100 h-100 z-0">
-            <div class="position-absolute inset-0 bg-ivory mask-ivory-top opacity-100"></div>
-            <img src="./assets/base_camp_bg-Bt3x_etB.jpg" class="w-100 h-100 object-fit-cover mask-ivory-top opacity-75"
-              style="filter: sepia(0.2) grayscale(0.3) contrast(125%);">
+      <!-- ─────────────────────────────────────────────
+           SECTION 2: O MNĚ  (800 m – Základní tábor)
+           ───────────────────────────────────────────── -->
+      <section id="omne-section" class="vh-100">
+        <div class="w-100 h-100 position-relative">
+          <!-- BG -->
+          <img src="./assets/base_camp_bg-Bt3x_etB.jpg" class="abs-fill w-100 h-100 object-fit-cover mask-ivory-top"
+            style="opacity:0.6;filter:sepia(0.2)grayscale(0.25)contrast(120%);">
+          <div class="abs-fill"
+            style="background:linear-gradient(to right,rgba(253,251,247,0.9)0%,rgba(253,251,247,0.3)55%,transparent 100%);">
           </div>
 
-          <!-- Side Parallax Layers -->
-          <div id="bc-side-left" class="position-absolute start-0 bottom-0 w-25 h-75 bg-white opacity-25"
-            style="filter: blur(40px); mix-blend-mode: screen;"></div>
-          <div id="bc-side-right" class="position-absolute end-0 bottom-0 w-25 h-75 bg-white opacity-25"
-            style="filter: blur(40px); mix-blend-mode: screen;"></div>
+          <div class="container h-100 d-flex align-items-center pointer-events-auto">
+            <div class="row align-items-center g-0" style="max-width:900px;">
 
-          <!-- Content -->
-          <div class="container-fluid h-100 d-flex align-items-center">
-            <div class="glass-card p-5 p-md-5 position-relative z-1 pointer-events-auto shadow-lg"
-              style="max-width: 600px; margin-left: 2rem;">
-              <div class="gold-border-top"></div>
-              <h4 class="text-warning text-uppercase tracking-widest small fw-bold mb-3">Base Camp — 5364 m</h4>
-              <h2 class="serif display-5 text-dark mb-4">Nehraju si na<br><span
-                  class="fst-italic text-secondary">hrdinu.</span></h2>
-              <p class="lead text-dark opacity-90 mb-5">
-                Jsem geodet, učitel a manažer punkový kapely, co se zamiloval do řídkýho vzduchu.
-                Říkají o mně, že jsem horolezec. Já se cítím spíš jako <span
-                  class="fw-bold border-bottom border-warning">poutník</span>.
-              </p>
-              <a href="#" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
-                Můj celý příběh
-                <i data-lucide="arrow-right"></i>
-              </a>
+              <!-- Card Text -->
+              <div class="col-md-7">
+                <div class="glass-card p-5 position-relative">
+                  <div class="gold-bar"></div>
+                  <p class="label-alt text-warning mb-3">O mně — 800 m n. m.</p>
+                  <h2 class="serif display-5 text-dark mb-3">Nehraju si na&nbsp;<span
+                      class="fst-italic text-secondary">hrdinu.</span></h2>
+                  <p class="lead text-dark mb-3" style="opacity:0.85;">
+                    Jsem geodet, učitel a manažer punkový kapely, co se zamiloval do řídkýho vzduchu.
+                  </p>
+                  <p class="text-dark mb-4" style="opacity:0.75;font-size:0.95rem;">
+                    Říkají o mně, že jsem horolezec. Já se cítím spíš jako <span
+                      class="fw-bold border-bottom border-warning">poutník</span>. Přežil jsem rakovinu, bolí mě klouby,
+                    ale stejně tam lezu znova. Ne proto, abych dobyl vrchol, ale abych našel cestu zpátky.
+                  </p>
+                  <a href="#" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
+                    Můj celý příběh <i data-lucide="arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Photo -->
+              <div class="col-md-5 d-none d-md-block" style="height:420px;">
+                <img src="./assets/honza_portrait.jpg"
+                  style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:0 var(--radius) var(--radius) 0;box-shadow:0 30px 60px -12px rgba(45,55,72,0.22);"
+                  alt="Honza Trávníček">
+              </div>
+
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SECTION 3: ICEFALL -->
-      <section id="icefall-section" class="vh-100">
-        <div id="icefall-container" class="w-100 h-100 position-relative">
-          <div class="position-absolute inset-0 bg-light mask-icefall z-0"></div>
-          <img src="./assets/icefall_bg-BfygNX9C.jpg"
-            class="position-absolute inset-0 w-100 h-100 object-fit-cover mask-icefall opacity-75 grayscale contrast-125">
-          <div class="position-absolute inset-0"
-            style="background: linear-gradient(to top right, rgba(200,220,240,0.4), rgba(220,230,250,0.2)); mix-blend-mode: multiply;">
+      <!-- ─────────────────────────────────────────────
+           SECTION 3: PARTNEŘI  (3000 m – Icefall)
+           ───────────────────────────────────────────── -->
+      <section id="partneri-section" class="vh-100">
+        <div class="w-100 h-100 position-relative overflow-hidden">
+          <!-- BG Icefall -->
+          <img src="./assets/icefall_bg-BfygNX9C.jpg" class="abs-fill w-100 h-100 object-fit-cover"
+            style="opacity:0.55;filter:grayscale(0.4)contrast(120%);">
+          <div class="abs-fill"
+            style="background:linear-gradient(to bottom,rgba(15,23,42,0.5)0%,rgba(15,23,42,0.2)50%,rgba(253,251,247,0.3)100%);">
           </div>
 
-          <div class="position-relative z-1 text-center px-4 pointer-events-auto">
-            <i data-lucide="pickaxe" class="text-primary opacity-50 mb-4" style="width: 48px; height: 48px;"></i>
-            <h4 class="text-secondary text-uppercase tracking-widest small fw-bold mb-3">Icefall — 6400 m</h4>
-            <h1 class="serif display-3 text-dark mb-4 drop-shadow">Tanec na ostří<br><span
-                class="text-muted fst-italic">ledu.</span></h1>
-            <p class="mx-auto text-secondary opacity-90 mb-0" style="max-width: 500px;">
-              Každý krok může být poslední. Trhliny se mění každou vteřinu.
-              Tady hory dýchají, a my musíme dýchat s nimi.
-            </p>
+          <!-- text top -->
+          <div class="position-absolute w-100 text-center pointer-events-auto" style="top:12%;z-index:10;">
+            <p class="label-alt text-warning mb-2">Partneři — 3000 m n. m.</p>
+            <h2 class="serif text-white fw-bold" style="font-size:clamp(1.8rem,4vw,3rem);">Bez nich bych tam <span
+                class="fst-italic" style="color:var(--gold);">zmrznul.</span></h2>
+          </div>
+
+          <!-- ROPE SVG -->
+          <svg class="rope-svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="height:80px;">
+            <path id="rope-path" d="M0,60 C150,20 350,100 600,55 C850,10 1050,90 1200,50" stroke="#8B7355"
+              stroke-width="3" fill="none" stroke-dasharray="8,4" opacity="0.9" />
+          </svg>
+
+          <!-- FLAGS container (positioned via CSS at 35% top) -->
+          <div class="abs-fill" style="z-index:10;">
+
+            <!-- Flag 1: Mammut -->
+            <div class="flag-wrap pointer-events-auto" style="left:22%;top:28%;">
+              <div style="width:1px;height:60px;background:rgba(139,115,85,0.8);"></div>
+              <div style="position:relative;">
+                <div
+                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#e63030,#c0392b);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 3s ease-in-out infinite;">
+                  <div
+                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                    MAMMUT</div>
+                  <div style="font-size:1.1rem;">🦣</div>
+                </div>
+                <div class="flag-tooltip" style="width:200px;white-space:normal;">Moje druhá kůže. Ta, co nepromokne.
+                </div>
+              </div>
+              <div class="flag-name">Mammut</div>
+            </div>
+
+            <!-- Flag 2: Red Bull -->
+            <div class="flag-wrap pointer-events-auto" style="left:50%;top:24%;transform:translateX(-50%);">
+              <div style="width:1px;height:70px;background:rgba(139,115,85,0.8);"></div>
+              <div style="position:relative;">
+                <div
+                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#003087,#cc0001);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 3.5s ease-in-out infinite 0.5s;">
+                  <div
+                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                    RED BULL</div>
+                  <div style="font-size:1.1rem;">🐂</div>
+                </div>
+                <div class="flag-tooltip" style="width:210px;white-space:normal;left:50%;transform:translateX(-50%);">
+                  Křídla, když nohy už nemůžou.</div>
+              </div>
+              <div class="flag-name">Red Bull</div>
+            </div>
+
+            <!-- Flag 3: Prazdroj -->
+            <div class="flag-wrap pointer-events-auto" style="left:76%;top:30%;">
+              <div style="width:1px;height:55px;background:rgba(139,115,85,0.8);"></div>
+              <div style="position:relative;">
+                <div
+                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#c8860a,#9e6b08);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 4s ease-in-out infinite 1s;">
+                  <div
+                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                    PRAZDROJ</div>
+                  <div style="font-size:1.1rem;">🍺</div>
+                </div>
+                <div class="flag-tooltip" style="width:210px;white-space:normal;left:0;transform:translateX(-60%);">
+                  Nejlepší ionťák na světě.</div>
+              </div>
+              <div class="flag-name">Prazdroj</div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      <!-- SECTION 4: CLIMB / SUMMIT -->
-      <section id="climb-section" class="vh-100 d-flex justify-content-end align-items-center pe-md-5">
-        <div id="climb-container" class="w-100 h-100 position-relative">
+      <!-- ─────────────────────────────────────────────
+           SECTION 4: PROJEKTY V NEPÁLU  (4500 m)
+           ───────────────────────────────────────────── -->
+      <section id="projekty-section" class="vh-100">
+        <div class="w-100 h-100 position-relative">
 
-          <div class="position-absolute inset-0 bg-secondary mask-climb z-0"></div>
-          <img src="./assets/climbers_bg-D9BDaYCs.jpg"
-            class="position-absolute inset-0 w-100 h-100 object-fit-cover mask-climb opacity-40 grayscale contrast-150">
-          <div class="position-absolute inset-0 bg-slate-100 opacity-25 mix-blend-multiply"></div>
+          <!-- Split LEFT: Czech Pub photo -->
+          <div class="split-left">
+            <img src="./assets/czech_pub.jpg" class="w-100 h-100 object-fit-cover"
+              style="filter:saturate(0.8)contrast(110%);" alt="Czech Pub">
+            <div
+              style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(15,23,42,0.1)100%);">
+            </div>
+          </div>
 
-          <div class="container h-100 d-flex align-items-center justify-content-end">
-            <div class="glass-card p-5 p-md-5 position-relative z-1 pointer-events-auto shadow-lg text-end"
-              style="max-width: 550px; margin-right: 2rem;">
-              <h4 class="text-muted text-uppercase tracking-widest small fw-bold mb-4">Zóna smrti — 8000+ m</h4>
-              <h2 class="serif display-4 text-dark mb-5">Tam, kde končí<br><span class="text-secondary">dech.</span>
-              </h2>
+          <!-- Split RIGHT: glass card on kathmandu bg -->
+          <div class="split-right" style="background:linear-gradient(135deg,#1a2744,#0d2040);">
+            <img src="./assets/kathmandu.jpg" class="abs-fill w-100 h-100 object-fit-cover"
+              style="opacity:0.18;filter:saturate(0.5);">
 
-              <!-- Stats Grid -->
-              <div class="row g-4">
-                <div class="col-6 stat-item">
-                  <i data-lucide="mountain" class="stat-icon"></i>
-                  <span class="serif h2 mb-0">5</span>
-                  <small class="text-uppercase tracking-widest text-muted small">Osmiveslovek</small>
+            <div class="glass-card p-5 position-relative z-1 pointer-events-auto"
+              style="max-width:440px;background:rgba(253,251,247,0.08);border-color:rgba(255,255,255,0.15);">
+              <div class="gold-bar"></div>
+              <p class="label-alt mb-3" style="color:var(--gold);">Projekty v Nepálu — 4500 m n. m.</p>
+              <h2 class="serif fw-bold text-white mb-4" style="font-size:clamp(1.6rem,3vw,2.4rem);">Kus Plzně<br><span
+                  class="fst-italic" style="color:var(--gold);">v Káthmándú.</span></h2>
+              <p class="mb-4" style="color:rgba(255,255,255,0.75);font-size:0.9rem;line-height:1.7;">
+                Postavit hospodu v Nepálu byl možná větší úlet než vylézt na K2. Ale Czech Pub a Kathmandu Base Camp
+                nejsou jen o pivu. Je to domov pro všechny, kdo ztratili směr nebo jen hledají českou stopu pod
+                Himálajem.
+              </p>
+              <div class="d-flex gap-3">
+                <a href="#" class="text-decoration-none fw-bold d-flex align-items-center gap-2"
+                  style="color:var(--gold);font-size:0.85rem;">
+                  <i data-lucide="calendar"></i> Rezervovat nocleh
+                </a>
+                <a href="#" class="text-decoration-none d-flex align-items-center gap-2"
+                  style="color:rgba(255,255,255,0.6);font-size:0.85rem;">
+                  <i data-lucide="map-pin"></i> Ukázat na mapě
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────────────
+           SECTION 5: EXPEDICE  (7000 m – Stěna)
+           ───────────────────────────────────────────── -->
+      <section id="expedice-section" class="vh-100">
+        <div class="w-100 h-100 position-relative overflow-hidden">
+          <img src="./assets/climbers_bg-D9BDaYCs.jpg" class="abs-fill w-100 h-100 object-fit-cover"
+            style="filter:saturate(0.5)contrast(130%)grayscale(0.3);">
+          <!-- Cool blue-grey shift -->
+          <div class="abs-fill"
+            style="background:linear-gradient(160deg,rgba(14,30,60,0.75)0%,rgba(30,50,90,0.55)100%);"></div>
+          <!-- Cloud layers drifting upward -->
+          <div class="cloud-layer" style="top:15%;height:120px;opacity:0.6;"></div>
+          <div class="cloud-layer" style="top:55%;height:80px;opacity:0.3;animation-delay:3s;"></div>
+
+          <div class="container h-100 d-flex align-items-center pointer-events-auto"
+            style="position:relative;z-index:5;">
+            <div class="w-100">
+              <div class="text-center mb-4">
+                <p class="label-alt text-warning mb-2">Expedice — 7000 m n. m.</p>
+                <h2 class="serif text-white fw-bold" style="font-size:clamp(1.8rem,4vw,3rem);">Osm tisíc metrů <span
+                    class="fst-italic" style="color:var(--gold);">rozhodování.</span></h2>
+              </div>
+
+              <!-- HOTSPOTS -->
+              <div class="row g-3 justify-content-center mb-4">
+
+                <!-- Manaslu -->
+                <div class="col-md-4">
+                  <div class="hotspot-btn w-100 text-center" onclick="toggleHotspot(this)">
+                    <span class="label-alt d-block" style="color:var(--gold);margin-bottom:2px;">8163 m</span>
+                    Manaslu
+                    <i data-lucide="chevron-down"
+                      style="width:14px;height:14px;margin-left:4px;vertical-align:middle;"></i>
+                  </div>
+                  <div class="hotspot-info mt-2">
+                    <div class="glass-card p-3"
+                      style="background:rgba(14,30,60,0.6);border-color:rgba(255,255,255,0.15);">
+                      <p class="mb-2 text-white" style="font-size:0.85rem;">Moje první osma. Tyrkysová bohyně.</p>
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <small class="text-warning" style="font-size:0.7rem;letter-spacing:0.1em;">MÍRA UTRPENÍ</small>
+                      </div>
+                      <div class="utrpeni-bar">
+                        <div class="utrpeni-fill" style="width:60%;"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-6 stat-item">
-                  <i data-lucide="wind" class="stat-icon"></i>
-                  <span class="serif h2 mb-0">14%</span>
-                  <small class="text-uppercase tracking-widest text-muted small">Kyslíku</small>
+
+                <!-- K2 -->
+                <div class="col-md-4">
+                  <div class="hotspot-btn w-100 text-center" onclick="toggleHotspot(this)">
+                    <span class="label-alt d-block" style="color:var(--gold);margin-bottom:2px;">8611 m</span>
+                    K2
+                    <i data-lucide="chevron-down"
+                      style="width:14px;height:14px;margin-left:4px;vertical-align:middle;"></i>
+                  </div>
+                  <div class="hotspot-info mt-2">
+                    <div class="glass-card p-3"
+                      style="background:rgba(14,30,60,0.6);border-color:rgba(255,255,255,0.15);">
+                      <p class="mb-2 text-white" style="font-size:0.85rem;">Čtyřikrát mě vykopla. Popáté pustila. Bez
+                        kyslíku. Na dřeň.</p>
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <small class="text-warning" style="font-size:0.7rem;letter-spacing:0.1em;">MÍRA UTRPENÍ</small>
+                      </div>
+                      <div class="utrpeni-bar">
+                        <div class="utrpeni-fill" style="width:95%;"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-6 stat-item">
-                  <i data-lucide="thermometer" class="stat-icon"></i>
-                  <span class="serif h2 mb-0">-40°</span>
-                  <small class="text-uppercase tracking-widest text-muted small">Teplota</small>
+
+                <!-- Annapurna -->
+                <div class="col-md-4">
+                  <div class="hotspot-btn w-100 text-center" onclick="toggleHotspot(this)">
+                    <span class="label-alt d-block" style="color:var(--gold);margin-bottom:2px;">8091 m</span>
+                    Annapurna
+                    <i data-lucide="chevron-down"
+                      style="width:14px;height:14px;vertical-align:middle;margin-left:4px;"></i>
+                  </div>
+                  <div class="hotspot-info mt-2">
+                    <div class="glass-card p-3"
+                      style="background:rgba(14,30,60,0.6);border-color:rgba(255,255,255,0.15);">
+                      <p class="mb-2 text-white" style="font-size:0.85rem;">Laviny a loterie o život.</p>
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <small class="text-warning" style="font-size:0.7rem;letter-spacing:0.1em;">MÍRA UTRPENÍ</small>
+                      </div>
+                      <div class="utrpeni-bar">
+                        <div class="utrpeni-fill" style="width:85%;"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-6 d-flex align-items-end justify-content-end">
-                  <a href="#"
-                    class="text-decoration-none text-warning fw-bold border-bottom border-warning pb-1 small text-uppercase tracking-wider">Expedice
-                    2025</a>
+
+              </div>
+
+              <!-- Stats row -->
+              <div class="d-flex justify-content-center gap-5 mt-3">
+                <div class="text-center">
+                  <div class="serif fw-bold text-white" style="font-size:2rem;">5</div>
+                  <div class="label-alt" style="color:var(--gold);">Osmitisícovek</div>
+                </div>
+                <div class="text-center">
+                  <div class="serif fw-bold text-white" style="font-size:2rem;">14%</div>
+                  <div class="label-alt" style="color:var(--gold);">Kyslíku</div>
+                </div>
+                <div class="text-center">
+                  <div class="serif fw-bold text-white" style="font-size:2rem;">−40°</div>
+                  <div class="label-alt" style="color:var(--gold);">Teplota</div>
                 </div>
               </div>
             </div>
@@ -389,236 +991,273 @@
         </div>
       </section>
 
-      <!-- SECTION 5: APPROACH / PORTRAIT (~7000m) -->
-      <section id="approach-section" class="vh-100">
-        <div id="approach-container" class="w-100 h-100 position-relative">
-          <img src="./assets/approach_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover opacity-80"
-            style="filter: saturate(0.7) contrast(115%); object-position: center top;" alt="Approach">
-          <div class="position-absolute inset-0"
-            style="background: linear-gradient(120deg, rgba(253,251,247,0.9) 0%, rgba(253,251,247,0.3) 50%, transparent 100%);">
-          </div>
+      <!-- ─────────────────────────────────────────────
+           SECTION 6: PŘEDNÁŠKY  (8848 m – Vrchol)
+           ───────────────────────────────────────────── -->
+      <section id="prednasky-section" class="vh-100">
+        <div class="cloud-below"></div>
+        <div class="container h-100 d-flex align-items-center pointer-events-auto" style="position:relative;z-index:5;">
+          <div class="row align-items-center g-5 w-100">
 
-          <div class="container h-100 d-flex align-items-center">
-            <div class="glass-card p-5 position-relative z-1 pointer-events-auto" style="max-width: 560px;">
-              <div class="gold-border-top"></div>
-              <h4 class="text-warning text-uppercase tracking-widest small fw-bold mb-3">Přístupový tábor — 7000 m</h4>
-              <h2 class="serif display-5 text-dark mb-4">Každý výstup
-                začíná<br><span class="fst-italic text-secondary">uvnitř.</span>
+            <!-- LEFT: text -->
+            <div class="col-lg-6">
+              <p class="label-alt mb-3" style="color:var(--gold);">Přednášky — 8848 m n. m.</p>
+              <h2 class="serif text-white fw-bold mb-3" style="font-size:clamp(1.8rem,3.5vw,2.8rem);">
+                Tráva 50 Tour:<br><span class="fst-italic" style="color:var(--gold);">Oslavit šediny se musí.</span>
               </h2>
-              <p class="text-dark opacity-90 mb-5">
-                Tisíce metrů pod vrcholem si člověk nevybírá jen cestu — vybírá si, jestli má dost důvodů pokračovat.
-                Já jsem si vybral <span class="fw-bold border-bottom border-warning">pětadvacet let</span> znovu a
-                znovu.
+              <p class="mb-5" style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.7;">
+                Přijďte si poslechnout historky, který se do knížek nevešly.
               </p>
-              <a href="#" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
-                Expedice & projekty
-                <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- SECTION 6: TÝM / EXPEDICE -->
-      <section id="team-section" class="vh-100">
-        <div id="team-container" class="w-100 h-100 position-relative">
-          <img src="./assets/team_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover"
-            style="filter: saturate(0.65) contrast(120%); object-position: center;" alt="Team">
-          <div class="position-absolute inset-0"
-            style="background: linear-gradient(to bottom, rgba(253,251,247,0.15) 0%, rgba(30,41,59,0.65) 100%);"></div>
+              <!-- Tour dates -->
+              <div class="tour-date">
+                <div>
+                  <div class="text-white fw-semibold">Brno — Café Práh</div>
+                  <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;">Datum bude upřesněn</div>
+                </div>
+                <a href="#" class="text-decoration-none"
+                  style="color:var(--gold);font-size:0.8rem;font-weight:600;letter-spacing:0.1em;">VSTUPENKY →</a>
+              </div>
+              <div class="tour-date">
+                <div>
+                  <div class="text-white fw-semibold">Tábor — Recykl Club</div>
+                  <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;">Datum bude upřesněn</div>
+                </div>
+                <a href="#" class="text-decoration-none"
+                  style="color:var(--gold);font-size:0.8rem;font-weight:600;letter-spacing:0.1em;">VSTUPENKY →</a>
+              </div>
 
-          <div class="container h-100 d-flex align-items-end justify-content-center pb-5">
-            <div class="text-center text-white pointer-events-auto" style="max-width: 700px;">
-              <h4 class="text-uppercase tracking-widest small fw-bold mb-3 opacity-75">Tým — Lobuje East 6119 m</h4>
-              <h2 class="serif display-4 fw-bold mb-4">Hory tě naučí
-                <span class="fst-italic" style="color: var(--gold);">důvěřovat.</span>
-              </h2>
-              <p class="lead opacity-90 mb-5">
-                Bez týmu se na osmitisícovku nedostaneš. Každý šerpa, každý partner na laně —
-                dohromady jeden organismus, jeden dech.
-              </p>
-              <div class="d-flex justify-content-center gap-5">
-                <div class="text-center">
-                  <div class="serif display-6 fw-bold" style="color: var(--gold);">12+</div>
-                  <small class="text-uppercase tracking-wider opacity-75">Expedic</small>
-                </div>
-                <div class="text-center">
-                  <div class="serif display-6 fw-bold" style="color: var(--gold);">5</div>
-                  <small class="text-uppercase tracking-wider opacity-75">Osmitisícovek</small>
-                </div>
-                <div class="text-center">
-                  <div class="serif display-6 fw-bold" style="color: var(--gold);">1</div>
-                  <small class="text-uppercase tracking-wider opacity-75">Cíl</small>
-                </div>
+              <div class="action-banner mt-4">
+                <span class="text-white" style="font-size:0.9rem;">Chceš mě na firemní akci?</span>
+                <a href="mailto:honzatravatravnicek@gmail.com" class="fw-bold text-decoration-none ms-2"
+                  style="color:var(--gold);">Napiš. →</a>
               </div>
             </div>
+
+            <!-- RIGHT: photo -->
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="./assets/prednasky.jpg" alt="Honza přednáška"
+                style="width:100%;max-height:55vh;object-fit:cover;object-position:center top;border-radius:var(--radius);filter:grayscale(0.2)contrast(110%);box-shadow:0 40px 80px -16px rgba(0,0,0,0.6);">
+            </div>
+
           </div>
         </div>
       </section>
 
-      <!-- SECTION 7: SUMMIT — MOTIVAČNÍ FINALE -->
-      <section id="summit-section" class="vh-100">
-        <div id="summit-container" class="w-100 h-100 position-relative">
-          <img src="./assets/summit_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover"
-            style="filter: saturate(0.5) contrast(130%) brightness(0.85); object-position: center top;" alt="Summit">
-          <div class="position-absolute inset-0"
-            style="background: radial-gradient(ellipse at center, rgba(212,175,55,0.08) 0%, rgba(30,41,59,0.75) 100%);">
+      <!-- ─────────────────────────────────────────────
+           SECTION 7: PATIČKA  (Sestup)
+           ───────────────────────────────────────────── -->
+      <section id="footer-section" class="vh-100">
+        <div class="container text-center pointer-events-auto" style="position:relative;z-index:5;">
+
+          <!-- Logo -->
+          <div class="serif text-white fw-bold mb-1" style="font-size:1.8rem;letter-spacing:0.05em;">14 Summits</div>
+          <div class="label-alt mb-5" style="color:var(--gold);">Expedition</div>
+
+          <!-- Socials -->
+          <div class="d-flex justify-content-center gap-3 mb-5">
+            <a href="#" class="social-icon"><i data-lucide="instagram"></i></a>
+            <a href="#" class="social-icon"><i data-lucide="facebook"></i></a>
+            <a href="mailto:honzatravatravnicek@gmail.com" class="social-icon"><i data-lucide="mail"></i></a>
           </div>
 
-          <!-- Gold glow ring -->
-          <div class="position-absolute"
-            style="top: 50%; left: 50%; transform: translate(-50%, -70%); width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%); filter: blur(40px);">
-          </div>
-
-          <div class="container h-100 d-flex align-items-center justify-content-center">
-            <div class="text-center text-white pointer-events-auto" style="max-width: 700px;">
-              <div class="mb-4"
-                style="color: var(--gold); font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.9;">
-                Mount Everest — 8848 m n. m.</div>
-              <h1 class="serif mb-5 fw-bold"
-                style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 1.1; text-shadow: 0 0 80px rgba(212,175,55,0.3);">
-                Tam, kde vzduch
-                <span class="d-block fst-italic" style="color: var(--gold);">přestane existovat</span>
-                — začneš ty.
-              </h1>
-              <p class="lead opacity-80 mb-5" style="max-width: 480px; margin: 0 auto 2rem;">
-                Vrchol Everestu je jen začátek. Každý krok zpátky dolů je triumf.
-                Každý nádech je dar. Setkej se s Honzou — poutníkem, který ti ukáže cestu.
-              </p>
-              <a href="#" class="btn btn-outline-light px-5 py-3 text-uppercase tracking-wider fw-bold"
-                style="border-color: var(--gold); color: var(--gold); letter-spacing: 0.15em;">
-                Kontaktuj Honzu
-              </a>
+          <div class="d-flex justify-content-center gap-5 mb-5 flex-wrap">
+            <div>
+              <div class="label-alt mb-2" style="color:var(--slate-400);">Email</div>
+              <a href="mailto:honzatravatravnicek@gmail.com" class="text-decoration-none"
+                style="color:rgba(255,255,255,0.8);font-size:0.9rem;">honzatravatravnicek@gmail.com</a>
+            </div>
+            <div class="footer-divider d-none d-md-block"></div>
+            <div>
+              <div class="label-alt mb-2" style="color:var(--slate-400);">Instagram</div>
+              <a href="#" class="text-decoration-none"
+                style="color:rgba(255,255,255,0.8);font-size:0.9rem;">@honzatrava</a>
             </div>
           </div>
+
+          <!-- Newsletter -->
+          <div style="max-width:420px;margin:0 auto;">
+            <p class="mb-3" style="color:rgba(255,255,255,0.55);font-size:0.9rem;">Chceš vědět, kdy zase
+              odletím?<br>Nech mi tu mail.</p>
+            <div class="d-flex">
+              <input type="email" class="newsletter-input" placeholder="tvuj@email.cz">
+              <button class="newsletter-btn">Leťme →</button>
+            </div>
+          </div>
+
+          <div class="mt-5" style="color:rgba(255,255,255,0.2);font-size:0.75rem;">
+            © 2025 Honza Trávníček · Poutník mezi světy
+          </div>
+
         </div>
       </section>
 
-    </div>
-  </div>
+    </div><!-- /viewport -->
+  </div><!-- /scrolly-container -->
 
-  <!-- GSAP Scripts -->
+  <!-- ═══════════ SCRIPTS ═══════════ -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
   <script>
+    // ── LOADING SCREEN ──────────────────────────────────────────
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loading-screen').classList.add('hide');
+      }, 2000);
+    });
+
+    // ── HAMBURGER MENU ──────────────────────────────────────────
+    const menuBtn = document.getElementById('menu-btn');
+    const navPanel = document.getElementById('nav-panel');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    function toggleMenu(open) {
+      menuBtn.classList.toggle('open', open);
+      navPanel.classList.toggle('open', open);
+      navOverlay.classList.toggle('open', open);
+    }
+    menuBtn.addEventListener('click', () => toggleMenu(!navPanel.classList.contains('open')));
+    navOverlay.addEventListener('click', () => toggleMenu(false));
+
+    // Nav links: jump to scroll position of section
+    document.querySelectorAll('[data-target]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targets = {
+          'hero-section': 0,
+          'omne-section': 0.12,
+          'partneri-section': 0.28,
+          'projekty-section': 0.43,
+          'expedice-section': 0.57,
+          'prednasky-section': 0.71,
+          'footer-section': 0.86,
+        };
+        const p = targets[link.dataset.target] ?? 0;
+        const totalH = document.getElementById('scrolly-container').scrollHeight;
+        window.scrollTo({ top: p * totalH, behavior: 'smooth' });
+        toggleMenu(false);
+      });
+    });
+
+    // ── ICONS ───────────────────────────────────────────────────
+    lucide.createIcons();
+
+    // ── HOTSPOT TOGGLE ──────────────────────────────────────────
+    function toggleHotspot(btn) {
+      const info = btn.nextElementSibling;
+      const isOpen = info.classList.contains('open');
+      // close all
+      document.querySelectorAll('.hotspot-info').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.hotspot-btn').forEach(el => el.classList.remove('active'));
+      if (!isOpen) {
+        info.classList.add('open');
+        btn.classList.add('active');
+      }
+    }
+
+    // ── FLAG SWING KEYFRAMES ─────────────────────────────────────
+    const swingStyle = document.createElement('style');
+    swingStyle.textContent = `
+      @keyframes swingFlag {
+        0%,100% { transform: rotate(-4deg); }
+        50%      { transform: rotate(4deg); }
+      }
+    `;
+    document.head.appendChild(swingStyle);
+
+    // ── GSAP SCROLLTRIGGER ───────────────────────────────────────
     gsap.registerPlugin(ScrollTrigger);
 
-    // --- Altimeter Logic ---
-    const altNumber = document.querySelector('#alt-number');
-    const altProgress = document.querySelector('#alt-progress');
+    const altNumber = document.getElementById('alt-number');
+    const altProgress = document.getElementById('alt-progress');
 
+    // Altitude map — 7 sections, each ~1/7 of scroll
     const altMap = {
-      points: [0, 0.15, 0.35, 0.52, 0.72, 0.87, 0.93, 1],
-      values: [0, 800, 5364, 6400, 8000, 7000, 6119, 8848]
+      points: [0, 0.14, 0.28, 0.43, 0.57, 0.71, 0.86, 1.0],
+      values: [0, 800, 3000, 4500, 7000, 8848, 7500, 0]
     };
-
     function getAltitude(p) {
       for (let i = 0; i < altMap.points.length - 1; i++) {
         if (p >= altMap.points[i] && p <= altMap.points[i + 1]) {
-          const localP = (p - altMap.points[i]) / (altMap.points[i + 1] - altMap.points[i]);
-          return altMap.values[i] + localP * (altMap.values[i + 1] - altMap.values[i]);
+          const lp = (p - altMap.points[i]) / (altMap.points[i + 1] - altMap.points[i]);
+          return altMap.values[i] + lp * (altMap.values[i + 1] - altMap.values[i]);
         }
       }
       return altMap.values[altMap.values.length - 1];
     }
 
-    // --- Main Animation Timeline ---
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: "#scrolly-container",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5 // Smooth as a spring
+        trigger: '#scrolly-container',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.5,
       }
     });
 
-    // Initial call to replace lucide elements
-    lucide.createIcons();
-
-    // Update Altimeter on Update
-    tl.eventCallback("onUpdate", () => {
+    tl.eventCallback('onUpdate', () => {
       const p = tl.progress();
       altNumber.innerText = Math.round(getAltitude(p));
-      altProgress.style.height = (p * 100) + "%";
+      altProgress.style.height = (p * 100) + '%';
     });
 
-    // SECTION 1: HERO (0 - 0.35)
-    tl.to("#hero-section", { opacity: 1, duration: 0.1 }, 0);
-    tl.to("#hero-text", { y: -150, opacity: 0, scale: 0.8, duration: 0.3 }, 0);
+    // ─────────────────────────────────────────────────────────
+    // SECTION LAYOUT (each ~0.143)
+    //  S1 Hero          0.00 → 0.14
+    //  S2 O mně         0.14 → 0.28
+    //  S3 Partneři      0.28 → 0.43
+    //  S4 Projekty      0.43 → 0.57
+    //  S5 Expedice      0.57 → 0.71
+    //  S6 Přednášky     0.71 → 0.86
+    //  S7 Patička       0.86 → 1.00
+    // ─────────────────────────────────────────────────────────
 
-    // Everest Deep Zoom
-    tl.to("#hero-everest-container", { scale: 2.8, y: "-60%", duration: 1 }, 0);
-    tl.to("#hero-everest-container", { opacity: 0, duration: 0.3 }, 0.6);
+    // S1: HERO
+    tl.to('#hero-section', { opacity: 1, duration: 0.1 }, 0);
+    tl.to('#hero-text', { y: -160, opacity: 0, scale: 0.85, duration: 0.08 }, 0.03);
+    tl.to('#hero-everest-container', { scale: 2.8, y: '-60%', duration: 0.14 }, 0);
+    tl.to('#hero-everest-container', { opacity: 0, duration: 0.05 }, 0.09);
+    tl.to('#mist-left', { xPercent: -90, opacity: 0, duration: 0.08 }, 0);
+    tl.to('#mist-right', { xPercent: 90, opacity: 0, duration: 0.08 }, 0);
+    tl.to('#mist-lo-l', { xPercent: -160, opacity: 0, duration: 0.07 }, 0.01);
+    tl.to('#mist-lo-r', { xPercent: 160, opacity: 0, duration: 0.07 }, 0.01);
+    tl.to('#hero-section', { opacity: 0, duration: 0.05 }, 0.12);
 
-    // Mist Parting
-    tl.to("#mist-left", { xPercent: -80, opacity: 0, duration: 0.4 }, 0);
-    tl.to("#mist-right", { xPercent: 80, opacity: 0, duration: 0.4 }, 0);
-    tl.to("#mist-close-left", { xPercent: -150, opacity: 0, duration: 0.35 }, 0);
-    tl.to("#mist-close-right", { xPercent: 150, opacity: 0, duration: 0.35 }, 0);
+    // S2: O MNĚ  (0.12 – 0.28)
+    tl.fromTo('#omne-section',
+      { opacity: 0, yPercent: 60 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.12);
+    tl.to('#omne-section', { yPercent: 100, opacity: 0, duration: 0.08 }, 0.26);
 
-    // SECTION 2: BASE CAMP (0.25 - 0.55)
-    // Entry - RISING FROM BOTTOM
-    tl.fromTo("#base-camp-section",
-      { opacity: 0, yPercent: 100 },
-      { opacity: 1, yPercent: 0, duration: 0.4 },
-      0.2
-    );
+    // S3: PARTNEŘI  (0.28 – 0.43)
+    tl.fromTo('#partneri-section',
+      { opacity: 0, yPercent: -80 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.28);
+    tl.to('#partneri-section', { yPercent: 100, opacity: 0, duration: 0.08 }, 0.41);
 
-    // BC Side Parallax
-    tl.to("#bc-side-left", { xPercent: -100, opacity: 0, duration: 0.3 }, 0.3);
-    tl.to("#bc-side-right", { xPercent: 100, opacity: 0, duration: 0.3 }, 0.3);
+    // S4: PROJEKTY  (0.43 – 0.57)
+    tl.fromTo('#projekty-section',
+      { opacity: 0, xPercent: -20 },
+      { opacity: 1, xPercent: 0, duration: 0.1 }, 0.43);
+    tl.to('#projekty-section', { opacity: 0, xPercent: 20, duration: 0.08 }, 0.55);
 
-    // BC Exit - DROP DOWN
-    tl.to("#base-camp-section", { yPercent: 100, opacity: 0, duration: 0.3 }, 0.5);
-
-    // SECTION 3: ICEFALL (0.50 - 0.80)
-    // Entry - DESCEND FROM TOP
-    tl.fromTo("#icefall-section",
-      { opacity: 0, yPercent: -100 },
-      { opacity: 1, yPercent: 0, duration: 0.4 },
-      0.45
-    );
-
-    // Icefall Exit - DROP DOWN + WALK OVER SCALE
-    tl.to("#icefall-section", { yPercent: 100, opacity: 0, scale: 1.5, duration: 0.35 }, 0.75);
-
-    // SECTION 4: CLIMB / SUMMIT (0.75 - 1.0)
-    // Entry - DESCEND FROM TOP
-    tl.fromTo("#climb-section",
-      { opacity: 0, yPercent: -100 },
-      { opacity: 1, yPercent: 0, duration: 0.4 },
-      0.70
-    );
-
-    // Climb Exit
-    tl.to("#climb-section", { yPercent: 100, opacity: 0, duration: 0.28 }, 0.84);
-
-    // SECTION 5: APPROACH (0.83 - 0.90)
-    tl.fromTo("#approach-section",
-      { opacity: 0, yPercent: -100 },
-      { opacity: 1, yPercent: 0, duration: 0.3 },
-      0.87
-    );
-    tl.to("#approach-section", { yPercent: 100, opacity: 0, duration: 0.25 }, 0.91);
-
-    // SECTION 6: TEAM (0.91 - 0.95)
-    tl.fromTo("#team-section",
+    // S5: EXPEDICE  (0.57 – 0.71)
+    tl.fromTo('#expedice-section',
       { opacity: 0, scale: 1.08 },
-      { opacity: 1, scale: 1, duration: 0.28 },
-      0.93
-    );
-    tl.to("#team-section", { opacity: 0, scale: 0.95, duration: 0.22 }, 0.96);
+      { opacity: 1, scale: 1, duration: 0.1 }, 0.57);
+    tl.to('#expedice-section', { opacity: 0, scale: 0.95, duration: 0.08 }, 0.69);
 
-    // SECTION 7: SUMMIT — MOTIVATIONAL FINALE (0.96 - 1.0)
-    tl.fromTo("#summit-section",
-      { opacity: 0, scale: 1.12 },
-      { opacity: 1, scale: 1, duration: 0.3 },
-      0.97
-    );
+    // S6: PŘEDNÁŠKY  (0.71 – 0.86)
+    tl.fromTo('#prednasky-section',
+      { opacity: 0, yPercent: -60 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.71);
+    tl.to('#prednasky-section', { opacity: 0, yPercent: 60, duration: 0.08 }, 0.84);
 
-    // Re-init lucide icons for new sections
-    lucide.createIcons();
+    // S7: PATIČKA  (0.86 – 1.0)
+    tl.fromTo('#footer-section',
+      { opacity: 0, yPercent: 40 },
+      { opacity: 1, yPercent: 0, duration: 0.12 }, 0.86);
 
   </script>
 
