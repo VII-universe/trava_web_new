@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Honza Trávníček | Poutník mezi světy</title>
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Oswald:wght@700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --ivory: #FDFBF7;
+      --gold: #D4AF37;
+      --slate-800: #1e293b;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--ivory);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      color: var(--slate-800);
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .oswald {
+      font-family: 'Oswald', sans-serif;
+    }
+
+    /* Scrollytelling Setup */
+    #scrolly-container {
+      position: relative;
+      height: 1050vh;
+      /* Extended for 7 sections */
+    }
+
+    #viewport {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      /* Hidden by default, GSAP will show */
+    }
+
+    #hero-section {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .pointer-events-auto {
+      pointer-events: auto !important;
+    }
+
+    /* Shared Components */
+    .mask-ivory-top {
+      mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+    }
+
+    .mask-icefall {
+      mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+    }
+
+    .mask-climb {
+      mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+    }
+
+    /* Hero */
+    #hero-bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, #FDFBF7, #E2E8F0);
+      z-index: 0;
+    }
+
+    #everest-img {
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+      object-fit: cover;
+      -o-object-position: center;
+      object-position: center;
+      opacity: 0.4;
+      mix-blend-mode: multiply;
+      filter: contrast(125%) saturate(50%);
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    }
+
+    /* Altimeter */
+    #altimeter {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      mix-blend-mode: difference;
+      color: #fff;
+      /* Difference will flip this */
+    }
+
+    .alt-line {
+      height: 120px;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    #alt-progress {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: var(--gold);
+      height: 0%;
+    }
+
+    /* Mist Layers */
+    .mist-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      filter: blur(80px);
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    /* Content Cards */
+    .glass-card {
+      background: rgba(253, 251, 247, 0.45);
+      backdrop-filter: blur(25px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 1.5rem;
+      box-shadow: 0 30px 60px -12px rgba(45, 55, 72, 0.18);
+    }
+
+    .gold-border-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .inset-0 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    /* Stats Grid */
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+    }
+
+    .stat-icon {
+      color: var(--slate-500);
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .bounce {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-10px);
+      }
+
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Text Shadow for better contrast */
+    .drop-shadow {
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Altimeter Counter -->
+  <div id="altimeter">
+    <div class="alt-line">
+      <div id="alt-progress"></div>
+    </div>
+    <div class="text-center">
+      <div id="alt-number" class="oswald h3 mb-0">0</div>
+      <small class="text-uppercase tracking-wider opacity-60" style="font-size: 0.6rem;">m n.m.</small>
+    </div>
+    <div class="alt-line"></div>
+  </div>
+
+  <div id="scrolly-container">
+    <div id="viewport">
+
+      <!-- SECTION 1: HERO -->
+      <section id="hero-section" class="vh-100">
+        <div id="hero-bg-gradient"></div>
+
+        <!-- Everest Layer -->
+        <div id="hero-everest-container" class="absolute inset-0 w-100 h-100" style="transform-origin: 50% 80%;">
+          <img id="everest-img" src="./assets/mount_everest_ivory-BFK1vzc2.png" alt="Everest">
+        </div>
+
+        <!-- Text Layer -->
+        <div id="hero-text" class="position-relative z-2 text-center px-4">
+          <h2 class="text-uppercase tracking-widest text-warning small mb-4">Poutník mezi světy</h2>
+          <h1 class="serif display-1 fw-bold text-slate-800 mb-5">HONZA<br>TRÁVNÍČEK</h1>
+          <div class="mt-5 d-flex flex-column align-items-center opacity-75">
+            <span class="small text-uppercase tracking-widest text-muted mb-2">Začni výstup</span>
+            <i data-lucide="chevron-down" class="text-warning bounce"></i>
+          </div>
+        </div>
+
+        <!-- Mist Layers -->
+        <div id="mist-left" class="mist-layer" style="width: 50vw; height: 50vh; left: -10%; top: 40%;"></div>
+        <div id="mist-right" class="mist-layer" style="width: 50vw; height: 50vh; right: -10%; top: 30%;"></div>
+        <div id="mist-close-left" class="mist-layer"
+          style="width: 60vw; height: 80vh; left: -15%; bottom: -20%; background: linear-gradient(to top right, white, transparent); opacity: 0.9;">
+        </div>
+        <div id="mist-close-right" class="mist-layer"
+          style="width: 60vw; height: 80vh; right: -15%; bottom: -20%; background: linear-gradient(to top left, white, transparent); opacity: 0.9;">
+        </div>
+      </section>
+
+      <!-- SECTION 2: BASE CAMP -->
+      <section id="base-camp-section" class="vh-100 flex-column justify-content-center align-items-start px-md-5">
+        <div id="base-camp-container" class="w-100 h-100 position-relative">
+
+          <!-- Backgrounds -->
+          <div class="position-absolute inset-0 w-100 h-100 z-0">
+            <div class="position-absolute inset-0 bg-ivory mask-ivory-top opacity-100"></div>
+            <img src="./assets/base_camp_bg-Bt3x_etB.jpg" class="w-100 h-100 object-fit-cover mask-ivory-top opacity-75"
+              style="filter: sepia(0.2) grayscale(0.3) contrast(125%);">
+          </div>
+
+          <!-- Side Parallax Layers -->
+          <div id="bc-side-left" class="position-absolute start-0 bottom-0 w-25 h-75 bg-white opacity-25"
+            style="filter: blur(40px); mix-blend-mode: screen;"></div>
+          <div id="bc-side-right" class="position-absolute end-0 bottom-0 w-25 h-75 bg-white opacity-25"
+            style="filter: blur(40px); mix-blend-mode: screen;"></div>
+
+          <!-- Content -->
+          <div class="container-fluid h-100 d-flex align-items-center">
+            <div class="glass-card p-5 p-md-5 position-relative z-1 pointer-events-auto shadow-lg"
+              style="max-width: 600px; margin-left: 2rem;">
+              <div class="gold-border-top"></div>
+              <h4 class="text-warning text-uppercase tracking-widest small fw-bold mb-3">Base Camp — 5364 m</h4>
+              <h2 class="serif display-5 text-dark mb-4">Nehraju si na<br><span
+                  class="fst-italic text-secondary">hrdinu.</span></h2>
+              <p class="lead text-dark opacity-90 mb-5">
+                Jsem geodet, učitel a manažer punkový kapely, co se zamiloval do řídkýho vzduchu.
+                Říkají o mně, že jsem horolezec. Já se cítím spíš jako <span
+                  class="fw-bold border-bottom border-warning">poutník</span>.
+              </p>
+              <a href="#" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
+                Můj celý příběh
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: ICEFALL -->
+      <section id="icefall-section" class="vh-100">
+        <div id="icefall-container" class="w-100 h-100 position-relative">
+          <div class="position-absolute inset-0 bg-light mask-icefall z-0"></div>
+          <img src="./assets/icefall_bg-BfygNX9C.jpg"
+            class="position-absolute inset-0 w-100 h-100 object-fit-cover mask-icefall opacity-75 grayscale contrast-125">
+          <div class="position-absolute inset-0"
+            style="background: linear-gradient(to top right, rgba(200,220,240,0.4), rgba(220,230,250,0.2)); mix-blend-mode: multiply;">
+          </div>
+
+          <div class="position-relative z-1 text-center px-4 pointer-events-auto">
+            <i data-lucide="pickaxe" class="text-primary opacity-50 mb-4" style="width: 48px; height: 48px;"></i>
+            <h4 class="text-secondary text-uppercase tracking-widest small fw-bold mb-3">Icefall — 6400 m</h4>
+            <h1 class="serif display-3 text-dark mb-4 drop-shadow">Tanec na ostří<br><span
+                class="text-muted fst-italic">ledu.</span></h1>
+            <p class="mx-auto text-secondary opacity-90 mb-0" style="max-width: 500px;">
+              Každý krok může být poslední. Trhliny se mění každou vteřinu.
+              Tady hory dýchají, a my musíme dýchat s nimi.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: CLIMB / SUMMIT -->
+      <section id="climb-section" class="vh-100 d-flex justify-content-end align-items-center pe-md-5">
+        <div id="climb-container" class="w-100 h-100 position-relative">
+
+          <div class="position-absolute inset-0 bg-secondary mask-climb z-0"></div>
+          <img src="./assets/climbers_bg-D9BDaYCs.jpg"
+            class="position-absolute inset-0 w-100 h-100 object-fit-cover mask-climb opacity-40 grayscale contrast-150">
+          <div class="position-absolute inset-0 bg-slate-100 opacity-25 mix-blend-multiply"></div>
+
+          <div class="container h-100 d-flex align-items-center justify-content-end">
+            <div class="glass-card p-5 p-md-5 position-relative z-1 pointer-events-auto shadow-lg text-end"
+              style="max-width: 550px; margin-right: 2rem;">
+              <h4 class="text-muted text-uppercase tracking-widest small fw-bold mb-4">Zóna smrti — 8000+ m</h4>
+              <h2 class="serif display-4 text-dark mb-5">Tam, kde končí<br><span class="text-secondary">dech.</span>
+              </h2>
+
+              <!-- Stats Grid -->
+              <div class="row g-4">
+                <div class="col-6 stat-item">
+                  <i data-lucide="mountain" class="stat-icon"></i>
+                  <span class="serif h2 mb-0">5</span>
+                  <small class="text-uppercase tracking-widest text-muted small">Osmiveslovek</small>
+                </div>
+                <div class="col-6 stat-item">
+                  <i data-lucide="wind" class="stat-icon"></i>
+                  <span class="serif h2 mb-0">14%</span>
+                  <small class="text-uppercase tracking-widest text-muted small">Kyslíku</small>
+                </div>
+                <div class="col-6 stat-item">
+                  <i data-lucide="thermometer" class="stat-icon"></i>
+                  <span class="serif h2 mb-0">-40°</span>
+                  <small class="text-uppercase tracking-widest text-muted small">Teplota</small>
+                </div>
+                <div class="col-6 d-flex align-items-end justify-content-end">
+                  <a href="#"
+                    class="text-decoration-none text-warning fw-bold border-bottom border-warning pb-1 small text-uppercase tracking-wider">Expedice
+                    2025</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: APPROACH / PORTRAIT (~7000m) -->
+      <section id="approach-section" class="vh-100">
+        <div id="approach-container" class="w-100 h-100 position-relative">
+          <img src="./assets/approach_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover opacity-80"
+            style="filter: saturate(0.7) contrast(115%); object-position: center top;" alt="Approach">
+          <div class="position-absolute inset-0"
+            style="background: linear-gradient(120deg, rgba(253,251,247,0.9) 0%, rgba(253,251,247,0.3) 50%, transparent 100%);">
+          </div>
+
+          <div class="container h-100 d-flex align-items-center">
+            <div class="glass-card p-5 position-relative z-1 pointer-events-auto" style="max-width: 560px;">
+              <div class="gold-border-top"></div>
+              <h4 class="text-warning text-uppercase tracking-widest small fw-bold mb-3">Přístupový tábor — 7000 m</h4>
+              <h2 class="serif display-5 text-dark mb-4">Každý výstup
+                začíná<br><span class="fst-italic text-secondary">uvnitř.</span>
+              </h2>
+              <p class="text-dark opacity-90 mb-5">
+                Tisíce metrů pod vrcholem si člověk nevybírá jen cestu — vybírá si, jestli má dost důvodů pokračovat.
+                Já jsem si vybral <span class="fw-bold border-bottom border-warning">pětadvacet let</span> znovu a
+                znovu.
+              </p>
+              <a href="#" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
+                Expedice & projekty
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: TÝM / EXPEDICE -->
+      <section id="team-section" class="vh-100">
+        <div id="team-container" class="w-100 h-100 position-relative">
+          <img src="./assets/team_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover"
+            style="filter: saturate(0.65) contrast(120%); object-position: center;" alt="Team">
+          <div class="position-absolute inset-0"
+            style="background: linear-gradient(to bottom, rgba(253,251,247,0.15) 0%, rgba(30,41,59,0.65) 100%);"></div>
+
+          <div class="container h-100 d-flex align-items-end justify-content-center pb-5">
+            <div class="text-center text-white pointer-events-auto" style="max-width: 700px;">
+              <h4 class="text-uppercase tracking-widest small fw-bold mb-3 opacity-75">Tým — Lobuje East 6119 m</h4>
+              <h2 class="serif display-4 fw-bold mb-4">Hory tě naučí
+                <span class="fst-italic" style="color: var(--gold);">důvěřovat.</span>
+              </h2>
+              <p class="lead opacity-90 mb-5">
+                Bez týmu se na osmitisícovku nedostaneš. Každý šerpa, každý partner na laně —
+                dohromady jeden organismus, jeden dech.
+              </p>
+              <div class="d-flex justify-content-center gap-5">
+                <div class="text-center">
+                  <div class="serif display-6 fw-bold" style="color: var(--gold);">12+</div>
+                  <small class="text-uppercase tracking-wider opacity-75">Expedic</small>
+                </div>
+                <div class="text-center">
+                  <div class="serif display-6 fw-bold" style="color: var(--gold);">5</div>
+                  <small class="text-uppercase tracking-wider opacity-75">Osmitisícovek</small>
+                </div>
+                <div class="text-center">
+                  <div class="serif display-6 fw-bold" style="color: var(--gold);">1</div>
+                  <small class="text-uppercase tracking-wider opacity-75">Cíl</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: SUMMIT — MOTIVAČNÍ FINALE -->
+      <section id="summit-section" class="vh-100">
+        <div id="summit-container" class="w-100 h-100 position-relative">
+          <img src="./assets/summit_bg.jpg" class="position-absolute inset-0 w-100 h-100 object-fit-cover"
+            style="filter: saturate(0.5) contrast(130%) brightness(0.85); object-position: center top;" alt="Summit">
+          <div class="position-absolute inset-0"
+            style="background: radial-gradient(ellipse at center, rgba(212,175,55,0.08) 0%, rgba(30,41,59,0.75) 100%);">
+          </div>
+
+          <!-- Gold glow ring -->
+          <div class="position-absolute"
+            style="top: 50%; left: 50%; transform: translate(-50%, -70%); width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%); filter: blur(40px);">
+          </div>
+
+          <div class="container h-100 d-flex align-items-center justify-content-center">
+            <div class="text-center text-white pointer-events-auto" style="max-width: 700px;">
+              <div class="mb-4"
+                style="color: var(--gold); font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.9;">
+                Mount Everest — 8848 m n. m.</div>
+              <h1 class="serif mb-5 fw-bold"
+                style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 1.1; text-shadow: 0 0 80px rgba(212,175,55,0.3);">
+                Tam, kde vzduch
+                <span class="d-block fst-italic" style="color: var(--gold);">přestane existovat</span>
+                — začneš ty.
+              </h1>
+              <p class="lead opacity-80 mb-5" style="max-width: 480px; margin: 0 auto 2rem;">
+                Vrchol Everestu je jen začátek. Každý krok zpátky dolů je triumf.
+                Každý nádech je dar. Setkej se s Honzou — poutníkem, který ti ukáže cestu.
+              </p>
+              <a href="#" class="btn btn-outline-light px-5 py-3 text-uppercase tracking-wider fw-bold"
+                style="border-color: var(--gold); color: var(--gold); letter-spacing: 0.15em;">
+                Kontaktuj Honzu
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- GSAP Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Altimeter Logic ---
+    const altNumber = document.querySelector('#alt-number');
+    const altProgress = document.querySelector('#alt-progress');
+
+    const altMap = {
+      points: [0, 0.15, 0.35, 0.52, 0.72, 0.87, 0.93, 1],
+      values: [0, 800, 5364, 6400, 8000, 7000, 6119, 8848]
+    };
+
+    function getAltitude(p) {
+      for (let i = 0; i < altMap.points.length - 1; i++) {
+        if (p >= altMap.points[i] && p <= altMap.points[i + 1]) {
+          const localP = (p - altMap.points[i]) / (altMap.points[i + 1] - altMap.points[i]);
+          return altMap.values[i] + localP * (altMap.values[i + 1] - altMap.values[i]);
+        }
+      }
+      return altMap.values[altMap.values.length - 1];
+    }
+
+    // --- Main Animation Timeline ---
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#scrolly-container",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5 // Smooth as a spring
+      }
+    });
+
+    // Initial call to replace lucide elements
+    lucide.createIcons();
+
+    // Update Altimeter on Update
+    tl.eventCallback("onUpdate", () => {
+      const p = tl.progress();
+      altNumber.innerText = Math.round(getAltitude(p));
+      altProgress.style.height = (p * 100) + "%";
+    });
+
+    // SECTION 1: HERO (0 - 0.35)
+    tl.to("#hero-section", { opacity: 1, duration: 0.1 }, 0);
+    tl.to("#hero-text", { y: -150, opacity: 0, scale: 0.8, duration: 0.3 }, 0);
+
+    // Everest Deep Zoom
+    tl.to("#hero-everest-container", { scale: 2.8, y: "-60%", duration: 1 }, 0);
+    tl.to("#hero-everest-container", { opacity: 0, duration: 0.3 }, 0.6);
+
+    // Mist Parting
+    tl.to("#mist-left", { xPercent: -80, opacity: 0, duration: 0.4 }, 0);
+    tl.to("#mist-right", { xPercent: 80, opacity: 0, duration: 0.4 }, 0);
+    tl.to("#mist-close-left", { xPercent: -150, opacity: 0, duration: 0.35 }, 0);
+    tl.to("#mist-close-right", { xPercent: 150, opacity: 0, duration: 0.35 }, 0);
+
+    // SECTION 2: BASE CAMP (0.25 - 0.55)
+    // Entry - RISING FROM BOTTOM
+    tl.fromTo("#base-camp-section",
+      { opacity: 0, yPercent: 100 },
+      { opacity: 1, yPercent: 0, duration: 0.4 },
+      0.2
+    );
+
+    // BC Side Parallax
+    tl.to("#bc-side-left", { xPercent: -100, opacity: 0, duration: 0.3 }, 0.3);
+    tl.to("#bc-side-right", { xPercent: 100, opacity: 0, duration: 0.3 }, 0.3);
+
+    // BC Exit - DROP DOWN
+    tl.to("#base-camp-section", { yPercent: 100, opacity: 0, duration: 0.3 }, 0.5);
+
+    // SECTION 3: ICEFALL (0.50 - 0.80)
+    // Entry - DESCEND FROM TOP
+    tl.fromTo("#icefall-section",
+      { opacity: 0, yPercent: -100 },
+      { opacity: 1, yPercent: 0, duration: 0.4 },
+      0.45
+    );
+
+    // Icefall Exit - DROP DOWN + WALK OVER SCALE
+    tl.to("#icefall-section", { yPercent: 100, opacity: 0, scale: 1.5, duration: 0.35 }, 0.75);
+
+    // SECTION 4: CLIMB / SUMMIT (0.75 - 1.0)
+    // Entry - DESCEND FROM TOP
+    tl.fromTo("#climb-section",
+      { opacity: 0, yPercent: -100 },
+      { opacity: 1, yPercent: 0, duration: 0.4 },
+      0.70
+    );
+
+    // Climb Exit
+    tl.to("#climb-section", { yPercent: 100, opacity: 0, duration: 0.28 }, 0.84);
+
+    // SECTION 5: APPROACH (0.83 - 0.90)
+    tl.fromTo("#approach-section",
+      { opacity: 0, yPercent: -100 },
+      { opacity: 1, yPercent: 0, duration: 0.3 },
+      0.87
+    );
+    tl.to("#approach-section", { yPercent: 100, opacity: 0, duration: 0.25 }, 0.91);
+
+    // SECTION 6: TEAM (0.91 - 0.95)
+    tl.fromTo("#team-section",
+      { opacity: 0, scale: 1.08 },
+      { opacity: 1, scale: 1, duration: 0.28 },
+      0.93
+    );
+    tl.to("#team-section", { opacity: 0, scale: 0.95, duration: 0.22 }, 0.96);
+
+    // SECTION 7: SUMMIT — MOTIVATIONAL FINALE (0.96 - 1.0)
+    tl.fromTo("#summit-section",
+      { opacity: 0, scale: 1.12 },
+      { opacity: 1, scale: 1, duration: 0.3 },
+      0.97
+    );
+
+    // Re-init lucide icons for new sections
+    lucide.createIcons();
+
+  </script>
+
+</body>
+
+</html>
