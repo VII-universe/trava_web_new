@@ -4,22 +4,22 @@ import { ArrowRight } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 
 const About = ({ scrollProgress }) => {
-    // PHASE 2: 0.25 -> 0.50
+    // PHASE 2: 0.20 -> 0.40
 
     // Transition In
-    const containerOpacity = useTransform(scrollProgress, [0.2, 0.3], [0, 1]);
-    const containerScale = useTransform(scrollProgress, [0.2, 0.4], [0.8, 1]);
-    const containerY = useTransform(scrollProgress, [0.2, 0.35], ["100%", "0%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.15, 0.25], [0, 1]);
+    const containerScale = useTransform(scrollProgress, [0.15, 0.3], [0.8, 1]);
+    const containerY = useTransform(scrollProgress, [0.15, 0.25], ["100%", "0%"]);
 
     // Parallax Layers
-    const sideLayerLeftX = useTransform(scrollProgress, [0.3, 0.5], ["0%", "-50%"]);
-    const sideLayerRightX = useTransform(scrollProgress, [0.3, 0.5], ["0%", "50%"]);
-    const sideLayerOpacity = useTransform(scrollProgress, [0.3, 0.5], [0.8, 0]);
+    const sideLayerLeftX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "-50%"]);
+    const sideLayerRightX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "50%"]);
+    const sideLayerOpacity = useTransform(scrollProgress, [0.2, 0.4], [0.8, 0]);
 
     // Transition Out
-    const exitOpacity = useTransform(scrollProgress, [0.5, 0.6], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.5, 0.6], [1, 0.8]);
-    const exitY = useTransform(scrollProgress, [0.5, 0.65], ["0%", "100%"]);
+    const exitOpacity = useTransform(scrollProgress, [0.4, 0.5], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.4, 0.5], [1, 0.8]);
+    const exitY = useTransform(scrollProgress, [0.4, 0.55], ["0%", "100%"]);
 
     return (
         <motion.div
@@ -38,8 +38,8 @@ const About = ({ scrollProgress }) => {
                     <div
                         className="absolute inset-0 bg-ivory"
                         style={{
-                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)'
+                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)',
+                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)'
                         }}
                     />
 
@@ -47,10 +47,10 @@ const About = ({ scrollProgress }) => {
                     <img
                         src={BaseCampImg}
                         alt="Base Camp Tents"
-                        className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-100"
+                        className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
                         style={{
-                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)'
+                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)',
+                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)'
                         }}
                     />
                 </motion.div>

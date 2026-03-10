@@ -4,26 +4,24 @@ import { ChevronDown } from 'lucide-react';
 import EverestImage from '../assets/mount_everest_ivory.png';
 
 const Hero = ({ scrollProgress }) => {
-    // PHASE 1: 0.0 -> 0.35
+    // PHASE 1: 0.0 -> 0.20
 
     // Text
-    const textY = useTransform(scrollProgress, [0, 0.3], ["0%", "-150%"]);
-    const textOpacity = useTransform(scrollProgress, [0, 0.25], [1, 0]);
-    const textScale = useTransform(scrollProgress, [0, 0.3], [1, 0.8]);
+    const textY = useTransform(scrollProgress, [0, 0.15], ["0%", "-150%"]);
+    const textOpacity = useTransform(scrollProgress, [0, 0.12], [1, 0]);
+    const textScale = useTransform(scrollProgress, [0, 0.15], [1, 0.8]);
 
     // Everest - "The Deep Approach"
-    // We zoom into the 'BASE' (bottom center), making the mountain huge
-    const everestScale = useTransform(scrollProgress, [0, 1], [1, 2.8]);
+    const everestScale = useTransform(scrollProgress, [0, 1], [1, 3.5]);
     const everestY = useTransform(scrollProgress, [0, 1], ["10%", "-60%"]);
-    // We keep opacity high longer so the texture of the base is visible under the tents
-    const everestOpacity = useTransform(scrollProgress, [0.5, 0.9], [1, 0]);
+    const everestOpacity = useTransform(scrollProgress, [0.4, 0.7], [1, 0]);
 
     // Mist Layers
-    const mistMidLeft = useTransform(scrollProgress, [0, 0.4], ["0%", "-80%"]);
-    const mistMidRight = useTransform(scrollProgress, [0, 0.4], ["0%", "80%"]);
-    const mistCloseLeft = useTransform(scrollProgress, [0, 0.35], ["0%", "-150%"]);
-    const mistCloseRight = useTransform(scrollProgress, [0, 0.35], ["0%", "150%"]);
-    const globalMistOpacity = useTransform(scrollProgress, [0, 0.35], [1, 0]);
+    const mistMidLeft = useTransform(scrollProgress, [0, 0.2], ["0%", "-80%"]);
+    const mistMidRight = useTransform(scrollProgress, [0, 0.2], ["0%", "80%"]);
+    const mistCloseLeft = useTransform(scrollProgress, [0, 0.18], ["0%", "-150%"]);
+    const mistCloseRight = useTransform(scrollProgress, [0, 0.18], ["0%", "150%"]);
+    const globalMistOpacity = useTransform(scrollProgress, [0, 0.18], [1, 0]);
 
     return (
         <section className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none">

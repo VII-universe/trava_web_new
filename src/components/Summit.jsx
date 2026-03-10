@@ -1,0 +1,91 @@
+import React from 'react';
+import { motion, useTransform } from 'framer-motion';
+import { Trophy, Star, ChevronUp } from 'lucide-react';
+import SummitImg from '../assets/summit_bg.png';
+
+const Summit = ({ scrollProgress }) => {
+    // PHASE 5: 0.80 -> 1.0 (The Summit)
+
+    // Triggers
+    const opacity = useTransform(scrollProgress, [0.75, 0.85], [0, 1]);
+    const scale = useTransform(scrollProgress, [0.80, 1], [1.1, 1]);
+    const y = useTransform(scrollProgress, [0.75, 0.85], ["100%", "0%"]);
+
+    // Content animations
+    const contentOpacity = useTransform(scrollProgress, [0.85, 0.9], [0, 1]);
+    const contentY = useTransform(scrollProgress, [0.85, 0.95], [50, 0]);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+        <motion.div
+            style={{ opacity, y }}
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+        >
+            <motion.div
+                style={{ scale }}
+                className="absolute inset-0 z-0 h-full w-full"
+            >
+                {/* Background Image */}
+                <img
+                    src={SummitImg}
+                    alt="Everest Summit"
+                    className="w-full h-full object-cover object-center brightness-110"
+                />
+
+                {/* Gradient Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-transparent to-ivory/40" />
+            </motion.div>
+
+            {/* Content Block */}
+            <motion.div
+                style={{ opacity: contentOpacity, y: contentY }}
+                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6"
+            >
+                <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                    className="mb-8 flex justify-center"
+                >
+                    <div className="p-4 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
+                        <Trophy className="w-12 h-12 text-gold-500" />
+                    </div>
+                </motion.div>
+
+                <h4 className="text-gold-600 font-sans uppercase tracking-[0.4em] text-sm font-bold mb-4 drop-shadow-sm">
+                    Vrchol — 8848 m
+                </h4>
+
+                <h2 className="font-serif text-6xl md:text-8xl text-slate-900 mb-8 leading-none tracking-tight">
+                    Jsme <span className="italic font-normal">doma.</span>
+                </h2>
+
+                <p className="font-sans text-slate-800 leading-relaxed text-xl mb-12 max-w-2xl mx-auto drop-shadow-sm">
+                    Na nejvyšším bodě planety se čas zastaví. Tady nekončí jen cesta, ale začíná nové pochopení toho, co znamená být člověkem.
+                </p>
+
+                <div className="flex flex-col items-center gap-6">
+                    <button
+                        onClick={scrollToTop}
+                        className="group relative px-8 py-4 bg-slate-900 text-white font-bold uppercase tracking-widest text-sm overflow-hidden transition-all hover:bg-gold-500 rounded-px"
+                    >
+                        <span className="relative z-10 flex items-center gap-2">
+                            ZPĚT DO ÚDOLÍ <ChevronUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+                        </span>
+                    </button>
+
+                    <div className="flex gap-4 opacity-50">
+                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
+                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
+                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
+                    </div>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+};
+
+export default Summit;

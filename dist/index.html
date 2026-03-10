@@ -33,6 +33,7 @@
       --glass-bg: rgba(253, 251, 247, 0.45);
       --blur: blur(25px) saturate(160%);
       --radius: 1.5rem;
+      --summit-navy: #0A1628;
     }
 
     /* ═══════════ RESET ═══════════ */
@@ -234,7 +235,8 @@
     /* ═══════════ SCROLLYTELLING SHELL ═══════════ */
     #scrolly-container {
       position: relative;
-      height: 1050vh;
+      height: 1200vh;
+      /* Increased for better summit spacing */
     }
 
     #viewport {
@@ -262,6 +264,32 @@
     #hero-section {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    /* ═══════════ PERSISTENT MOUNTAIN ═══════════ */
+    #persistent-mountain-container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--ivory);
+    }
+
+    #persistent-mountain-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      filter: contrast(110%) saturate(70%);
+      transform-origin: 50% 80%;
+    }
+
+    .mountain-fog {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(253, 251, 247, 0.4) 60%, var(--ivory) 100%);
+      z-index: 2;
     }
 
     .pointer-events-auto {
@@ -421,8 +449,29 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       text-align: center;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(0, 0, 0, 0.5);
       margin-top: 4px;
+    }
+
+    .flag-card-inner {
+      width: 100px;
+      padding: 12px 10px;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .flag-card-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+      pointer-events: none;
     }
 
     /* ───── S4: PROJEKTY ───── */
@@ -606,6 +655,26 @@
       cursor: pointer;
       letter-spacing: 0.05em;
     }
+
+    /* ───── SUMMIT ZOOM ───── */
+    #summit-reveal-section {
+      background: var(--summit-navy);
+      z-index: 1001;
+      /* Above altimeter etc for the final reveal */
+    }
+
+    #summit-hood-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+    }
+
+    .summit-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 22, 40, 0.4) 60%, var(--summit-navy) 100%);
+    }
   </style>
 </head>
 
@@ -665,17 +734,16 @@
   <div id="scrolly-container">
     <div id="viewport">
 
+      <!-- Persistent Background -->
+      <div id="persistent-mountain-container">
+        <img id="persistent-mountain-img" src="./assets/mount_everest_ivory-BFK1vzc2.png" alt="Mountain">
+        <div class="mountain-fog"></div>
+      </div>
+
       <!-- ─────────────────────────────────────────────
            SECTION 1: HERO  (0 m – Mlha)
            ───────────────────────────────────────────── -->
       <section id="hero-section" class="vh-100">
-        <div id="hero-bg"></div>
-
-        <!-- Everest silhouette -->
-        <div id="hero-everest-container" class="abs-fill" style="transform-origin: 50% 80%;">
-          <img id="everest-img" src="./assets/mount_everest_ivory-BFK1vzc2.png" alt="Everest">
-        </div>
-
         <!-- Mist layers (opona effect) -->
         <div id="mist-left" class="mist-layer" style="width:55vw;height:55vh;left:-10%;top:35%;"></div>
         <div id="mist-right" class="mist-layer" style="width:55vw;height:55vh;right:-10%;top:25%;"></div>
@@ -771,56 +839,50 @@
               stroke-width="3" fill="none" stroke-dasharray="8,4" opacity="0.9" />
           </svg>
 
-          <!-- FLAGS container (positioned via CSS at 35% top) -->
-          <div class="abs-fill" style="z-index:10;">
+          <!-- FLAGS container -->
+          <div class="abs-fill" style="z-index:10; display: flex; align-items: center; justify-content: center;">
 
             <!-- Flag 1: Mammut -->
-            <div class="flag-wrap pointer-events-auto" style="left:22%;top:28%;">
-              <div style="width:1px;height:60px;background:rgba(139,115,85,0.8);"></div>
+            <div class="flag-wrap pointer-events-auto" style="left:20%; top: 40%;">
+              <div style="width:1px;height:40px;background:rgba(0,0,0,0.2);"></div>
               <div style="position:relative;">
-                <div
-                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#e63030,#c0392b);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 3s ease-in-out infinite;">
-                  <div
-                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                <div class="flag-card-inner"
+                  style="background: #e63030; color: white; animation: swingFlag 3s ease-in-out infinite;">
+                  <div style="font-family:'Oswald',sans-serif;font-size:0.6rem;letter-spacing:0.1em;font-weight:700;">
                     MAMMUT</div>
-                  <div style="font-size:1.1rem;">🦣</div>
+                  <div style="font-size:1rem;">🦣</div>
                 </div>
-                <div class="flag-tooltip" style="width:200px;white-space:normal;">Moje druhá kůže. Ta, co nepromokne.
-                </div>
+                <div class="flag-tooltip">Drtič mrazu.</div>
               </div>
               <div class="flag-name">Mammut</div>
             </div>
 
             <!-- Flag 2: Red Bull -->
-            <div class="flag-wrap pointer-events-auto" style="left:50%;top:24%;transform:translateX(-50%);">
-              <div style="width:1px;height:70px;background:rgba(139,115,85,0.8);"></div>
+            <div class="flag-wrap pointer-events-auto" style="left:50%; top: 35%; transform: translateX(-50%);">
+              <div style="width:1px;height:50px;background:rgba(0,0,0,0.2);"></div>
               <div style="position:relative;">
-                <div
-                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#003087,#cc0001);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 3.5s ease-in-out infinite 0.5s;">
-                  <div
-                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                <div class="flag-card-inner"
+                  style="background: #003087; color: white; animation: swingFlag 3.5s ease-in-out infinite 0.5s;">
+                  <div style="font-family:'Oswald',sans-serif;font-size:0.6rem;letter-spacing:0.1em;font-weight:700;">
                     RED BULL</div>
-                  <div style="font-size:1.1rem;">🐂</div>
+                  <div style="font-size:1rem;">🐂</div>
                 </div>
-                <div class="flag-tooltip" style="width:210px;white-space:normal;left:50%;transform:translateX(-50%);">
-                  Křídla, když nohy už nemůžou.</div>
+                <div class="flag-tooltip">Křídla nahoru.</div>
               </div>
               <div class="flag-name">Red Bull</div>
             </div>
 
             <!-- Flag 3: Prazdroj -->
-            <div class="flag-wrap pointer-events-auto" style="left:76%;top:30%;">
-              <div style="width:1px;height:55px;background:rgba(139,115,85,0.8);"></div>
+            <div class="flag-wrap pointer-events-auto" style="left:80%; top: 42%; transform: translateX(-100%);">
+              <div style="width:1px;height:45px;background:rgba(0,0,0,0.2);"></div>
               <div style="position:relative;">
-                <div
-                  style="width:90px;padding:10px 8px;background:linear-gradient(135deg,#c8860a,#9e6b08);border-radius:4px;text-align:center;cursor:pointer;animation:swingFlag 4s ease-in-out infinite 1s;">
-                  <div
-                    style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:white;font-weight:700;">
+                <div class="flag-card-inner"
+                  style="background: #c8860a; color: white; animation: swingFlag 4s ease-in-out infinite 1s;">
+                  <div style="font-family:'Oswald',sans-serif;font-size:0.6rem;letter-spacing:0.1em;font-weight:700;">
                     PRAZDROJ</div>
-                  <div style="font-size:1.1rem;">🍺</div>
+                  <div style="font-size:1rem;">🍺</div>
                 </div>
-                <div class="flag-tooltip" style="width:210px;white-space:normal;left:0;transform:translateX(-60%);">
-                  Nejlepší ionťák na světě.</div>
+                <div class="flag-tooltip">Český ionťák.</div>
               </div>
               <div class="flag-name">Prazdroj</div>
             </div>
@@ -1090,7 +1152,19 @@
           </div>
 
         </div>
-      </section>
+        <!-- ─────────────────────────────────────────────
+           SECTION 8: SUMMIT REVEAL (The Zoom)
+           ───────────────────────────────────────────── -->
+        <section id="summit-reveal-section" class="vh-100">
+          <div class="abs-fill">
+            <img id="summit-hood-img" src="./assets/summit_bg.jpg" alt="Honza Summit">
+            <div class="summit-overlay"></div>
+          </div>
+          <div class="position-relative z-2 text-center text-white px-4">
+            <h2 class="serif display-1 fw-bold mb-0" style="letter-spacing: -0.05em; opacity: 0;" id="summit-text">8848m
+            </h2>
+          </div>
+        </section>
 
     </div><!-- /viewport -->
   </div><!-- /scrolly-container -->
@@ -1127,11 +1201,12 @@
         const targets = {
           'hero-section': 0,
           'omne-section': 0.12,
-          'partneri-section': 0.28,
-          'projekty-section': 0.43,
-          'expedice-section': 0.57,
-          'prednasky-section': 0.71,
-          'footer-section': 0.86,
+          'partneri-section': 0.25,
+          'projekty-section': 0.38,
+          'expedice-section': 0.52,
+          'prednasky-section': 0.65,
+          'footer-section': 0.78,
+          'summit-reveal': 0.92
         };
         const p = targets[link.dataset.target] ?? 0;
         const totalH = document.getElementById('scrolly-container').scrollHeight;
@@ -1172,10 +1247,10 @@
     const altNumber = document.getElementById('alt-number');
     const altProgress = document.getElementById('alt-progress');
 
-    // Altitude map — 7 sections, each ~1/7 of scroll
+    // Altitude map — 8 sections
     const altMap = {
-      points: [0, 0.14, 0.28, 0.43, 0.57, 0.71, 0.86, 1.0],
-      values: [0, 800, 3000, 4500, 7000, 8848, 7500, 0]
+      points: [0, 0.12, 0.25, 0.38, 0.52, 0.65, 0.78, 0.92, 1.0],
+      values: [0, 800, 3000, 4500, 6000, 7500, 8848, 8848, 0]
     };
     function getAltitude(p) {
       for (let i = 0; i < altMap.points.length - 1; i++) {
@@ -1203,61 +1278,73 @@
     });
 
     // ─────────────────────────────────────────────────────────
-    // SECTION LAYOUT (each ~0.143)
-    //  S1 Hero          0.00 → 0.14
-    //  S2 O mně         0.14 → 0.28
-    //  S3 Partneři      0.28 → 0.43
-    //  S4 Projekty      0.43 → 0.57
-    //  S5 Expedice      0.57 → 0.71
-    //  S6 Přednášky     0.71 → 0.86
-    //  S7 Patička       0.86 → 1.00
+    // SECTION LAYOUT (each ~0.125 progress)
+    // 0.00 → 0.12  S1 Hero
+    // 0.12 → 0.25  S2 O mně
+    // 0.25 → 0.38  S3 Partneři
+    // 0.38 → 0.52  S4 Projekty
+    // 0.52 → 0.65  S5 Expedice
+    // 0.65 → 0.78  S6 Přednášky
+    // 0.78 → 0.92  S7 Patička
+    // 0.92 → 1.00  S8 Summit
     // ─────────────────────────────────────────────────────────
 
+    // PERSISTENT MOUNTAIN PARALLAX (Continuous)
+    tl.to('#persistent-mountain-img', { scale: 3.5, y: '-60%', duration: 1 }, 0);
+    tl.to('#persistent-mountain-container', { opacity: 0, duration: 0.1 }, 0.92);
+
     // S1: HERO
-    tl.to('#hero-section', { opacity: 1, duration: 0.1 }, 0);
-    tl.to('#hero-text', { y: -160, opacity: 0, scale: 0.85, duration: 0.08 }, 0.03);
-    tl.to('#hero-everest-container', { scale: 2.8, y: '-60%', duration: 0.14 }, 0);
-    tl.to('#hero-everest-container', { opacity: 0, duration: 0.05 }, 0.09);
-    tl.to('#mist-left', { xPercent: -90, opacity: 0, duration: 0.08 }, 0);
-    tl.to('#mist-right', { xPercent: 90, opacity: 0, duration: 0.08 }, 0);
-    tl.to('#mist-lo-l', { xPercent: -160, opacity: 0, duration: 0.07 }, 0.01);
-    tl.to('#mist-lo-r', { xPercent: 160, opacity: 0, duration: 0.07 }, 0.01);
-    tl.to('#hero-section', { opacity: 0, duration: 0.05 }, 0.12);
+    tl.to('#hero-text', { y: -160, opacity: 0, scale: 0.85, duration: 0.1 }, 0.03);
+    tl.to('#mist-left', { xPercent: -90, opacity: 0, duration: 0.1 }, 0);
+    tl.to('#mist-right', { xPercent: 90, opacity: 0, duration: 0.1 }, 0);
+    tl.to('#mist-lo-l', { xPercent: -160, opacity: 0, duration: 0.08 }, 0.01);
+    tl.to('#mist-lo-r', { xPercent: 160, opacity: 0, duration: 0.08 }, 0.01);
+    tl.to('#hero-section', { opacity: 0, yPercent: -30, duration: 0.08 }, 0.12);
 
-    // S2: O MNĚ  (0.12 – 0.28)
+    // S2: O MNĚ
     tl.fromTo('#omne-section',
-      { opacity: 0, yPercent: 60 },
+      { opacity: 0, yPercent: 40 },
       { opacity: 1, yPercent: 0, duration: 0.1 }, 0.12);
-    tl.to('#omne-section', { yPercent: 100, opacity: 0, duration: 0.08 }, 0.26);
+    tl.to('#omne-section', { yPercent: -40, opacity: 0, duration: 0.1 }, 0.23);
 
-    // S3: PARTNEŘI  (0.28 – 0.43)
+    // S3: PARTNEŘI
     tl.fromTo('#partneri-section',
-      { opacity: 0, yPercent: -80 },
-      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.28);
-    tl.to('#partneri-section', { yPercent: 100, opacity: 0, duration: 0.08 }, 0.41);
+      { opacity: 0, yPercent: 40 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.23);
+    tl.to('#partneri-section', { yPercent: -40, opacity: 0, duration: 0.1 }, 0.36);
 
-    // S4: PROJEKTY  (0.43 – 0.57)
+    // S4: PROJEKTY
     tl.fromTo('#projekty-section',
-      { opacity: 0, xPercent: -20 },
-      { opacity: 1, xPercent: 0, duration: 0.1 }, 0.43);
-    tl.to('#projekty-section', { opacity: 0, xPercent: 20, duration: 0.08 }, 0.55);
+      { opacity: 0, yPercent: 40 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.36);
+    tl.to('#projekty-section', { yPercent: -40, opacity: 0, duration: 0.1 }, 0.5);
 
-    // S5: EXPEDICE  (0.57 – 0.71)
+    // S5: EXPEDICE
     tl.fromTo('#expedice-section',
-      { opacity: 0, scale: 1.08 },
-      { opacity: 1, scale: 1, duration: 0.1 }, 0.57);
-    tl.to('#expedice-section', { opacity: 0, scale: 0.95, duration: 0.08 }, 0.69);
+      { opacity: 0, yPercent: 40 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.5);
+    tl.to('#expedice-section', { yPercent: -40, opacity: 0, duration: 0.1 }, 0.63);
 
-    // S6: PŘEDNÁŠKY  (0.71 – 0.86)
+    // S6: PŘEDNÁŠKY
     tl.fromTo('#prednasky-section',
-      { opacity: 0, yPercent: -60 },
-      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.71);
-    tl.to('#prednasky-section', { opacity: 0, yPercent: 60, duration: 0.08 }, 0.84);
+      { opacity: 0, yPercent: 40 },
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.63);
+    tl.to('#prednasky-section', { yPercent: -40, opacity: 0, duration: 0.1 }, 0.76);
 
-    // S7: PATIČKA  (0.86 – 1.0)
+    // S7: PATIČKA
     tl.fromTo('#footer-section',
       { opacity: 0, yPercent: 40 },
-      { opacity: 1, yPercent: 0, duration: 0.12 }, 0.86);
+      { opacity: 1, yPercent: 0, duration: 0.1 }, 0.76);
+    tl.to('#footer-section', { opacity: 0, yPercent: -40, duration: 0.1 }, 0.88);
+
+    // S8: SUMMIT REVEAL
+    tl.fromTo('#summit-reveal-section',
+      { opacity: 0 },
+      { opacity: 1, duration: 0.1 }, 0.88);
+    tl.fromTo('#summit-hood-img',
+      { scale: 1.5, yPercent: 10 },
+      { scale: 1, yPercent: 0, duration: 0.15 }, 0.88);
+    tl.to('#summit-text', { opacity: 1, y: -20, duration: 0.1 }, 0.94);
 
   </script>
 

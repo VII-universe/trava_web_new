@@ -4,16 +4,16 @@ import { Pickaxe } from 'lucide-react';
 import IcefallImg from '../assets/icefall_bg.jpg';
 
 const Icefall = ({ scrollProgress }) => {
-    // PHASE 3: 0.50 -> 0.75
+    // PHASE 3: 0.40 -> 0.60
 
     // Transition In (Descend from Top)
-    const containerY = useTransform(scrollProgress, [0.45, 0.60], ["-100%", "0%"]);
-    const opacity = useTransform(scrollProgress, [0.45, 0.55], [0, 1]);
+    const containerY = useTransform(scrollProgress, [0.35, 0.45], ["-100%", "0%"]);
+    const opacity = useTransform(scrollProgress, [0.35, 0.45], [0, 1]);
 
     // Transition Out (Drop Down & Zoom Over)
-    const exitY = useTransform(scrollProgress, [0.75, 0.90], ["0%", "100%"]);
-    const exitOpacity = useTransform(scrollProgress, [0.75, 0.85], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.75, 0.90], [1, 1.5]); // "Walk Over" Effect
+    const exitY = useTransform(scrollProgress, [0.60, 0.70], ["0%", "100%"]);
+    const exitOpacity = useTransform(scrollProgress, [0.60, 0.70], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.60, 0.75], [1, 1.5]); // "Walk Over" Effect
 
     return (
         <motion.div
