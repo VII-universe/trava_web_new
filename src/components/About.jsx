@@ -16,10 +16,14 @@ const About = ({ scrollProgress }) => {
     const sideLayerRightX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "50%"]);
     const sideLayerOpacity = useTransform(scrollProgress, [0.2, 0.4], [0.8, 0]);
 
-    // Transition Out — hloubkový odchod (About se propadá jak Icefall přijíždí)
-    const exitOpacity = useTransform(scrollProgress, [0.38, 0.50], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.38, 0.52], [1, 0.86]);
-    const exitY = useTransform(scrollProgress, [0.38, 0.52], ['0%', '10%']);
+    // Transition Out — "odsunutí" sekce při nájezdu Icefall
+    // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
+    // odsouvá dolů a lehce do strany, aby působilo jako vytlačení.
+    const exitOpacity = useTransform(scrollProgress, [0.35, 0.45], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.35, 0.45], [1, 0.94]);
+    // stejné časování jako Partners (Icefall): interval 0.35 -> 0.45
+    const exitY = useTransform(scrollProgress, [0.35, 0.45], ['0%', '100%']);
+    const exitX = useTransform(scrollProgress, [0.35, 0.45], ['0%', '-8%']);
 
     return (
         <motion.div
@@ -32,7 +36,7 @@ const About = ({ scrollProgress }) => {
             >
                 <motion.div
                     style={{
-                        opacity: exitOpacity, scale: exitScale, y: exitY,
+                        opacity: exitOpacity, scale: exitScale, y: exitY, x: exitX,
                         maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
                     }}
@@ -61,7 +65,7 @@ const About = ({ scrollProgress }) => {
 
                 {/* Content */}
                 <motion.div
-                    style={{ opacity: exitOpacity, y: exitY }}
+                    style={{ opacity: exitOpacity, y: exitY, x: exitX }}
                     className="relative z-50 max-w-xl p-10 md:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto mt-20"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
