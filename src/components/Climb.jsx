@@ -13,14 +13,14 @@ const Climb = ({ scrollProgress }) => {
     // —— ENTRY ——
     const entryOpacity = useTransform(scrollProgress, [0.62, 0.70], [0, 1]);
     const entryY = useTransform(scrollProgress, [0.62, 0.74], ["-100%", "0%"]);
-    // —— EXIT: Climb se propadá do hloubky při příjezdu Summitu ——
+    // —— EXIT: stejná rychlost jako nájezd Summitu (0.80 -> 0.90) ——
     const exitOpacity = useTransform(scrollProgress, [0.80, 0.90], [1, 0]);
-    const exitY = useTransform(scrollProgress, [0.80, 0.92], ['0%', '12%']);
-    const exitScale = useTransform(scrollProgress, [0.80, 0.92], [1, 0.85]);
+    const exitY = useTransform(scrollProgress, [0.80, 0.90], ['0%', '100%']);
+    const exitScale = useTransform(scrollProgress, [0.80, 0.90], [1, 0.9]);
     // combined: pick entry when <0.74, hold stable, then exit
     const bgOpacity = useTransform(scrollProgress, [0.62, 0.70, 0.80, 0.90], [0, 1, 1, 0]);
-    const bgY = useTransform(scrollProgress, [0.62, 0.74, 0.80, 0.92], ["-100%", "0%", "0%", "12%"]);
-    const bgScale = useTransform(scrollProgress, [0.74, 0.80, 0.92], [1, 1, 0.85]);
+    const bgY = useTransform(scrollProgress, [0.62, 0.74, 0.80, 0.90], ["-100%", "0%", "0%", "100%"]);
+    const bgScale = useTransform(scrollProgress, [0.74, 0.80, 0.90], [1, 1, 0.9]);
 
     return (
         <div className="absolute inset-0 w-full h-full flex items-center justify-end px-6 md:px-20 lg:px-32 pointer-events-none overflow-hidden">

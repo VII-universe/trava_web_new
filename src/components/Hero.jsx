@@ -13,8 +13,9 @@ const Hero = ({ scrollProgress }) => {
 
     // Everest - "The Deep Approach"
     const everestScale = useTransform(scrollProgress, [0, 1], [1, 3.5]);
-    const everestY = useTransform(scrollProgress, [0, 1], ["10%", "-60%"]);
-    const everestOpacity = useTransform(scrollProgress, [0.4, 0.7], [1, 0]);
+    // Exit synced to About entry window (0.15 -> 0.25)
+    const everestY = useTransform(scrollProgress, [0, 0.15, 0.25, 1], ["10%", "-8%", "-108%", "-160%"]);
+    const everestOpacity = useTransform(scrollProgress, [0.15, 0.25], [1, 0]);
 
     // Mist Layers
     const mistMidLeft = useTransform(scrollProgress, [0, 0.2], ["0%", "-80%"]);

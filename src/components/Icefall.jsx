@@ -56,6 +56,37 @@ const FLAGS = [
             </svg>
         ),
     },
+    {
+        id: 'hanibal',
+        name: 'Hanibal',
+        quote: 'Výbava, co drží i nad osm tisíc.',
+        left: '34%',
+        stripes: ['#1F2937', '#F59E0B', '#1F2937'],
+        logo: (
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-auto">
+                <rect x="10" y="8" width="60" height="28" rx="4" fill="rgba(0,0,0,0.28)" />
+                <text x="16" y="28" fontFamily="sans-serif" fontSize="11" fontWeight="900" fill="#fff" letterSpacing="0.6">
+                    HANIBAL
+                </text>
+            </svg>
+        ),
+    },
+    {
+        id: 'tilak',
+        name: 'Tilak',
+        quote: 'Česká technika do nejhoršího počasí.',
+        left: '66%',
+        stripes: ['#111827', '#94A3B8', '#111827'],
+        logo: (
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-auto">
+                <circle cx="20" cy="22" r="8" fill="#fff" opacity="0.85" />
+                <path d="M34 28 L42 14 L50 28 Z" fill="#fff" opacity="0.9" />
+                <text x="52" y="26" fontFamily="sans-serif" fontSize="8" fontWeight="800" fill="#fff" letterSpacing="1">
+                    TILAK
+                </text>
+            </svg>
+        ),
+    },
 ];
 
 /* ─── Keyframe styles injected once ─────────────────────── */
@@ -91,7 +122,8 @@ const Flag = ({ flag, index }) => {
     return (
         <div
             className="absolute flex flex-col items-center"
-            style={{ left: flag.left, top: 0, transform: 'translateX(-50%)' }}
+            // Anchor flags directly to horizontal rope
+            style={{ left: flag.left, top: -14, transform: 'translateX(-50%)' }}
         >
             {/* Pendulum wrapper — very gentle sway, no flipping */}
             <div
@@ -103,14 +135,6 @@ const Flag = ({ flag, index }) => {
                     alignItems: 'center',
                 }}
             >
-                {/* String */}
-                <div style={{
-                    width: 1.5,
-                    height: 64,
-                    background: 'linear-gradient(to bottom, rgba(180,160,120,0.9), rgba(180,160,120,0.2))',
-                    flexShrink: 0,
-                }} />
-
                 {/* Flag cloth — flutter via skewX, not rotate */}
                 <div
                     onMouseEnter={() => setHovered(true)}

@@ -27,8 +27,9 @@ const Summit = ({ scrollProgress }) => {
             <motion.div
                 style={{
                     scale,
-                    maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
+                    // stronger bottom transparency to hide sharp lower edge
+                    maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 230px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 230px), transparent 100%)'
                 }}
                 className="absolute inset-0 z-0 h-full w-full"
             >
@@ -36,17 +37,18 @@ const Summit = ({ scrollProgress }) => {
                 <img
                     src={SummitImg}
                     alt="Everest Summit"
-                    className="w-full h-full object-cover object-center brightness-110"
+                    className="w-full h-full object-cover object-center brightness-95 saturate-75 contrast-110"
                 />
 
                 {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-transparent to-ivory/40" />
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
             </motion.div>
 
             {/* Content Block */}
             <motion.div
                 style={{ opacity: contentOpacity, y: contentY }}
-                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6"
+                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6 py-8 rounded-2xl bg-white/38 backdrop-blur-sm border border-white/45 shadow-2xl shadow-slate-900/20"
             >
                 <motion.div
                     initial={{ scale: 0 }}
@@ -59,15 +61,15 @@ const Summit = ({ scrollProgress }) => {
                     </div>
                 </motion.div>
 
-                <h4 className="text-gold-600 font-sans uppercase tracking-[0.4em] text-sm font-bold mb-4 drop-shadow-sm">
+                <h4 className="text-gold-700 font-sans uppercase tracking-[0.4em] text-sm font-bold mb-4 drop-shadow-md">
                     Vrchol — 8848 m
                 </h4>
 
-                <h2 className="font-serif text-6xl md:text-8xl text-slate-900 mb-8 leading-none tracking-tight">
+                <h2 className="font-serif text-6xl md:text-8xl text-slate-950 mb-8 leading-none tracking-tight drop-shadow-md">
                     Jsme <span className="italic font-normal">doma.</span>
                 </h2>
 
-                <p className="font-sans text-slate-800 leading-relaxed text-xl mb-12 max-w-2xl mx-auto drop-shadow-sm">
+                <p className="font-sans text-slate-900/95 leading-relaxed text-xl mb-12 max-w-2xl mx-auto drop-shadow-sm">
                     Na nejvyšším bodě planety se čas zastaví. Tady nekončí jen cesta, ale začíná nové pochopení toho, co znamená být člověkem.
                 </p>
 
