@@ -10,16 +10,26 @@ const Climb = ({ scrollProgress }) => {
     const opacity = useTransform(scrollProgress, [0.55, 0.65], [0, 1]);
     const y = useTransform(scrollProgress, [0.55, 0.70], ["-100%", "0%"]);
 
-    // Transition Out
-    const exitOpacity = useTransform(scrollProgress, [0.80, 0.85], [1, 0]);
-    const exitY = useTransform(scrollProgress, [0.80, 0.90], ["0%", "100%"]);
+    // —— ENTRY ——
+    const entryOpacity = useTransform(scrollProgress, [0.62, 0.70], [0, 1]);
+    const entryY = useTransform(scrollProgress, [0.62, 0.74], ["-100%", "0%"]);
+    // —— EXIT: Climb se propadá do hloubky při příjezdu Summitu ——
+    const exitOpacity = useTransform(scrollProgress, [0.80, 0.90], [1, 0]);
+    const exitY = useTransform(scrollProgress, [0.80, 0.92], ['0%', '12%']);
+    const exitScale = useTransform(scrollProgress, [0.80, 0.92], [1, 0.85]);
+    // combined: pick entry when <0.74, hold stable, then exit
+    const bgOpacity = useTransform(scrollProgress, [0.62, 0.70, 0.80, 0.90], [0, 1, 1, 0]);
+    const bgY = useTransform(scrollProgress, [0.62, 0.74, 0.80, 0.92], ["-100%", "0%", "0%", "12%"]);
+    const bgScale = useTransform(scrollProgress, [0.74, 0.80, 0.92], [1, 1, 0.85]);
 
     return (
         <div className="absolute inset-0 w-full h-full flex items-center justify-end px-6 md:px-20 lg:px-32 pointer-events-none overflow-hidden">
 
             <motion.div
                 style={{
-                    opacity: useTransform(scrollProgress, [0.62, 0.70, 0.83, 0.88], [0, 1, 1, 0]), y: useTransform(scrollProgress, [0.62, 0.74, 0.83, 0.93], ["-100%", "0%", "0%", "100%"]),
+                    opacity: bgOpacity,
+                    y: bgY,
+                    scale: bgScale,
                     maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
                     WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
                 }}
@@ -41,7 +51,7 @@ const Climb = ({ scrollProgress }) => {
 
             {/* Content Block */}
             <motion.div
-                style={{ opacity: useTransform(scrollProgress, [0.55, 0.65, 0.80, 0.85], [0, 1, 1, 0]), y: useTransform(scrollProgress, [0.55, 0.70, 0.80, 0.90], ["-100%", "0%", "0%", "100%"]) }}
+                style={{ opacity: bgOpacity, y: bgY, scale: bgScale }}
                 className="relative z-50 text-right max-w-lg pointer-events-auto bg-white/40 backdrop-blur-sm p-10 rounded-xl border border-white/50"
             >
                 <h4 className="text-slate-500 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-6">

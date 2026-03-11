@@ -4,16 +4,16 @@ import { Trophy, Star, ChevronUp } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
 
 const Summit = ({ scrollProgress }) => {
-    // PHASE 5: 0.80 -> 1.0 (The Summit)
+    // PHASE 5: 0.82 -> 1.0 (The Summit) — opožděný příjezd shora
 
-    // Triggers
-    const opacity = useTransform(scrollProgress, [0.75, 0.85], [0, 1]);
-    const scale = useTransform(scrollProgress, [0.80, 1], [1.1, 1]);
-    const y = useTransform(scrollProgress, [0.75, 0.85], ["-100%", "0%"]);
+    // Triggers — zpožděno oproti Climb exitu pro efekt hloubky
+    const opacity = useTransform(scrollProgress, [0.80, 0.90], [0, 1]);
+    const scale = useTransform(scrollProgress, [0.82, 1], [1.08, 1]);
+    const y = useTransform(scrollProgress, [0.80, 0.90], ["-100%", "0%"]);
 
     // Content animations
-    const contentOpacity = useTransform(scrollProgress, [0.85, 0.9], [0, 1]);
-    const contentY = useTransform(scrollProgress, [0.85, 0.95], [50, 0]);
+    const contentOpacity = useTransform(scrollProgress, [0.90, 0.95], [0, 1]);
+    const contentY = useTransform(scrollProgress, [0.90, 0.98], [50, 0]);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
