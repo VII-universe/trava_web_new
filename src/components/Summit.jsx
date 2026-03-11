@@ -27,8 +27,8 @@ const Summit = ({ scrollProgress }) => {
             <motion.div
                 style={{
                     scale,
-                    maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                    maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
                 }}
                 className="absolute inset-0 z-0 h-full w-full"
             >

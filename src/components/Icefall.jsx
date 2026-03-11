@@ -168,8 +168,8 @@ const Icefall = ({ scrollProgress }) => {
                 {/* ── Background ── */}
                 <div className="absolute inset-0 z-0"
                     style={{
-                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
                     }}
                 >
                     <div className="absolute inset-0 bg-[#F0F4F8]" />

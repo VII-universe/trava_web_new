@@ -20,8 +20,8 @@ const Climb = ({ scrollProgress }) => {
             <motion.div
                 style={{
                     opacity: useTransform(scrollProgress, [0.62, 0.70, 0.83, 0.88], [0, 1, 1, 0]), y: useTransform(scrollProgress, [0.62, 0.74, 0.83, 0.93], ["-100%", "0%", "0%", "100%"]),
-                    maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                    maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
                 }}
                 className="absolute inset-0 z-0 h-full w-full"
             >
