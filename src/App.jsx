@@ -8,6 +8,7 @@ import Summit from './components/Summit';
 import Altimeter from './components/Altimeter';
 import ProgressBar from './components/ProgressBar';
 import SnowOverlay from './components/SnowOverlay';
+import CloudLayer from './components/CloudLayer';
 
 function App() {
   const containerRef = useRef(null);
@@ -29,6 +30,9 @@ function App() {
         <ProgressBar scrollProgress={smoothProgress} />
         <Altimeter scrollProgress={smoothProgress} />
         <SnowOverlay scrollProgress={smoothProgress} />
+
+        {/* Cloud transitions between sections */}
+        <CloudLayer scrollProgress={smoothProgress} />
 
         {/* Phase 1: Hero (0.0 - 0.2) */}
         <Hero scrollProgress={smoothProgress} />
