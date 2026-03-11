@@ -16,10 +16,10 @@ const About = ({ scrollProgress }) => {
     const sideLayerRightX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "50%"]);
     const sideLayerOpacity = useTransform(scrollProgress, [0.2, 0.4], [0.8, 0]);
 
-    // Transition Out
-    const exitOpacity = useTransform(scrollProgress, [0.4, 0.5], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.4, 0.5], [1, 0.8]);
-    const exitY = useTransform(scrollProgress, [0.4, 0.55], ["0%", "100%"]);
+    // Transition Out — hloubkový odchod (About se propadá jak Icefall přijíždí)
+    const exitOpacity = useTransform(scrollProgress, [0.38, 0.50], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.38, 0.52], [1, 0.86]);
+    const exitY = useTransform(scrollProgress, [0.38, 0.52], ['0%', '10%']);
 
     return (
         <motion.div

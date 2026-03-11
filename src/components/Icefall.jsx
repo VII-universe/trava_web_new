@@ -210,8 +210,8 @@ const Icefall = ({ scrollProgress }) => {
                 {/* ── Background ── */}
                 <div className="absolute inset-0 z-0"
                     style={{
-                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
+                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 130px), transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 130px), transparent 100%)'
                     }}
                 >
                     <div className="absolute inset-0 bg-[#F0F4F8]" />
@@ -224,6 +224,8 @@ const Icefall = ({ scrollProgress }) => {
                     {/* Soft vignette so text is legible */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/30" />
                 </div>
+                {/* Additional bottom fade overlay — covers mix-blend layers outside bg container */}
+                <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-10" style={{ height: 140, background: 'linear-gradient(to top, #F0F4F8 0%, rgba(240,244,248,0.7) 40%, transparent 100%)' }} />
 
                 {/* ── Header text ── */}
                 <div className="absolute top-[8%] left-0 right-0 text-center z-20">
