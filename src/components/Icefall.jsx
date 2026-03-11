@@ -186,6 +186,8 @@ const Icefall = ({ scrollProgress }) => {
                     <div className="absolute inset-0 bg-gradient-to-tr from-slate-200/40 to-blue-200/20 mix-blend-multiply" />
                     {/* Soft vignette so text is legible */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/30" />
+                    {/* Bottom edge fade */}
+                    <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#F0F4F8] to-transparent pointer-events-none" />
                 </div>
 
                 {/* ── Header text ── */}

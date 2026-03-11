@@ -25,8 +25,8 @@ const Climb = ({ scrollProgress }) => {
                 <div
                     className="absolute inset-0 bg-[#F1F5F9]"
                     style={{
-                        maskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)'
+                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
                     }}
                 />
 
@@ -36,13 +36,15 @@ const Climb = ({ scrollProgress }) => {
                     alt="Climbers on ridge"
                     className="w-full h-full object-cover object-center opacity-40 filter grayscale contrast-125"
                     style={{
-                        maskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)'
+                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
                     }}
                 />
 
                 {/* Cold Blue Overlay */}
                 <div className="absolute inset-0 bg-slate-100/30 mix-blend-multiply" />
+                {/* Bottom edge fade — hides sharp photo border */}
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F1F5F9] to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Content Block */}

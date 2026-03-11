@@ -53,6 +53,8 @@ const About = ({ scrollProgress }) => {
                             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)'
                         }}
                     />
+                    {/* Bottom edge fade */}
+                    <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-ivory to-transparent pointer-events-none z-10" />
                 </motion.div>
 
                 {/* Layers */}
