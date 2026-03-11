@@ -18,33 +18,25 @@ const Climb = ({ scrollProgress }) => {
         <div className="absolute inset-0 w-full h-full flex items-center justify-end px-6 md:px-20 lg:px-32 pointer-events-none overflow-hidden">
 
             <motion.div
-                style={{ opacity: useTransform(scrollProgress, [0.55, 0.65, 0.80, 0.85], [0, 1, 1, 0]), y: useTransform(scrollProgress, [0.55, 0.70, 0.80, 0.90], ["-100%", "0%", "0%", "100%"]) }}
+                style={{
+                    opacity: useTransform(scrollProgress, [0.62, 0.70, 0.83, 0.88], [0, 1, 1, 0]), y: useTransform(scrollProgress, [0.62, 0.74, 0.83, 0.93], ["-100%", "0%", "0%", "100%"]),
+                    maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                }}
                 className="absolute inset-0 z-0 h-full w-full"
             >
                 {/* SOLID BACKING LAYER */}
-                <div
-                    className="absolute inset-0 bg-[#F1F5F9]"
-                    style={{
-                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
-                    }}
-                />
+                <div className="absolute inset-0 bg-[#F1F5F9]" />
 
                 {/* Background Image */}
                 <img
                     src={ClimbersImg}
                     alt="Climbers on ridge"
                     className="w-full h-full object-cover object-center opacity-40 filter grayscale contrast-125"
-                    style={{
-                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
-                    }}
                 />
 
                 {/* Cold Blue Overlay */}
                 <div className="absolute inset-0 bg-slate-100/30 mix-blend-multiply" />
-                {/* Bottom edge fade — hides sharp photo border */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F1F5F9] to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Content Block */}

@@ -31,30 +31,22 @@ const About = ({ scrollProgress }) => {
                 className="w-full h-full relative flex items-center justify-start px-6 md:px-20 lg:px-32"
             >
                 <motion.div
-                    style={{ opacity: exitOpacity, scale: exitScale, y: exitY }}
+                    style={{
+                        opacity: exitOpacity, scale: exitScale, y: exitY,
+                        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                    }}
                     className="w-full h-full absolute inset-0 z-0 origin-bottom"
                 >
                     {/* SOLID BACKING LAYER - Blocks previous section */}
-                    <div
-                        className="absolute inset-0 bg-ivory"
-                        style={{
-                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)'
-                        }}
-                    />
+                    <div className="absolute inset-0 bg-ivory" />
 
                     {/* IMAGE LAYER */}
                     <img
                         src={BaseCampImg}
                         alt="Base Camp Tents"
                         className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
-                        style={{
-                            maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 100%)'
-                        }}
                     />
-                    {/* Bottom edge fade */}
-                    <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-ivory to-transparent pointer-events-none z-10" />
                 </motion.div>
 
                 {/* Layers */}

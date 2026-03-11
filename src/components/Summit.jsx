@@ -25,7 +25,11 @@ const Summit = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
         >
             <motion.div
-                style={{ scale }}
+                style={{
+                    scale,
+                    maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 50px), transparent 100%)'
+                }}
                 className="absolute inset-0 z-0 h-full w-full"
             >
                 {/* Background Image */}
@@ -37,8 +41,6 @@ const Summit = ({ scrollProgress }) => {
 
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-transparent to-ivory/40" />
-                {/* Bottom edge fade */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ivory to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Content Block */}
