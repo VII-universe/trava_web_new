@@ -9,7 +9,7 @@ const Summit = ({ scrollProgress }) => {
     // Triggers
     const opacity = useTransform(scrollProgress, [0.75, 0.85], [0, 1]);
     const scale = useTransform(scrollProgress, [0.80, 1], [1.1, 1]);
-    const y = useTransform(scrollProgress, [0.75, 0.85], ["100%", "0%"]);
+    const y = useTransform(scrollProgress, [0.75, 0.85], ["-100%", "0%"]);
 
     // Content animations
     const contentOpacity = useTransform(scrollProgress, [0.85, 0.9], [0, 1]);
