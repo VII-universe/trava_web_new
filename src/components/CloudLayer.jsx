@@ -24,7 +24,6 @@ const CLOUDS = [
     { src: CloudB, ix: 55, iy: 62, w: 65, fx: 50, fy: -8, op: 0.85, sIn: 0.14, sMid: 0.20, sOut: 0.26, z: 50 },
     { src: CloudA, ix: 20, iy: 80, w: 50, fx: -40, fy: 5, op: 0.60, sIn: 0.16, sMid: 0.21, sOut: 0.27, z: 40 },
     { src: CloudB, ix: 40, iy: 55, w: 45, fx: 45, fy: 8, op: 0.55, sIn: 0.17, sMid: 0.21, sOut: 0.27, z: 40 },
-    // small wispy background clouds
     { src: CloudA, ix: -15, iy: 60, w: 40, fx: -20, fy: -15, op: 0.35, sIn: 0.13, sMid: 0.20, sOut: 0.28, z: 30 },
     { src: CloudB, ix: 70, iy: 75, w: 35, fx: 20, fy: -5, op: 0.30, sIn: 0.15, sMid: 0.20, sOut: 0.28, z: 30 },
 
@@ -51,6 +50,46 @@ const CLOUDS = [
     { src: CloudB, ix: 60, iy: 48, w: 55, fx: 50, fy: 14, op: 0.62, sIn: 0.76, sMid: 0.81, sOut: 0.87, z: 40 },
     { src: CloudB, ix: -22, iy: 48, w: 46, fx: -25, fy: -22, op: 0.40, sIn: 0.73, sMid: 0.80, sOut: 0.88, z: 30 },
     { src: CloudA, ix: 80, iy: 68, w: 42, fx: 26, fy: -12, op: 0.35, sIn: 0.75, sMid: 0.80, sOut: 0.88, z: 30 },
+
+    // ═══════════════════════════════════════════════════════════
+    // EDGE CLOUDS — mask sharp photo borders during each section
+    // These stay visible throughout the entire section display.
+    // They do NOT fly away — they gently drift inward as a veil.
+    // ═══════════════════════════════════════════════════════════
+
+    // ─── About / Base Camp (0.20 – 0.40): BOTTOM edge mask ────
+    // About photo has mask gradient at bottom ~80%. Cover with clouds.
+    { src: CloudA, ix: -10, iy: 74, w: 75, fx: 0, fy: 0, op: 0.80, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
+    { src: CloudB, ix: 30, iy: 78, w: 65, fx: 0, fy: 0, op: 0.72, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
+    { src: CloudA, ix: 60, iy: 72, w: 55, fx: 0, fy: 0, op: 0.60, sIn: 0.22, sMid: 0.28, sOut: 0.38, z: 45 },
+    // TOP edge — About enters from below, top has gradient from white
+    { src: CloudB, ix: -8, iy: -8, w: 70, fx: 0, fy: 0, op: 0.65, sIn: 0.20, sMid: 0.26, sOut: 0.37, z: 45 },
+    { src: CloudA, ix: 40, iy: -5, w: 60, fx: 0, fy: 0, op: 0.55, sIn: 0.21, sMid: 0.27, sOut: 0.37, z: 45 },
+
+    // ─── Icefall / Partners (0.40 – 0.60): BOTTOM + TOP edges ─
+    // Icefall enters from top, so BOTTOM edge is visible and harsh
+    { src: CloudB, ix: -12, iy: 72, w: 80, fx: 0, fy: 0, op: 0.82, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
+    { src: CloudA, ix: 25, iy: 76, w: 70, fx: 0, fy: 0, op: 0.75, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
+    { src: CloudB, ix: 62, iy: 70, w: 58, fx: 0, fy: 0, op: 0.62, sIn: 0.42, sMid: 0.48, sOut: 0.58, z: 45 },
+    // TOP edge — covers top of icefall bg
+    { src: CloudA, ix: -5, iy: -10, w: 72, fx: 0, fy: 0, op: 0.60, sIn: 0.40, sMid: 0.46, sOut: 0.57, z: 45 },
+    { src: CloudB, ix: 45, iy: -6, w: 62, fx: 0, fy: 0, op: 0.52, sIn: 0.41, sMid: 0.47, sOut: 0.57, z: 45 },
+
+    // ─── Climb / Death Zone (0.60 – 0.80): BOTTOM + TOP edges ─
+    { src: CloudA, ix: -8, iy: 68, w: 82, fx: 0, fy: 0, op: 0.80, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
+    { src: CloudB, ix: 28, iy: 74, w: 72, fx: 0, fy: 0, op: 0.73, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
+    { src: CloudA, ix: 65, iy: 71, w: 56, fx: 0, fy: 0, op: 0.60, sIn: 0.62, sMid: 0.68, sOut: 0.78, z: 45 },
+    // TOP
+    { src: CloudB, ix: -6, iy: -8, w: 74, fx: 0, fy: 0, op: 0.62, sIn: 0.60, sMid: 0.66, sOut: 0.77, z: 45 },
+    { src: CloudA, ix: 42, iy: -5, w: 65, fx: 0, fy: 0, op: 0.50, sIn: 0.61, sMid: 0.67, sOut: 0.77, z: 45 },
+
+    // ─── Summit (0.80 – 1.0): BOTTOM edge mask ─────────────────
+    { src: CloudB, ix: -10, iy: 70, w: 85, fx: 0, fy: 0, op: 0.78, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
+    { src: CloudA, ix: 30, iy: 75, w: 75, fx: 0, fy: 0, op: 0.70, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
+    { src: CloudB, ix: 65, iy: 68, w: 60, fx: 0, fy: 0, op: 0.58, sIn: 0.82, sMid: 0.88, sOut: 0.98, z: 45 },
+    // TOP — Summit comes from top, cover its top edge
+    { src: CloudA, ix: -4, iy: -10, w: 76, fx: 0, fy: 0, op: 0.65, sIn: 0.80, sMid: 0.86, sOut: 0.97, z: 45 },
+    { src: CloudB, ix: 38, iy: -6, w: 66, fx: 0, fy: 0, op: 0.55, sIn: 0.81, sMid: 0.87, sOut: 0.97, z: 45 },
 ];
 
 const Cloud = ({ c, scrollProgress }) => {
