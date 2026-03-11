@@ -58,87 +58,129 @@ const FLAGS = [
     },
 ];
 
+/* ─── Keyframe styles injected once ─────────────────────── */
+const flagStyles = `
+@keyframes pendulum {
+  0%   { transform: rotate(-0.8deg); }
+  50%  { transform: rotate(0.8deg); }
+  100% { transform: rotate(-0.8deg); }
+}
+@keyframes flutter {
+  0%   { skewY: 0deg; transform: skewX(0deg)  scaleX(1); }
+  25%  { transform: skewX(-1.5deg) scaleX(0.985); }
+  55%  { transform: skewX(1deg)   scaleX(0.995); }
+  80%  { transform: skewX(-0.5deg) scaleX(1); }
+  100% { transform: skewX(0deg)  scaleX(1); }
+}
+@keyframes sheen {
+  0%   { opacity: 0.08; }
+  45%  { opacity: 0.18; }
+  100% { opacity: 0.08; }
+}
+`;
+
 /* ─── Single flag component ─────────────────────────────── */
-const Flag = ({ flag, index, scrollProgress }) => {
+const Flag = ({ flag, index }) => {
     const [hovered, setHovered] = useState(false);
 
-    // Each flag sways slightly differently
-    const swingAmplitude = 3 + index * 1.5;
-    const swingBase = useTransform(
-        scrollProgress,
-        [0.40, 0.50, 0.60],
-        [-swingAmplitude, swingAmplitude, -swingAmplitude]
-    );
-
-    const [r, g, b] = [flag.stripes[0], flag.stripes[1], flag.stripes[2]];
+    // Slightly different timing per flag = organic, not synced
+    const period = 3.2 + index * 0.9;   // pendulum period
+    const flutter = 2.4 + index * 0.7;   // cloth flutter period
+    const delay = index * 0.55;
 
     return (
         <div
             className="absolute flex flex-col items-center"
             style={{ left: flag.left, top: 0, transform: 'translateX(-50%)' }}
         >
-            {/* String from rope down to flag */}
-            <motion.div
-                style={{ rotate: swingBase, transformOrigin: 'top center' }}
-                animate={hovered ? { rotate: 6 } : {}}
-                transition={{ type: 'spring', stiffness: 50, damping: 10 }}
-                className="flex flex-col items-center"
+            {/* Pendulum wrapper — very gentle sway, no flipping */}
+            <div
+                style={{
+                    transformOrigin: 'top center',
+                    animation: `pendulum ${period}s ${delay}s ease-in-out infinite`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
             >
                 {/* String */}
-                <div style={{ width: 2, height: 70, background: 'linear-gradient(to bottom,rgba(190,170,130,0.95),rgba(190,170,130,0.3))' }} />
+                <div style={{
+                    width: 1.5,
+                    height: 64,
+                    background: 'linear-gradient(to bottom, rgba(180,160,120,0.9), rgba(180,160,120,0.2))',
+                    flexShrink: 0,
+                }} />
 
-                {/* Flag body */}
-                <motion.div
+                {/* Flag cloth — flutter via skewX, not rotate */}
+                <div
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 18 }}
-                    className="relative cursor-pointer shadow-2xl rounded-sm overflow-hidden"
-                    style={{ width: 140, height: 96 }}
+                    className="relative cursor-pointer"
+                    style={{
+                        width: 136,
+                        height: 90,
+                        animation: `flutter ${flutter}s ${delay}s ease-in-out infinite`,
+                        transformOrigin: 'left center',
+                        boxShadow: '2px 4px 18px rgba(0,0,0,0.22)',
+                        borderRadius: 2,
+                        overflow: 'visible',
+                        transition: 'filter 0.2s',
+                        filter: hovered ? 'brightness(1.08)' : 'brightness(1)',
+                    }}
                 >
-                    {/* Stripe background */}
-                    <div className="absolute inset-0 flex flex-col">
-                        <div className="flex-1" style={{ background: flag.stripes[0] }} />
-                        <div className="flex-1" style={{ background: flag.stripes[1] }} />
-                        <div className="flex-1" style={{ background: flag.stripes[2] }} />
+                    {/* Stripes */}
+                    <div style={{
+                        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+                        borderRadius: 2, overflow: 'hidden',
+                    }}>
+                        <div style={{ flex: 1, background: flag.stripes[0] }} />
+                        <div style={{ flex: 1, background: flag.stripes[1] }} />
+                        <div style={{ flex: 1, background: flag.stripes[2] }} />
                     </div>
 
-                    {/* Cloth texture overlay */}
-                    <div
-                        className="absolute inset-0 opacity-[0.07]"
-                        style={{
-                            backgroundImage: 'repeating-linear-gradient(90deg, #000 0px,#000 1px,transparent 1px,transparent 8px)',
-                        }}
-                    />
+                    {/* Cloth weave texture */}
+                    <div style={{
+                        position: 'absolute', inset: 0, opacity: 0.06, borderRadius: 2,
+                        backgroundImage: 'repeating-linear-gradient(90deg,#000 0,#000 1px,transparent 1px,transparent 9px)',
+                    }} />
 
-                    {/* Light sheen */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20" />
+                    {/* Animated light sheen — suggests cloth ripple */}
+                    <div style={{
+                        position: 'absolute', inset: 0, borderRadius: 2,
+                        background: 'linear-gradient(105deg, rgba(255,255,255,0.22) 0%, transparent 55%, rgba(0,0,0,0.12) 100%)',
+                        animation: `sheen ${flutter}s ${delay}s ease-in-out infinite`,
+                    }} />
 
                     {/* Logo */}
-                    <div className="absolute inset-0 flex items-center justify-center p-3">
+                    <div style={{
+                        position: 'absolute', inset: 0, display: 'flex',
+                        alignItems: 'center', justifyContent: 'center', padding: 10,
+                    }}>
                         {flag.logo}
                     </div>
 
-                    {/* Left edge shadow (pole side) */}
-                    <div className="absolute top-0 left-0 w-2 h-full bg-black/20" />
-                </motion.div>
+                    {/* Left pole edge shadow */}
+                    <div style={{
+                        position: 'absolute', top: 0, left: 0, width: 3, height: '100%',
+                        background: 'rgba(0,0,0,0.25)', borderRadius: '2px 0 0 2px',
+                    }} />
+                </div>
 
-                {/* Hover tooltip bubble */}
+                {/* Hover tooltip */}
                 <motion.div
-                    initial={{ opacity: 0, y: -4, scale: 0.95 }}
-                    animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : -4, scale: hovered ? 1 : 0.95 }}
+                    initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                    animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : -6, scale: hovered ? 1 : 0.95 }}
                     transition={{ duration: 0.18 }}
-                    className="pointer-events-none mt-3 z-50"
-                    style={{ width: 200 }}
+                    className="pointer-events-none mt-4 z-50"
+                    style={{ width: 210 }}
                 >
-                    <div className="bg-white/90 backdrop-blur-lg rounded-2xl p-4 shadow-xl text-center border border-white/60">
+                    <div className="bg-white/92 backdrop-blur-lg rounded-2xl p-4 shadow-xl text-center border border-white/60">
                         <p className="font-serif text-slate-900 font-semibold text-sm mb-1">{flag.name}</p>
                         <p className="font-sans text-slate-600 text-xs leading-relaxed italic">„{flag.quote}"</p>
                     </div>
-                    {/* Arrow */}
-                    <div className="mx-auto mt-[-6px] w-3 h-3 bg-white/90 rotate-45 border-t border-l border-white/60" />
+                    <div className="mx-auto mt-[-6px] w-3 h-3 bg-white/92 rotate-45 border-t border-l border-white/60" />
                 </motion.div>
-            </motion.div>
+            </div>
         </div>
     );
 };
@@ -224,8 +266,9 @@ const Icefall = ({ scrollProgress }) => {
 
                     {/* Flags hanging from rope */}
                     <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
+                        <style>{flagStyles}</style>
                         {FLAGS.map((flag, i) => (
-                            <Flag key={flag.id} flag={flag} index={i} scrollProgress={scrollProgress} />
+                            <Flag key={flag.id} flag={flag} index={i} />
                         ))}
                     </div>
                 </div>
