@@ -27,7 +27,7 @@ const Nepal = ({ scrollProgress }) => {
             <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <motion.img
                     style={{ y: bgY }}
-                    src={BaseCampImg}
+                    src={PubBgImg}
                     alt="Kathmandu Background"
                     className="absolute inset-0 w-full h-full object-cover opacity-90 scale-125 origin-center"
                 />
@@ -197,7 +197,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={PubBgImg} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
+                            <img src={ClimbersImg} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Czech Pub<br/>Nepal</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
