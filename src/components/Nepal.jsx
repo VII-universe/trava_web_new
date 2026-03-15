@@ -2,11 +2,13 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg'; // Placeholder for Nepal view
+import IcefallImg from '../assets/icefall_bg.jpg';
+import ClimbersImg from '../assets/climbers_bg.jpg';
 
 const Nepal = ({ scrollProgress }) => {
-    // PHASE 5: 0.58 -> 0.74 with hold
-    const containerOpacity = useTransform(scrollProgress, [0.58, 0.62, 0.70, 0.74], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.58, 0.62, 0.70, 0.74], ["-120%", "0%", "0%", "130%"]);
+    // PHASE 5: 0.42 -> 0.58 with hold (minimum gap to Expedice)
+    const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
 
     return (
         <motion.div
@@ -36,7 +38,7 @@ const Nepal = ({ scrollProgress }) => {
                 </div>
 
                 {/* Content Right: Text on Glass */}
-                <div className="w-full md:w-1/2 h-1/2 md:h-full bg-ivory flex items-center justify-center p-10 md:p-20">
+                <div className="w-full md:w-1/2 h-1/2 md:h-full bg-ivory flex flex-col gap-8 items-center justify-center p-10 md:p-20 overflow-hidden">
                     <motion.div
                         className="max-w-2xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 pointer-events-auto"
                         whileHover={{ y: -5 }}
@@ -58,6 +60,26 @@ const Nepal = ({ scrollProgress }) => {
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                         </div>
+                    </motion.div>
+
+                    {/* Horizontal scrolling gallery under the cards */}
+                    <motion.div
+                        className="max-w-2xl w-full pointer-events-auto overflow-hidden"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                    >
+                        <motion.div
+                            className="flex gap-4"
+                            animate={{ x: ['0%', '-50%'] }}
+                            transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                        >
+                            {[BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg, ClimbersImg].map((src, idx) => (
+                                <div key={idx} className="min-w-[160px] overflow-hidden rounded-xl glass-card p-1">
+                                    <img src={src} alt="Nepal gallery" className="w-full h-32 object-cover rounded-lg" />
+                                </div>
+                            ))}
+                        </motion.div>
                     </motion.div>
                 </div>
             </motion.div>

@@ -3,12 +3,12 @@ import { motion, useTransform, useScroll } from 'framer-motion';
 import SummitImage from '../assets/summit_bg.png';
 
 const Expeditions = ({ scrollProgress }) => {
-    // PHASE 4: 0.42 -> 0.58 with hold
-    const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
+    // PHASE 4: 0.28 -> 0.44 with hold (tighter to Partners)
+    const containerOpacity = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], [0, 1, 1, 0]);
 
     // Slide in from top; hold; exit before Nepal enters
-    const backgroundY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
-    const contentY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
+    const backgroundY = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], ["-120%", "0%", "0%", "130%"]);
+    const contentY = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], ["-120%", "0%", "0%", "130%"]);
 
     const peaks = [
         { name: "Treky po celém světě", text: "", x: "20%", y: "40%" },

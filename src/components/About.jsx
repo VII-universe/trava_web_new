@@ -8,30 +8,30 @@ const About = ({ scrollProgress }) => {
     // PHASE 2: 0.20 -> 0.40
 
     // Transition In
-    // PHASE 2: 0.14 -> 0.26 (with hold)
-    const containerOpacity = useTransform(scrollProgress, [0.14, 0.18, 0.24, 0.26], [0, 1, 1, 0]);
-    const containerScale = useTransform(scrollProgress, [0.14, 0.18], [0.9, 1]);
-    const containerY = useTransform(scrollProgress, [0.14, 0.18, 0.24, 0.26], ["100%", "0%", "0%", "120%"]);
+    // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.22)
+    const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.22], [0, 1, 1, 0]);
+    const containerScale = useTransform(scrollProgress, [0.12, 0.16], [0.9, 1]);
+    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.22], ["100%", "0%", "0%", "120%"]);
 
     // Parallax Layers
-    const sideLayerLeftX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "-50%"]);
-    const sideLayerRightX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "50%"]);
-    const sideLayerOpacity = useTransform(scrollProgress, [0.2, 0.4], [0.8, 0]);
+    const sideLayerLeftX = useTransform(scrollProgress, [0.14, 0.22], ["0%", "-50%"]);
+    const sideLayerRightX = useTransform(scrollProgress, [0.14, 0.22], ["0%", "50%"]);
+    const sideLayerOpacity = useTransform(scrollProgress, [0.14, 0.22], [0.8, 0]);
 
-    // Honza Profile Layer (Parallax + Zoom)
-    // He should arrive slightly slower and zoom in
-    const honzaX = useTransform(scrollProgress, [0.2, 0.4], ["15%", "5%"]); // Coming from right
-    const honzaY = useTransform(scrollProgress, [0.15, 0.25, 0.35, 0.45], ["20%", "0%", "0%", "20%"]); // Float in/out
-    const honzaScale = useTransform(scrollProgress, [0.2, 0.4], [0.95, 1.1]); // Subtle zoom
-    const honzaOpacity = useTransform(scrollProgress, [0.18, 0.23, 0.37, 0.42], [0, 1, 1, 0]);
+    // Honza Profile Layer — faster arrival
+    const honzaX = useTransform(scrollProgress, [0.12, 0.20], ["18%", "5%"]); // Coming from right faster
+    const honzaY = useTransform(scrollProgress, [0.12, 0.18, 0.20, 0.26], ["24%", "0%", "0%", "18%"]); // earlier float
+    const honzaScale = useTransform(scrollProgress, [0.12, 0.20], [0.95, 1.12]); // quicker zoom
+    const honzaOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.24], [0, 1, 1, 0]);
 
     // Transition Out — "odsunutí" sekce při nájezdu Icefall
     // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
     // odsouvá dolů a lehce do strany, aby působilo jako vytlačení.
-    const exitOpacity = useTransform(scrollProgress, [0.24, 0.26], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.24, 0.26], [1, 0.94]);
-    const exitY = useTransform(scrollProgress, [0.24, 0.26], ['0%', '120%']);
-    const exitX = useTransform(scrollProgress, [0.24, 0.26], ['0%', '-6%']);
+    // Smoother background/image exit
+    const exitOpacity = useTransform(scrollProgress, [0.20, 0.26], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.20, 0.26], [1, 0.95]);
+    const exitY = useTransform(scrollProgress, [0.20, 0.26], ['0%', '140%']);
+    const exitX = useTransform(scrollProgress, [0.20, 0.26], ['0%', '-6%']);
 
     return (
         <motion.div

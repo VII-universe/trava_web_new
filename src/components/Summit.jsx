@@ -4,16 +4,15 @@ import { Trophy, Star, ChevronUp } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
 
 const Summit = ({ scrollProgress }) => {
-    // PHASE 8: 0.90 -> 0.98 with hold
+    // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
 
-    // Triggers — zpožděno oproti Media exitu for depth
-    const opacity = useTransform(scrollProgress, [0.88, 0.91, 0.95, 0.98], [0, 1, 1, 0]);
-    const scale = useTransform(scrollProgress, [0.88, 0.91], [1.08, 1]);
-    const y = useTransform(scrollProgress, [0.88, 0.91, 0.95, 0.98], ["-120%", "0%", "0%", "130%"]);
+    const opacity = useTransform(scrollProgress, [0.82, 0.86, 0.92, 0.96], [0, 1, 1, 0]);
+    const scale = useTransform(scrollProgress, [0.82, 0.90], [1.08, 1]);
+    const y = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.98], ["-120%", "0%", "0%", "160%"]);
 
     // Content animations
-    const contentOpacity = useTransform(scrollProgress, [0.89, 0.92, 0.95, 0.98], [0, 1, 1, 0]);
-    const contentY = useTransform(scrollProgress, [0.89, 0.92, 0.95, 0.98], [50, 0, 0, 100]);
+    const contentOpacity = useTransform(scrollProgress, [0.84, 0.90, 0.94, 0.98], [0, 1, 1, 0]);
+    const contentY = useTransform(scrollProgress, [0.84, 0.90, 0.94, 0.98], [50, 0, 0, 120]);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,7 +21,7 @@ const Summit = ({ scrollProgress }) => {
     return (
         <motion.div
             style={{ opacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden z-40"
         >
             <motion.div
                 style={{

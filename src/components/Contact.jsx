@@ -2,9 +2,9 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 
 const Contact = ({ scrollProgress }) => {
-    // PHASE 9: 0.96 -> 1.0 (slides in from top)
-    const containerOpacity = useTransform(scrollProgress, [0.94, 0.97, 1.0], [0, 1, 1]);
-    const y = useTransform(scrollProgress, [0.94, 0.97, 1.0], ["-120%", "0%", "0%"]);
+    // PHASE 9: 0.93 -> 1.0 (middle ground entry timing)
+    const containerOpacity = useTransform(scrollProgress, [0.93, 0.97, 1.0], [0, 1, 1]);
+    const y = useTransform(scrollProgress, [0.93, 0.97, 1.0], ["-120%", "0%", "0%"]);
 
     return (
         <motion.div

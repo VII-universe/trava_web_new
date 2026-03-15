@@ -2,9 +2,9 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 
 const Media = ({ scrollProgress }) => {
-    // PHASE 7: 0.84 -> 0.96 with hold
-    const containerOpacity = useTransform(scrollProgress, [0.84, 0.87, 0.93, 0.96], [0, 1, 1, 0]);
-    const y = useTransform(scrollProgress, [0.84, 0.87, 0.93, 0.96], ["-120%", "0%", "0%", "130%"]);
+    // PHASE 7: 0.68 -> 0.84 with hold (slightly closer)
+    const containerOpacity = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.84], [0, 1, 1, 0]);
+    const y = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.84], ["-120%", "0%", "0%", "130%"]);
 
     const items = [
         {
