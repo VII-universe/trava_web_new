@@ -4,16 +4,16 @@ import { Trophy, Star, ChevronUp } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
 
 const Summit = ({ scrollProgress }) => {
-    // PHASE 5: 0.82 -> 1.0 (The Summit) — opožděný příjezd shora
+    // PHASE 7: 0.90 -> 1.0 (The Summit / Zdravotní osvěta & Média)
 
     // Triggers — zpožděno oproti Climb exitu pro efekt hloubky
-    const opacity = useTransform(scrollProgress, [0.80, 0.90], [0, 1]);
-    const scale = useTransform(scrollProgress, [0.82, 1], [1.08, 1]);
-    const y = useTransform(scrollProgress, [0.80, 0.90], ["-100%", "0%"]);
+    const opacity = useTransform(scrollProgress, [0.88, 0.92], [0, 1]);
+    const scale = useTransform(scrollProgress, [0.90, 1], [1.08, 1]);
+    const y = useTransform(scrollProgress, [0.88, 0.92, 1], ["-120%", "0%", "120%"]);
 
     // Content animations
-    const contentOpacity = useTransform(scrollProgress, [0.90, 0.95], [0, 1]);
-    const contentY = useTransform(scrollProgress, [0.90, 0.98], [50, 0]);
+    const contentOpacity = useTransform(scrollProgress, [0.93, 0.98], [0, 1]);
+    const contentY = useTransform(scrollProgress, [0.93, 1], [50, 0]);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -62,16 +62,33 @@ const Summit = ({ scrollProgress }) => {
                 </motion.div>
 
                 <h4 className="text-gold-700 font-sans uppercase tracking-[0.4em] text-sm font-bold mb-4 drop-shadow-md">
-                    Vrchol — 8848 m
+                    Zdravotní osvěta & média — 8848 m
                 </h4>
 
-                <h2 className="font-serif text-6xl md:text-8xl text-slate-950 mb-8 leading-none tracking-tight drop-shadow-md">
-                    Jsme <span className="italic font-normal">doma.</span>
+                <h2 className="font-serif text-6xl md:text-7xl text-slate-950 mb-8 leading-none tracking-tight drop-shadow-md">
+                    Kašpárek s nemocí, co to překonává.
                 </h2>
 
-                <p className="font-sans text-slate-900/95 leading-relaxed text-xl mb-12 max-w-2xl mx-auto drop-shadow-sm">
-                    Na nejvyšším bodě planety se čas zastaví. Tady nekončí jen cesta, ale začíná nové pochopení toho, co znamená být člověkem.
-                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto">
+                    <div className="glass-card p-8">
+                        <h3 className="font-serif text-3xl text-slate-900 mb-4">Osvěta</h3>
+                        <p className="font-sans text-slate-800 leading-relaxed text-lg mb-4">
+                            Spolupráce a osvěta pro FUCK CANCER a REVMA LIGA.
+                        </p>
+                        <p className="font-sans text-slate-700 leading-relaxed text-sm">
+                            Spolupráce s lékaři: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková, Martin Pospíchal.
+                        </p>
+                    </div>
+                    <div className="glass-card p-8">
+                        <h3 className="font-serif text-3xl text-slate-900 mb-4">Média & Kontakt</h3>
+                        <ul className="space-y-3 text-slate-800 font-sans text-lg">
+                            <li>Blog (nezávislé příběhy z expedic)</li>
+                            <li>YouTube (vlogy, zákulisí)</li>
+                            <li>Podcast (příprava 2027)</li>
+                            <li>Kontakt a Booking formulář</li>
+                        </ul>
+                    </div>
+                </div>
 
                 <div className="flex flex-col items-center gap-6">
                     <button

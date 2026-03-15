@@ -4,23 +4,23 @@ import { Mountain, Wind, Thermometer } from 'lucide-react';
 import ClimbersImg from '../assets/climbers_bg.jpg';
 
 const Climb = ({ scrollProgress }) => {
-    // PHASE 4: 0.60 -> 0.80 (The Climb)
+    // PHASE 6 (after Nepal): 0.78 -> 0.90 (The Climb)
 
     // Triggers
-    const opacity = useTransform(scrollProgress, [0.55, 0.65], [0, 1]);
-    const y = useTransform(scrollProgress, [0.55, 0.70], ["-100%", "0%"]);
+    const opacity = useTransform(scrollProgress, [0.76, 0.82], [0, 1]);
+    const y = useTransform(scrollProgress, [0.76, 0.84], ["-100%", "0%"]);
 
     // —— ENTRY ——
-    const entryOpacity = useTransform(scrollProgress, [0.62, 0.70], [0, 1]);
-    const entryY = useTransform(scrollProgress, [0.62, 0.74], ["-100%", "0%"]);
-    // —— EXIT: stejná rychlost jako nájezd Summitu (0.80 -> 0.90) ——
-    const exitOpacity = useTransform(scrollProgress, [0.80, 0.90], [1, 0]);
-    const exitY = useTransform(scrollProgress, [0.80, 0.90], ['0%', '100%']);
-    const exitScale = useTransform(scrollProgress, [0.80, 0.90], [1, 0.9]);
+    const entryOpacity = useTransform(scrollProgress, [0.78, 0.86], [0, 1]);
+    const entryY = useTransform(scrollProgress, [0.78, 0.86], ["-100%", "0%"]);
+    // —— EXIT: stejná rychlost jako nájezd Summitu (0.90 -> 1.00) ——
+    const exitOpacity = useTransform(scrollProgress, [0.90, 1.00], [1, 0]);
+    const exitY = useTransform(scrollProgress, [0.90, 1.00], ['0%', '100%']);
+    const exitScale = useTransform(scrollProgress, [0.90, 1.00], [1, 0.9]);
     // combined: pick entry when <0.74, hold stable, then exit
-    const bgOpacity = useTransform(scrollProgress, [0.62, 0.70, 0.80, 0.90], [0, 1, 1, 0]);
-    const bgY = useTransform(scrollProgress, [0.62, 0.74, 0.80, 0.90], ["-100%", "0%", "0%", "100%"]);
-    const bgScale = useTransform(scrollProgress, [0.74, 0.80, 0.90], [1, 1, 0.9]);
+    const bgOpacity = useTransform(scrollProgress, [0.78, 0.84, 0.90, 1.00], [0, 1, 1, 0]);
+    const bgY = useTransform(scrollProgress, [0.78, 0.84, 0.90, 1.00], ["-100%", "0%", "0%", "100%"]);
+    const bgScale = useTransform(scrollProgress, [0.84, 0.90, 1.00], [1, 1, 0.9]);
 
     return (
         <div className="absolute inset-0 w-full h-full flex items-center justify-end px-6 md:px-20 lg:px-32 pointer-events-none overflow-hidden">

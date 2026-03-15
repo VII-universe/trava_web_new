@@ -211,16 +211,16 @@ const Flag = ({ flag, index }) => {
 
 /* ─── Main component ────────────────────────────────────── */
 const Icefall = ({ scrollProgress }) => {
-    // PHASE 3: 0.40 -> 0.60
+    // PHASE 3: 0.32 -> 0.50 (moved up in stack)
 
-    const containerY = useTransform(scrollProgress, [0.35, 0.45], ['-100%', '0%']);
-    const opacity = useTransform(scrollProgress, [0.35, 0.45], [0, 1]);
-    const exitY = useTransform(scrollProgress, [0.60, 0.70], ['0%', '100%']);
-    const exitOpacity = useTransform(scrollProgress, [0.60, 0.70], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.60, 0.75], [1, 1.5]);
+    const containerY = useTransform(scrollProgress, [0.30, 0.38], ['-100%', '0%']);
+    const opacity = useTransform(scrollProgress, [0.30, 0.38], [0, 1]);
+    const exitY = useTransform(scrollProgress, [0.50, 0.58], ['0%', '100%']);
+    const exitOpacity = useTransform(scrollProgress, [0.50, 0.58], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.50, 0.60], [1, 1.4]);
 
     // Rope gentle lean on scroll
-    const ropeSkew = useTransform(scrollProgress, [0.40, 0.60], [-0.8, 0.8]);
+    const ropeSkew = useTransform(scrollProgress, [0.32, 0.50], [-0.8, 0.8]);
 
     return (
         <motion.div

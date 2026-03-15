@@ -56,13 +56,13 @@ const Hero = ({ scrollProgress }) => {
                 className="relative z-20 text-center flex flex-col items-center px-4"
             >
                 <motion.h2 className="text-gold-500 font-sans tracking-[0.3em] text-sm uppercase mb-6 drop-shadow-sm">
-                    Poutník mezi světy
+                    Poutník mezi světy.
                 </motion.h2>
                 <motion.h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-slate-800 mb-8 leading-tight tracking-tight mix-blend-darken drop-shadow-2xl">
                     HONZA <br /> TRÁVNÍČEK
                 </motion.h1>
                 <motion.div className="mt-12 flex flex-col items-center gap-2">
-                    <span className="text-xs uppercase tracking-widest text-slate-500">Začni výstup</span>
+                    <span className="text-xs uppercase tracking-widest text-slate-500">Začni výstup.</span>
                     <ChevronDown className="w-5 h-5 text-gold-500 animate-bounce" />
                 </motion.div>
             </motion.div>

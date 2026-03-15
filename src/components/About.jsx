@@ -95,13 +95,12 @@ const About = ({ scrollProgress }) => {
                     className="relative z-50 max-w-xl p-10 md:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto mt-20"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
-                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Base Camp — 5364 m</h4>
+                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Kdo je Honza Tráva — 800 m</h4>
                     <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                        Nehraju si na<br /> <span className="italic text-slate-600">hrdinu.</span>
+                        Nehraju si na <span className="italic text-slate-600">hrdinu.</span>
                     </h2>
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
-                        Jsem geodet, učitel a manažer punkový kapely, co se zamiloval do řídkýho vzduchu.
-                        Říkají o mně, že jsem horolezec. Já se cítím spíš jako <span className="font-semibold text-slate-900 border-b border-gold-400">poutník</span>.
+                        Horolezec, cestovatel, dobrodruh, podnikatel. Život mezi ČR a Nepálem. Jsem autentický příběh člověka, který překonal rakovinu i psoriatickou artritidu. Ne proto, abych dobyl vrchol, ale abych našel cestu zpátky.
                     </p>
                     <button className="group flex items-center gap-3 text-slate-900 font-medium tracking-wide hover:text-gold-600 transition-colors duration-300">
                         <span className="relative">

@@ -3,17 +3,18 @@ import { motion, useTransform, useScroll } from 'framer-motion';
 import SummitImage from '../assets/summit_bg.png';
 
 const Expeditions = ({ scrollProgress }) => {
-    // PHASE 5: 0.40 -> 0.55
-    const containerOpacity = useTransform(scrollProgress, [0.38, 0.42, 0.53, 0.57], [0, 1, 1, 0]);
+    // PHASE 4: 0.48 -> 0.66
+    const containerOpacity = useTransform(scrollProgress, [0.46, 0.50, 0.62, 0.66], [0, 1, 1, 0]);
 
-    // Dynamic Ascent: Content moves slightly slower than background for depth
-    const backgroundY = useTransform(scrollProgress, [0.40, 0.55], ["20%", "-20%"]);
-    const contentY = useTransform(scrollProgress, [0.38, 0.44, 0.53, 0.59], ["100%", "0%", "0%", "-50%"]);
+    // Slide in from top into the sticky frame
+    const backgroundY = useTransform(scrollProgress, [0.46, 0.50, 0.62, 0.66], ["-120%", "0%", "0%", "120%"]);
+    const contentY = useTransform(scrollProgress, [0.46, 0.50, 0.62, 0.66], ["-120%", "0%", "0%", "120%"]);
 
     const peaks = [
-        { name: "Manaslu", text: "Moje první osma. Tyrkysová bohyně.", x: "20%", y: "40%" },
-        { name: "K2", text: "Čtyřikrát mě vykopla. Popáté pustila. Bez kyslíku. Na dřeň.", x: "50%", y: "20%" },
-        { name: "Annapurna", text: "Laviny a loterie o život.", x: "80%", y: "50%" }
+        { name: "Treky po celém světě", text: "", x: "20%", y: "40%" },
+        { name: "Expedice na 6000+", text: "", x: "50%", y: "20%" },
+        { name: "Jógové výpravy", text: "", x: "80%", y: "50%" },
+        { name: "Fotografické výpravy", text: "", x: "65%", y: "70%" }
     ];
 
     return (
@@ -40,49 +41,40 @@ const Expeditions = ({ scrollProgress }) => {
             >
                 <div className="text-center mb-16 relative z-10">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
-                        05 — EXPEDICE / Stěna (7000 m)
+                        04 — Expedice & 14Summits (4500 m)
                     </h4>
                     <h2 className="font-serif text-4xl md:text-6xl text-white mb-4">
-                        Cesta na dřeň.
+                        Od himálajských vrcholů po točené v Káthmándú
                     </h2>
-                    <p className="text-slate-400 font-serif italic text-lg tracking-widest">Slonovinová mizí v modři.</p>
+                    <p className="text-slate-200 font-serif italic text-lg tracking-widest">Protože cesta nekončí, když slezeš z hory.</p>
                 </div>
 
-                {/* Hotspots Container */}
-                <div className="absolute inset-0 pointer-events-auto">
-                    {peaks.map((peak, i) => (
-                        <motion.div
-                            key={peak.name}
-                            className="absolute group"
-                            style={{ left: peak.x, top: peak.y }}
-                            initial={{ scale: 0 }}
-                            whileInView={{ scale: 1 }}
-                        >
-                            <div className="w-4 h-4 bg-gold-500 rounded-full animate-pulse cursor-pointer relative z-10" />
-                            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-48 p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                                <h5 className="font-serif text-gold-400 text-lg mb-2">{peak.name}</h5>
-                                <p className="text-xs text-white/80 leading-relaxed font-sans">{peak.text}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                {/* Two glass cards */}
+                <div className="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
+                    <motion.div className="glass-card p-10 text-left pointer-events-auto">
+                        <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4">14Summits — Úvod</h3>
+                        <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-4">
+                            Od himálajských vrcholů po točené v Káthmándú
+                        </h2>
+                        <p className="font-sans text-slate-700 leading-relaxed text-lg">
+                            Protože cesta nekončí, když slezeš z hory.
+                        </p>
+                    </motion.div>
 
-                {/* Míra utrpení Graphic */}
-                <div className="absolute bottom-20 left-10 md:left-20 max-w-xs pointer-events-auto">
-                    <div className="p-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl">
-                        <span className="text-[10px] uppercase tracking-widest text-gold-500 mb-4 block font-bold">Míra utrpení</span>
-                        <div className="flex items-end gap-1 h-24">
-                            {[40, 60, 45, 90, 100, 80, 95].map((val, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="flex-1 bg-gradient-to-t from-gold-600 to-gold-400 opacity-80"
-                                    initial={{ height: 0 }}
-                                    whileInView={{ height: `${val}%` }}
-                                    transition={{ delay: i * 0.1 }}
-                                />
+                    <motion.div className="glass-card p-10 text-left pointer-events-auto">
+                        <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4">S kým do hor</h3>
+                        <p className="font-sans text-slate-800 leading-relaxed text-lg mb-6">
+                            S kým do hor: Honza Tráva má za sebou 6 osmitisícovek. Miri Jirková vystoupala na nespočet šestitisícovek... Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
+                        </p>
+                        <ul className="list-none space-y-2 text-slate-800 font-sans">
+                            {peaks.map((peak) => (
+                                <li key={peak.name} className="flex items-center gap-3">
+                                    <span className="w-2 h-2 rounded-full bg-gold-500" />
+                                    <span>{peak.name}</span>
+                                </li>
                             ))}
-                        </div>
-                    </div>
+                        </ul>
+                    </motion.div>
                 </div>
             </motion.div>
         </motion.div>

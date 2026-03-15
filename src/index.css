@@ -19,6 +19,11 @@
   }
 }
 
+/* Glassmorphism utility for translucent content blocks */
+.glass-card {
+  @apply bg-white/45 backdrop-blur-xl border border-white/60 shadow-2xl shadow-slate-200/60 rounded-2xl;
+}
+
 /* Custom scrollbar for webkit */
 ::-webkit-scrollbar {
   width: 8px;

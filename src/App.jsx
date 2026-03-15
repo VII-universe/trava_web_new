@@ -3,7 +3,9 @@ import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
 import Icefall from './components/Icefall';
-import Climb from './components/Climb';
+import Expeditions from './components/Expeditions';
+import Nepal from './components/Nepal';
+import Lectures from './components/Lectures';
 import Summit from './components/Summit';
 import Altimeter from './components/Altimeter';
 import ProgressBar from './components/ProgressBar';
@@ -13,7 +15,7 @@ import CloudLayer from './components/CloudLayer';
 function App() {
   const containerRef = useRef(null);
 
-  // Track scroll over extended height for 5 sections
+  // Track scroll over extended height for 7 sections
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -23,32 +25,40 @@ function App() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 40, damping: 25, restDelta: 0.001 });
 
   return (
-    <div ref={containerRef} className="relative h-[850vh] bg-ivory selection:bg-gold-400 selection:text-white">
+    <div ref={containerRef} className="relative h-[1400vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
-      <div className="fixed inset-0 overflow-hidden">
-        {/* Global Progress Indicators */}
-        <ProgressBar scrollProgress={smoothProgress} />
-        <Altimeter scrollProgress={smoothProgress} />
-        <SnowOverlay scrollProgress={smoothProgress} />
+      {/* Sticky viewport (camera frame) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          {/* Global Progress Indicators */}
+          <ProgressBar scrollProgress={smoothProgress} />
+          <Altimeter scrollProgress={smoothProgress} />
+          <SnowOverlay scrollProgress={smoothProgress} />
 
-        {/* Cloud transitions between sections */}
-        <CloudLayer scrollProgress={smoothProgress} />
+          {/* Cloud transitions between sections */}
+          <CloudLayer scrollProgress={smoothProgress} />
 
-        {/* Phase 1: Hero (0.0 - 0.2) */}
-        <Hero scrollProgress={smoothProgress} />
+          {/* Phase 1: Hero (0.0 - 0.2) */}
+          <Hero scrollProgress={smoothProgress} />
 
-        {/* Phase 2: About / Base Camp (0.2 - 0.4) */}
-        <About scrollProgress={smoothProgress} />
+          {/* Phase 2: About / Base Camp (0.2 - 0.4) */}
+          <About scrollProgress={smoothProgress} />
 
-        {/* Phase 3: The Icefall (0.4 - 0.6) */}
-        <Icefall scrollProgress={smoothProgress} />
+          {/* Phase 3: Partneři — flags rope (0.32 - 0.50) */}
+          <Icefall scrollProgress={smoothProgress} />
 
-        {/* Phase 4: The Climb / Death Zone (0.6 - 0.8) */}
-        <Climb scrollProgress={smoothProgress} />
+          {/* Phase 4: Expedice & 14Summits (0.48 - 0.66) */}
+          <Expeditions scrollProgress={smoothProgress} />
 
-        {/* Phase 5: The Summit (0.8 - 1.0) */}
-        <Summit scrollProgress={smoothProgress} />
+          {/* Phase 5: Nepal — Pub & Hotel (0.64 - 0.80) */}
+          <Nepal scrollProgress={smoothProgress} />
 
+          {/* Phase 6: Projekty & Přednášky (0.78 - 0.90) */}
+          <Lectures scrollProgress={smoothProgress} />
+
+          {/* Phase 7: Zdravotní osvěta & Média (0.90 - 1.0) */}
+          <Summit scrollProgress={smoothProgress} />
+        </div>
       </div>
 
     </div>
