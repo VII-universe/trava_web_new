@@ -13,6 +13,7 @@ import ProgressBar from './components/ProgressBar';
 import SnowOverlay from './components/SnowOverlay';
 import CloudLayer from './components/CloudLayer';
 import Media from './components/Media';
+import Nav from './components/Nav';
 
 function App() {
   const containerRef = useRef(null);
@@ -32,6 +33,9 @@ function App() {
       {/* Sticky viewport (camera frame) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
+          {/* Navigation Overlay */}
+          <Nav />
+
           {/* Global Progress Indicators */}
           <ProgressBar scrollProgress={smoothProgress} />
           <Altimeter scrollProgress={smoothProgress} />
