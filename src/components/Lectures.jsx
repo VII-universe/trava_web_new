@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
+import IcefallImg from '../assets/icefall_bg.jpg';
+import ClimbersImg from '../assets/climbers_bg.jpg';
+import SummitImg from '../assets/summit_bg.png';
 
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
@@ -38,15 +41,64 @@ const Lectures = ({ scrollProgress }) => {
                     50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16 max-w-5xl mx-auto">
-                    {events.map(event => (
-                        <div key={event.city} className="glass-card p-8 bg-white/10 border-white/20 text-left">
-                            <Calendar className="w-6 h-6 text-gold-500 mb-4" />
-                            <h5 className="font-serif text-2xl text-white mb-2">{event.city}</h5>
-                            <p className="text-slate-300 text-sm leading-relaxed">{event.venue}</p>
-                            {event.date && <p className="text-slate-400 text-xs mt-2 uppercase tracking-widest">{event.date}</p>}
+                <div className="relative max-w-6xl mx-auto w-full mb-16 px-4 md:px-0 mt-20">
+                    
+                    {/* POLAROID 1 - Left */}
+                    <motion.div
+                        initial={{ rotate: -25, x: -70, y: 80, opacity: 0 }}
+                        whileInView={{ rotate: -15, x: -100, y: -40, opacity: 1 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
+                        className="absolute -top-16 -left-12 md:-top-24 md:-left-28 lg:-top-20 lg:-left-44 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
+                    >
+                        <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
+                            <img src={IcefallImg} className="w-full h-full object-cover filter grayscale contrast-125 opacity-90" alt="Přednáška" />
+                            <div className="absolute inset-0 bg-gold-900/10 mix-blend-overlay" />
                         </div>
-                    ))}
+                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Začátky</div>
+                    </motion.div>
+
+                    {/* POLAROID 2 - Right */}
+                    <motion.div
+                        initial={{ rotate: 15, x: 70, y: 100, opacity: 0 }}
+                        whileInView={{ rotate: 12, x: 100, y: 0, opacity: 1 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.2, delay: 0.1, type: "spring", bounce: 0.3 }}
+                        className="absolute -bottom-10 -right-12 md:-bottom-16 md:-right-28 lg:-bottom-10 lg:-right-40 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
+                    >
+                        <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
+                            <img src={ClimbersImg} className="w-full h-full object-cover filter grayscale contrast-125 opacity-90" alt="Tým" />
+                            <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
+                        </div>
+                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Na lanech</div>
+                    </motion.div>
+                    
+                    {/* POLAROID 3 - Bottom Left */}
+                    <motion.div
+                        initial={{ rotate: -10, x: -60, y: -40, opacity: 0 }}
+                        whileInView={{ rotate: -5, x: -60, y: 80, opacity: 1 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.2, delay: 0.2, type: "spring", bounce: 0.3 }}
+                        className="absolute -bottom-24 -left-12 lg:-bottom-32 lg:-left-24 z-0 w-44 md:w-60 lg:w-72 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden lg:block"
+                    >
+                        <div className="w-full aspect-[4/3] bg-slate-200 overflow-hidden relative">
+                            <img src={SummitImg} className="w-full h-full object-cover object-top filter grayscale contrast-125 opacity-90" alt="Vrchol" />
+                            <div className="absolute inset-0 bg-slate-900/20 mix-blend-overlay" />
+                        </div>
+                        <div className="absolute bottom-3 md:bottom-4 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Vrchol</div>
+                    </motion.div>
+
+                    {/* Cards Grid (on top) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 max-w-5xl mx-auto backdrop-blur-sm">
+                        {events.map(event => (
+                            <div key={event.city} className="glass-card p-8 bg-white/10 border-white/20 text-left shadow-2xl">
+                                <Calendar className="w-6 h-6 text-gold-500 mb-4" />
+                                <h5 className="font-serif text-2xl text-white mb-2">{event.city}</h5>
+                                <p className="text-slate-300 text-sm leading-relaxed">{event.venue}</p>
+                                {event.date && <p className="text-slate-400 text-xs mt-2 uppercase tracking-widest">{event.date}</p>}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="text-center text-slate-300 text-sm max-w-4xl mx-auto mb-8">
