@@ -9,6 +9,7 @@ const Summit = ({ scrollProgress }) => {
     const opacity = useTransform(scrollProgress, [0.82, 0.86, 0.92, 0.96], [0, 1, 1, 0]);
     const scale = useTransform(scrollProgress, [0.82, 0.90], [1.08, 1]);
     const y = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.98], ["-120%", "0%", "0%", "160%"]);
+    const bgY = useTransform(scrollProgress, [0.78, 1.0], ["-15%", "15%"]);
 
     // Content animations
     const contentOpacity = useTransform(scrollProgress, [0.84, 0.90, 0.94, 0.98], [0, 1, 1, 0]);
@@ -33,10 +34,11 @@ const Summit = ({ scrollProgress }) => {
                 className="absolute inset-0 z-0 h-full w-full"
             >
                 {/* Background Image */}
-                <img
+                <motion.img
+                    style={{ y: bgY }}
                     src={SummitImg}
                     alt="Everest Summit"
-                    className="w-full h-full object-cover object-center brightness-95 saturate-75 contrast-110"
+                    className="absolute inset-0 w-full h-full object-cover object-center brightness-95 saturate-75 contrast-110 scale-125 origin-center"
                 />
 
                 {/* Gradient Overlays */}

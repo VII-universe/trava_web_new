@@ -8,10 +8,11 @@ const About = ({ scrollProgress }) => {
     // PHASE 2: 0.20 -> 0.40
 
     // Transition In
-    // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.22)
-    const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.22], [0, 1, 1, 0]);
+    // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.25)
+    const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.23, 0.25], [0, 1, 1, 0]);
     const containerScale = useTransform(scrollProgress, [0.12, 0.16], [0.9, 1]);
-    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.22], ["100%", "0%", "0%", "120%"]);
+    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.25], ["100%", "0%", "0%", "120%"]);
+    const bgY = useTransform(scrollProgress, [0.10, 0.26], ["-15%", "15%"]);
 
     // Parallax Layers
     const sideLayerLeftX = useTransform(scrollProgress, [0.14, 0.22], ["0%", "-50%"]);
@@ -20,18 +21,19 @@ const About = ({ scrollProgress }) => {
 
     // Honza Profile Layer — faster arrival
     const honzaX = useTransform(scrollProgress, [0.12, 0.20], ["18%", "5%"]); // Coming from right faster
-    const honzaY = useTransform(scrollProgress, [0.12, 0.18, 0.20, 0.26], ["24%", "0%", "0%", "18%"]); // earlier float
+    const honzaY = useTransform(scrollProgress, [0.12, 0.18, 0.20, 0.25], ["24%", "0%", "0%", "5%"]); // earlier float
     const honzaScale = useTransform(scrollProgress, [0.12, 0.20], [0.95, 1.12]); // quicker zoom
-    const honzaOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.20, 0.24], [0, 1, 1, 0]);
+    const honzaOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.23, 0.25], [0, 1, 1, 0]);
 
     // Transition Out — "odsunutí" sekce při nájezdu Icefall
     // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
-    // odsouvá dolů a lehce do strany, aby působilo jako vytlačení.
-    // Smoother background/image exit
-    const exitOpacity = useTransform(scrollProgress, [0.20, 0.26], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.20, 0.26], [1, 0.95]);
-    const exitY = useTransform(scrollProgress, [0.20, 0.26], ['0%', '140%']);
-    const exitX = useTransform(scrollProgress, [0.20, 0.26], ['0%', '-6%']);
+    // odsouvá dolů přes hlavní containerY. Zde vypínáme dodatečný pohyb dolů, 
+    // aby se rychlost nesčítala a vrstvy se posouvaly synchronně s Partnery.
+    // Pro minimalizaci mezery prodlužujeme zobrazení až do 0.25
+    const exitOpacity = useTransform(scrollProgress, [0.20, 0.25], [1, 0.6]);
+    const exitScale = useTransform(scrollProgress, [0.20, 0.25], [1, 0.98]);
+    const exitY = useTransform(scrollProgress, [0.20, 0.25], ['0%', '0%']);
+    const exitX = useTransform(scrollProgress, [0.20, 0.25], ['0%', '0%']);
 
     return (
         <motion.div
@@ -54,10 +56,11 @@ const About = ({ scrollProgress }) => {
                     <div className="absolute inset-0 bg-ivory" />
 
                     {/* IMAGE LAYER */}
-                    <img
+                    <motion.img
+                        style={{ y: bgY }}
                         src={BaseCampImg}
                         alt="Base Camp Tents"
-                        className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
+                        className="absolute inset-0 w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105 scale-110 origin-center"
                     />
                 </motion.div>
 

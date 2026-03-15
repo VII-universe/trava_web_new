@@ -9,6 +9,7 @@ const Expeditions = ({ scrollProgress }) => {
     // Slide in from top; hold; exit before Nepal enters
     const backgroundY = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], ["-120%", "0%", "0%", "130%"]);
     const contentY = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], ["-120%", "0%", "0%", "130%"]);
+    const bgY = useTransform(scrollProgress, [0.25, 0.48], ["-15%", "15%"]);
 
     const peaks = [
         { name: "Treky po celém světě", text: "", x: "20%", y: "40%" },
@@ -27,10 +28,11 @@ const Expeditions = ({ scrollProgress }) => {
                 style={{ y: backgroundY }}
                 className="absolute inset-0 w-full h-[150%] z-0"
             >
-                <img
+                <motion.img
+                    style={{ y: bgY }}
                     src={SummitImage}
                     alt="Mountain Wall"
-                    className="w-full h-full object-cover opacity-60 mix-blend-overlay grayscale"
+                    className="absolute inset-0 w-full h-[150%] object-cover opacity-60 mix-blend-overlay grayscale scale-125 origin-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-[#1A202C] via-transparent to-[#1A202C]" />
             </motion.div>

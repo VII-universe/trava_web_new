@@ -211,10 +211,11 @@ const Flag = ({ flag, index }) => {
 
 /* ─── Main component ────────────────────────────────────── */
 const Icefall = ({ scrollProgress }) => {
-    // PHASE 3: 0.19 -> 0.31 with hold (slightly closer still)
+    // PHASE 3: 0.18 -> 0.31 with hold (entry matches About exit exactly)
 
-    const containerY = useTransform(scrollProgress, [0.19, 0.22, 0.28, 0.31], ['-120%', '0%', '0%', '130%']);
-    const opacity = useTransform(scrollProgress, [0.19, 0.22, 0.28, 0.31], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.18, 0.23, 0.28, 0.31], ['-120%', '0%', '0%', '130%']);
+    const opacity = useTransform(scrollProgress, [0.18, 0.23, 0.28, 0.31], [0, 1, 1, 0]);
+    const bgY = useTransform(scrollProgress, [0.15, 0.35], ["-15%", "15%"]);
 
     // Rope gentle lean on scroll
     const ropeSkew = useTransform(scrollProgress, [0.32, 0.50], [-0.8, 0.8]);
@@ -234,10 +235,11 @@ const Icefall = ({ scrollProgress }) => {
                     }}
                 >
                     <div className="absolute inset-0 bg-[#F0F4F8]" />
-                    <img
+                    <motion.img
+                        style={{ y: bgY }}
                         src={IcefallImg}
                         alt="Khumbu Icefall"
-                        className="w-full h-full object-cover object-center opacity-80 filter contrast-125 brightness-110 saturate-0"
+                        className="absolute inset-0 w-full h-full object-cover object-center opacity-80 filter contrast-125 brightness-110 saturate-0 scale-125 origin-center"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-slate-200/40 to-blue-200/20 mix-blend-multiply" />
                     {/* Soft vignette so text is legible */}

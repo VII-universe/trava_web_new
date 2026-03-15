@@ -4,6 +4,7 @@ import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'luc
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import IcefallImg from '../assets/icefall_bg.jpg';
 import ClimbersImg from '../assets/climbers_bg.jpg';
+import HotelLogo from '../assets/logo_2.png';
 
 const Nepal = ({ scrollProgress }) => {
     const [openHotel, setOpenHotel] = useState(false);
@@ -13,93 +14,90 @@ const Nepal = ({ scrollProgress }) => {
     // PHASE 5: 0.42 -> 0.58 with hold (minimum gap to Expedice)
     const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
     const containerY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
+    const bgY = useTransform(scrollProgress, [0.38, 0.62], ["-15%", "15%"]);
 
     return (
         <>
         <motion.div
-            style={{ opacity: containerOpacity }}
+            style={{ opacity: containerOpacity, y: containerY }}
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
         >
-            <motion.div
-                style={{ y: containerY }}
-                className="w-full h-full relative flex flex-col md:flex-row"
+            {/* Full width background image */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+                <motion.img
+                    style={{ y: bgY }}
+                    src={BaseCampImg}
+                    alt="Kathmandu Background"
+                    className="absolute inset-0 w-full h-full object-cover opacity-90 scale-125 origin-center"
+                />
+                <div className="absolute inset-0 bg-slate-900/30" />
+            </div>
+
+            <div
+                className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-12 pointer-events-none"
             >
-                {/* Visual Left: Photo of Czech Pub behavior */}
-                <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden bg-slate-900">
-                    <img
-                        src={BaseCampImg}
-                        alt="Czech Pub Kathmandu"
-                        className="w-full h-full object-cover opacity-60 scale-125 saturate-50 contrast-125"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/40" />
-
-                    <div className="absolute bottom-10 left-10 text-white z-10">
-                        <div className="flex items-center gap-2 text-gold-400 mb-2">
-                            <MapPin className="w-4 h-4" />
-                            <span className="text-xs tracking-widest font-bold uppercase">Kathmandu base camp</span>
+                {/* Single main glass card combining Hotel, Pub and Gallery */}
+                <motion.div 
+                    className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-[2rem] p-8 md:p-14 flex flex-col pointer-events-auto overflow-hidden"
+                    whileHover={{ y: -5 }}
+                >
+                    <div className="text-center mb-10">
+                        <div className="flex items-center justify-center gap-2 text-gold-600 mb-3">
+                            <MapPin className="w-5 h-5" />
+                            <span className="text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
                         </div>
-                        <h3 className="font-serif text-3xl">Czech Pub Nepal</h3>
+                        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight">Czech Pub Nepal</h2>
                     </div>
-                </div>
 
-                {/* Content Right: Text on Glass */}
-                <div className="w-full md:w-1/2 h-1/2 md:h-full bg-ivory flex flex-col gap-8 items-center justify-center p-10 md:p-20 overflow-hidden">
-                    <motion.div
-                        className="max-w-2xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 pointer-events-auto"
-                        whileHover={{ y: -5 }}
-                    >
-                        <div className="glass-card p-8 h-full flex flex-col">
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
-                                HOTEL Kathmandu Base Camp
-                            </h4>
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-12">
+                        {/* Hotel Text */}
+                        <div className="flex flex-col">
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[64px] object-contain mb-4 self-start" />
+                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
                             <button
                                 onClick={() => setOpenHotel(true)}
-                                className="mt-4 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition"
+                                className="mt-6 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition self-start"
                             >
                                 Více & galerie
                             </button>
                         </div>
 
-                        <div className="glass-card p-8 h-full flex flex-col">
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                        {/* Pub Text */}
+                        <div className="flex flex-col">
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-2">
                                 CZECH PUB
                             </h4>
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed">
+                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                             <button
                                 onClick={() => setOpenPub(true)}
-                                className="mt-4 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition"
+                                className="mt-6 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition self-start"
                             >
                                 Více & galerie
                             </button>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {/* Horizontal scrolling gallery under the cards */}
-                    <motion.div
-                        className="max-w-2xl w-full pointer-events-auto overflow-hidden"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                    >
+                    {/* Horizontal scrolling gallery inside the box */}
+                    <div className="pt-8 border-t border-slate-900/10">
                         <motion.div
                             className="flex gap-4"
                             animate={{ x: ['0%', '-50%'] }}
-                            transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                         >
-                            {[BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg, ClimbersImg].map((src, idx) => (
-                                <div key={idx} className="min-w-[160px] overflow-hidden rounded-xl glass-card p-1">
-                                    <img src={src} alt="Nepal gallery" className="w-full h-32 object-cover rounded-lg" />
+                            {[BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg].map((src, idx) => (
+                                <div key={idx} className="min-w-[160px] md:min-w-[200px] cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
+                                    <img src={src} className="w-full h-32 md:h-40 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Nepal gallery" />
+                                    <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
                                 </div>
                             ))}
                         </motion.div>
-                    </motion.div>
-                </div>
-            </motion.div>
+                    </div>
+                </motion.div>
+            </div>
         </motion.div>
 
         <AnimatePresence>
@@ -139,7 +137,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">Ubytování</h4>
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[64px] object-contain mb-6 self-start" />
                             <h2 className="font-serif text-3xl text-slate-900 mb-6">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
@@ -217,7 +215,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">Gastronomie</h4>
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-2">Gastronomie</h4>
                             <h2 className="font-serif text-3xl text-slate-900 mb-6">Místo, kde se potkávají dobrodruzi</h2>
 
                             <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
