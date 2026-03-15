@@ -211,13 +211,10 @@ const Flag = ({ flag, index }) => {
 
 /* ─── Main component ────────────────────────────────────── */
 const Icefall = ({ scrollProgress }) => {
-    // PHASE 3: 0.32 -> 0.50 (moved up in stack)
+    // PHASE 3: 0.26 -> 0.42 with hold
 
-    const containerY = useTransform(scrollProgress, [0.30, 0.38], ['-100%', '0%']);
-    const opacity = useTransform(scrollProgress, [0.30, 0.38], [0, 1]);
-    const exitY = useTransform(scrollProgress, [0.50, 0.58], ['0%', '100%']);
-    const exitOpacity = useTransform(scrollProgress, [0.50, 0.58], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.50, 0.60], [1, 1.4]);
+    const containerY = useTransform(scrollProgress, [0.26, 0.30, 0.36, 0.42], ['-120%', '0%', '0%', '130%']);
+    const opacity = useTransform(scrollProgress, [0.26, 0.30, 0.36, 0.42], [0, 1, 1, 0]);
 
     // Rope gentle lean on scroll
     const ropeSkew = useTransform(scrollProgress, [0.32, 0.50], [-0.8, 0.8]);
@@ -227,10 +224,7 @@ const Icefall = ({ scrollProgress }) => {
             style={{ y: containerY, opacity }}
             className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
-            <motion.div
-                style={{ y: exitY, opacity: exitOpacity, scale: exitScale }}
-                className="w-full h-full relative"
-            >
+            <div className="w-full h-full relative">
                 {/* ── Background ── */}
                 <div className="absolute inset-0 z-0"
                     style={{
@@ -305,8 +299,7 @@ const Icefall = ({ scrollProgress }) => {
                         Tanec na ostří ledu.
                     </h3>
                 </div>
-
-            </motion.div>
+            </div>
         </motion.div>
     );
 };

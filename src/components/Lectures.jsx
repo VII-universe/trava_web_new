@@ -3,9 +3,9 @@ import { motion, useTransform } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
 const Lectures = ({ scrollProgress }) => {
-    // PHASE 6: 0.78 -> 0.90 (Projekty & Přednášky)
-    const containerOpacity = useTransform(scrollProgress, [0.76, 0.82, 0.88, 0.92], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.76, 0.82, 0.88, 0.94], ["-120%", "0%", "0%", "120%"]);
+    // PHASE 6: 0.70 -> 0.86 with hold; exits before Media
+    const containerOpacity = useTransform(scrollProgress, [0.70, 0.74, 0.82, 0.86], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.70, 0.74, 0.82, 0.86], ["-120%", "0%", "0%", "120%"]);
 
     const events = [
         { city: "50 let tour", venue: "únor–březen 2026", date: "Velká přednášková tour" },

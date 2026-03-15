@@ -8,9 +8,10 @@ const About = ({ scrollProgress }) => {
     // PHASE 2: 0.20 -> 0.40
 
     // Transition In
-    const containerOpacity = useTransform(scrollProgress, [0.15, 0.25], [0, 1]);
-    const containerScale = useTransform(scrollProgress, [0.15, 0.3], [0.8, 1]);
-    const containerY = useTransform(scrollProgress, [0.15, 0.25], ["100%", "0%"]);
+    // PHASE 2: 0.14 -> 0.26 (with hold)
+    const containerOpacity = useTransform(scrollProgress, [0.14, 0.18, 0.24, 0.26], [0, 1, 1, 0]);
+    const containerScale = useTransform(scrollProgress, [0.14, 0.18], [0.9, 1]);
+    const containerY = useTransform(scrollProgress, [0.14, 0.18, 0.24, 0.26], ["100%", "0%", "0%", "120%"]);
 
     // Parallax Layers
     const sideLayerLeftX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "-50%"]);
@@ -27,11 +28,10 @@ const About = ({ scrollProgress }) => {
     // Transition Out — "odsunutí" sekce při nájezdu Icefall
     // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
     // odsouvá dolů a lehce do strany, aby působilo jako vytlačení.
-    const exitOpacity = useTransform(scrollProgress, [0.35, 0.45], [1, 0]);
-    const exitScale = useTransform(scrollProgress, [0.35, 0.45], [1, 0.94]);
-    // stejné časování jako Partners (Icefall): interval 0.35 -> 0.45
-    const exitY = useTransform(scrollProgress, [0.35, 0.45], ['0%', '100%']);
-    const exitX = useTransform(scrollProgress, [0.35, 0.45], ['0%', '-8%']);
+    const exitOpacity = useTransform(scrollProgress, [0.24, 0.26], [1, 0]);
+    const exitScale = useTransform(scrollProgress, [0.24, 0.26], [1, 0.94]);
+    const exitY = useTransform(scrollProgress, [0.24, 0.26], ['0%', '120%']);
+    const exitX = useTransform(scrollProgress, [0.24, 0.26], ['0%', '-6%']);
 
     return (
         <motion.div

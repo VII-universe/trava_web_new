@@ -4,9 +4,9 @@ import { MapPin } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg'; // Placeholder for Nepal view
 
 const Nepal = ({ scrollProgress }) => {
-    // PHASE 5: 0.64 -> 0.80 (Nepal — Pub & Hotel)
-    const containerOpacity = useTransform(scrollProgress, [0.62, 0.68], [0, 1]);
-    const containerY = useTransform(scrollProgress, [0.62, 0.68, 0.78, 0.84], ["-120%", "0%", "0%", "120%"]);
+    // PHASE 5: 0.58 -> 0.74 with hold
+    const containerOpacity = useTransform(scrollProgress, [0.58, 0.62, 0.70, 0.74], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.58, 0.62, 0.70, 0.74], ["-120%", "0%", "0%", "130%"]);
 
     return (
         <motion.div

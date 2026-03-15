@@ -7,15 +7,17 @@ import Expeditions from './components/Expeditions';
 import Nepal from './components/Nepal';
 import Lectures from './components/Lectures';
 import Summit from './components/Summit';
+import Contact from './components/Contact';
 import Altimeter from './components/Altimeter';
 import ProgressBar from './components/ProgressBar';
 import SnowOverlay from './components/SnowOverlay';
 import CloudLayer from './components/CloudLayer';
+import Media from './components/Media';
 
 function App() {
   const containerRef = useRef(null);
 
-  // Track scroll over extended height for 7 sections
+  // Track scroll over extended height for 9 sections
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -25,7 +27,7 @@ function App() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 40, damping: 25, restDelta: 0.001 });
 
   return (
-    <div ref={containerRef} className="relative h-[1400vh] bg-ivory selection:bg-gold-400 selection:text-white">
+    <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
       {/* Sticky viewport (camera frame) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -56,8 +58,14 @@ function App() {
           {/* Phase 6: Projekty & Přednášky (0.78 - 0.90) */}
           <Lectures scrollProgress={smoothProgress} />
 
-          {/* Phase 7: Zdravotní osvěta & Média (0.90 - 1.0) */}
+          {/* Phase 7: Média & Obsah (0.86 - 0.96) */}
+          <Media scrollProgress={smoothProgress} />
+
+          {/* Phase 8: Zdravotní osvěta (0.90 - 0.98) */}
           <Summit scrollProgress={smoothProgress} />
+
+          {/* Phase 9: Kontakt (0.96 - 1.0) */}
+          <Contact scrollProgress={smoothProgress} />
         </div>
       </div>
 
