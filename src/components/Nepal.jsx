@@ -4,6 +4,7 @@ import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'luc
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import IcefallImg from '../assets/icefall_bg.jpg';
 import ClimbersImg from '../assets/climbers_bg.jpg';
+import PubBgImg from '../assets/czech_pub_new_bg.png';
 import HotelLogo from '../assets/logo_2.png';
 
 const Nepal = ({ scrollProgress }) => {
@@ -196,7 +197,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={ClimbersImg} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
+                            <img src={PubBgImg} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Czech Pub<br/>Nepal</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
