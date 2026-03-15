@@ -49,7 +49,7 @@ const Summit = ({ scrollProgress }) => {
             {/* Content Block */}
             <motion.div
                 style={{ opacity: contentOpacity, y: contentY }}
-                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6 py-8 rounded-2xl bg-white/38 backdrop-blur-sm border border-white/45 shadow-2xl shadow-slate-900/20"
+                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6 py-10 md:py-12 rounded-3xl bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_0_50px_rgba(0,0,0,0.3)]"
             >
                 <motion.div
                     initial={{ scale: 0 }}
@@ -70,19 +70,19 @@ const Summit = ({ scrollProgress }) => {
                     Kašpárek s nemocí, co to překonává.
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto">
-                    <div className="glass-card p-8">
-                        <h3 className="font-serif text-3xl text-slate-900 mb-4">Osvěta</h3>
-                        <p className="font-sans text-slate-800 leading-relaxed text-lg mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto mt-8">
+                    <div className="glass-card bg-white/60 border-white/40 p-8 shadow-xl">
+                        <h3 className="font-serif text-3xl text-slate-950 mb-4">Osvěta</h3>
+                        <p className="font-sans text-slate-800 leading-relaxed text-lg mb-4 font-medium">
                             Spolupráce a osvěta pro FUCK CANCER a REVMA LIGA.
                         </p>
                         <p className="font-sans text-slate-700 leading-relaxed text-sm">
                             Spolupráce s lékaři: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková, Martin Pospíchal.
                         </p>
                     </div>
-                    <div className="glass-card p-8">
-                        <h3 className="font-serif text-3xl text-slate-900 mb-4">Média & Kontakt</h3>
-                        <ul className="space-y-3 text-slate-800 font-sans text-lg">
+                    <div className="glass-card bg-white/60 border-white/40 p-8 shadow-xl">
+                        <h3 className="font-serif text-3xl text-slate-950 mb-4">Média & Kontakt</h3>
+                        <ul className="space-y-3 text-slate-800 font-sans text-lg font-medium">
                             <li>Blog (nezávislé příběhy z expedic)</li>
                             <li>YouTube (vlogy, zákulisí)</li>
                             <li>Podcast (příprava 2027)</li>
