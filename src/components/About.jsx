@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
+import HonzaProfile from '../assets/honza_profile.png';
 
 const About = ({ scrollProgress }) => {
     // PHASE 2: 0.20 -> 0.40
@@ -15,6 +16,13 @@ const About = ({ scrollProgress }) => {
     const sideLayerLeftX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "-50%"]);
     const sideLayerRightX = useTransform(scrollProgress, [0.2, 0.4], ["0%", "50%"]);
     const sideLayerOpacity = useTransform(scrollProgress, [0.2, 0.4], [0.8, 0]);
+
+    // Honza Profile Layer (Parallax + Zoom)
+    // He should arrive slightly slower and zoom in
+    const honzaX = useTransform(scrollProgress, [0.2, 0.4], ["15%", "5%"]); // Coming from right
+    const honzaY = useTransform(scrollProgress, [0.15, 0.25, 0.35, 0.45], ["20%", "0%", "0%", "20%"]); // Float in/out
+    const honzaScale = useTransform(scrollProgress, [0.2, 0.4], [0.95, 1.1]); // Subtle zoom
+    const honzaOpacity = useTransform(scrollProgress, [0.18, 0.23, 0.37, 0.42], [0, 1, 1, 0]);
 
     // Transition Out — "odsunutí" sekce při nájezdu Icefall
     // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
@@ -62,6 +70,24 @@ const About = ({ scrollProgress }) => {
                     style={{ x: sideLayerRightX, opacity: sideLayerOpacity }}
                     className="absolute right-0 bottom-0 w-[30%] h-[80%] z-10 bg-ivory/20 blur-[40px] mix-blend-screen pointer-events-none"
                 />
+
+                {/* HONZA PROFILE LAYER */}
+                <motion.div
+                    style={{
+                        x: honzaX,
+                        y: honzaY,
+                        scale: honzaScale,
+                        opacity: honzaOpacity,
+                        filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.1))'
+                    }}
+                    className="absolute right-0 bottom-0 w-[60%] h-[90%] z-20 pointer-events-none flex items-end justify-end overflow-hidden"
+                >
+                    <img
+                        src={HonzaProfile}
+                        alt="Honza"
+                        className="w-full h-full object-contain object-right-bottom mix-blend-normal"
+                    />
+                </motion.div>
 
                 {/* Content */}
                 <motion.div
