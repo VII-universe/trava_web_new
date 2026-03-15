@@ -1,47 +1,159 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useTransform } from 'framer-motion';
+import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight } from 'lucide-react';
+import BaseCampImg from '../assets/base_camp_bg.jpg';
 
 const Contact = ({ scrollProgress }) => {
-    // PHASE 9: 0.93 -> 1.0 (middle ground entry timing)
-    const containerOpacity = useTransform(scrollProgress, [0.93, 0.97, 1.0], [0, 1, 1]);
-    const y = useTransform(scrollProgress, [0.93, 0.97, 1.0], ["-120%", "0%", "0%"]);
+    const [focusedInput, setFocusedInput] = useState(null);
+
+    // PHASE 10: 0.94 -> 1.0 (End of the page)
+    const containerOpacity = useTransform(scrollProgress, [0.94, 0.96, 1.0], [0, 1, 1]);
+    const y = useTransform(scrollProgress, [0.94, 0.96, 1.0], ["-120%", "0%", "0%"]);
 
     return (
         <motion.div
             style={{ opacity: containerOpacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900"
         >
-            <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-ivory to-white" />
+            {/* Background elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <img src={BaseCampImg} className="w-full h-full object-cover opacity-10 mix-blend-luminosity scale-110" alt="Background" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900" />
+            </div>
 
-            <motion.div className="relative z-10 max-w-5xl w-full px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <div className="glass-card p-10 pointer-events-auto">
-                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3">Kontakt</h4>
-                    <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-4">Spojme se</h2>
-                    <p className="font-sans text-slate-800 leading-relaxed mb-6">
-                        Napiš mi o expedici, přednášce nebo spolupráci. Ozvu se zpět co nejdřív.
+            <div className="relative z-10 w-full max-w-6xl px-6 md:px-12 pointer-events-auto h-full flex flex-col justify-center">
+                
+                <div className="text-center mb-16 md:mb-20">
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                        Kontakt
+                    </h4>
+                    <h2 className="font-serif text-5xl md:text-7xl text-white mb-6">
+                        Pojďme do toho.
+                    </h2>
+                    <p className="font-sans text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
+                        Ať už jde o sdílení příběhů, přednášku, nebo přípravu na další vrchol – nejlepší výpravy začínají prvním krokem.
                     </p>
-                    <form className="space-y-4">
-                        <input className="w-full glass-card p-3 focus:outline-none" placeholder="Jméno" />
-                        <input className="w-full glass-card p-3 focus:outline-none" placeholder="Email" />
-                        <textarea className="w-full glass-card p-3 h-28 focus:outline-none" placeholder="Zpráva" />
-                        <button type="button" className="w-full py-3 bg-slate-900 text-white font-semibold tracking-wide uppercase text-xs hover:bg-gold-600 transition-colors">
-                            Odeslat
-                        </button>
-                    </form>
                 </div>
 
-                <div className="glass-card p-10 pointer-events-auto">
-                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3">Média & Booking</h4>
-                    <p className="font-sans text-slate-800 leading-relaxed mb-4">
-                        Pro média, podcasty, videa nebo domluvu přednášek pište přímo sem.
-                    </p>
-                    <ul className="space-y-3 text-slate-800 font-sans">
-                        <li><span className="font-semibold">E-mail:</span> media@travaclimb.com</li>
-                        <li><span className="font-semibold">Telefon:</span> +420 123 456 789</li>
-                        <li><span className="font-semibold">Lokalita:</span> ČR & Nepál (Kathmandu Base Camp)</li>
-                    </ul>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+                    
+                    {/* Left Column: Contact Info */}
+                    <div className="lg:col-span-5 flex flex-col justify-between">
+                        <div className="space-y-12">
+                            {/* Contact Item */}
+                            <div className="group">
+                                <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-4 group-hover:text-gold-500 transition-colors">Booking & Média</h5>
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-white/5 border border-white/10 rounded-xl group-hover:bg-gold-500/10 group-hover:border-gold-500/30 transition-all duration-300">
+                                        <Mail className="w-6 h-6 text-slate-300 group-hover:text-gold-400" />
+                                    </div>
+                                    <div>
+                                        <a href="mailto:booking@honzatrava.cz" className="text-white font-serif text-2xl hover:text-gold-400 transition-colors block mb-1">
+                                            booking@honzatrava.cz
+                                        </a>
+                                        <p className="text-slate-400 text-sm">Odpovídáme zpravidla do 48 hodin</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Contact Item */}
+                            <div className="group">
+                                <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-4 group-hover:text-gold-500 transition-colors">Základní Tábor</h5>
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-white/5 border border-white/10 rounded-xl group-hover:bg-gold-500/10 group-hover:border-gold-500/30 transition-all duration-300">
+                                        <MapPin className="w-6 h-6 text-slate-300 group-hover:text-gold-400" />
+                                    </div>
+                                    <div>
+                                        <a href="#" className="text-white font-serif text-2xl hover:text-gold-400 transition-colors block mb-1">
+                                            Czech Pub Nepal
+                                        </a>
+                                        <p className="text-slate-400 text-sm">Thamel, Káthmándú, Nepál</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="mt-16 lg:mt-0 pt-10 border-t border-white/10">
+                            <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-6">Sledujte cestu</h5>
+                            <div className="flex gap-4">
+                                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110">
+                                    <Instagram className="w-5 h-5" />
+                                </a>
+                                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110">
+                                    <Facebook className="w-5 h-5" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Form */}
+                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group/form">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-1000" />
+                        
+                        <form className="relative space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="relative">
+                                    <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'name' ? '-top-6 text-xs text-gold-500' : 'top-3 text-base text-slate-500'}`}>
+                                        Jméno a příjmení
+                                    </label>
+                                    <input 
+                                        type="text"
+                                        onFocus={() => setFocusedInput('name')}
+                                        onBlur={(e) => setFocusedInput(e.target.value ? 'name' : null)}
+                                        className="w-full bg-transparent border-b border-white/20 pb-3 pt-3 text-white focus:border-gold-500 focus:outline-none transition-colors"
+                                    />
+                                </div>
+                                <div className="relative">
+                                    <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'email' ? '-top-6 text-xs text-gold-500' : 'top-3 text-base text-slate-500'}`}>
+                                        E-mail
+                                    </label>
+                                    <input 
+                                        type="email"
+                                        onFocus={() => setFocusedInput('email')}
+                                        onBlur={(e) => setFocusedInput(e.target.value ? 'email' : null)}
+                                        className="w-full bg-transparent border-b border-white/20 pb-3 pt-3 text-white focus:border-gold-500 focus:outline-none transition-colors"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className="relative pt-4">
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'subject' ? 'top-0 text-xs text-gold-500' : 'top-7 text-base text-slate-500'}`}>
+                                    Předmět / O co jde?
+                                </label>
+                                <input 
+                                    type="text"
+                                    onFocus={() => setFocusedInput('subject')}
+                                    onBlur={(e) => setFocusedInput(e.target.value ? 'subject' : null)}
+                                    className="w-full bg-transparent border-b border-white/20 pb-3 pt-7 text-white focus:border-gold-500 focus:outline-none transition-colors"
+                                />
+                            </div>
+
+                            <div className="relative pt-4">
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'message' ? 'top-0 text-xs text-gold-500' : 'top-7 text-base text-slate-500'}`}>
+                                    Vaše zpráva
+                                </label>
+                                <textarea 
+                                    onFocus={() => setFocusedInput('message')}
+                                    onBlur={(e) => setFocusedInput(e.target.value ? 'message' : null)}
+                                    className="w-full bg-transparent border-b border-white/20 pb-3 pt-7 min-h-[120px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
+                                />
+                            </div>
+
+                            <button type="button" className="group w-full md:w-auto mt-8 flex items-center justify-center gap-4 bg-white text-slate-900 py-4 px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-500 hover:text-white transition-all duration-300">
+                                Odeslat zprávu
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </motion.div>
+
+                {/* Footer text */}
+                <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs font-mono uppercase tracking-widest">
+                    <p>© {new Date().getFullYear()} Honza Trávníček. Všechna práva vyhrazena.</p>
+                    <p>Designed for the summit.</p>
+                </div>
+            </div>
         </motion.div>
     );
 };
