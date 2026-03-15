@@ -1,10 +1,12 @@
-import React from 'react';
-import { motion, useTransform } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { ArrowRight, X } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
 
 const About = ({ scrollProgress }) => {
+    const [isStoryOpen, setIsStoryOpen] = useState(false);
+
     // PHASE 2: 0.20 -> 0.40
 
     // Transition In
@@ -105,7 +107,10 @@ const About = ({ scrollProgress }) => {
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
                         Horolezec, cestovatel, dobrodruh, podnikatel. Život mezi ČR a Nepálem. Jsem autentický příběh člověka, který překonal rakovinu i psoriatickou artritidu. Ne proto, abych dobyl vrchol, ale abych našel cestu zpátky.
                     </p>
-                    <button className="group flex items-center gap-3 text-slate-900 font-medium tracking-wide hover:text-gold-600 transition-colors duration-300">
+                    <button 
+                        onClick={() => setIsStoryOpen(true)}
+                        className="group flex items-center gap-3 text-slate-900 font-medium tracking-wide hover:text-gold-600 transition-colors duration-300"
+                    >
                         <span className="relative">
                             Můj celý příběh
                             <span className="absolute -bottom-1 left-0 w-full h-px bg-slate-400 group-hover:bg-gold-400 transition-colors duration-300" />
@@ -113,6 +118,75 @@ const About = ({ scrollProgress }) => {
                         <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                     </button>
                 </motion.div>
+
+                {/* ── Story Modal ── */}
+                <AnimatePresence>
+                    {isStoryOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                            onClick={() => setIsStoryOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                            >
+                                <button 
+                                    onClick={() => setIsStoryOpen(false)}
+                                    className="absolute top-6 right-6 z-10 p-3 rounded-full bg-slate-900/10 hover:bg-slate-900/20 text-slate-900 transition-colors backdrop-blur-sm"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+
+                                {/* Left: Text Content */}
+                                <div className="w-full md:w-1/2 p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar">
+                                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
+                                        Příběh, který se stal
+                                    </h4>
+                                    <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
+                                        Cesta zpátky <br/><span className="italic text-slate-600">k sobě.</span>
+                                    </h2>
+                                    
+                                    <div className="prose prose-slate prose-lg">
+                                        <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
+                                            Nikdy jsem neplánoval být na osmitisícovkách. Můj život byl donedávna o něčem úplně jiném. Až do chvíle, kdy mi do života vstoupila rakovina a psoriatická artritida. Tyto dvě rány mě srazily na úplné dno, z místa, kde se svět zdál být jako jistota.
+                                        </p>
+                                        <p className="font-sans text-slate-700 leading-relaxed mb-4">
+                                            Lékaři, nemocnice, nejistota. Změnilo to všechny moje plány a hodnoty. Najednou nešlo o to, co vybuduji v kariéře, ale jestli vůbec přežiju. Místo toho, abych se poddal, rozhodl jsem se vzepřít. Hory se staly mým lékem, mým psychickým i fyzickým útočištěm.
+                                        </p>
+                                        <p className="font-sans text-slate-700 leading-relaxed mb-4">
+                                            Dnes žiju napůl v České republice a napůl v Nepálu. Himaláje nejsou jenom obří skály, které chci dobýt; jsou mým druhým domovem, místem, kde cítím nejhlubší pokoru. Každý krok nahoru za hranici 8000 metrů beru jako dar. Dýchám za ty, kteří už nemohou, a snažím se ukázat, že překonat se dá i to, co vypadá jako konec.
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-12 pt-8 border-t border-slate-300">
+                                        <blockquote className="font-serif text-2xl text-slate-800 italic leading-snug">
+                                            „Nehraju si na hrdinu. V horách nikdo není hrdina, všechny nás dříve nebo později srovnají na kolena.“
+                                        </blockquote>
+                                    </div>
+                                </div>
+
+                                {/* Right: Photo Grid */}
+                                <div className="w-full md:w-1/2 bg-slate-900 p-2 md:p-4 grid grid-cols-2 grid-rows-2 gap-2 md:gap-4 overflow-y-auto">
+                                    <div className="relative rounded-2xl overflow-hidden group">
+                                        <img src="https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain Landscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                    </div>
+                                    <div className="relative rounded-2xl overflow-hidden group row-span-2">
+                                        <img src="https://images.unsplash.com/photo-1525816922573-0373ab11f181?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Climbing" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                    </div>
+                                    <div className="relative rounded-2xl overflow-hidden group">
+                                        <img src="https://images.unsplash.com/photo-1542259009477-d625272157b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nepal Valley" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
         </motion.div>
     );
