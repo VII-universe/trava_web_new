@@ -21,7 +21,7 @@ const FLAGS = [
         // Mammut colours: black + white + gold tusk logo
         stripes: ['#1a1a1a', '#ffffff', '#1a1a1a'],
         logo: (
-            <img src={LogoMammut} alt="Mammut Logo" className="w-full h-full object-contain drop-shadow-md" />
+            <img src={LogoMammut} alt="Mammut Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
         ),
     },
     {
@@ -33,7 +33,7 @@ const FLAGS = [
         left: '50%',
         stripes: ['#CC0000', '#FECF00', '#CC0000'],
         logo: (
-            <img src={LogoRedBull} alt="Red Bull Logo" className="w-full h-full object-contain drop-shadow-md" />
+            <img src={LogoRedBull} alt="Red Bull Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
         ),
     },
     {
@@ -45,7 +45,7 @@ const FLAGS = [
         left: '82%',
         stripes: ['#1A5C2A', '#F5E6C8', '#1A5C2A'],
         logo: (
-            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-full h-full object-contain drop-shadow-md" />
+            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
         ),
     },
     {
@@ -57,7 +57,7 @@ const FLAGS = [
         left: '34%',
         stripes: ['#1F2937', '#F59E0B', '#1F2937'],
         logo: (
-            <img src={LogoHanibal} alt="Hanibal Logo" className="w-full h-full object-contain drop-shadow-md" />
+            <img src={LogoHanibal} alt="Hanibal Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
         ),
     },
     {
@@ -69,7 +69,7 @@ const FLAGS = [
         left: '66%',
         stripes: ['#111827', '#94A3B8', '#111827'],
         logo: (
-            <img src={LogoTilak} alt="Tilak Logo" className="w-full h-full object-contain drop-shadow-md" />
+            <img src={LogoTilak} alt="Tilak Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
         ),
     },
 ];
@@ -127,10 +127,10 @@ const Flag = ({ flag, index, onSelect }) => {
                     onClick={() => onSelect(flag)}
                     className="relative cursor-pointer group"
                     style={{
-                        width: 136,
-                        height: 90,
+                        width: 144,
+                        height: 144,
                         animation: `flutter ${flutter}s ${delay}s ease-in-out infinite`,
-                        transformOrigin: 'left center',
+                        transformOrigin: 'top center',
                         transition: 'transform 0.3s ease-out',
                         transform: hovered ? 'scale(1.05)' : 'scale(1)',
                     }}
@@ -142,8 +142,8 @@ const Flag = ({ flag, index, onSelect }) => {
                         </span>
                     </div>
 
-                    {/* Logo (fade slightly on hover to show "Zobrazit") */}
-                    <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-30 transition-opacity duration-300">
+                    {/* Logo */}
+                    <div className="absolute inset-0 flex items-center justify-center group-hover:scale-[0.98] group-hover:opacity-60 transition-all duration-300">
                         {flag.logo}
                     </div>
                 </div>
