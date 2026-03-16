@@ -9,6 +9,8 @@ import SummitImg from '../assets/summit_bg.png';
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [showAllProjects, setShowAllProjects] = useState(false);
+    const [selectedMoreProject, setSelectedMoreProject] = useState(null);
 
     // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
     const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);
@@ -32,6 +34,81 @@ const Lectures = ({ scrollProgress }) => {
             image: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
             description: "Hory spojují. Nejsme na to sami – tvoříme projekty s fantastickými lidmi z různých oborů. Ať už jde o natáčení dokumentů s Petrem Horkým, focení s Petrem Janem Juračkou nebo speciální expedice s Jiřím Langmajerem.",
             highlights: ["Dokumentární tvorba", "Unikátní expedice", "Sdílení syrových příběhů z hor"]
+        }
+    ];
+
+    const MORE_PROJECTS = [
+        {
+            id: 'pjj',
+            title: "Petr Jan Juračka",
+            subtitle: "Něha Himálaje, balón Annapurna, Everest Marathon",
+            image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Spolupráce na dechberoucích projektech s fantastickým fotografem a filmařem. Od knihy a filmu Něha Himálaje, přes unikátní projekt létání balónem u Annapurny až po Everest Marathon. Vizuální i lidský zážitek.",
+            highlights: ["Kniha a film Něha Himálaje", "Projekt balón Annapurna", "Everest Marathon"]
+        },
+        {
+            id: 'horky',
+            title: "Petr Horký",
+            subtitle: "Filmy, projekty, společné akce",
+            image: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Dlouhodobá spolupráce s vynikajícím režisérem a polárníkem Petrem Horkým. Tvoříme společně filmy, pořádáme poutavé přednášky a vymýšlíme další nezapomenutelné společné akce, které mají přesah.",
+            highlights: ["Dokumentární filmy", "Společné projekty", "Sdílení zkušeností"]
+        },
+        {
+            id: 'langos',
+            title: "Jirka „Langoš“ Langmajer",
+            subtitle: "Přednášky, promo, společné projekty",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Netradiční spojení světa hor a divadla. S Jirkou Langmajerem pořádáme společné přednášky plné humoru i drsných historek, natáčíme promo videa a připravujeme další unikátní projekty.",
+            highlights: ["Zábavné společné přednášky", "Marketingová promo videa", "Nové formáty vyprávění"]
+        },
+        {
+            id: 'audy',
+            title: "Marek Audy",
+            subtitle: "3D projekce",
+            image: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Zážitek, který vás vtáhne přímo do děje. Díky spolupráci s Markem Audym přinášíme unikátní 3D projekce z našich expedic, které divákům zprostředkovávají naprosto realistický pocit z vysokých hor.",
+            highlights: ["Vtahující 3D fotografie", "Realistický vizuální zážitek z hor", "Využití moderních technologií v přednáškách"]
+        },
+        {
+            id: 'forman',
+            title: "Petr Forman",
+            subtitle: "Divadlo, audiokniha, COPATUTOJE",
+            image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Kreativní přesahy mimo klasické horolezectví. S Petrem Formanem jsme se potkali mimo jiné při tvorbě divadla, nahrávání audioknihy nebo u fantastického regionálního projektu COPATUTOJE.",
+            highlights: ["Netradiční divadelní fúze", "Spolupráce na audioknize", "Projekt COPATUTOJE pro Plzeň"]
+        },
+        {
+            id: 'tour2026',
+            title: "50 let tour (únor–březen 2026)",
+            subtitle: "Velká přednášková tour, zapojení partnerů",
+            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Velkolepá oslava 50. narozenin Honzy Trávy přímo na pódiích napříč republikou. Čeká nás velká přednášková tour plná těch nejlepších příběhů, hostů a překvapení. Exkluzivní možnost zapojení pro partnery projektu.",
+            highlights: ["Republikové turné", "Nejlepší historky z 8 osmitisícovek", "Výrazný prostor pro partnery"]
+        },
+        {
+            id: 'jsmeneskoncili',
+            title: "Jestejsmeneskoncili",
+            subtitle: "S Miri, Horkým, Langošem a J. Votavou",
+            image: "https://images.unsplash.com/photo-1520208422220-d12a3c588e6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Silná sestava, silné poselství. Unikátní sdílený projekt, ve kterém se spojují osobnosti z různých sfér (Miri Jirková, Petr Horký, Jirka Langmajer, Jirka Votava a Honza Tráva), aby ukázali, že po dosažení vrcholu nebo překonání krize to teprve začíná.",
+            highlights: ["Synergie pěti osobností", "Inspirace pro životní změny", "Zcela nový formát spolupráce"]
+        },
+        {
+            id: 'neha_himalaje',
+            title: "Něha Himálaje",
+            subtitle: "Kniha / film / audio s PJJ",
+            image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Multimediální projekt mapující lidskou i horolezeckou tvář himálajských expedic v podání Petra Jana Juračky a Honzy Trávy. Zahrnuje velmi úspěšnou knihu, filmový dokument, audioknihu a celou řadu navazujících přednáškových aktivit.",
+            highlights: ["Úspěšná knižní publikace", "Emocionálně silný dokumentární film", "Rozsáhlá osvětová činnost"]
+        },
+        {
+            id: 'narazove',
+            title: "Další aktivity",
+            subtitle: "Havlík, Kopka, 1000 mil...",
+            image: "https://images.unsplash.com/photo-1516939335682-7e997f08d085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Život není jen o osmitisícovkách. Rádi se vrháme do dalších výzev – ať už jde o natáčení s režisérem Rudou Havlíkem, drsný cyklo výlet v Nepálu s extrémním bikerem Honzou Kopkou, účast na závodě 1000 mil nebo pořádání různých komunitních akcí pro radost.",
+            highlights: ["Spolupráce s filmovou produkcí Rudiho Havlíka", "Extrémní cyklo expedice v Nepálu", "Účast na komunitních projektech"]
         }
     ];
 
@@ -125,6 +202,16 @@ const Lectures = ({ scrollProgress }) => {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+
+                    <div className="mt-8 relative z-10 flex justify-center">
+                        <button
+                            onClick={() => setShowAllProjects(true)}
+                            className="bg-transparent border border-white/20 text-white font-sans tracking-[0.2em] uppercase text-xs font-bold py-4 px-10 rounded-full hover:bg-white/10 hover:border-white/40 transition-all backdrop-blur-sm shadow-xl flex items-center group"
+                        >
+                            Více projektů
+                            <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
+                        </button>
                     </div>
                 </div>
 
@@ -367,6 +454,131 @@ const Lectures = ({ scrollProgress }) => {
                                 </button>
                             </div>
                         </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* "Více projektů" Modal Area */}
+            <AnimatePresence>
+                {showAllProjects && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[120] bg-[#0E131F]/90 backdrop-blur-xl flex flex-col p-4 md:p-10 pointer-events-auto"
+                    >
+                        <div className="flex justify-between items-center w-full max-w-7xl mx-auto mb-8 relative z-20">
+                            <h2 className="font-serif text-3xl md:text-5xl text-white">Všechny projekty</h2>
+                            <button
+                                onClick={() => {
+                                    setShowAllProjects(false);
+                                    setSelectedMoreProject(null);
+                                }}
+                                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-md"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="flex-1 w-full max-w-7xl mx-auto overflow-y-auto overflow-x-hidden pb-20 scrollbar-hide">
+                            <AnimatePresence mode="wait">
+                                {selectedMoreProject ? (
+                                    <motion.div
+                                        key="detail"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="bg-[#fcfbf9] border border-white/20 shadow-2xl rounded-[2rem] w-full overflow-hidden relative flex flex-col md:flex-row min-h-[70vh]"
+                                    >
+                                        <div className="md:w-1/2 relative min-h-[300px] md:min-h-0">
+                                            <img src={selectedMoreProject.image} className="absolute inset-0 w-full h-full object-cover" alt={selectedMoreProject.title} />
+                                            <button
+                                                onClick={() => setSelectedMoreProject(null)}
+                                                className="absolute top-6 left-6 flex items-center bg-black/40 hover:bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-colors"
+                                            >
+                                                <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                                                Zpět na přehled
+                                            </button>
+                                        </div>
+
+                                        <div className="md:w-1/2 p-8 md:p-14 overflow-y-auto text-left flex flex-col justify-center bg-white">
+                                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] font-bold mb-4">
+                                                {selectedMoreProject.subtitle}
+                                            </h4>
+                                            <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6 leading-tight">
+                                                {selectedMoreProject.title}
+                                            </h2>
+                                            
+                                            <p className="font-sans text-slate-600 leading-relaxed mb-8 text-lg">
+                                                {selectedMoreProject.description}
+                                            </p>
+
+                                            <div className="bg-slate-50 border border-slate-100 p-8 rounded-2xl mb-10">
+                                                <h5 className="font-serif text-slate-800 text-xl mb-5">V čem spočívá spolupráce?</h5>
+                                                <ul className="space-y-4">
+                                                    {selectedMoreProject.highlights.map((h, i) => (
+                                                        <li key={i} className="flex items-start text-base text-slate-600">
+                                                            <ArrowRight className="w-5 h-5 text-gold-500 mr-4 mt-0.5 shrink-0" />
+                                                            <span>{h}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedMoreProject(null);
+                                                    setShowAllProjects(false);
+                                                    setOpen(true);
+                                                }}
+                                                className="w-full sm:w-auto self-start bg-slate-900 text-white font-sans tracking-[0.2em] uppercase text-sm font-bold py-5 px-10 rounded-xl hover:bg-gold-600 transition-colors shadow-xl shadow-slate-900/20"
+                                            >
+                                                Mám zájem
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="grid"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                    >
+                                        {MORE_PROJECTS.map((project, idx) => (
+                                            <motion.div
+                                                key={project.id}
+                                                whileHover={{ y: -5 }}
+                                                onClick={() => setSelectedMoreProject(project)}
+                                                className="group cursor-pointer bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-sm hover:bg-white/10 transition-colors"
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: idx * 0.05 }}
+                                            >
+                                                <div className="w-full h-48 overflow-hidden relative">
+                                                    <img 
+                                                        src={project.image} 
+                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                        alt={project.title} 
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E131F] to-transparent" />
+                                                </div>
+                                                <div className="p-6">
+                                                    <h3 className="text-white font-serif text-2xl mb-2 group-hover:text-gold-400 transition-colors">{project.title}</h3>
+                                                    <p className="text-slate-400 text-sm font-sans mb-6 line-clamp-2">{project.subtitle}</p>
+                                                    
+                                                    <div className="flex items-center text-gold-500 font-bold text-[10px] tracking-[0.2em] uppercase">
+                                                        Zobrazit více <ArrowRight className="w-3 h-3 ml-2 group-hover:translate-x-1 transition-transform" />
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
