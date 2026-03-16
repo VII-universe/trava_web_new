@@ -117,10 +117,10 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
                                     src={HonzaProfile} 
-                                    className="w-full h-full object-cover object-top filter grayscale contrast-125 opacity-90 mix-blend-multiply" 
+                                    className="w-full h-full object-cover object-top filter contrast-105 opacity-95 saturate-110" 
                                     alt="Honza" 
                                 />
-                                <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
+                                <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-sm font-medium tracking-wide">
                                 Honza
@@ -137,10 +137,10 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
                                     src={ClimbersImg} 
-                                    className="w-full h-full object-cover object-center filter grayscale contrast-125 opacity-90" 
+                                    className="w-full h-full object-cover object-center filter contrast-105 opacity-95 saturate-110" 
                                     alt="Miri" 
                                 />
-                                <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
+                                <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-sm font-medium tracking-wide">
                                 Miri
@@ -158,10 +158,9 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
                                     src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                    className="w-full h-full object-cover filter grayscale contrast-110 opacity-80" 
+                                    className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Base Camp" 
                                 />
-                                <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-4 left-0 w-full text-center font-serif italic text-slate-500 text-xs font-medium tracking-wide">
                                 Base Camp
@@ -178,10 +177,9 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
                                     src="https://images.unsplash.com/photo-1549880181-56a44cf4a9a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                    className="w-full h-full object-cover filter grayscale contrast-125 opacity-85" 
+                                    className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Naše Cesty" 
                                 />
-                                <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-4 left-0 w-full text-center font-serif italic text-slate-500 text-xs font-medium tracking-wide">
                                 Cesta nahoru
@@ -198,10 +196,9 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
                                     src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                    className="w-full h-full object-cover filter grayscale contrast-110 opacity-75" 
+                                    className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Vrchol" 
                                 />
-                                <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-3 left-0 w-full text-center font-serif italic text-slate-400 text-[10px] font-medium tracking-wide">
                                 Expedice Manáslu
