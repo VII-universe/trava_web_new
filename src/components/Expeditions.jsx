@@ -147,6 +147,67 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
 
+                        {/* Additional Polaroids */}
+                        <motion.div
+                            initial={{ rotate: -10, x: -140, y: 80, opacity: 0 }}
+                            whileInView={{ rotate: -5, x: -90, y: 40, opacity: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.4, delay: 0.3, type: "spring", bounce: 0.2 }}
+                            className="hidden xl:block absolute -bottom-32 left-[10%] z-0 w-64 bg-[#f8f9fa] p-3 pb-12 shadow-[0_15px_40px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/40"
+                        >
+                            <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    className="w-full h-full object-cover filter grayscale contrast-110 opacity-80" 
+                                    alt="Base Camp" 
+                                />
+                                <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
+                            </div>
+                            <div className="absolute bottom-4 left-0 w-full text-center font-serif italic text-slate-500 text-xs font-medium tracking-wide">
+                                Base Camp
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ rotate: -15, x: 120, y: 80, opacity: 0 }}
+                            whileInView={{ rotate: 12, x: 80, y: 50, opacity: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.5, delay: 0.4, type: "spring", bounce: 0.2 }}
+                            className="hidden xl:block absolute -bottom-36 right-10 z-0 w-72 bg-[#f8f9fa] p-3 pb-14 shadow-[0_20px_50px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
+                        >
+                            <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1549880181-56a44cf4a9a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    className="w-full h-full object-cover filter grayscale contrast-125 opacity-85" 
+                                    alt="Naše Cesty" 
+                                />
+                                <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
+                            </div>
+                            <div className="absolute bottom-4 left-0 w-full text-center font-serif italic text-slate-500 text-xs font-medium tracking-wide">
+                                Cesta nahoru
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ rotate: 15, x: 60, y: -80, opacity: 0 }}
+                            whileInView={{ rotate: 8, x: 40, y: -40, opacity: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.3, delay: 0.5, type: "spring", bounce: 0.3 }}
+                            className="hidden lg:block absolute -top-24 right-[-40px] z-0 w-56 bg-[#f8f9fa] p-2 pb-10 shadow-[0_10px_30px_rgba(0,0,0,0.4)] rounded-sm border border-slate-200/40"
+                        >
+                            <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    className="w-full h-full object-cover filter grayscale contrast-110 opacity-75" 
+                                    alt="Vrchol" 
+                                />
+                                <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
+                            </div>
+                            <div className="absolute bottom-3 left-0 w-full text-center font-serif italic text-slate-400 text-[10px] font-medium tracking-wide">
+                                Expedice Manáslu
+                            </div>
+                        </motion.div>
+
                         <motion.div className="glass-card p-6 md:p-10 text-left pointer-events-auto relative z-10 backdrop-blur-2xl bg-slate-900/60 border-white/10 shadow-2xl h-full flex flex-col justify-center">
                             <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4">S kým do hor</h3>
                             <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight drop-shadow-sm">
