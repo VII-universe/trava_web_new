@@ -139,10 +139,10 @@ const Expeditions = ({ scrollProgress }) => {
                                     <button
                                         key={exped.id}
                                         onClick={() => setSelectedExped(exped)}
-                                        className="group text-left p-4 md:p-5 rounded-xl border border-white/10 bg-black/20 hover:bg-black/40 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-sm flex items-center justify-between"
+                                        className="group text-left p-4 md:p-5 rounded-xl border border-white/10 bg-black/60 hover:bg-black/80 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-md flex items-center justify-between shadow-lg"
                                     >
                                         <div>
-                                            <h4 className="font-serif text-lg md:text-xl text-white group-hover:text-gold-400 transition-colors">{exped.title}</h4>
+                                            <h4 className="font-serif text-lg md:text-xl text-white drop-shadow-md group-hover:text-gold-400 transition-colors">{exped.title}</h4>
                                             <div className="flex gap-4 mt-2">
                                                 <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
                                                 <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase">• {exped.difficulty}</span>
