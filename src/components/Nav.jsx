@@ -68,18 +68,18 @@ const Nav = ({ scrollProgress }) => {
         <>
             {/* Main Sticky Logo - Top Left */}
             <div className="fixed top-6 left-6 md:top-10 md:left-10 z-[100] cursor-pointer" onClick={() => handleNavClick(0.0)}>
-                <div className={`relative h-20 md:h-28 transition-transform duration-300 ${scrolled ? 'scale-90 opacity-90' : 'scale-100 opacity-100 hover:scale-105'} origin-top-left`}>
+                <div className={`relative flex items-start transition-transform duration-300 ${scrolled ? 'scale-90 opacity-90' : 'scale-100 opacity-100 hover:scale-105'} origin-top-left`}>
                     <motion.img 
                         src={LogoWhite} 
                         alt="Honza Tráva Logo (White)" 
                         style={{ opacity: whiteOpacity }}
-                        className="absolute inset-0 h-full w-auto drop-shadow-md" 
+                        className="h-16 md:h-24 lg:h-32 w-auto drop-shadow-md relative z-10" 
                     />
                     <motion.img 
                         src={LogoBlack} 
                         alt="Honza Tráva Logo (Black)" 
                         style={{ opacity: blackOpacity }}
-                        className="absolute inset-0 h-full w-auto" 
+                        className="absolute top-0 left-0 h-16 md:h-24 lg:h-32 w-auto z-20" 
                     />
                 </div>
             </div>

@@ -54,16 +54,16 @@ const Hero = ({ scrollProgress }) => {
             {/* Text */}
             <motion.div
                 style={{ y: textY, opacity: textOpacity, scale: textScale }}
-                className="relative z-20 text-center flex flex-col items-center px-4"
+                className="relative z-20 text-center flex flex-col items-center w-full px-4"
             >
                 <motion.h2 className="text-gold-500 font-sans tracking-[0.3em] text-sm uppercase mb-6 drop-shadow-sm">
                     Poutník mezi světy.
                 </motion.h2>
-                <motion.div className="flex justify-center w-full px-4 mb-4">
+                <motion.div className="flex justify-center w-full mb-8">
                     <img 
                         src={LogoMain} 
                         alt="Honza Tráva Logo" 
-                        className="w-full max-w-[600px] md:max-w-[900px] lg:max-w-[1200px] xl:max-w-[1600px] h-auto object-contain drop-shadow-2xl" 
+                        className="w-full max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-[1200px] h-auto object-contain drop-shadow-2xl" 
                     />
                 </motion.div>
                 <motion.div className="mt-12 flex flex-col items-center gap-2">
