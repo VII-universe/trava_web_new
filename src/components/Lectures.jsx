@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useTransform } from 'framer-motion';
+import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import IcefallImg from '../assets/icefall_bg.jpg';
@@ -8,13 +8,31 @@ import SummitImg from '../assets/summit_bg.png';
 
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
     // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
     const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);
     const containerY = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], ["-120%", "0%", "0%", "120%"]);
 
     const events = [
-        { city: "50 let tour", venue: "únor–březen 2026", date: "Velká přednášková tour" },
-        { city: "Propojení s osobnostmi", venue: "Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman", date: "Spolupráce" }
+        { 
+            id: 'tour50',
+            city: "50 let tour", 
+            venue: "únor–březen 2026", 
+            date: "Velká přednášková tour",
+            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Jedinečná přednášková série k životnímu jubileu Honzy Trávy. Přijďte si poslechnout příběhy z osmi osmitisícovek, zjistit, jaké to je trávit desítky dní v extrémních podmínkách, a nasát motivaci pro vaše vlastní životní výzvy.",
+            highlights: ["Příhody z 8 osmitisícovek", "Fotky a videa, která jste neviděli", "Osobní setkání a autogramiáda"]
+        },
+        { 
+            id: 'collab',
+            city: "Propojení s osobnostmi", 
+            venue: "Petr Jan Juračka, Petr Horký, Jirka Langmajer, Marek Audy...", 
+            date: "Spolupráce se zajímavými lidmi",
+            image: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Hory spojují. Nejsme na to sami – tvoříme projekty s fantastickými lidmi z různých oborů. Ať už jde o natáčení dokumentů s Petrem Horkým, focení s Petrem Janem Juračkou nebo speciální expedice s Jiřím Langmajerem.",
+            highlights: ["Dokumentární tvorba", "Unikátní expedice", "Sdílení syrových příběhů z hor"]
+        }
     ];
 
     return (
@@ -91,12 +109,21 @@ const Lectures = ({ scrollProgress }) => {
                     {/* Cards Grid (on top) */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 max-w-5xl mx-auto backdrop-blur-sm">
                         {events.map(event => (
-                            <div key={event.city} className="glass-card p-8 bg-white/60 border-white/40 text-left shadow-2xl">
+                            <motion.div 
+                                key={event.id} 
+                                onClick={() => setSelectedEvent(event)}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="glass-card p-8 bg-white/60 hover:bg-white/80 border-white/40 text-left shadow-2xl cursor-pointer transition-colors"
+                            >
                                 <Calendar className="w-6 h-6 text-gold-600 mb-4" />
                                 <h5 className="font-serif text-2xl text-slate-900 mb-2">{event.city}</h5>
-                                <p className="text-slate-700 text-sm leading-relaxed font-medium">{event.venue}</p>
-                                {event.date && <p className="text-slate-500 text-xs mt-2 uppercase tracking-widest font-bold">{event.date}</p>}
-                            </div>
+                                <p className="text-slate-700 text-sm leading-relaxed font-medium mb-4">{event.venue}</p>
+                                <div className="flex items-center text-gold-600 font-bold text-xs tracking-widest uppercase">
+                                    Více informací
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -274,6 +301,75 @@ const Lectures = ({ scrollProgress }) => {
                     </motion.div>
                 </motion.div>
             )}
+
+            {/* Detailed Project Modal */}
+            <AnimatePresence>
+                {selectedEvent && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 md:p-6 pointer-events-auto"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0, y: 30 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 30 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                            className="bg-[#fcfbf9] border border-white/60 shadow-2xl rounded-[2rem] max-w-5xl w-full max-h-[90vh] overflow-hidden relative flex flex-col md:flex-row"
+                        >
+                            <button
+                                onClick={() => setSelectedEvent(null)}
+                                className="absolute top-6 right-6 p-2 bg-slate-200/80 hover:bg-slate-300 rounded-full transition text-slate-600 z-10"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            {/* Image Side */}
+                            <div className="md:w-1/2 relative min-h-[250px] md:min-h-0">
+                                <img src={selectedEvent.image} className="absolute inset-0 w-full h-full object-cover" alt={selectedEvent.city} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden" />
+                            </div>
+
+                            {/* Content Side */}
+                            <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto text-left flex flex-col justify-center">
+                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] font-bold mb-4">
+                                    {selectedEvent.date}
+                                </h4>
+                                <h2 className="font-serif text-3xl md:text-5xl text-slate-900 mb-6 leading-tight">
+                                    {selectedEvent.city}
+                                </h2>
+                                
+                                <p className="font-sans text-slate-600 leading-relaxed mb-8">
+                                    {selectedEvent.description}
+                                </p>
+
+                                <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl mb-8">
+                                    <h5 className="font-serif text-slate-800 text-lg mb-4">A na co se těšit?</h5>
+                                    <ul className="space-y-3">
+                                        {selectedEvent.highlights.map((h, i) => (
+                                            <li key={i} className="flex items-start text-sm text-slate-600">
+                                                <ArrowRight className="w-4 h-4 text-gold-500 mr-3 mt-0.5 shrink-0" />
+                                                <span>{h}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setSelectedEvent(null);
+                                        setOpen(true);
+                                    }}
+                                    className="w-full sm:w-auto self-start bg-slate-900 text-white font-sans tracking-[0.2em] uppercase text-xs font-bold py-4 px-8 rounded-xl hover:bg-gold-600 transition-colors shadow-lg shadow-slate-900/20"
+                                >
+                                    Mám zájem
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
