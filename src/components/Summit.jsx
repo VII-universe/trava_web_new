@@ -9,10 +9,10 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Summit = ({ scrollProgress }) => {
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
 
-    const opacity = useTransform(scrollProgress, [0.82, 0.86, 0.92, 0.96], [0, 1, 1, 0]);
+    const opacity = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.98], [0, 1, 1, 1]);
     const scale = useTransform(scrollProgress, [0.82, 0.90], [1.08, 1]);
-    const y = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.98], ["-120%", "0%", "0%", "160%"]);
-    const bgY = useTransform(scrollProgress, [0.78, 1.0], ["-15%", "15%"]);
+    const y = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.98], ["-120%", "0%", "0%", "100%"]);
+    const bgY = useTransform(scrollProgress, [0.78, 1.0], ["-10%", "10%"]);
 
     // Content animations
     const contentOpacity = useTransform(scrollProgress, [0.84, 0.90, 0.94, 0.98], [0, 1, 1, 0]);
@@ -30,9 +30,9 @@ const Summit = ({ scrollProgress }) => {
             <motion.div
                 style={{
                     scale,
-                    // stronger bottom transparency to hide sharp lower edge
-                    maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 230px), transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 230px), transparent 100%)'
+                    // keep bottom transparency to hide sharp lower edge over previous elements, but make top solid
+                    maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 230px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 230px), transparent 100%)'
                 }}
                 className="absolute inset-0 z-0 h-full w-full"
             >

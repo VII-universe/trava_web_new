@@ -6,9 +6,9 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Contact = ({ scrollProgress }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
-    // PHASE 9: 0.96 -> 1.0 (End of the page)
-    // Make it sticky by sliding down from the top when Summit finishes fading
-    const containerOpacity = useTransform(scrollProgress, [0.94, 0.98, 1.0], [0, 1, 1]);
+    // PHASE 9: 0.94 -> 1.0 (End of the page)
+    // Make it sticky by sliding exactly in sync with Summit.jsx exit (-100% to 0% as Summit goes 0% to 100%)
+    const containerOpacity = useTransform(scrollProgress, [0.93, 0.94, 0.98, 1.0], [0, 1, 1, 1]);
     const y = useTransform(scrollProgress, [0.94, 0.98, 1.0], ["-100%", "0%", "0%"]);
 
     // Generate random snow particles once
