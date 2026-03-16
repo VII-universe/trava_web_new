@@ -4,14 +4,14 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
     { label: 'Úvod', progress: 0.0 },
-    { label: 'O Honzovi', progress: 0.2 },
-    { label: 'Partneři', progress: 0.32 },
-    { label: 'Expedice & 14 Summits', progress: 0.48 },
-    { label: 'Nepál — Pub & Hotel', progress: 0.64 },
-    { label: 'Přednášky', progress: 0.78 },
-    { label: 'Média & Obsah', progress: 0.86 },
-    { label: 'Kašpárek & Osvěta', progress: 0.90 },
-    { label: 'Kontakt', progress: 1.0 }
+    { label: 'O Honzovi', progress: 0.16 },
+    { label: 'Partneři', progress: 0.24 },
+    { label: 'Expedice & 14 Summits', progress: 0.31 },
+    { label: 'Nepál — Pub & Hotel', progress: 0.46 },
+    { label: 'Přednášky & Projekty', progress: 0.58 },
+    { label: 'Média & Obsah', progress: 0.72 },
+    { label: 'Kašpárek & Osvěta', progress: 0.84 },
+    { label: 'Kontakt', progress: 0.98 }
 ];
 
 const Nav = () => {

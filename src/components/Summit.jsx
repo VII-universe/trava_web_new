@@ -127,14 +127,32 @@ const Summit = ({ scrollProgress }) => {
                             Spolupráce s lékaři: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková, Martin Pospíchal.
                         </p>
                     </div>
-                    <div className="glass-card bg-white/60 border-white/40 p-8 shadow-xl">
-                        <h3 className="font-serif text-3xl text-slate-950 mb-4">Média & Kontakt</h3>
-                        <ul className="space-y-3 text-slate-800 font-sans text-lg font-medium">
-                            <li>Blog (nezávislé příběhy z expedic)</li>
-                            <li>YouTube (vlogy, zákulisí)</li>
-                            <li>Podcast (příprava 2027)</li>
-                            <li>Kontakt a Booking formulář</li>
-                        </ul>
+                    <div className="glass-card bg-white/60 border-white/40 p-8 shadow-xl flex flex-col justify-center">
+                        <h3 className="font-serif text-3xl text-slate-950 mb-6">Média & Kontakt</h3>
+                        <div className="space-y-4 flex flex-col">
+                            <button 
+                                onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
+                                className="text-left font-sans text-lg font-medium text-slate-800 hover:text-gold-600 transition flex items-center justify-between group"
+                            >
+                                Blog (Příběhy z expedic)
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                            </button>
+                            <button 
+                                onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
+                                className="text-left font-sans text-lg font-medium text-slate-800 hover:text-gold-600 transition flex items-center justify-between group"
+                            >
+                                YouTube & Podcast 2027
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                            </button>
+                            <div className="h-px w-full bg-slate-200 my-2" />
+                            <button 
+                                onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+                                className="text-left font-sans text-lg font-bold text-slate-950 hover:text-gold-600 transition flex items-center justify-between group"
+                            >
+                                Kontakt a Booking
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
