@@ -6,19 +6,46 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Contact = ({ scrollProgress }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
-    // PHASE 10: 0.94 -> 1.0 (End of the page)
-    const containerOpacity = useTransform(scrollProgress, [0.94, 0.96, 1.0], [0, 1, 1]);
-    const y = useTransform(scrollProgress, [0.94, 0.96, 1.0], ["-120%", "0%", "0%"]);
+    // PHASE 9: 0.96 -> 1.0 (End of the page)
+    // Make it sticky by sliding up right when Summit finishes fading
+    const containerOpacity = useTransform(scrollProgress, [0.94, 0.98, 1.0], [0, 1, 1]);
+    const y = useTransform(scrollProgress, [0.94, 0.98, 1.0], ["100%", "0%", "0%"]);
+
+    // Generate random snow particles once
+    const snowParticles = Array.from({ length: 70 }).map((_, i) => ({
+        id: i,
+        left: `${Math.random() * 100}%`,
+        size: Math.random() * 4 + 2 + 'px',
+        animationDuration: Math.random() * 5 + 5 + 's',
+        animationDelay: Math.random() * -10 + 's',
+        opacity: Math.random() * 0.6 + 0.2
+    }));
 
     return (
         <motion.div
             style={{ opacity: containerOpacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900"
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900 overflow-hidden"
         >
             {/* Background elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <img src={BaseCampImg} className="w-full h-full object-cover opacity-10 mix-blend-luminosity scale-110" alt="Background" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900" />
+                
+                {/* Snow Effect */}
+                {snowParticles.map(particle => (
+                    <div
+                        key={particle.id}
+                        className="snow"
+                        style={{
+                            left: particle.left,
+                            width: particle.size,
+                            height: particle.size,
+                            animationDuration: particle.animationDuration,
+                            animationDelay: particle.animationDelay,
+                            opacity: particle.opacity,
+                        }}
+                    />
+                ))}
             </div>
 
             <div className="relative z-10 w-full max-w-6xl px-6 md:px-12 pointer-events-auto h-full flex flex-col justify-center">
