@@ -7,9 +7,11 @@ const Contact = ({ scrollProgress }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
     // PHASE 9: 0.94 -> 1.0 (End of the page)
+    // PHASE 9: 0.94 -> 1.0 (End of the page)
     // Make it sticky by sliding exactly in sync with Summit.jsx exit (-100% to 0% as Summit goes 0% to 100%)
-    const containerOpacity = useTransform(scrollProgress, [0.93, 0.94, 0.98, 1.0], [0, 1, 1, 1]);
-    const y = useTransform(scrollProgress, [0.94, 0.98, 1.0], ["-100%", "0%", "0%"]);
+    // Start overlapping slightly earlier (0.92 instead of 0.94) to aggressively eliminate gaps
+    const containerOpacity = useTransform(scrollProgress, [0.91, 0.92, 0.98, 1.0], [0, 1, 1, 1]);
+    const y = useTransform(scrollProgress, [0.92, 0.97, 1.0], ["-100%", "0%", "0%"]);
 
     // Generate random snow particles once
     const snowParticles = Array.from({ length: 70 }).map((_, i) => ({
@@ -24,7 +26,7 @@ const Contact = ({ scrollProgress }) => {
     return (
         <motion.div
             style={{ opacity: containerOpacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900 overflow-hidden"
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900 overflow-hidden z-[60]"
         >
             {/* Background elements */}
             <div className="absolute inset-0 overflow-hidden">
