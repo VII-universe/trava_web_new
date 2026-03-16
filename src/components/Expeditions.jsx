@@ -120,13 +120,13 @@ const Expeditions = ({ scrollProgress }) => {
 
                         <motion.div className="glass-card p-6 md:p-10 text-left pointer-events-auto relative z-10 backdrop-blur-2xl bg-slate-900/60 border-white/10 shadow-2xl h-full flex flex-col justify-center">
                             <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4">S kým do hor</h3>
-                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight">
+                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight drop-shadow-sm">
                                 Osmitisícovky i treky bez přetvářky
                             </h2>
-                            <p className="font-sans text-slate-300 leading-relaxed text-base md:text-lg mb-4">
+                            <p className="font-sans text-slate-100 font-medium leading-relaxed text-base md:text-lg mb-4 drop-shadow-sm">
                                 Honza Tráva má za sebou 6 osmitisícovek. Miri Jirková vystoupala na nespočet šestitisícovek...
                             </p>
-                            <p className="font-sans text-slate-400 leading-relaxed text-sm md:text-base">
+                            <p className="font-sans text-slate-200 leading-relaxed text-sm md:text-base drop-shadow-sm">
                                 Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
                             </p>
                         </motion.div>
@@ -144,8 +144,8 @@ const Expeditions = ({ scrollProgress }) => {
                                         <div>
                                             <h4 className="font-serif text-lg md:text-xl text-white group-hover:text-gold-400 transition-colors">{exped.title}</h4>
                                             <div className="flex gap-4 mt-2">
-                                                <span className="font-sans text-xs text-slate-400 tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
-                                                <span className="font-sans text-xs text-slate-400 tracking-wider uppercase">• {exped.difficulty}</span>
+                                                <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
+                                                <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase">• {exped.difficulty}</span>
                                             </div>
                                         </div>
                                         <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-gold-500 group-hover:border-gold-500 transition-colors">
