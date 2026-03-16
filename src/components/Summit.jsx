@@ -2,6 +2,8 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { Trophy, Star, ChevronUp } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
+import ClimbersImg from '../assets/climbers_bg.jpg';
+import HonzaProfileImg from '../assets/honza_profile.png';
 
 const Summit = ({ scrollProgress }) => {
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
@@ -44,6 +46,26 @@ const Summit = ({ scrollProgress }) => {
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
+                
+                {/* POLAROID 1 - Left */}
+                <motion.div
+                    initial={{ opacity: 0, rotate: -15, x: -100 }}
+                    whileInView={{ opacity: 1, rotate: -8, x: 0 }}
+                    transition={{ duration: 1.5, delay: 0.2 }}
+                    className="absolute top-20 left-10 md:top-40 md:left-20 w-48 md:w-72 bg-white p-3 pb-8 md:p-4 md:pb-12 shadow-2xl rounded-sm z-20 pointer-events-auto hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer hidden sm:block border border-slate-200"
+                >
+                    <img src={ClimbersImg} className="w-full h-auto object-cover grayscale-0 sepia-0" alt="Horolezci" />
+                </motion.div>
+
+                {/* POLAROID 2 - Right */}
+                <motion.div
+                    initial={{ opacity: 0, rotate: 15, x: 100 }}
+                    whileInView={{ opacity: 1, rotate: 6, x: 0 }}
+                    transition={{ duration: 1.5, delay: 0.4 }}
+                    className="absolute bottom-40 right-10 md:bottom-60 md:right-20 w-48 md:w-[22rem] bg-white p-3 pb-8 md:p-4 md:pb-12 shadow-xl hover:shadow-2xl rounded-sm z-20 pointer-events-auto hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer hidden lg:block border border-slate-200"
+                >
+                    <img src={HonzaProfileImg} className="w-full h-auto object-cover grayscale-0" alt="Honza Profil" />
+                </motion.div>
             </motion.div>
 
             {/* Content Block */}
@@ -91,13 +113,13 @@ const Summit = ({ scrollProgress }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center gap-6">
+                <div className="flex flex-col items-center gap-6 mt-16">
                     <button
                         onClick={scrollToTop}
-                        className="group relative px-8 py-4 bg-slate-900 text-white font-bold uppercase tracking-widest text-sm overflow-hidden transition-all hover:bg-gold-500 rounded-px"
+                        className="group relative px-12 py-5 bg-slate-900 text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-gold-500 rounded-full shadow-lg shadow-black/20 hover:shadow-gold-500/40 hover:-translate-y-1"
                     >
-                        <span className="relative z-10 flex items-center gap-2">
-                            ZPĚT DO ÚDOLÍ <ChevronUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+                        <span className="relative z-10 flex items-center gap-3">
+                            ZPĚT DO ÚDOLÍ <ChevronUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
                         </span>
                     </button>
 
