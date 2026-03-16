@@ -237,9 +237,9 @@ const Icefall = ({ scrollProgress }) => {
 
     // PHASE 3: 0.18 -> 0.31 with hold (entry matches About exit exactly)
 
-    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.29, 0.33], ['-85%', '0%', '0%', '130%']);
-    const opacity = useTransform(scrollProgress, [0.19, 0.24, 0.29, 0.33], [0, 1, 1, 0]);
-    const bgY = useTransform(scrollProgress, [0.15, 0.39], ["-15%", "15%"]);
+    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], ['-85%', '0%', '0%', '95%']);
+    const opacity = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], [0, 1, 1, 0]);
+    const bgY = useTransform(scrollProgress, [0.15, 0.37], ["-15%", "15%"]);
 
     // Rope gentle lean on scroll
     const ropeSkew = useTransform(scrollProgress, [0.32, 0.50], [-0.8, 0.8]);

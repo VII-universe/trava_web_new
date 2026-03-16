@@ -63,10 +63,10 @@ const MORE_EXPEDITIONS = [
 ];
 
 const Expeditions = ({ scrollProgress }) => {
-    const containerOpacity = useTransform(scrollProgress, [0.25, 0.30, 0.40, 0.44], [0, 1, 1, 0]);
-    const backgroundY = useTransform(scrollProgress, [0.25, 0.30, 0.40, 0.44], ["-60%", "0%", "0%", "130%"]);
-    const contentY = useTransform(scrollProgress, [0.25, 0.30, 0.40, 0.44], ["-60%", "0%", "0%", "130%"]);
-    const bgY = useTransform(scrollProgress, [0.22, 0.48], ["-15%", "15%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], [0, 1, 1, 0]);
+    const backgroundY = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], ["-95%", "0%", "0%", "130%"]);
+    const contentY = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], ["-95%", "0%", "0%", "130%"]);
+    const bgY = useTransform(scrollProgress, [0.25, 0.48], ["-15%", "15%"]);
 
     const [selectedExped, setSelectedExped] = useState(null);
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
