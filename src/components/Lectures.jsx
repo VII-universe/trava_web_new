@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
-import Polaroid1 from '../assets/zmensene/Portréty/Přednášky/photohanny-129.jpg';
-import Polaroid2 from '../assets/zmensene/Portréty/Přednášky/DSD_8450.jpg';
-import Polaroid3 from '../assets/zmensene/Portréty/Přednášky/photohanny-134.jpg';
-import BookingBg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/DSC06903.jpg';
+import Polaroid1 from '../assets/zmensene/portrety/prednasky/photohanny-129.jpg';
+import Polaroid2 from '../assets/zmensene/portrety/prednasky/dsd_8450.jpg';
+import Polaroid3 from '../assets/zmensene/portrety/prednasky/photohanny-134.jpg';
+import BookingBg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
 
-import Tour50Img from '../assets/zmensene/Portréty/Přednášky/Honza - přednáška.jpg';
-import CollabImg from '../assets/zmensene/Portréty/Přednášky/DSC04123.jpg';
+import Tour50Img from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
+import CollabImg from '../assets/zmensene/portrety/prednasky/dsc04123.jpg';
 
-import PjjImg from '../assets/zmensene/Portréty/Expedice a treky/PJJ_Manaslu_2022_NikonZ30_6384-Edit.jpg';
-import HorkyImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/20240728_131841.jpg';
-import LangosImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/20240715_133229.jpg';
-import AudyImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06947.jpg';
-import FormanImg from '../assets/zmensene/Kathmandu/DSC08157.jpg';
-import TourMainImg from '../assets/zmensene/Portréty/Přednášky/1R2A2034.jpg';
-import JesteImg from '../assets/zmensene/Projekty/Ještě Jsme Neskončili/20240806_151350.jpg';
-import NehaImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/DSC07645.jpg';
-import DalsiImg from '../assets/zmensene/Skupinky/WhatsApp Image 2025-06-15 at 18.53.30 (2).jpg';
+import PjjImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
+import HorkyImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.jpg';
+import LangosImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240715_133229.jpg';
+import AudyImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
+import FormanImg from '../assets/zmensene/kathmandu/dsc08157.jpg';
+import TourMainImg from '../assets/zmensene/portrety/prednasky/1r2a2034.jpg';
+import JesteImg from '../assets/zmensene/projekty/jeste_jsme_neskoncili/20240806_151350.jpg';
+import NehaImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07645.jpg';
+import DalsiImg from '../assets/zmensene/skupinky/whatsapp_image_2025-06-15_at_18_53_30__2_.jpg';
 
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);

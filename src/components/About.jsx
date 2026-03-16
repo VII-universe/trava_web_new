@@ -3,9 +3,9 @@ import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
-import StoryImg1 from '../assets/zmensene/Portréty/Historie/trava30.jpg';
-import StoryImg2 from '../assets/zmensene/Portréty/Historie/037.jpg';
-import StoryImg3 from '../assets/zmensene/Portréty/Expedice a treky/20240723_091830.jpg';
+import StoryImg1 from '../assets/zmensene/portrety/historie/trava30.jpg';
+import StoryImg2 from '../assets/zmensene/portrety/historie/037.jpg';
+import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.jpg';
 
 const About = ({ scrollProgress }) => {
     const [isStoryOpen, setIsStoryOpen] = useState(false);

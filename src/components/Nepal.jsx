@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'lucide-react';
-import HotelImg1 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-010-hires.jpg';
-import HotelImg2 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-012-hires.jpg';
-import HotelImg3 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-017-hires.jpg';
-import HotelImg4 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-022-hires.jpg';
+import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
+import HotelImg2 from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.jpg';
+import HotelImg3 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.jpg';
+import HotelImg4 from '../assets/zmensene/hotel/czech-pub-highlander-022-hires.jpg';
 
-import PubImg1 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-035-hires.jpg';
-import PubImg2 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-040-hires.jpg';
-import PubImg3 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-045-hires.jpg';
-import PubImg4 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-050-hires.jpg';
+import PubImg1 from '../assets/zmensene/pub/prostory/czech-pub-highlander-035-hires.jpg';
+import PubImg2 from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hires.jpg';
+import PubImg3 from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.jpg';
+import PubImg4 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.jpg';
 import PubBgImg from '../assets/czech_pub_new_bg.png';
 import HotelLogo from '../assets/logo_2.png';
 

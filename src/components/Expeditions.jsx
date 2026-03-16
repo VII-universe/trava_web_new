@@ -5,20 +5,20 @@ import SummitImage from '../assets/summit_bg.png';
 import HonzaProfile from '../assets/honza_profile.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
 
-import ManasluImg from '../assets/zmensene/Portréty/Expedice a treky/20240728_133329.jpg';
-import MeraImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06947.jpg';
-import YogaImg from '../assets/zmensene/Portréty/Expedice a treky/20240723_091830.jpg';
+import ManasluImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.jpg';
+import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
+import YogaImg from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.jpg';
 
-import AconcaImg from '../assets/zmensene/Portréty/Expedice a treky/DSC05780.jpg';
-import ElbrusImg from '../assets/zmensene/Portréty/Expedice a treky/DSC_0008.jpg';
-import KiliImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06888.jpg';
-import MustangImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06330.jpg';
-import K2Img from '../assets/zmensene/Portréty/Expedice a treky/DSC07035.jpg';
-import EcuadorImg from '../assets/zmensene/Portréty/Expedice a treky/DSC07138.jpg';
+import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.jpg';
+import ElbrusImg from '../assets/zmensene/portrety/expedice_a_treky/dsc_0008.jpg';
+import KiliImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06888.jpg';
+import MustangImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
+import K2Img from '../assets/zmensene/portrety/expedice_a_treky/dsc07035.jpg';
+import EcuadorImg from '../assets/zmensene/portrety/expedice_a_treky/dsc07138.jpg';
 
-import PolaroidBaseCamp from '../assets/zmensene/Portréty/Expedice a treky/20240709_160740.jpg';
-import PolaroidCesta from '../assets/zmensene/Portréty/Expedice a treky/PJJ_Manaslu_2022_NikonZ30_6158.jpg';
-import PolaroidVrchol from '../assets/zmensene/Portréty/Expedice a treky/20240801_142543.jpg';
+import PolaroidBaseCamp from '../assets/zmensene/portrety/expedice_a_treky/20240709_160740.jpg';
+import PolaroidCesta from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
+import PolaroidVrchol from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.jpg';
 
 const EXPEDITIONS = [
     {
