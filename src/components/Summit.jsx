@@ -4,6 +4,7 @@ import { Trophy, Star, ChevronUp } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
 import HonzaProfileImg from '../assets/honza_profile.png';
+import BaseCampImg from '../assets/base_camp_bg.jpg';
 
 const Summit = ({ scrollProgress }) => {
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
@@ -47,30 +48,43 @@ const Summit = ({ scrollProgress }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
                 
-                {/* POLAROID 1 - Left */}
+                {/* POLAROID 1 - Top Left */}
                 <motion.div
-                    initial={{ opacity: 0, rotate: -15, x: -100 }}
-                    whileInView={{ opacity: 1, rotate: -8, x: 0 }}
-                    transition={{ duration: 1.5, delay: 0.2 }}
-                    className="absolute top-20 left-10 md:top-40 md:left-20 w-48 md:w-64 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 transition-all duration-500 group"
+                    initial={{ opacity: 0, rotate: -20, x: -100 }}
+                    whileInView={{ opacity: 1, rotate: -12, x: 0 }}
+                    transition={{ duration: 1.5, delay: 0.1 }}
+                    className="absolute top-10 left-4 md:top-16 md:left-[10%] lg:top-20 lg:left-[18%] w-56 md:w-[20rem] lg:w-[24rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
                 >
                     <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                         <img src={ClimbersImg} className="w-full h-full object-cover grayscale-0 sepia-0" alt="Horolezci" />
                     </div>
-                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-xs md:text-sm font-medium">Tým v akci</div>
+                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Tým v akci</div>
                 </motion.div>
 
-                {/* POLAROID 2 - Right */}
+                {/* POLAROID 2 - Top Right */}
                 <motion.div
-                    initial={{ opacity: 0, rotate: 15, x: 100 }}
-                    whileInView={{ opacity: 1, rotate: 6, x: 0 }}
-                    transition={{ duration: 1.5, delay: 0.4 }}
-                    className="absolute bottom-40 right-10 md:bottom-60 md:right-20 w-48 md:w-64 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden lg:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 transition-all duration-500 group"
+                    initial={{ opacity: 0, rotate: 20, x: 100 }}
+                    whileInView={{ opacity: 1, rotate: 14, x: 0 }}
+                    transition={{ duration: 1.5, delay: 0.3 }}
+                    className="absolute top-48 right-4 md:top-32 md:right-[5%] lg:top-40 lg:right-[15%] w-56 md:w-[20rem] lg:w-[24rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
                 >
                     <div className="w-full aspect-[4/5] bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                         <img src={HonzaProfileImg} className="w-full h-full object-cover object-top grayscale-0" alt="Honza Profil" />
                     </div>
-                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-xs md:text-sm font-medium">Na vrcholu</div>
+                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Na vrcholu</div>
+                </motion.div>
+
+                {/* POLAROID 3 - Bottom Left/Center */}
+                <motion.div
+                    initial={{ opacity: 0, rotate: -10, y: 100 }}
+                    whileInView={{ opacity: 1, rotate: -6, y: 0 }}
+                    transition={{ duration: 1.5, delay: 0.5 }}
+                    className="absolute bottom-10 left-1/4 md:bottom-16 md:left-[20%] lg:bottom-24 lg:left-[28%] w-56 md:w-[20rem] lg:w-[25rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden md:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
+                >
+                    <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
+                        <img src={BaseCampImg} className="w-full h-full object-cover grayscale-0" alt="Základní tábor" />
+                    </div>
+                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Společná cesta</div>
                 </motion.div>
             </motion.div>
 
