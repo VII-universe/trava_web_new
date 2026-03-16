@@ -78,7 +78,11 @@ const Expeditions = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full bg-[#1A202C] pointer-events-none"
         >
             <motion.div
-                style={{ y: backgroundY }}
+                style={{ 
+                    y: backgroundY,
+                    maskImage: 'linear-gradient(to top, black 0%, black calc(100% - 150px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to top, black 0%, black calc(100% - 150px), transparent 100%)'
+                }}
                 className="absolute inset-0 w-full h-[150%] z-0"
             >
                 <motion.img
