@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import LogoWhite from '../assets/svg/honza_trava_logo_negativni_V1.svg';
+import LogoBlack from '../assets/svg/honza_trava_logo_V1.svg';
 
 const navItems = [
     { label: 'Úvod', progress: 0.0 },
@@ -15,9 +16,23 @@ const navItems = [
     { label: 'Kontakt', progress: 0.98 }
 ];
 
-const Nav = () => {
+const Nav = ({ scrollProgress }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+
+    // Fade logo colors based on background brightness phases
+    // Hero(Light) -> About(Dark) -> Icefall(Light) -> Expe, Nepal, Lectr(Dark) -> Media(Light) -> Summit, Contact(Dark)
+    const whiteOpacity = scrollProgress ? useTransform(
+        scrollProgress,
+        [0, 0.12, 0.16, 0.28, 0.32, 0.44, 0.48, 0.84, 0.86, 0.88, 0.91, 1.0],
+        [0, 0,    1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
+    ) : 1;
+
+    const blackOpacity = scrollProgress ? useTransform(
+        scrollProgress,
+        [0, 0.12, 0.16, 0.28, 0.32, 0.44, 0.48, 0.84, 0.86, 0.88, 0.91, 1.0],
+        [1, 1,    0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
+    ) : 0;
 
     // Close menu on escape key
     useEffect(() => {
@@ -53,11 +68,20 @@ const Nav = () => {
         <>
             {/* Main Sticky Logo - Top Left */}
             <div className="fixed top-6 left-6 md:top-10 md:left-10 z-[100] cursor-pointer" onClick={() => handleNavClick(0.0)}>
-                <img 
-                    src={LogoWhite} 
-                    alt="Honza Tráva Logo" 
-                    className={`h-12 md:h-16 transition-all duration-300 drop-shadow-md ${scrolled ? 'opacity-90' : 'opacity-100 hover:scale-105'}`} 
-                />
+                <div className={`relative h-20 md:h-28 transition-transform duration-300 ${scrolled ? 'scale-90 opacity-90' : 'scale-100 opacity-100 hover:scale-105'} origin-top-left`}>
+                    <motion.img 
+                        src={LogoWhite} 
+                        alt="Honza Tráva Logo (White)" 
+                        style={{ opacity: whiteOpacity }}
+                        className="absolute inset-0 h-full w-auto drop-shadow-md" 
+                    />
+                    <motion.img 
+                        src={LogoBlack} 
+                        alt="Honza Tráva Logo (Black)" 
+                        style={{ opacity: blackOpacity }}
+                        className="absolute inset-0 h-full w-auto" 
+                    />
+                </div>
             </div>
 
             {/* Burger Button - Top Right */}
