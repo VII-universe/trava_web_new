@@ -15,7 +15,7 @@ const FLAGS = [
         // Mammut colours: black + white + gold tusk logo
         stripes: ['#1a1a1a', '#ffffff', '#1a1a1a'],
         logo: (
-            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 md:w-48 h-auto drop-shadow-xl">
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 md:w-64 h-auto drop-shadow-xl">
                 <text x="4" y="32" fontFamily="serif" fontSize="22" fontWeight="900" fill="#D4AF37" letterSpacing="1">
                     MAMMUT
                 </text>
@@ -33,7 +33,7 @@ const FLAGS = [
         left: '50%',
         stripes: ['#CC0000', '#FECF00', '#CC0000'],
         logo: (
-            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 md:w-48 h-auto drop-shadow-xl">
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 md:w-64 h-auto drop-shadow-xl">
                 <circle cx="25" cy="22" r="14" fill="#FECF00" opacity="0.9" />
                 <circle cx="45" cy="22" r="14" fill="#CC0000" opacity="0.9" />
                 <text x="8" y="42" fontFamily="sans-serif" fontSize="9" fontWeight="900" fill="white" letterSpacing="0.5">
@@ -51,7 +51,7 @@ const FLAGS = [
         left: '82%',
         stripes: ['#1A5C2A', '#F5E6C8', '#1A5C2A'],
         logo: (
-            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 md:w-48 h-auto drop-shadow-xl">
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 md:w-64 h-auto drop-shadow-xl">
                 {/* Pilsner Urquell shield shape */}
                 <path d="M40 4 L68 16 L68 32 Q40 44 12 32 L12 16 Z" fill="#C8A84B" opacity="0.3" />
                 <text x="16" y="22" fontFamily="serif" fontSize="11" fontWeight="700" fill="#fff" letterSpacing="0">
@@ -72,7 +72,7 @@ const FLAGS = [
         left: '34%',
         stripes: ['#1F2937', '#F59E0B', '#1F2937'],
         logo: (
-            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 md:w-48 h-auto drop-shadow-xl">
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 md:w-64 h-auto drop-shadow-xl">
                 <rect x="10" y="8" width="60" height="28" rx="4" fill="rgba(0,0,0,0.28)" />
                 <text x="16" y="28" fontFamily="sans-serif" fontSize="11" fontWeight="900" fill="#fff" letterSpacing="0.6">
                     HANIBAL
@@ -89,7 +89,7 @@ const FLAGS = [
         left: '66%',
         stripes: ['#111827', '#94A3B8', '#111827'],
         logo: (
-            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 md:w-48 h-auto drop-shadow-xl">
+            <svg viewBox="0 0 80 44" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 md:w-64 h-auto drop-shadow-xl">
                 <circle cx="20" cy="22" r="8" fill="#fff" opacity="0.85" />
                 <path d="M34 28 L42 14 L50 28 Z" fill="#fff" opacity="0.9" />
                 <text x="52" y="26" fontFamily="sans-serif" fontSize="8" fontWeight="800" fill="#fff" letterSpacing="1">
@@ -197,7 +197,7 @@ const Flag = ({ flag, index, onSelect }) => {
                     {/* Logo (fade slightly on hover to show "Zobrazit") */}
                     <div className="group-hover:opacity-30 transition-opacity duration-300" style={{
                         position: 'absolute', inset: 0, display: 'flex',
-                        alignItems: 'center', justifyContent: 'center', padding: 10,
+                        alignItems: 'center', justifyContent: 'center', padding: 2,
                     }}>
                         {flag.logo}
                     </div>
@@ -237,11 +237,11 @@ const Icefall = ({ scrollProgress }) => {
 
     // PHASE 3: 0.18 -> 0.31 with hold (entry matches About exit exactly)
 
-    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], ['-85%', '0%', '0%', '105%']);
+    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], ['-87%', '0%', '0%', '105%']);
     const opacity = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], [0, 1, 1, 0]);
     
     // Slower fade out for the background image specifically
-    const imageOpacity = useTransform(scrollProgress, [0.26, 0.31], [0.8, 0]);
+    const imageOpacity = useTransform(scrollProgress, [0.27, 0.31], [0.8, 0]);
     
     const bgY = useTransform(scrollProgress, [0.15, 0.37], ["-15%", "15%"]);
 

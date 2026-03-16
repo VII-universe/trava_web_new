@@ -3,6 +3,9 @@ import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
+import StoryImg1 from '../assets/zmensene/Portréty/Historie/trava30.jpg';
+import StoryImg2 from '../assets/zmensene/Portréty/Historie/037.jpg';
+import StoryImg3 from '../assets/zmensene/Portréty/Expedice a treky/20240723_091830.jpg';
 
 const About = ({ scrollProgress }) => {
     const [isStoryOpen, setIsStoryOpen] = useState(false);
@@ -13,7 +16,7 @@ const About = ({ scrollProgress }) => {
     // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.25)
     const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.22, 0.25], [0, 1, 1, 0]);
     const containerScale = useTransform(scrollProgress, [0.12, 0.16], [0.9, 1]);
-    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.19, 0.24], ["100%", "0%", "0%", "85%"]);
+    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.19, 0.24], ["100%", "0%", "0%", "87%"]);
     const bgY = useTransform(scrollProgress, [0.10, 0.26], ["-15%", "15%"]);
 
     // Parallax Layers
@@ -37,8 +40,8 @@ const About = ({ scrollProgress }) => {
     const exitY = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
     const exitX = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
     // Fast fade out for the background image specifically, so it doesn't hard-cut under Icefall
-    // Starts fading just as Icefall enters at 0.19, fully gone by 0.24 (slower)
-    const imageOpacity = useTransform(scrollProgress, [0.19, 0.24], [0.8, 0]);
+    // Starts fading just as Icefall enters at 0.19, fully gone by 0.23 (slower)
+    const imageOpacity = useTransform(scrollProgress, [0.19, 0.23], [0.8, 0]);
 
     return (
         <motion.div
@@ -182,13 +185,13 @@ const About = ({ scrollProgress }) => {
                                 {/* Right: Photo Grid */}
                                 <div className="w-full md:w-1/2 bg-slate-900 p-2 md:p-4 grid grid-cols-2 grid-rows-2 gap-2 md:gap-4 overflow-y-auto">
                                     <div className="relative rounded-2xl overflow-hidden group">
-                                        <img src="https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain Landscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src={StoryImg1} alt="Mountain Landscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     </div>
                                     <div className="relative rounded-2xl overflow-hidden group row-span-2">
-                                        <img src="https://images.unsplash.com/photo-1525816922573-0373ab11f181?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Climbing" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src={StoryImg2} alt="Climbing" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     </div>
                                     <div className="relative rounded-2xl overflow-hidden group">
-                                        <img src="https://images.unsplash.com/photo-1542259009477-d625272157b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nepal Valley" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src={StoryImg3} alt="Nepal Valley" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     </div>
                                 </div>
                             </motion.div>

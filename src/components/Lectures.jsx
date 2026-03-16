@@ -28,6 +28,9 @@ const Lectures = ({ scrollProgress }) => {
     // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
     const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);
     const containerY = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], ["-120%", "0%", "0%", "120%"]);
+    
+    // Lightens the background as it exits
+    const lightenOpacity = useTransform(scrollProgress, [0.60, 0.69], [0, 1]);
 
     const events = [
         { 
@@ -132,6 +135,12 @@ const Lectures = ({ scrollProgress }) => {
         >
             {/* Visual: Peak view with clouds below */}
             <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-white/20 to-transparent blur-[60px] opacity-40" />
+            
+            {/* Lightening Overlay */}
+            <motion.div 
+                className="absolute inset-0 bg-[#f8f9fa] z-0" 
+                style={{ opacity: lightenOpacity }} 
+            />
 
             <motion.div
                 style={{ y: containerY }}

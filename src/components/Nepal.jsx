@@ -22,6 +22,9 @@ const Nepal = ({ scrollProgress }) => {
     const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
     const containerY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
     const bgY = useTransform(scrollProgress, [0.38, 0.62], ["-15%", "15%"]);
+    
+    // Background image fades in from 0
+    const imageOpacity = useTransform(scrollProgress, [0.42, 0.46], [0, 1]);
 
     return (
         <>
@@ -32,12 +35,11 @@ const Nepal = ({ scrollProgress }) => {
             {/* Full width background image */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <motion.img
-                    style={{ y: bgY }}
+                    style={{ y: bgY, opacity: imageOpacity }}
                     src={PubBgImg}
                     alt="Kathmandu Background"
-                    className="absolute inset-0 w-full h-full object-cover opacity-90 scale-125 origin-center"
+                    className="absolute inset-0 w-full h-full object-cover scale-125 origin-center"
                 />
-                <div className="absolute inset-0 bg-slate-900/30" />
             </div>
 
             <div
@@ -59,7 +61,7 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-12">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[160px] object-contain mb-4 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[200px] md:h-[240px] object-contain mb-4 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
