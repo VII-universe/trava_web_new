@@ -9,9 +9,9 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Summit = ({ scrollProgress }) => {
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
 
-    const opacity = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.99], [0, 1, 1, 1]);
+    const opacity = useTransform(scrollProgress, [0.79, 0.81, 0.94, 0.99], [0, 1, 1, 1]);
     const scale = useTransform(scrollProgress, [0.82, 0.90], [1.08, 1]);
-    const y = useTransform(scrollProgress, [0.82, 0.86, 0.94, 0.99], ["-120%", "0%", "0%", "90%"]);
+    const y = useTransform(scrollProgress, [0.79, 0.84, 0.94, 0.99], ["-100%", "0%", "0%", "90%"]);
     const bgY = useTransform(scrollProgress, [0.78, 1.0], ["-10%", "10%"]);
 
     // Content animations

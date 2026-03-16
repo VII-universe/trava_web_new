@@ -53,8 +53,8 @@ const Media = ({ scrollProgress }) => {
     const [readingArticle, setReadingArticle] = useState(false);
 
     // PHASE 7: 0.68 -> 0.84 with hold (slightly closer)
-    const containerOpacity = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.84], [0, 1, 1, 0]);
-    const y = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.84], ["-120%", "0%", "0%", "130%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.85], [0, 1, 1, 1]); // Keeping opacity solid while leaving so no fade gap
+    const y = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.84], ["-120%", "0%", "0%", "100%"]);
 
     const items = [
         {
