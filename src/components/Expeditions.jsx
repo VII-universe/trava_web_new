@@ -35,6 +35,15 @@ const EXPEDITIONS = [
     }
 ];
 
+const MORE_EXPEDITIONS = [
+    { id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Nejvyšší hora Jižní Ameriky (6961 m)' },
+    { id: 'elbrus', title: 'Elbrus', alt: 'Elbrus 5642 m', image: 'https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Střecha Evropy (5642 m)' },
+    { id: 'kilimanjaro', title: 'Kilimandžáro', alt: 'Kilimandžáro 5895 m', image: 'https://images.unsplash.com/photo-1613145904873-196024345cc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Africký gigant (5895 m)' },
+    { id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Trek do zakázaného království' },
+    { id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Trek po ledovci Baltoro (Pákistán)' },
+    { id: 'ecuador', title: 'Ekvádor', alt: 'Sopky Ekvádoru', image: 'https://images.unsplash.com/photo-1588693761747-d865cbb68595?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Výstupy na rovníkové sopky' },
+];
+
 const Expeditions = ({ scrollProgress }) => {
     const containerOpacity = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], [0, 1, 1, 0]);
     const backgroundY = useTransform(scrollProgress, [0.28, 0.32, 0.40, 0.44], ["-120%", "0%", "0%", "130%"]);
@@ -42,6 +51,7 @@ const Expeditions = ({ scrollProgress }) => {
     const bgY = useTransform(scrollProgress, [0.25, 0.48], ["-15%", "15%"]);
 
     const [selectedExped, setSelectedExped] = useState(null);
+    const [showAllExpeditions, setShowAllExpeditions] = useState(false);
 
     return (
         <motion.div
@@ -154,6 +164,15 @@ const Expeditions = ({ scrollProgress }) => {
                                     </button>
                                 ))}
                             </div>
+
+                            {/* Více expedicí Button */}
+                            <button 
+                                onClick={() => setShowAllExpeditions(true)}
+                                className="mt-6 w-full py-4 px-6 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3 group shadow-md"
+                            >
+                                <span className="drop-shadow-sm group-hover:text-gold-400 transition-colors">Více expedicí</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 group-hover:text-gold-400 transition-all" />
+                            </button>
                         </motion.div>
                     </div>
                 </div>
@@ -227,6 +246,70 @@ const Expeditions = ({ scrollProgress }) => {
                                     Mám zájem
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── All Expeditions Grid Modal ── */}
+            <AnimatePresence>
+                {showAllExpeditions && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                        onClick={() => setShowAllExpeditions(false)}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-[#111827] w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col relative"
+                        >
+                            <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-20 bg-gradient-to-b from-[#111827] to-transparent">
+                                <div>
+                                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-2">
+                                        Kompletní přehled
+                                    </h4>
+                                    <h2 className="font-serif text-3xl md:text-4xl text-white">
+                                        Všechny Expedice
+                                    </h2>
+                                </div>
+                                <button 
+                                    onClick={() => setShowAllExpeditions(false)}
+                                    className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md border border-transparent hover:border-white/30"
+                                >
+                                    <X className="w-5 h-5 md:w-6 md:h-6" />
+                                </button>
+                            </div>
+
+                            <div className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {MORE_EXPEDITIONS.map((exped) => (
+                                        <div 
+                                            key={exped.id}
+                                            className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
+                                        >
+                                            <img 
+                                                src={exped.image} 
+                                                alt={exped.alt} 
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                                            
+                                            <div className="absolute inset-x-0 bottom-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                                <h3 className="font-serif text-2xl text-white mb-2">{exped.title}</h3>
+                                                <p className="font-sans text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                                                    {exped.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
