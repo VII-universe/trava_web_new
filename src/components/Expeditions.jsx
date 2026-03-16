@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
-import { X, MapPin, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, MapPin } from 'lucide-react';
+import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
 import SummitImage from '../assets/summit_bg.png';
 import HonzaProfile from '../assets/honza_profile.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
@@ -113,9 +114,10 @@ const Expeditions = ({ scrollProgress }) => {
                 style={{ y: contentY }}
                 className="w-full h-full relative flex flex-col items-center justify-center px-6"
             >
-                <div className="text-center mb-10 md:mb-16 relative z-10 pt-10 md:pt-0">
+                <div className="text-center mb-10 md:mb-16 relative z-10 pt-10 md:pt-0 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 mb-6 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
-                        04 — Expedice & 14Summits (4500 m)
+                        04 — Expedice (4500 m)
                     </h4>
                     <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-4 drop-shadow-md">
                         Od himálajských vrcholů po točené v Káthmándú

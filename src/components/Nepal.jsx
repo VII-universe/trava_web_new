@@ -11,7 +11,8 @@ import PubImg2 from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hi
 import PubImg3 from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.jpg';
 import PubImg4 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.jpg';
 import PubBgImg from '../assets/czech_pub_new_bg.png';
-import HotelLogo from '../assets/logo_2.png';
+import HotelLogo from '../assets/svg/honza_trava_logo_hotel_V1.svg';
+import PubLogo from '../assets/svg/honza_trava_logo_pub_V1.svg';
 
 const Nepal = ({ scrollProgress }) => {
     const [openHotel, setOpenHotel] = useState(false);
@@ -61,7 +62,7 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-12">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[200px] md:h-[240px] object-contain mb-4 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="w-[300px] md:w-[400px] object-contain mb-4 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
@@ -75,9 +76,7 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-2">
-                                CZECH PUB
-                            </h4>
+                            <img src={PubLogo} alt="Czech Pub Logo" className="w-[250px] md:w-[350px] object-contain mb-4 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
@@ -146,7 +145,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[160px] object-contain mb-6 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="w-[200px] md:w-[300px] object-contain mb-6 self-start" />
                             <h2 className="font-serif text-3xl text-slate-900 mb-6">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
@@ -224,7 +223,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-2">Gastronomie</h4>
+                            <img src={PubLogo} alt="Czech Pub Logo" className="w-[180px] md:w-[250px] object-contain mb-6 self-start mt-2" />
                             <h2 className="font-serif text-3xl text-slate-900 mb-6">Místo, kde se potkávají dobrodruzi</h2>
 
                             <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">

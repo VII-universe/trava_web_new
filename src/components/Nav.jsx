@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import LogoWhite from '../assets/svg/honza_trava_logo_negativni_V1.svg';
 
 const navItems = [
     { label: 'Úvod', progress: 0.0 },
@@ -50,7 +51,16 @@ const Nav = () => {
 
     return (
         <>
-            {/* Burger Button */}
+            {/* Main Sticky Logo - Top Left */}
+            <div className="fixed top-6 left-6 md:top-10 md:left-10 z-[100] cursor-pointer" onClick={() => handleNavClick(0.0)}>
+                <img 
+                    src={LogoWhite} 
+                    alt="Honza Tráva Logo" 
+                    className={`h-12 md:h-16 transition-all duration-300 drop-shadow-md ${scrolled ? 'opacity-90' : 'opacity-100 hover:scale-105'}`} 
+                />
+            </div>
+
+            {/* Burger Button - Top Right */}
             <button
                 onClick={() => setIsOpen(true)}
                 className={`fixed top-6 right-6 md:top-10 md:right-10 z-[100] p-4 rounded-full transition-all duration-300 ${
