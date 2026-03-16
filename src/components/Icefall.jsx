@@ -237,7 +237,7 @@ const Icefall = ({ scrollProgress }) => {
 
     // PHASE 3: 0.18 -> 0.31 with hold (entry matches About exit exactly)
 
-    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], ['-95%', '0%', '0%', '130%']);
+    const containerY = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], ['-85%', '0%', '0%', '130%']);
     const opacity = useTransform(scrollProgress, [0.19, 0.24, 0.28, 0.31], [0, 1, 1, 0]);
     const bgY = useTransform(scrollProgress, [0.15, 0.35], ["-15%", "15%"]);
 

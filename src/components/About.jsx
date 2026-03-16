@@ -13,7 +13,7 @@ const About = ({ scrollProgress }) => {
     // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.25)
     const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.22, 0.25], [0, 1, 1, 0]);
     const containerScale = useTransform(scrollProgress, [0.12, 0.16], [0.9, 1]);
-    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.19, 0.24], ["100%", "0%", "0%", "95%"]);
+    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.19, 0.24], ["100%", "0%", "0%", "85%"]);
     const bgY = useTransform(scrollProgress, [0.10, 0.26], ["-15%", "15%"]);
 
     // Parallax Layers
