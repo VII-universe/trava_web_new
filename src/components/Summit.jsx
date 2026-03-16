@@ -52,9 +52,12 @@ const Summit = ({ scrollProgress }) => {
                     initial={{ opacity: 0, rotate: -15, x: -100 }}
                     whileInView={{ opacity: 1, rotate: -8, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.2 }}
-                    className="absolute top-20 left-10 md:top-40 md:left-20 w-48 md:w-72 bg-white p-3 pb-8 md:p-4 md:pb-12 shadow-2xl rounded-sm z-20 pointer-events-auto hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer hidden sm:block border border-slate-200"
+                    className="absolute top-20 left-10 md:top-40 md:left-20 w-48 md:w-64 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 transition-all duration-500 group"
                 >
-                    <img src={ClimbersImg} className="w-full h-auto object-cover grayscale-0 sepia-0" alt="Horolezci" />
+                    <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
+                        <img src={ClimbersImg} className="w-full h-full object-cover grayscale-0 sepia-0" alt="Horolezci" />
+                    </div>
+                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-xs md:text-sm font-medium">Tým v akci</div>
                 </motion.div>
 
                 {/* POLAROID 2 - Right */}
@@ -62,9 +65,12 @@ const Summit = ({ scrollProgress }) => {
                     initial={{ opacity: 0, rotate: 15, x: 100 }}
                     whileInView={{ opacity: 1, rotate: 6, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.4 }}
-                    className="absolute bottom-40 right-10 md:bottom-60 md:right-20 w-48 md:w-[22rem] bg-white p-3 pb-8 md:p-4 md:pb-12 shadow-xl hover:shadow-2xl rounded-sm z-20 pointer-events-auto hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer hidden lg:block border border-slate-200"
+                    className="absolute bottom-40 right-10 md:bottom-60 md:right-20 w-48 md:w-64 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden lg:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 transition-all duration-500 group"
                 >
-                    <img src={HonzaProfileImg} className="w-full h-auto object-cover grayscale-0" alt="Honza Profil" />
+                    <div className="w-full aspect-[4/5] bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
+                        <img src={HonzaProfileImg} className="w-full h-full object-cover object-top grayscale-0" alt="Honza Profil" />
+                    </div>
+                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-xs md:text-sm font-medium">Na vrcholu</div>
                 </motion.div>
             </motion.div>
 
