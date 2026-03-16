@@ -71,7 +71,7 @@ const Media = ({ scrollProgress }) => {
                         whileInView={{ rotate: -12, x: -100, y: -40, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -top-16 -left-6 md:-top-24 md:-left-20 lg:-top-28 lg:-left-32 z-0 w-44 md:w-60 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500 group"
+                        className="absolute -top-16 -left-6 md:-top-24 md:-left-20 lg:-top-28 lg:-left-32 z-0 w-48 md:w-64 lg:w-80 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500 group"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                             <img src={MEDIA_DATA.video[0].image} className="w-full h-full object-cover filter grayscale contrast-125 opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Video" />
@@ -91,7 +91,7 @@ const Media = ({ scrollProgress }) => {
                         whileInView={{ rotate: 16, x: 100, y: 20, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, delay: 0.1, type: "spring", bounce: 0.3 }}
-                        className="absolute -top-10 -right-6 md:-top-20 md:-right-20 lg:-top-16 lg:-right-32 z-0 w-44 md:w-60 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500 group"
+                        className="absolute -top-10 -right-6 md:-top-20 md:-right-20 lg:-top-16 lg:-right-32 z-0 w-48 md:w-64 lg:w-80 bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden sm:block pointer-events-auto cursor-pointer hover:scale-105 transition-transform duration-500 group"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                             <img src={MEDIA_DATA.podcast[0].image} className="w-full h-full object-cover object-top filter grayscale contrast-125 opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Podcast" />
@@ -111,7 +111,7 @@ const Media = ({ scrollProgress }) => {
                         whileInView={{ rotate: 6, x: -20, y: 40, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, delay: 0.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -bottom-16 left-1/4 lg:-bottom-24 lg:left-1/3 z-0 w-40 md:w-56 lg:w-64 bg-white p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden lg:block pointer-events-auto cursor-pointer hover:scale-105 z-[1] transition-transform duration-500 group"
+                        className="absolute -bottom-16 left-1/4 lg:-bottom-24 lg:left-1/3 z-0 w-48 md:w-60 lg:w-72 bg-white p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.15)] rounded-sm border border-slate-200 hidden lg:block pointer-events-auto cursor-pointer hover:scale-105 z-[1] transition-transform duration-500 group"
                     >
                         <div className="w-full aspect-[4/3] bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                             <img src={MEDIA_DATA.blog[0].image} className="w-full h-full object-cover filter grayscale contrast-125 opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Blog" />
@@ -129,11 +129,25 @@ const Media = ({ scrollProgress }) => {
                         {items.map((item) => (
                             <motion.div
                                 key={item.title}
-                                className="glass-card p-8 h-full flex flex-col pointer-events-auto bg-white/70 border-white/80 shadow-xl"
-                                whileHover={{ y: -6 }}
+                                onClick={() => {
+                                    if (item.title === 'Blog') setActiveItem(MEDIA_DATA.blog[0]);
+                                    if (item.title === 'YouTube') setActiveItem(MEDIA_DATA.video[0]);
+                                    if (item.title.includes('Podcast')) setActiveItem(MEDIA_DATA.podcast[0]);
+                                }}
+                                className="glass-card p-8 h-full flex flex-col pointer-events-auto bg-white/70 border-white/80 shadow-xl cursor-pointer hover:bg-white/90 transition-colors"
+                                whileHover={{ y: -6, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                <h3 className="font-serif text-2xl text-slate-900 mb-3">{item.title}</h3>
+                                <div className="flex items-center justify-between mb-3">
+                                    <h3 className="font-serif text-2xl text-slate-900">{item.title}</h3>
+                                    {item.title === 'Blog' && <FileText className="w-5 h-5 text-gold-600" />}
+                                    {item.title === 'YouTube' && <Play className="w-5 h-5 text-gold-600" fill="currentColor" />}
+                                    {item.title.includes('Podcast') && <Mic className="w-5 h-5 text-gold-600" />}
+                                </div>
                                 <p className="font-sans text-slate-800 leading-relaxed text-base flex-1">{item.text}</p>
+                                <div className="mt-4 flex items-center text-gold-600 font-bold text-[10px] tracking-widest uppercase group">
+                                    Zobrazit obsah <PlayCircle className="w-4 h-4 ml-2" />
+                                </div>
                             </motion.div>
                         ))}
                     </div>
