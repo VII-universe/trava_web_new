@@ -21,7 +21,7 @@ const FLAGS = [
         // Mammut colours: black + white + gold tusk logo
         stripes: ['#1a1a1a', '#ffffff', '#1a1a1a'],
         logo: (
-            <img src={LogoMammut} alt="Mammut Logo" className="w-20 h-auto object-contain drop-shadow-sm mix-blend-multiply" />
+            <img src={LogoMammut} alt="Mammut Logo" className="w-full h-full object-contain drop-shadow-md" />
         ),
     },
     {
@@ -33,7 +33,7 @@ const FLAGS = [
         left: '50%',
         stripes: ['#CC0000', '#FECF00', '#CC0000'],
         logo: (
-            <img src={LogoRedBull} alt="Red Bull Logo" className="w-20 h-auto object-contain drop-shadow-sm mix-blend-overlay" />
+            <img src={LogoRedBull} alt="Red Bull Logo" className="w-full h-full object-contain drop-shadow-md" />
         ),
     },
     {
@@ -45,7 +45,7 @@ const FLAGS = [
         left: '82%',
         stripes: ['#1A5C2A', '#F5E6C8', '#1A5C2A'],
         logo: (
-            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-20 h-auto object-contain drop-shadow-sm mix-blend-multiply" />
+            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-full h-full object-contain drop-shadow-md" />
         ),
     },
     {
@@ -57,7 +57,7 @@ const FLAGS = [
         left: '34%',
         stripes: ['#1F2937', '#F59E0B', '#1F2937'],
         logo: (
-            <img src={LogoHanibal} alt="Hanibal Logo" className="w-20 h-auto object-contain drop-shadow-sm" />
+            <img src={LogoHanibal} alt="Hanibal Logo" className="w-full h-full object-contain drop-shadow-md" />
         ),
     },
     {
@@ -69,7 +69,7 @@ const FLAGS = [
         left: '66%',
         stripes: ['#111827', '#94A3B8', '#111827'],
         logo: (
-            <img src={LogoTilak} alt="Tilak Logo" className="w-20 h-auto object-contain drop-shadow-sm mix-blend-overlay" />
+            <img src={LogoTilak} alt="Tilak Logo" className="w-full h-full object-contain drop-shadow-md" />
         ),
     },
 ];
@@ -131,56 +131,21 @@ const Flag = ({ flag, index, onSelect }) => {
                         height: 90,
                         animation: `flutter ${flutter}s ${delay}s ease-in-out infinite`,
                         transformOrigin: 'left center',
-                        boxShadow: hovered ? '0px 15px 30px rgba(0,0,0,0.4)' : '2px 4px 18px rgba(0,0,0,0.22)',
-                        borderRadius: 2,
-                        overflow: 'hidden',
-                        transition: 'box-shadow 0.3s ease-out, transform 0.3s ease-out',
+                        transition: 'transform 0.3s ease-out',
                         transform: hovered ? 'scale(1.05)' : 'scale(1)',
                     }}
                 >
-                    {/* Dark gradient overlay on hover for better contrast */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
-                        <span className="text-white font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-1 drop-shadow-md">
+                    {/* Hover text over the logo without square background */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center pointer-events-none">
+                        <span className="text-white font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                             Zobrazit <ExternalLink className="w-3 h-3" />
                         </span>
                     </div>
 
-                    {/* Stripes */}
-                    <div style={{
-                        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
-                        borderRadius: 2, overflow: 'hidden',
-                    }}>
-                        <div style={{ flex: 1, background: flag.stripes[0] }} />
-                        <div style={{ flex: 1, background: flag.stripes[1] }} />
-                        <div style={{ flex: 1, background: flag.stripes[2] }} />
-                    </div>
-
-                    {/* Cloth weave texture */}
-                    <div style={{
-                        position: 'absolute', inset: 0, opacity: 0.1, borderRadius: 2,
-                        backgroundImage: 'repeating-linear-gradient(90deg,#000 0,#000 1px,transparent 1px,transparent 9px)',
-                    }} />
-
-                    {/* Animated light sheen — suggests cloth ripple */}
-                    <div style={{
-                        position: 'absolute', inset: 0, borderRadius: 2,
-                        background: 'linear-gradient(105deg, rgba(255,255,255,0.22) 0%, transparent 55%, rgba(0,0,0,0.12) 100%)',
-                        animation: `sheen ${flutter}s ${delay}s ease-in-out infinite`,
-                    }} />
-
                     {/* Logo (fade slightly on hover to show "Zobrazit") */}
-                    <div className="group-hover:opacity-30 transition-opacity duration-300" style={{
-                        position: 'absolute', inset: 0, display: 'flex',
-                        alignItems: 'center', justifyContent: 'center', padding: 2,
-                    }}>
+                    <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-30 transition-opacity duration-300">
                         {flag.logo}
                     </div>
-
-                    {/* Left pole edge shadow */}
-                    <div style={{
-                        position: 'absolute', top: 0, left: 0, width: 3, height: '100%',
-                        background: 'rgba(0,0,0,0.35)', borderRadius: '2px 0 0 2px',
-                    }} />
                 </div>
 
                 {/* Hover tooltip - Professional UX redesign */}
