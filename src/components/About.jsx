@@ -36,10 +36,17 @@ const About = ({ scrollProgress }) => {
     const exitScale = useTransform(scrollProgress, [0.19, 0.24], [1, 0.98]);
     const exitY = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
     const exitX = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
+    // Fast fade out for the background image specifically, so it doesn't hard-cut under Icefall
+    // Starts fading just as Icefall enters at 0.19, fully gone by 0.24 (slower)
+    const imageOpacity = useTransform(scrollProgress, [0.19, 0.24], [0.8, 0]);
 
     return (
         <motion.div
-            style={{ opacity: containerOpacity }}
+            style={{ 
+                opacity: containerOpacity,
+                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)'
+            }}
             className="absolute inset-0 w-full h-full flex items-end justify-center pointer-events-none overflow-hidden"
         >
             <motion.div
@@ -48,9 +55,7 @@ const About = ({ scrollProgress }) => {
             >
                 <motion.div
                     style={{
-                        opacity: exitOpacity, scale: exitScale, y: exitY, x: exitX,
-                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)'
+                        opacity: exitOpacity, scale: exitScale, y: exitY, x: exitX
                     }}
                     className="w-full h-full absolute inset-0 z-0 origin-bottom"
                 >
@@ -59,11 +64,14 @@ const About = ({ scrollProgress }) => {
 
                     {/* IMAGE LAYER */}
                     <motion.img
-                        style={{ y: bgY }}
+                        style={{ y: bgY, opacity: imageOpacity }}
                         src={BaseCampImg}
                         alt="Base Camp Tents"
                         className="absolute inset-0 w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105 scale-110 origin-center"
                     />
+                    
+                    {/* Gradient blending edge with next section */}
+                    <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#f8f9fa] to-transparent z-10" />
                 </motion.div>
 
                 {/* Layers */}

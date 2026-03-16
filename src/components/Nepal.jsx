@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'lucide-react';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
-import IcefallImg from '../assets/icefall_bg.jpg';
-import ClimbersImg from '../assets/climbers_bg.jpg';
+import HotelImg1 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-010-hires.jpg';
+import HotelImg2 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-012-hires.jpg';
+import HotelImg3 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-017-hires.jpg';
+import HotelImg4 from '../assets/zmensene/Hotel/CZECH-PUB-HIGHLANDER-022-hires.jpg';
+
+import PubImg1 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-035-hires.jpg';
+import PubImg2 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-040-hires.jpg';
+import PubImg3 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-045-hires.jpg';
+import PubImg4 from '../assets/zmensene/Pub/Prostory/CZECH-PUB-HIGHLANDER-050-hires.jpg';
 import PubBgImg from '../assets/czech_pub_new_bg.png';
 import HotelLogo from '../assets/logo_2.png';
 
@@ -53,7 +59,7 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-12">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[64px] object-contain mb-4 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[160px] object-contain mb-4 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
@@ -89,7 +95,7 @@ const Nepal = ({ scrollProgress }) => {
                             animate={{ x: ['0%', '-50%'] }}
                             transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                         >
-                            {[BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg, ClimbersImg, BaseCampImg, IcefallImg].map((src, idx) => (
+                            {[HotelImg1, PubImg1, HotelImg2, PubImg2, HotelImg3, PubImg3, HotelImg4, PubImg4].map((src, idx) => (
                                 <div key={idx} className="min-w-[160px] md:min-w-[200px] cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
                                     <img src={src} className="w-full h-32 md:h-40 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Nepal gallery" />
                                     <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
@@ -119,7 +125,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={BaseCampImg} className="w-full h-full object-cover" alt="Hotel Kathmandu Base Camp" />
+                            <img src={HotelImg1} className="w-full h-full object-cover" alt="Hotel Kathmandu Base Camp" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Hotel Kathmandu<br/>Base Camp</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
@@ -138,7 +144,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[64px] object-contain mb-6 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[160px] object-contain mb-6 self-start" />
                             <h2 className="font-serif text-3xl text-slate-900 mb-6">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
@@ -162,7 +168,7 @@ const Nepal = ({ scrollProgress }) => {
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
                             <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
-                                {[BaseCampImg, IcefallImg, ClimbersImg].map((src, i) => (
+                                {[HotelImg2, HotelImg3, HotelImg4].map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
                                         <img src={src} className="w-32 h-24 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
@@ -197,7 +203,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={ClimbersImg} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
+                            <img src={PubImg1} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Czech Pub<br/>Nepal</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
@@ -240,7 +246,7 @@ const Nepal = ({ scrollProgress }) => {
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
                             <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
-                                {[IcefallImg, ClimbersImg, BaseCampImg].map((src, i) => (
+                                {[PubImg2, PubImg3, PubImg4].map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
                                         <img src={src} className="w-32 h-24 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />

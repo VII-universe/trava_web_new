@@ -5,13 +5,28 @@ import SummitImage from '../assets/summit_bg.png';
 import HonzaProfile from '../assets/honza_profile.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
 
+import ManasluImg from '../assets/zmensene/Portréty/Expedice a treky/20240728_133329.jpg';
+import MeraImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06947.jpg';
+import YogaImg from '../assets/zmensene/Portréty/Expedice a treky/20240723_091830.jpg';
+
+import AconcaImg from '../assets/zmensene/Portréty/Expedice a treky/DSC05780.jpg';
+import ElbrusImg from '../assets/zmensene/Portréty/Expedice a treky/DSC_0008.jpg';
+import KiliImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06888.jpg';
+import MustangImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06330.jpg';
+import K2Img from '../assets/zmensene/Portréty/Expedice a treky/DSC07035.jpg';
+import EcuadorImg from '../assets/zmensene/Portréty/Expedice a treky/DSC07138.jpg';
+
+import PolaroidBaseCamp from '../assets/zmensene/Portréty/Expedice a treky/20240709_160740.jpg';
+import PolaroidCesta from '../assets/zmensene/Portréty/Expedice a treky/PJJ_Manaslu_2022_NikonZ30_6158.jpg';
+import PolaroidVrchol from '../assets/zmensene/Portréty/Expedice a treky/20240801_142543.jpg';
+
 const EXPEDITIONS = [
     {
         id: 'nepal',
         title: 'Manáslu (8163 m)',
         duration: '35 Dní',
         difficulty: 'Extrémní',
-        image: 'https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        image: ManasluImg,
         description: 'Výstup na osmou nejvyšší horu světa. Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. S námi nebudete jen platící klient, ale platný člen expedice. Dýcháme za vás, zajišťujeme vynášky a fixujeme lana na místech, kde už to jinak nejde.',
         highlights: ['Základní tábor ve 4800 m', 'Rotace do výškových táborů', 'Útok na vrchol (8163 m)'],
     },
@@ -20,7 +35,7 @@ const EXPEDITIONS = [
         title: 'Mera Peak (6476 m) & Amphu Lapcha',
         duration: '21 Dní',
         difficulty: 'Velmi těžké',
-        image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        image: MeraImg,
         description: 'Trek srdcem Himálaje s výstupem na legendární šmitku Mera Peak. Přechod sedla Amphu Lapcha je jeden z nejvíce fascinujících horolezeckých zážitků, který tvoří přirozenou divokou hradbu do regionu Everestu.',
         highlights: ['Aklimatizace v údolí Hinku', 'Výstup na technický Mera Peak', 'Zdolání sedla Amphu Lapcha (5845 m)'],
     },
@@ -29,7 +44,7 @@ const EXPEDITIONS = [
         title: 'Jógový Trek (Annapurny)',
         duration: '14 Dní',
         difficulty: 'Střední',
-        image: 'https://images.unsplash.com/photo-1542259009477-d625272157b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        image: YogaImg,
         description: 'Spojujeme cvičení mysli i těla na čerstvém himálajském vzduchu. Cesta za poznáním sama sebe pod dohledem nádherných hřebenů Annapuren.',
         highlights: ['Ranní jógové seance s výhledem', 'Poznání místních klášterů', 'Fyzická a mentální očista'],
     }
@@ -37,27 +52,27 @@ const EXPEDITIONS = [
 
 const MORE_EXPEDITIONS = [
     { 
-        id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Nejvyšší hora Jižní Ameriky (6961 m)',
+        id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: AconcaImg, description: 'Nejvyšší hora Jižní Ameriky (6961 m)',
         duration: '22 Dní', difficulty: 'Těžké', highlights: ['Základní tábor Plaza de Mulas', 'Výstup na nejvyšší horu západní polokoule', 'Začátek cesty za 7 Summits']
     },
     { 
-        id: 'elbrus', title: 'Elbrus', alt: 'Elbrus 5642 m', image: 'https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Střecha Evropy (5642 m)',
+        id: 'elbrus', title: 'Elbrus', alt: 'Elbrus 5642 m', image: ElbrusImg, description: 'Střecha Evropy (5642 m)',
         duration: '11 Dní', difficulty: 'Střední', highlights: ['Aklimatizace na svazích Kavkazu', 'Výstup na nejvyšší bod Evropy', 'Skvělý trénink pro vyšší hory']
     },
     { 
-        id: 'kilimanjaro', title: 'Kilimandžáro', alt: 'Kilimandžáro 5895 m', image: 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Africký gigant (5895 m)',
+        id: 'kilimanjaro', title: 'Kilimandžáro', alt: 'Kilimandžáro 5895 m', image: KiliImg, description: 'Africký gigant (5895 m)',
         duration: '10 Dní', difficulty: 'Střední', highlights: ['Trek pěti vegetačními pásmy', 'Výstup na vrchol Uhuru Peak', 'Nezapomenutelné africké ráno na střeše kontinentu']
     },
     { 
-        id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Trek do zakázaného království',
+        id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: MustangImg, description: 'Trek do zakázaného království',
         duration: '18 Dní', difficulty: 'Lehké', highlights: ['Návštěva tajemného království Mustang', 'Objevování starobylých klášterů a jeskyní', 'Královské město Lo Manthang']
     },
     { 
-        id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Trek po ledovci Baltoro (Pákistán)',
+        id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: K2Img, description: 'Trek po ledovci Baltoro (Pákistán)',
         duration: '24 Dní', difficulty: 'Velmi těžké', highlights: ['Trek legendárním údolím Baltoro', 'Pohled na nejkrásnější divoké asijské hory', 'Až pod samotnou divokou K2']
     },
     { 
-        id: 'ecuador', title: 'Ekvádor', alt: 'Sopky Ekvádoru', image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Výstupy na rovníkové sopky',
+        id: 'ecuador', title: 'Ekvádor', alt: 'Sopky Ekvádoru', image: EcuadorImg, description: 'Výstupy na rovníkové sopky',
         duration: '16 Dní', difficulty: 'Střední', highlights: ['Aklimatizace vysoko v Andách', 'Noční výstup na legendární vulkán Cotopaxi', 'Možnost vystoupat na Chimborazo']
     },
 ];
@@ -133,10 +148,10 @@ const Expeditions = ({ scrollProgress }) => {
 
                         <motion.div
                             initial={{ rotate: 20, x: 100, y: -40, opacity: 0 }}
-                            whileInView={{ rotate: 16, x: 60, y: 20, opacity: 1 }}
+                            whileInView={{ rotate: 16, x: 40, y: 40, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1.2, delay: 0.2, type: "spring", bounce: 0.3 }}
-                            className="hidden lg:block absolute -bottom-16 -right-36 z-0 w-80 bg-[#f8f9fa] p-4 pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
+                            className="hidden lg:block absolute -bottom-32 -right-24 z-0 w-80 bg-[#f8f9fa] p-4 pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
@@ -154,14 +169,14 @@ const Expeditions = ({ scrollProgress }) => {
                         {/* Additional Polaroids */}
                         <motion.div
                             initial={{ rotate: -10, x: -140, y: 80, opacity: 0 }}
-                            whileInView={{ rotate: -5, x: -90, y: 40, opacity: 1 }}
+                            whileInView={{ rotate: -5, x: -80, y: 50, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1.4, delay: 0.3, type: "spring", bounce: 0.2 }}
-                            className="hidden xl:block absolute -bottom-32 left-[10%] z-0 w-64 bg-[#f8f9fa] p-3 pb-12 shadow-[0_15px_40px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/40"
+                            className="hidden xl:block absolute -bottom-32 -left-10 z-0 w-64 bg-[#f8f9fa] p-3 pb-12 shadow-[0_15px_40px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/40"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
-                                    src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    src={PolaroidBaseCamp} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Base Camp" 
                                 />
@@ -173,14 +188,14 @@ const Expeditions = ({ scrollProgress }) => {
 
                         <motion.div
                             initial={{ rotate: -15, x: 120, y: 80, opacity: 0 }}
-                            whileInView={{ rotate: 12, x: 80, y: 50, opacity: 1 }}
+                            whileInView={{ rotate: -8, x: 30, y: 60, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1.5, delay: 0.4, type: "spring", bounce: 0.2 }}
-                            className="hidden xl:block absolute -bottom-36 right-10 z-0 w-72 bg-[#f8f9fa] p-3 pb-14 shadow-[0_20px_50px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
+                            className="hidden xl:block absolute -bottom-40 right-20 z-0 w-72 bg-[#f8f9fa] p-3 pb-14 shadow-[0_20px_50px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
-                                    src="https://images.unsplash.com/photo-1549880181-56a44cf4a9a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    src={PolaroidCesta} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Naše Cesty" 
                                 />
@@ -192,14 +207,14 @@ const Expeditions = ({ scrollProgress }) => {
 
                         <motion.div
                             initial={{ rotate: 15, x: 60, y: -80, opacity: 0 }}
-                            whileInView={{ rotate: 8, x: 40, y: -40, opacity: 1 }}
+                            whileInView={{ rotate: 15, x: 60, y: 10, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1.3, delay: 0.5, type: "spring", bounce: 0.3 }}
-                            className="hidden lg:block absolute -top-24 right-[-40px] z-0 w-56 bg-[#f8f9fa] p-2 pb-10 shadow-[0_10px_30px_rgba(0,0,0,0.4)] rounded-sm border border-slate-200/40"
+                            className="hidden lg:block absolute -top-10 -right-24 z-0 w-56 bg-[#f8f9fa] p-2 pb-10 shadow-[0_10px_30px_rgba(0,0,0,0.4)] rounded-sm border border-slate-200/40"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
-                                    src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                    src={PolaroidVrchol} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Vrchol" 
                                 />
@@ -209,9 +224,9 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
 
-                        <motion.div className="glass-card p-6 md:p-10 text-left pointer-events-auto relative z-10 backdrop-blur-2xl bg-slate-900/60 border-white/10 shadow-2xl h-full flex flex-col justify-center">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4">S kým do hor</h3>
-                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight drop-shadow-sm">
+                        <motion.div className="glass-card p-6 md:p-10 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/75 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center rounded-2xl">
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4 drop-shadow-md">S kým do hor</h3>
+                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight drop-shadow-lg">
                                 Osmitisícovky i treky bez přetvářky
                             </h2>
                             <p className="font-sans text-slate-100 font-medium leading-relaxed text-base md:text-lg mb-4 drop-shadow-sm">
@@ -222,8 +237,8 @@ const Expeditions = ({ scrollProgress }) => {
                             </p>
                         </motion.div>
 
-                        <motion.div className="glass-card p-4 md:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-2xl bg-white/10 border-white/20 shadow-2xl h-full flex flex-col justify-center overflow-hidden">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-6 ml-2">Vyberte si výpravu</h3>
+                        <motion.div className="glass-card p-4 md:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-6 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
                             
                             <div className="flex flex-col gap-3">
                                 {EXPEDITIONS.map((exped) => (

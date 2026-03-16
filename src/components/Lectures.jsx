@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
-import IcefallImg from '../assets/icefall_bg.jpg';
-import ClimbersImg from '../assets/climbers_bg.jpg';
-import SummitImg from '../assets/summit_bg.png';
+import Polaroid1 from '../assets/zmensene/Portréty/Přednášky/photohanny-129.jpg';
+import Polaroid2 from '../assets/zmensene/Portréty/Přednášky/DSD_8450.jpg';
+import Polaroid3 from '../assets/zmensene/Portréty/Přednášky/photohanny-134.jpg';
+import BookingBg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/DSC06903.jpg';
+
+import Tour50Img from '../assets/zmensene/Portréty/Přednášky/Honza - přednáška.jpg';
+import CollabImg from '../assets/zmensene/Portréty/Přednášky/DSC04123.jpg';
+
+import PjjImg from '../assets/zmensene/Portréty/Expedice a treky/PJJ_Manaslu_2022_NikonZ30_6384-Edit.jpg';
+import HorkyImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/20240728_131841.jpg';
+import LangosImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/20240715_133229.jpg';
+import AudyImg from '../assets/zmensene/Portréty/Expedice a treky/DSC06947.jpg';
+import FormanImg from '../assets/zmensene/Kathmandu/DSC08157.jpg';
+import TourMainImg from '../assets/zmensene/Portréty/Přednášky/1R2A2034.jpg';
+import JesteImg from '../assets/zmensene/Projekty/Ještě Jsme Neskončili/20240806_151350.jpg';
+import NehaImg from '../assets/zmensene/Portréty/S Miri, Subinem,Onghchu nebo Sabinem/DSC07645.jpg';
+import DalsiImg from '../assets/zmensene/Skupinky/WhatsApp Image 2025-06-15 at 18.53.30 (2).jpg';
 
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
@@ -22,7 +35,7 @@ const Lectures = ({ scrollProgress }) => {
             city: "50 let tour", 
             venue: "únor–březen 2026", 
             date: "Velká přednášková tour",
-            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: Tour50Img,
             description: "Jedinečná přednášková série k životnímu jubileu Honzy Trávy. Přijďte si poslechnout příběhy z osmi osmitisícovek, zjistit, jaké to je trávit desítky dní v extrémních podmínkách, a nasát motivaci pro vaše vlastní životní výzvy.",
             highlights: ["Příhody z 8 osmitisícovek", "Fotky a videa, která jste neviděli", "Osobní setkání a autogramiáda"]
         },
@@ -31,7 +44,7 @@ const Lectures = ({ scrollProgress }) => {
             city: "Propojení s osobnostmi", 
             venue: "Petr Jan Juračka, Petr Horký, Jirka Langmajer, Marek Audy...", 
             date: "Spolupráce se zajímavými lidmi",
-            image: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: CollabImg,
             description: "Hory spojují. Nejsme na to sami – tvoříme projekty s fantastickými lidmi z různých oborů. Ať už jde o natáčení dokumentů s Petrem Horkým, focení s Petrem Janem Juračkou nebo speciální expedice s Jiřím Langmajerem.",
             highlights: ["Dokumentární tvorba", "Unikátní expedice", "Sdílení syrových příběhů z hor"]
         }
@@ -42,7 +55,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'pjj',
             title: "Petr Jan Juračka",
             subtitle: "Něha Himálaje, balón Annapurna, Everest Marathon",
-            image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: PjjImg,
             description: "Spolupráce na dechberoucích projektech s fantastickým fotografem a filmařem. Od knihy a filmu Něha Himálaje, přes unikátní projekt létání balónem u Annapurny až po Everest Marathon. Vizuální i lidský zážitek.",
             highlights: ["Kniha a film Něha Himálaje", "Projekt balón Annapurna", "Everest Marathon"]
         },
@@ -50,7 +63,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'horky',
             title: "Petr Horký",
             subtitle: "Filmy, projekty, společné akce",
-            image: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: HorkyImg,
             description: "Dlouhodobá spolupráce s vynikajícím režisérem a polárníkem Petrem Horkým. Tvoříme společně filmy, pořádáme poutavé přednášky a vymýšlíme další nezapomenutelné společné akce, které mají přesah.",
             highlights: ["Dokumentární filmy", "Společné projekty", "Sdílení zkušeností"]
         },
@@ -58,7 +71,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'langos',
             title: "Jirka „Langoš“ Langmajer",
             subtitle: "Přednášky, promo, společné projekty",
-            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: LangosImg,
             description: "Netradiční spojení světa hor a divadla. S Jirkou Langmajerem pořádáme společné přednášky plné humoru i drsných historek, natáčíme promo videa a připravujeme další unikátní projekty.",
             highlights: ["Zábavné společné přednášky", "Marketingová promo videa", "Nové formáty vyprávění"]
         },
@@ -66,7 +79,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'audy',
             title: "Marek Audy",
             subtitle: "3D projekce",
-            image: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: AudyImg,
             description: "Zážitek, který vás vtáhne přímo do děje. Díky spolupráci s Markem Audym přinášíme unikátní 3D projekce z našich expedic, které divákům zprostředkovávají naprosto realistický pocit z vysokých hor.",
             highlights: ["Vtahující 3D fotografie", "Realistický vizuální zážitek z hor", "Využití moderních technologií v přednáškách"]
         },
@@ -74,7 +87,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'forman',
             title: "Petr Forman",
             subtitle: "Divadlo, audiokniha, COPATUTOJE",
-            image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: FormanImg,
             description: "Kreativní přesahy mimo klasické horolezectví. S Petrem Formanem jsme se potkali mimo jiné při tvorbě divadla, nahrávání audioknihy nebo u fantastického regionálního projektu COPATUTOJE.",
             highlights: ["Netradiční divadelní fúze", "Spolupráce na audioknize", "Projekt COPATUTOJE pro Plzeň"]
         },
@@ -82,7 +95,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'tour2026',
             title: "50 let tour (únor–březen 2026)",
             subtitle: "Velká přednášková tour, zapojení partnerů",
-            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: TourMainImg,
             description: "Velkolepá oslava 50. narozenin Honzy Trávy přímo na pódiích napříč republikou. Čeká nás velká přednášková tour plná těch nejlepších příběhů, hostů a překvapení. Exkluzivní možnost zapojení pro partnery projektu.",
             highlights: ["Republikové turné", "Nejlepší historky z 8 osmitisícovek", "Výrazný prostor pro partnery"]
         },
@@ -90,7 +103,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'jsmeneskoncili',
             title: "Jestejsmeneskoncili",
             subtitle: "S Miri, Horkým, Langošem a J. Votavou",
-            image: "https://images.unsplash.com/photo-1520208422220-d12a3c588e6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: JesteImg,
             description: "Silná sestava, silné poselství. Unikátní sdílený projekt, ve kterém se spojují osobnosti z různých sfér (Miri Jirková, Petr Horký, Jirka Langmajer, Jirka Votava a Honza Tráva), aby ukázali, že po dosažení vrcholu nebo překonání krize to teprve začíná.",
             highlights: ["Synergie pěti osobností", "Inspirace pro životní změny", "Zcela nový formát spolupráce"]
         },
@@ -98,7 +111,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'neha_himalaje',
             title: "Něha Himálaje",
             subtitle: "Kniha / film / audio s PJJ",
-            image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: NehaImg,
             description: "Multimediální projekt mapující lidskou i horolezeckou tvář himálajských expedic v podání Petra Jana Juračky a Honzy Trávy. Zahrnuje velmi úspěšnou knihu, filmový dokument, audioknihu a celou řadu navazujících přednáškových aktivit.",
             highlights: ["Úspěšná knižní publikace", "Emocionálně silný dokumentární film", "Rozsáhlá osvětová činnost"]
         },
@@ -106,7 +119,7 @@ const Lectures = ({ scrollProgress }) => {
             id: 'narazove',
             title: "Další aktivity",
             subtitle: "Havlík, Kopka, 1000 mil...",
-            image: "https://images.unsplash.com/photo-1516939335682-7e997f08d085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            image: DalsiImg,
             description: "Život není jen o osmitisícovkách. Rádi se vrháme do dalších výzev – ať už jde o natáčení s režisérem Rudou Havlíkem, drsný cyklo výlet v Nepálu s extrémním bikerem Honzou Kopkou, účast na závodě 1000 mil nebo pořádání různých komunitních akcí pro radost.",
             highlights: ["Spolupráce s filmovou produkcí Rudiho Havlíka", "Extrémní cyklo expedice v Nepálu", "Účast na komunitních projektech"]
         }
@@ -147,10 +160,10 @@ const Lectures = ({ scrollProgress }) => {
                         className="absolute -top-16 -left-12 md:-top-24 md:-left-28 lg:-top-20 lg:-left-44 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                            <img src={IcefallImg} className="w-full h-full object-cover filter opacity-100" alt="Přednáška" />
+                            <img src={Polaroid1} className="w-full h-full object-cover filter opacity-100" alt="Přednáška" />
                             <div className="absolute inset-0 bg-gold-900/10 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Začátky</div>
+                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Energie</div>
                     </motion.div>
 
                     {/* POLAROID 2 - Right */}
@@ -162,10 +175,10 @@ const Lectures = ({ scrollProgress }) => {
                         className="absolute -bottom-10 -right-12 md:-bottom-16 md:-right-28 lg:-bottom-10 lg:-right-40 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                            <img src={ClimbersImg} className="w-full h-full object-cover filter opacity-100" alt="Tým" />
+                            <img src={Polaroid2} className="w-full h-full object-cover filter opacity-100" alt="Tým" />
                             <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Na lanech</div>
+                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Příběhy</div>
                     </motion.div>
                     
                     {/* POLAROID 3 - Bottom Left */}
@@ -177,10 +190,10 @@ const Lectures = ({ scrollProgress }) => {
                         className="absolute -bottom-24 -left-12 lg:-bottom-32 lg:-left-24 z-0 w-44 md:w-60 lg:w-72 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden lg:block"
                     >
                         <div className="w-full aspect-[4/3] bg-slate-200 overflow-hidden relative">
-                            <img src={SummitImg} className="w-full h-full object-cover object-top filter opacity-100" alt="Vrchol" />
+                            <img src={Polaroid3} className="w-full h-full object-cover object-top filter opacity-100" alt="Vrchol" />
                             <div className="absolute inset-0 bg-slate-900/20 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-4 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Vrchol</div>
+                        <div className="absolute bottom-3 md:bottom-4 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Atmosféra</div>
                     </motion.div>
 
                     {/* Cards Grid (on top) */}
@@ -246,7 +259,7 @@ const Lectures = ({ scrollProgress }) => {
                     >
                         {/* Left Info Area */}
                         <div className="md:w-[40%] relative bg-slate-900 flex flex-col justify-between hidden md:flex">
-                            <img src={BaseCampImg} className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" alt="Booking Background" />
+                            <img src={BookingBg} className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" alt="Booking Background" />
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/90" />
                             
                             <div className="relative z-10 p-10 flex flex-col h-full text-left">
