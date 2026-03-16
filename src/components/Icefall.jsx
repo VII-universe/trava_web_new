@@ -272,7 +272,7 @@ const Icefall = ({ scrollProgress }) => {
 
 
                 {/* ── Header text ── */}
-                <div className="absolute top-[8%] left-0 right-0 text-center z-20">
+                <div className="absolute top-[12%] left-0 right-0 text-center z-20">
                     <h4 className="text-slate-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3">
                         Partneři — 3000 m
                     </h4>
