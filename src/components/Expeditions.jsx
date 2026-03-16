@@ -36,12 +36,30 @@ const EXPEDITIONS = [
 ];
 
 const MORE_EXPEDITIONS = [
-    { id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Nejvyšší hora Jižní Ameriky (6961 m)' },
-    { id: 'elbrus', title: 'Elbrus', alt: 'Elbrus 5642 m', image: 'https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Střecha Evropy (5642 m)' },
-    { id: 'kilimanjaro', title: 'Kilimandžáro', alt: 'Kilimandžáro 5895 m', image: 'https://images.unsplash.com/photo-1613145904873-196024345cc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Africký gigant (5895 m)' },
-    { id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Trek do zakázaného království' },
-    { id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Trek po ledovci Baltoro (Pákistán)' },
-    { id: 'ecuador', title: 'Ekvádor', alt: 'Sopky Ekvádoru', image: 'https://images.unsplash.com/photo-1588693761747-d865cbb68595?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', description: 'Výstupy na rovníkové sopky' },
+    { 
+        id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Nejvyšší hora Jižní Ameriky (6961 m)',
+        duration: '22 Dní', difficulty: 'Těžké', highlights: ['Základní tábor Plaza de Mulas', 'Výstup na nejvyšší horu západní polokoule', 'Začátek cesty za 7 Summits']
+    },
+    { 
+        id: 'elbrus', title: 'Elbrus', alt: 'Elbrus 5642 m', image: 'https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Střecha Evropy (5642 m)',
+        duration: '11 Dní', difficulty: 'Střední', highlights: ['Aklimatizace na svazích Kavkazu', 'Výstup na nejvyšší bod Evropy', 'Skvělý trénink pro vyšší hory']
+    },
+    { 
+        id: 'kilimanjaro', title: 'Kilimandžáro', alt: 'Kilimandžáro 5895 m', image: 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Africký gigant (5895 m)',
+        duration: '10 Dní', difficulty: 'Střední', highlights: ['Trek pěti vegetačními pásmy', 'Výstup na vrchol Uhuru Peak', 'Nezapomenutelné africké ráno na střeše kontinentu']
+    },
+    { 
+        id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Trek do zakázaného království',
+        duration: '18 Dní', difficulty: 'Lehké', highlights: ['Návštěva tajemného království Mustang', 'Objevování starobylých klášterů a jeskyní', 'Královské město Lo Manthang']
+    },
+    { 
+        id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Trek po ledovci Baltoro (Pákistán)',
+        duration: '24 Dní', difficulty: 'Velmi těžké', highlights: ['Trek legendárním údolím Baltoro', 'Pohled na nejkrásnější divoké asijské hory', 'Až pod samotnou divokou K2']
+    },
+    { 
+        id: 'ecuador', title: 'Ekvádor', alt: 'Sopky Ekvádoru', image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', description: 'Výstupy na rovníkové sopky',
+        duration: '16 Dní', difficulty: 'Střední', highlights: ['Aklimatizace vysoko v Andách', 'Noční výstup na legendární vulkán Cotopaxi', 'Možnost vystoupat na Chimborazo']
+    },
 ];
 
 const Expeditions = ({ scrollProgress }) => {
@@ -52,6 +70,7 @@ const Expeditions = ({ scrollProgress }) => {
 
     const [selectedExped, setSelectedExped] = useState(null);
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
+    const [selectedMoreExped, setSelectedMoreExped] = useState(null);
 
     return (
         <motion.div
@@ -270,47 +289,116 @@ const Expeditions = ({ scrollProgress }) => {
                             onClick={(e) => e.stopPropagation()}
                             className="bg-[#111827] w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col relative"
                         >
-                            <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-20 bg-gradient-to-b from-[#111827] to-transparent">
-                                <div>
-                                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-2">
-                                        Kompletní přehled
-                                    </h4>
-                                    <h2 className="font-serif text-3xl md:text-4xl text-white">
-                                        Všechny Expedice
-                                    </h2>
-                                </div>
-                                <button 
-                                    onClick={() => setShowAllExpeditions(false)}
-                                    className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md border border-transparent hover:border-white/30"
-                                >
-                                    <X className="w-5 h-5 md:w-6 md:h-6" />
-                                </button>
-                            </div>
-
-                            <div className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {MORE_EXPEDITIONS.map((exped) => (
-                                        <div 
-                                            key={exped.id}
-                                            className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
+                            {selectedMoreExped ? (
+                                <div className="w-full h-full flex flex-col items-center justify-center p-4">
+                                    <div className="bg-ivory w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative">
+                                        <button 
+                                            onClick={() => setSelectedMoreExped(null)}
+                                            className="absolute top-4 left-4 md:top-6 md:left-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
                                         >
-                                            <img 
-                                                src={exped.image} 
-                                                alt={exped.alt} 
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                                            
-                                            <div className="absolute inset-x-0 bottom-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                                <h3 className="font-serif text-2xl text-white mb-2">{exped.title}</h3>
-                                                <p className="font-sans text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                                                    {exped.description}
-                                                </p>
+                                            <ArrowRight className="w-5 h-5 md:w-6 md:h-6 rotate-180" />
+                                        </button>
+
+                                        <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
+                                            <img src={selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
+                                            <div className="absolute bottom-6 left-6 flex flex-col gap-2">
+                                                <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                                    {selectedMoreExped.duration}
+                                                </div>
+                                                <div className="px-4 py-1.5 bg-gold-500/80 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                                    {selectedMoreExped.difficulty}
+                                                </div>
                                             </div>
                                         </div>
-                                    ))}
+
+                                        <div className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center">
+                                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
+                                                Detail Výpravy
+                                            </h4>
+                                            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+                                                {selectedMoreExped.title}
+                                            </h2>
+                                            
+                                            <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+                                                {selectedMoreExped.description}
+                                            </p>
+
+                                            <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                                <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
+                                                <ul className="space-y-3">
+                                                    {selectedMoreExped.highlights.map((highlight, idx) => (
+                                                        <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
+                                                            <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
+                                                            <span className="leading-snug">{highlight}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            <button 
+                                                onClick={() => {
+                                                    setSelectedMoreExped(null);
+                                                    setShowAllExpeditions(false);
+                                                }}
+                                                className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                                            >
+                                                Mám zájem
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <>
+                                    <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-20 bg-gradient-to-b from-[#111827] to-transparent">
+                                        <div>
+                                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-2">
+                                                Kompletní přehled
+                                            </h4>
+                                            <h2 className="font-serif text-3xl md:text-4xl text-white">
+                                                Všechny Expedice
+                                            </h2>
+                                        </div>
+                                        <button 
+                                            onClick={() => setShowAllExpeditions(false)}
+                                            className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md border border-transparent hover:border-white/30"
+                                        >
+                                            <X className="w-5 h-5 md:w-6 md:h-6" />
+                                        </button>
+                                    </div>
+
+                                    <div className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {MORE_EXPEDITIONS.map((exped) => (
+                                                <div 
+                                                    key={exped.id}
+                                                    onClick={() => setSelectedMoreExped(exped)}
+                                                    className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
+                                                >
+                                                    <img 
+                                                        src={exped.image} 
+                                                        alt={exped.alt} 
+                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                                                    
+                                                    <div className="absolute inset-x-0 bottom-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 flex flex-col justify-end">
+                                                        <h3 className="font-serif text-2xl text-white mb-2">{exped.title}</h3>
+                                                        <p className="font-sans text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 mb-4 line-clamp-2">
+                                                            {exped.description}
+                                                        </p>
+                                                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                                                            <span className="font-sans text-[10px] text-white/70 tracking-wider uppercase bg-white/10 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.duration}</span>
+                                                            <span className="font-sans text-[10px] text-gold-400 tracking-wider uppercase bg-black/40 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.difficulty}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </motion.div>
                     </motion.div>
                 )}
