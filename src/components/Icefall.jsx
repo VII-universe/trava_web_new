@@ -261,20 +261,29 @@ const Icefall = ({ scrollProgress }) => {
             <div className="w-full h-full relative">
                 <div className="absolute inset-0 z-0"
                     style={{
-                        // stronger bottom fade so Partners background goes smoothly to transparent
-                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black calc(100% - 120px), transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black calc(100% - 120px), transparent 100%)'
+                        // Top fade only, bottom is now sharp explicitly for gradient override
+                        maskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black 100%)'
                     }}
                 >
                     <div className="absolute inset-0 bg-[#F0F4F8]" />
                     {/* Gradient blending edge with previous section */}
                     <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#f8f9fa] to-transparent z-10" />
-                    <motion.img
+                    {/* IMAGE AND BOTTOM GRADIENT WRAPPER */}
+                    <motion.div
                         style={{ y: bgY, opacity: imageOpacity }}
-                        src={IcefallImg}
-                        alt="Khumbu Icefall"
-                        className="absolute inset-0 w-full h-full object-cover object-center filter contrast-125 brightness-110 saturate-0 scale-125 origin-center"
-                    />
+                        className="absolute inset-0 w-full h-full scale-125 origin-center"
+                    >
+                        <img
+                            src={IcefallImg}
+                            alt="Khumbu Icefall"
+                            className="absolute inset-0 w-full h-full object-cover object-center filter contrast-125 brightness-110 saturate-0"
+                        />
+                        {/* Bottom White Gradient Overlay precisely locked to image bottom */}
+                        <div 
+                            className="absolute bottom-0 left-0 w-full h-[150px] bg-gradient-to-t from-white via-white/80 to-transparent z-40 pointer-events-none" 
+                        />
+                    </motion.div>
                     <div className="absolute inset-0 bg-gradient-to-tr from-slate-200/40 to-blue-200/20 mix-blend-multiply" />
                     {/* Soft vignette so text is legible */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/30" />

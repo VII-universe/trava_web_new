@@ -47,8 +47,8 @@ const About = ({ scrollProgress }) => {
         <motion.div
             style={{ 
                 opacity: containerOpacity,
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 100%)'
+                maskImage: 'linear-gradient(to bottom, black 0%, black 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 100%)'
             }}
             className="absolute inset-0 w-full h-full flex items-end justify-center pointer-events-none overflow-hidden"
         >
@@ -56,6 +56,8 @@ const About = ({ scrollProgress }) => {
                 style={{ scale: containerScale, y: containerY }}
                 className="w-full h-full relative flex items-center justify-start px-6 md:px-20 lg:px-32"
             >
+                {/* Top White Gradient Overlay has been moved down directly into the image layer for better blending */}
+
                 <motion.div
                     style={{
                         opacity: exitOpacity, scale: exitScale, y: exitY, x: exitX
@@ -65,13 +67,21 @@ const About = ({ scrollProgress }) => {
                     {/* SOLID BACKING LAYER - Blocks previous section */}
                     <div className="absolute inset-0 bg-ivory" />
 
-                    {/* IMAGE LAYER */}
-                    <motion.img
+                    {/* IMAGE AND TOP GRADIENT WRAPPER - Unified scale context */}
+                    <motion.div
                         style={{ y: bgY, opacity: imageOpacity }}
-                        src={BaseCampImg}
-                        alt="Base Camp Tents"
-                        className="absolute inset-0 w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105 scale-110 origin-center"
-                    />
+                        className="absolute inset-0 w-full h-full scale-110 origin-center"
+                    >
+                        <img
+                            src={BaseCampImg}
+                            alt="Base Camp Tents"
+                            className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
+                        />
+                        {/* Top White Gradient Overlay precisely locked to image top */}
+                        <div 
+                            className="absolute top-0 left-0 w-full h-[150px] bg-gradient-to-b from-ivory via-ivory/80 to-transparent z-40 pointer-events-none" 
+                        />
+                    </motion.div>
                     
                     {/* Gradient blending edge with next section */}
                     <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#f8f9fa] to-transparent z-10" />
