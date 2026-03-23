@@ -50,129 +50,103 @@ const Summit = ({ scrollProgress }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
                 
-                {/* POLAROID 1 - Top Left */}
-                <motion.div
-                    initial={{ opacity: 0, rotate: -20, x: -100 }}
-                    whileInView={{ opacity: 1, rotate: -12, x: 0 }}
-                    transition={{ duration: 1.5, delay: 0.1 }}
-                    className="absolute top-10 left-4 md:top-16 md:left-[10%] lg:top-20 lg:left-[18%] w-56 md:w-[20rem] lg:w-[24rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
-                >
-                    <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
-                        <img src={ClimbersImg} className="w-full h-full object-cover grayscale-0 sepia-0" alt="Horolezci" />
-                    </div>
-                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Tým v akci</div>
-                </motion.div>
-
-                {/* POLAROID 2 - Top Right */}
-                <motion.div
-                    initial={{ opacity: 0, rotate: 20, x: 100 }}
-                    whileInView={{ opacity: 1, rotate: 14, x: 0 }}
-                    transition={{ duration: 1.5, delay: 0.3 }}
-                    className="absolute top-48 right-4 md:top-32 md:right-[5%] lg:top-40 lg:right-[15%] w-56 md:w-[20rem] lg:w-[24rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
-                >
-                    <div className="w-full aspect-[4/5] bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
-                        <img src={HonzaProfileImg} className="w-full h-full object-cover object-top grayscale-0" alt="Honza Profil" />
-                    </div>
-                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Na vrcholu</div>
-                </motion.div>
-
-                {/* POLAROID 3 - Bottom Left/Center */}
-                <motion.div
-                    initial={{ opacity: 0, rotate: -10, y: 100 }}
-                    whileInView={{ opacity: 1, rotate: -6, y: 0 }}
-                    transition={{ duration: 1.5, delay: 0.5 }}
-                    className="absolute bottom-10 left-1/4 md:bottom-16 md:left-[20%] lg:bottom-24 lg:left-[28%] w-56 md:w-[20rem] lg:w-[25rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden md:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
-                >
-                    <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
-                        <img src={BaseCampImg} className="w-full h-full object-cover grayscale-0" alt="Základní tábor" />
-                    </div>
-                    <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-800 text-sm md:text-base font-medium">Společná cesta</div>
-                </motion.div>
+                {/* Removed Absolute Polaroids for much cleaner UX/UI */}
             </motion.div>
 
             {/* Content Block */}
             <motion.div
                 style={{ opacity: contentOpacity, y: contentY }}
-                className="relative z-50 text-center w-full h-full max-w-3xl pointer-events-auto flex flex-col items-center justify-center"
+                className="relative z-50 w-full h-full max-w-6xl pointer-events-auto flex flex-col items-center justify-center mx-auto px-4"
             >
-                <div className="w-full px-6 py-6 md:py-8 lg:py-12 rounded-3xl bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_0_50px_rgba(0,0,0,0.3)] [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
-                <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                    className="mb-2 md:mb-4 flex justify-center"
-                >
-                    <div className="p-3 md:p-4 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
-                        <Trophy className="w-8 h-8 md:w-10 md:h-10 text-gold-500" />
-                    </div>
-                </motion.div>
-
-                <h4 className="text-gold-700 font-sans uppercase tracking-[0.4em] text-xs md:text-sm font-bold mb-2 md:mb-4 drop-shadow-md">
-                    Zdravotní osvěta & média — 8848 m
-                </h4>
-
-                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-slate-950 mb-4 md:mb-6 leading-none tracking-tight drop-shadow-md">
-                    Kašpárek s nemocí, co to překonává.
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left max-w-5xl mx-auto mt-4 md:mt-8">
-                    <div 
-                        onClick={() => setIsOsvetaOpen(true)}
-                        className="glass-card bg-white/60 hover:bg-white/80 transition-colors cursor-pointer border-white/40 p-6 md:p-8 shadow-xl group"
-                    >
-                        <h3 className="font-serif text-2xl md:text-3xl text-slate-950 mb-4 group-hover:text-gold-600 transition-colors">Osvěta &rarr;</h3>
-                        <p className="font-sans text-slate-800 leading-relaxed text-base md:text-lg mb-4 font-medium">
-                            Spolupráce a osvěta pro FUCK CANCER a REVMA LIGA.
-                        </p>
-                        <p className="font-sans text-slate-700 leading-relaxed text-xs md:text-sm">
-                            Spolupráce s lékaři: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková, Martin Pospíchal.
-                        </p>
-                    </div>
-                    <div className="glass-card bg-white/60 border-white/40 p-6 md:p-8 shadow-xl flex flex-col justify-center">
-                        <h3 className="font-serif text-2xl md:text-3xl text-slate-950 mb-4 md:mb-6">Média & Kontakt</h3>
-                        <div className="space-y-3 md:space-y-4 flex flex-col">
-                            <button 
-                                onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
-                                className="w-full px-5 py-3 bg-white/50 hover:bg-slate-900 hover:text-white rounded-xl text-left font-sans text-base font-bold text-slate-800 transition-all flex items-center justify-between group shadow-sm border border-slate-200/50 hover:border-slate-900"
+                <div className="w-full p-5 md:p-8 lg:p-10 rounded-[2rem] bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_rgba(0,0,0,0.15)] [@media(max-height:850px)]:scale-[0.90] [@media(max-height:750px)]:scale-[0.80] [@media(max-height:650px)]:scale-[0.70] origin-center transition-transform duration-300 flex flex-col">
+                    
+                    <div className="flex flex-col md:flex-row gap-6 lg:gap-10 w-full items-center text-left">
+                        {/* Left Side: Text and Actions */}
+                        <div className="flex-1 flex flex-col w-full">
+                            <motion.div 
+                                initial={{ scale: 0 }}
+                                whileInView={{ scale: 1 }}
+                                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                                className="flex items-center gap-3 md:gap-4 mb-4"
                             >
-                                Blog (Příběhy z expedic)
-                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
-                            </button>
-                            <button 
-                                onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
-                                className="w-full px-5 py-3 bg-white/50 hover:bg-slate-900 hover:text-white rounded-xl text-left font-sans text-base font-bold text-slate-800 transition-all flex items-center justify-between group shadow-sm border border-slate-200/50 hover:border-slate-900"
-                            >
-                                YouTube & Podcast 2027
-                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
-                            </button>
-                            <div className="h-4 w-full" />
-                            <button 
-                                onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
-                                className="w-full px-5 py-4 bg-gold-500 hover:bg-gold-600 text-white rounded-xl text-left font-sans text-lg font-bold transition-all flex items-center justify-between group shadow-lg"
-                            >
-                                Kontakt a Booking
-                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
-                            </button>
+                                <div className="p-2.5 md:p-3 shrink-0 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
+                                    <Trophy className="w-5 h-5 md:w-6 md:h-6 text-gold-600" />
+                                </div>
+                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] font-bold leading-snug">
+                                    Zdravotní osvěta & neziskovky<br/><span className="text-slate-500 font-medium tracking-widest text-[8px] md:text-[9px]">8848 m. n. m.</span>
+                                </h4>
+                            </motion.div>
+
+                            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-5 leading-tight tracking-tight">
+                                Kašpárek s nemocí,<br className="hidden lg:block"/>co to překonává.
+                            </h2>
+
+                            <div className="flex flex-col gap-3 md:gap-4">
+                                {/* Osvěta Card */}
+                                <div 
+                                    onClick={() => setIsOsvetaOpen(true)}
+                                    className="bg-slate-50 hover:bg-slate-100 transition-all duration-300 cursor-pointer border border-slate-200/80 rounded-2xl p-4 md:p-5 shadow-sm relative overflow-hidden group"
+                                >
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gold-400/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-gold-400/20 transition-colors" />
+                                    <h3 className="font-serif text-xl md:text-2xl text-slate-900 mb-2 group-hover:text-gold-600 transition-colors flex items-center justify-between relative z-10">
+                                        Naše Osvěta <span className="text-gold-500 font-sans group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </h3>
+                                    <p className="font-sans text-slate-700 leading-relaxed text-sm mb-2 font-medium relative z-10">
+                                        Spolupráce pro FUCK CANCER a REVMA LIGA. Ukazujeme, že s nemocí život nekončí.
+                                    </p>
+                                    <p className="font-sans text-slate-500 leading-relaxed text-[10px] md:text-[11px] relative z-10 line-clamp-1">
+                                        Odborníci: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková...
+                                    </p>
+                                </div>
+
+                                {/* Buttons Row */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+                                    <button 
+                                        onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
+                                        className="w-full px-4 py-3 bg-white hover:bg-slate-900 hover:text-white rounded-xl text-center font-sans text-[13px] md:text-sm font-bold text-slate-800 transition-all shadow-sm border border-slate-200 flex justify-center items-center gap-2 group"
+                                    >
+                                        Příběhy z expedic <span className="text-gold-500 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                    <button 
+                                        onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+                                        className="w-full px-4 py-3 bg-gold-500 hover:bg-gold-600 text-white rounded-xl text-center font-sans text-[13px] md:text-sm font-bold transition-all shadow-md flex justify-center items-center gap-2 group"
+                                    >
+                                        Kontakt a Booking <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Side: Photo Gallery (Horizontal stack) */}
+                        <div className="w-full md:w-[45%] lg:w-[40%] flex flex-col gap-3 shrink-0 mt-4 md:mt-0">
+                            {/* Main large image */}
+                            <div className="w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden shadow-md relative group">
+                                <img src={ClimbersImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Tým v akci" />
+                                <div className="absolute inset-0 border border-black/5 rounded-2xl pointer-events-none" />
+                            </div>
+                            {/* Two small images */}
+                            <div className="flex flex-row gap-3">
+                                <div className="flex-1 aspect-video md:aspect-[4/3] rounded-xl overflow-hidden shadow-sm relative group">
+                                    <img src={HonzaProfileImg} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Na vrcholu" />
+                                    <div className="absolute inset-0 border border-black/5 rounded-xl pointer-events-none" />
+                                </div>
+                                <div className="flex-1 aspect-video md:aspect-[4/3] rounded-xl overflow-hidden shadow-sm relative group">
+                                    <img src={BaseCampImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Společná cesta" />
+                                    <div className="absolute inset-0 border border-black/5 rounded-xl pointer-events-none" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="flex flex-col items-center gap-4 mt-8 md:mt-12">
-                    <button
-                        onClick={scrollToTop}
-                        className="group relative px-10 md:px-12 py-4 md:py-5 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs md:text-sm transition-all hover:bg-gold-500 rounded-full shadow-lg shadow-black/20 hover:shadow-gold-500/40 hover:-translate-y-1"
-                    >
-                        <span className="relative z-10 flex items-center gap-2 md:gap-3">
-                            ZPĚT DO ÚDOLÍ <ChevronUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
-                        </span>
-                    </button>
-
-                    <div className="flex gap-4 opacity-50">
-                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
-                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
-                        <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
+                    {/* Back to top row */}
+                    <div className="flex justify-center w-full mt-6 md:mt-8 border-t border-slate-200/60 pt-5 md:pt-6">
+                        <button
+                            onClick={scrollToTop}
+                            className="group relative px-6 py-2.5 bg-slate-900 text-white font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-all hover:bg-gold-500 rounded-full shadow-md hover:-translate-y-0.5 flex items-center gap-2"
+                        >
+                            ZPĚT NA ZAČÁTEK <ChevronUp className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform" />
+                        </button>
                     </div>
-                </div>
                 </div>
             </motion.div>
 
