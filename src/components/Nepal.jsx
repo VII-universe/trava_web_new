@@ -67,7 +67,7 @@ const Nepal = ({ scrollProgress }) => {
                             <MapPin className="w-5 h-5" />
                             <span className="text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
                         </div>
-                        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight">Czech Pub Nepal</h2>
+                        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight">Cesta nekončí, když slezeš z hory</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
@@ -149,42 +149,42 @@ const Nepal = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right content area */}
-                        <div className="md:w-[55%] p-8 md:p-12 overflow-y-auto flex flex-col text-left">
+                        <div className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left">
                             <button
                                 onClick={() => setOpenHotel(false)}
-                                className="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600"
+                                className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600 z-10"
                             >
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[60px] md:h-[90px] w-auto object-contain object-left mb-4 self-start" />
-                            <h2 className="font-serif text-3xl text-slate-900 mb-6">Tvůj základní tábor před výpravou</h2>
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[40px] md:h-[60px] w-auto object-contain object-left mb-2 self-start" />
+                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 mt-2">Tvůj základní tábor před výpravou</h2>
 
-                            <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
+                            <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
                                 Náš hotel v centru Thamelu je tvé útočiště z divokých ulic Káthmándú. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Zakládáme si na absolutní čistotě, klidné rodinné atmosféře a faktu, že se tu s námi domluvíš česky.
                             </p>
 
-                            <div className="grid grid-cols-2 gap-4 mb-8">
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Wifi className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Rychlá Wi-Fi</span>
+                            <div className="grid grid-cols-2 gap-3 mb-4 md:mb-6">
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Wifi className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Rychlá Wi-Fi</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Home className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Rooftop terasa</span>
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Home className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Rooftop terasa</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Coffee className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Klid a pohoda</span>
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Coffee className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Klid a pohoda</span>
                                 </div>
                             </div>
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
-                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
+                            <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
                                 {[HotelImg2, HotelImg3, HotelImg4].map((src, i) => (
-                                    <div key={i} className="cursor-pointer group relative flex-shrink-0 h-28" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="h-full w-auto object-contain bg-slate-900/5 rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
-                                        <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
+                                    <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
+                                        <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
+                                        <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
                                     </div>
                                 ))}
                             </div>
@@ -227,42 +227,42 @@ const Nepal = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right content area */}
-                        <div className="md:w-[55%] p-8 md:p-12 overflow-y-auto flex flex-col text-left">
+                        <div className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left">
                             <button
                                 onClick={() => setOpenPub(false)}
-                                className="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600"
+                                className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600"
                             >
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[60px] md:h-[90px] w-auto object-contain object-left mb-2 self-start" />
-                            <h2 className="font-serif text-3xl text-slate-900 mb-6 mt-2">Místo, kde se potkávají dobrodruzi</h2>
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[40px] md:h-[60px] w-auto object-contain object-left mb-2 self-start" />
+                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 mt-2">Místo, kde se potkávají dobrodruzi</h2>
 
-                            <p className="font-sans text-slate-700 text-lg leading-relaxed mb-8">
+                            <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
                                 Středobod českého vesmíru v Nepálu. Načepujeme ti parádní pivo a naservírujeme poctivý smažák. Sdílej historky z expedic a nasávej atmosféru s lidmi, kteří mají hory pod kůží.
                             </p>
 
-                            <div className="grid grid-cols-2 gap-4 mb-8">
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Beer className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Točené pivo</span>
+                            <div className="grid grid-cols-2 gap-3 mb-4 md:mb-6">
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Beer className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Točené pivo</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Utensils className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Domácí smažák</span>
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><Utensils className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Domácí smažák</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100"><MapPin className="w-5 h-5 text-gold-500"/></div>
-                                    <span className="font-semibold text-sm">Centrum dění</span>
+                                <div className="flex items-center gap-2 md:gap-3 text-slate-700">
+                                    <div className="p-1.5 md:p-2 bg-white rounded-lg shadow-sm border border-slate-100"><MapPin className="w-4 h-4 md:w-5 md:h-5 text-gold-500"/></div>
+                                    <span className="font-semibold text-xs md:text-sm">Centrum dění</span>
                                 </div>
                             </div>
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
-                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
+                            <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
                                 {[PubImg2, PubImg3, PubImg4].map((src, i) => (
-                                    <div key={i} className="cursor-pointer group relative flex-shrink-0 h-28" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="h-full w-auto object-contain bg-slate-900/5 rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
-                                        <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
+                                    <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
+                                        <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
+                                        <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
                                     </div>
                                 ))}
                             </div>

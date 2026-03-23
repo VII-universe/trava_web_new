@@ -121,7 +121,7 @@ const Expeditions = ({ scrollProgress }) => {
 
             <motion.div
                 style={{ y: contentY }}
-                className="w-full h-full relative flex flex-col items-center justify-center px-6"
+                className="w-full h-full relative flex flex-col items-center justify-center px-6 pb-16 md:pb-24 xl:pb-32"
             >
                 <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
                     <div className="text-center mb-6 md:mb-8 xl:mb-12 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
@@ -130,7 +130,7 @@ const Expeditions = ({ scrollProgress }) => {
                         04 — Expedice (4500 m)
                     </h4>
                     <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 drop-shadow-md">
-                        Od himálajských vrcholů po točené v Káthmándú
+                        Vydej se se mnou na cesty
                     </h2>
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Protože cesta nekončí, když slezeš z hory.</p>
                 </div>
