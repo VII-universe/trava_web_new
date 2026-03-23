@@ -21,7 +21,8 @@ const Nepal = ({ scrollProgress }) => {
 
     const hotelImages = [HotelImg2, HotelImg3, HotelImg4];
     const pubImages = [PubImg2, PubImg3, PubImg4];
-    const activeGallery = openHotel ? hotelImages : openPub ? pubImages : [];
+    const allImages = [HotelImg1, PubImg1, HotelImg2, PubImg2, HotelImg3, PubImg3, HotelImg4, PubImg4];
+    const activeGallery = openHotel ? hotelImages : openPub ? pubImages : allImages;
     const selectedIndex = activeGallery.indexOf(selectedImage);
 
     const handleNext = (e) => {
@@ -96,8 +97,8 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[120%] w-auto object-contain object-left -mt-8 md:-mt-14 lg:-mt-20 -ml-4 md:-ml-8 -mb-8 md:-mb-14 lg:-mb-16 self-start drop-shadow-sm pointer-events-none" />
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[150px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1 mt-4 md:mt-6">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
                             <button
@@ -110,8 +111,8 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[120%] w-auto object-contain object-left -mt-8 md:-mt-14 lg:-mt-20 -ml-4 md:-ml-8 -mb-8 md:-mb-14 lg:-mb-16 self-start drop-shadow-sm pointer-events-none" />
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[150px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1 mt-4 md:mt-6">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                             <button
@@ -130,7 +131,7 @@ const Nepal = ({ scrollProgress }) => {
                             animate={{ x: ['0%', '-50%'] }}
                             transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                         >
-                            {[HotelImg1, PubImg1, HotelImg2, PubImg2, HotelImg3, PubImg3, HotelImg4, PubImg4].map((src, idx) => (
+                            {allImages.map((src, idx) => (
                                 <div key={idx} className="min-w-[160px] md:min-w-[200px] cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
                                     <img src={src} className="w-full h-32 md:h-40 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Nepal gallery" />
                                     <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
@@ -180,8 +181,8 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[100px] md:h-[150px] lg:h-[180px] max-w-[120%] w-auto object-contain object-left -mt-6 md:-mt-10 lg:-mt-12 -ml-4 md:-ml-8 -mb-6 md:-mb-12 self-start pointer-events-none" />
-                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10">Tvůj základní tábor před výpravou</h2>
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-8 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-8 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
                                 Náš hotel v centru Thamelu je tvé útočiště z divokých ulic Káthmándú. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Zakládáme si na absolutní čistotě, klidné rodinné atmosféře a faktu, že se tu s námi domluvíš česky.
@@ -258,8 +259,8 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[100px] md:h-[150px] lg:h-[180px] max-w-[120%] w-auto object-contain object-left -mt-6 md:-mt-10 lg:-mt-12 -ml-4 md:-ml-8 -mb-6 md:-mb-12 self-start pointer-events-none" />
-                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10">Místo, kde se potkávají dobrodruzi</h2>
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-8 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-8 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Místo, kde se potkávají dobrodruzi</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
                                 Středobod českého vesmíru v Nepálu. Načepujeme ti parádní pivo a naservírujeme poctivý smažák. Sdílej historky z expedic a nasávej atmosféru s lidmi, kteří mají hory pod kůží.

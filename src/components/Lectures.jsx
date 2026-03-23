@@ -185,7 +185,6 @@ const Lectures = ({ scrollProgress }) => {
                             <img src={Polaroid1} className="w-full h-full object-cover filter opacity-100" alt="Přednáška" />
                             <div className="absolute inset-0 bg-gold-900/10 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Energie</div>
                     </motion.div>
 
                     {/* POLAROID 2 - Right */}
@@ -200,7 +199,6 @@ const Lectures = ({ scrollProgress }) => {
                             <img src={Polaroid2} className="w-full h-full object-cover filter opacity-100" alt="Tým" />
                             <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Příběhy</div>
                     </motion.div>
                     
                     {/* POLAROID 3 - Bottom Left */}
@@ -215,7 +213,6 @@ const Lectures = ({ scrollProgress }) => {
                             <img src={Polaroid3} className="w-full h-full object-cover object-top filter opacity-100" alt="Vrchol" />
                             <div className="absolute inset-0 bg-slate-900/20 mix-blend-overlay" />
                         </div>
-                        <div className="absolute bottom-3 md:bottom-4 left-0 w-full text-center font-serif italic text-slate-600 text-xs md:text-sm font-medium">Atmosféra</div>
                     </motion.div>
 
                     {/* Cards Grid (on top) */}

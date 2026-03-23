@@ -128,15 +128,14 @@ const About = ({ scrollProgress }) => {
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
                         Horolezec, cestovatel, dobrodruh, podnikatel. Život mezi ČR a Nepálem. Jsem autentický příběh člověka, který překonal rakovinu i psoriatickou artritidu. Ne proto, abych dobyl vrchol, ale abych našel cestu zpátky.
                     </p>
+                    
                     <button 
                         onClick={() => setIsStoryOpen(true)}
-                        className="group flex items-center gap-3 text-slate-900 font-medium tracking-wide hover:text-gold-600 transition-colors duration-300"
+                        className="group relative inline-flex items-center justify-center gap-3 py-4 px-8 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden w-full sm:w-auto mt-2"
                     >
-                        <span className="relative">
-                            Můj celý příběh
-                            <span className="absolute -bottom-1 left-0 w-full h-px bg-slate-400 group-hover:bg-gold-400 transition-colors duration-300" />
-                        </span>
-                        <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                        <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                        <span className="relative z-10 drop-shadow-md">Můj celý příběh</span>
+                        <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
                     </button>
                 </motion.div>
 

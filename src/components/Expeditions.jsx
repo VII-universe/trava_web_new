@@ -87,6 +87,7 @@ const Expeditions = ({ scrollProgress }) => {
     const [selectedExped, setSelectedExped] = useState(null);
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
     const [selectedMoreExped, setSelectedMoreExped] = useState(null);
+    const [isOrdering, setIsOrdering] = useState(false);
 
     // Prevent body scroll when modal is open
     useEffect(() => {
@@ -125,8 +126,8 @@ const Expeditions = ({ scrollProgress }) => {
             >
                 <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
                     <div className="text-center mb-6 md:mb-8 xl:mb-12 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-32 md:w-48 xl:w-56 mb-4 xl:mb-6 drop-shadow-lg opacity-90" />
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 xl:w-80 mb-2 xl:mb-4 drop-shadow-lg opacity-90 scale-110 md:scale-125" />
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-6 md:mt-10">
                         04 — Expedice (4500 m)
                     </h4>
                     <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 drop-shadow-md">
@@ -247,6 +248,23 @@ const Expeditions = ({ scrollProgress }) => {
                             <p className="font-sans text-slate-200 leading-relaxed text-sm md:text-base drop-shadow-sm">
                                 Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
                             </p>
+                            
+                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10">
+                                <button 
+                                    onClick={() => {
+                                        const totalHeight = document.body.scrollHeight - window.innerHeight;
+                                        window.scrollTo({
+                                            top: totalHeight * 0.98,
+                                            behavior: 'smooth'
+                                        });
+                                    }}
+                                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 py-4 md:py-5 px-8 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
+                                >
+                                    <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                    <span className="relative z-10 drop-shadow-md">Chci jet na expedici</span>
+                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+                                </button>
+                            </div>
                         </motion.div>
 
                         <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
@@ -256,7 +274,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 {EXPEDITIONS.map((exped) => (
                                     <button
                                         key={exped.id}
-                                        onClick={() => setSelectedExped(exped)}
+                                        onClick={() => { setSelectedExped(exped); setIsOrdering(false); }}
                                         className="group text-left p-3 md:p-4 rounded-xl border border-white/10 bg-black/60 hover:bg-black/80 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-md flex items-center justify-between shadow-lg"
                                     >
                                         <div>
@@ -325,36 +343,84 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
 
                             <div className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center">
-                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
-                                    Detail Výpravy
-                                </h4>
-                                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
-                                    {selectedExped.title}
-                                </h2>
-                                
-                                <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
-                                    {selectedExped.description}
-                                </p>
+                                {!isOrdering ? (
+                                    <>
+                                        <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
+                                            Detail Výpravy
+                                        </h4>
+                                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+                                            {selectedExped.title}
+                                        </h2>
+                                        
+                                        <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+                                            {selectedExped.description}
+                                        </p>
 
-                                <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
-                                    <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
-                                    <ul className="space-y-3">
-                                        {selectedExped.highlights.map((highlight, idx) => (
-                                            <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
-                                                <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
-                                                <span className="leading-snug">{highlight}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                        <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                            <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
+                                            <ul className="space-y-3">
+                                                {selectedExped.highlights.map((highlight, idx) => (
+                                                    <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
+                                                        <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
+                                                        <span className="leading-snug">{highlight}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
 
-                                <button 
-                                    onClick={() => setSelectedExped(null)}
-                                    className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
-                                >
-                                    Mám zájem
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </button>
+                                        <button 
+                                            onClick={() => setIsOrdering(true)}
+                                            className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                                        >
+                                            Mám zájem
+                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </button>
+                                    </>
+                                ) : (
+                                    <div className="flex flex-col h-full animate-in fade-in duration-500">
+                                        <button 
+                                            onClick={() => setIsOrdering(false)}
+                                            className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
+                                        >
+                                            <ArrowLeft className="w-4 h-4" />
+                                            Zpět
+                                        </button>
+                                        <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
+                                        <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a my se vám co nejdříve ozveme s detaily k: {selectedExped.title}.</p>
+                                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
+                                                <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
+                                                    <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                                                    <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
+                                                <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
+                                            </div>
+                                            <button 
+                                                type="button"
+                                                onClick={() => {
+                                                    alert("Poptávka na " + selectedExped.title + " byla odeslána! (Demo)");
+                                                    setIsOrdering(false);
+                                                    setSelectedExped(null);
+                                                }}
+                                                className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
+                                            >
+                                                Odeslat nezávaznou poptávku
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                        </form>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     </motion.div>
@@ -403,39 +469,85 @@ const Expeditions = ({ scrollProgress }) => {
                                         </div>
 
                                         <div className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center">
-                                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
-                                                Detail Výpravy
-                                            </h4>
-                                            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
-                                                {selectedMoreExped.title}
-                                            </h2>
-                                            
-                                            <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
-                                                {selectedMoreExped.description}
-                                            </p>
+                                            {!isOrdering ? (
+                                                <>
+                                                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
+                                                        Detail Výpravy
+                                                    </h4>
+                                                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+                                                        {selectedMoreExped.title}
+                                                    </h2>
+                                                    
+                                                    <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+                                                        {selectedMoreExped.description}
+                                                    </p>
 
-                                            <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
-                                                <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
-                                                <ul className="space-y-3">
-                                                    {selectedMoreExped.highlights.map((highlight, idx) => (
-                                                        <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
-                                                            <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
-                                                            <span className="leading-snug">{highlight}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
+                                                    <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                                        <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
+                                                        <ul className="space-y-3">
+                                                            {selectedMoreExped.highlights.map((highlight, idx) => (
+                                                                <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
+                                                                    <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
+                                                                    <span className="leading-snug">{highlight}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
 
-                                            <button 
-                                                onClick={() => {
-                                                    setSelectedMoreExped(null);
-                                                    setShowAllExpeditions(false);
-                                                }}
-                                                className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
-                                            >
-                                                Mám zájem
-                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                            </button>
+                                                    <button 
+                                                        onClick={() => setIsOrdering(true)}
+                                                        className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                                                    >
+                                                        Mám zájem
+                                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <div className="flex flex-col h-full animate-in fade-in duration-500">
+                                                    <button 
+                                                        onClick={() => setIsOrdering(false)}
+                                                        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
+                                                    >
+                                                        <ArrowLeft className="w-4 h-4" />
+                                                        Zpět
+                                                    </button>
+                                                    <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
+                                                    <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a my se vám co nejdříve ozveme s detaily k: {selectedMoreExped.title}.</p>
+                                                    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
+                                                            <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
+                                                        </div>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
+                                                                <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
+                                                            </div>
+                                                            <div>
+                                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                                                                <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
+                                                            <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
+                                                        </div>
+                                                        <button 
+                                                            type="button"
+                                                            onClick={() => {
+                                                                alert("Poptávka na " + selectedMoreExped.title + " byla odeslána! (Demo)");
+                                                                setIsOrdering(false);
+                                                                setSelectedMoreExped(null);
+                                                                setShowAllExpeditions(false);
+                                                            }}
+                                                            className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
+                                                        >
+                                                            Odeslat nezávaznou poptávku
+                                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -463,7 +575,7 @@ const Expeditions = ({ scrollProgress }) => {
                                             {MORE_EXPEDITIONS.map((exped) => (
                                                 <div 
                                                     key={exped.id}
-                                                    onClick={() => setSelectedMoreExped(exped)}
+                                                    onClick={() => { setSelectedMoreExped(exped); setIsOrdering(false); }}
                                                     className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
                                                 >
                                                     <img 
