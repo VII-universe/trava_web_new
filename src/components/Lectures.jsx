@@ -156,22 +156,22 @@ const Lectures = ({ scrollProgress }) => {
                 style={{ y: containerY }}
                 className="relative z-50 w-full h-full px-6 pointer-events-auto flex flex-col items-center justify-center"
             >
-                <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
-                    <div className="max-w-3xl w-full text-center">
+                <div className="w-full flex flex-col items-center justify-center translate-y-20 md:translate-y-24 lg:translate-y-12 [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
+                    <div className="max-w-3xl w-full text-center mt-16 md:mt-24 lg:mt-12 relative z-20">
                         <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3 md:mb-6">
                     06 — Projekty & Přednášky (7500 m)
                 </h4>
 
-                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-8 leading-tight">
+                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 lg:mb-6 leading-tight">
                     Projekty & Přednášky
                 </h2>
 
-                <p className="font-sans text-slate-300 text-lg md:text-xl leading-relaxed mb-6 md:mb-10 lg:mb-12 max-w-3xl mx-auto">
+                <p className="font-sans text-slate-300 text-sm md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8 max-w-3xl mx-auto">
                     50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
                         </p>
                     </div>
 
-                <div className="relative max-w-6xl mx-auto w-full mb-8 md:mb-12 lg:mb-16 px-4 md:px-0 mt-8 md:mt-12 lg:mt-20">
+                <div className="relative max-w-6xl mx-auto w-full mb-8 md:mb-12 lg:mb-16 px-4 md:px-0 mt-0 lg:mt-4">
                     
                     {/* POLAROID 1 - Left */}
                     <motion.div
