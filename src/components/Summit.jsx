@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Trophy, Star, ChevronUp, X } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
@@ -55,7 +55,7 @@ const Summit = ({ scrollProgress }) => {
                     initial={{ opacity: 0, rotate: -20, x: -100 }}
                     whileInView={{ opacity: 1, rotate: -12, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.1 }}
-                    className="absolute top-10 left-4 md:top-16 md:left-[10%] lg:top-20 lg:left-[18%] w-56 md:w-[20rem] lg:w-[24rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
+                    className="absolute top-10 left-4 md:top-16 md:left-[10%] lg:top-20 lg:left-[18%] w-56 md:w-[20rem] lg:w-[24rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
                 >
                     <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                         <img src={ClimbersImg} className="w-full h-full object-cover grayscale-0 sepia-0" alt="Horolezci" />
@@ -68,7 +68,7 @@ const Summit = ({ scrollProgress }) => {
                     initial={{ opacity: 0, rotate: 20, x: 100 }}
                     whileInView={{ opacity: 1, rotate: 14, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.3 }}
-                    className="absolute top-48 right-4 md:top-32 md:right-[5%] lg:top-40 lg:right-[15%] w-56 md:w-[20rem] lg:w-[24rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
+                    className="absolute top-48 right-4 md:top-32 md:right-[5%] lg:top-40 lg:right-[15%] w-56 md:w-[20rem] lg:w-[24rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden sm:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
                 >
                     <div className="w-full aspect-[4/5] bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                         <img src={HonzaProfileImg} className="w-full h-full object-cover object-top grayscale-0" alt="Honza Profil" />
@@ -81,7 +81,7 @@ const Summit = ({ scrollProgress }) => {
                     initial={{ opacity: 0, rotate: -10, y: 100 }}
                     whileInView={{ opacity: 1, rotate: -6, y: 0 }}
                     transition={{ duration: 1.5, delay: 0.5 }}
-                    className="absolute bottom-10 left-1/4 md:bottom-16 md:left-[20%] lg:bottom-24 lg:left-[28%] w-56 md:w-[20rem] lg:w-[25rem] bg-white p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-200 hidden md:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
+                    className="absolute bottom-10 left-1/4 md:bottom-16 md:left-[20%] lg:bottom-24 lg:left-[28%] w-56 md:w-[20rem] lg:w-[25rem] bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_30px_60px_rgba(0,0,0,0.2)] rounded-sm border border-slate-300/50 hidden md:block z-20 pointer-events-auto cursor-pointer hover:rotate-0 hover:scale-105 hover:z-40 transition-all duration-500 group"
                 >
                     <div className="w-full aspect-square bg-slate-200 overflow-hidden relative group-hover:shadow-inner transition-all">
                         <img src={BaseCampImg} className="w-full h-full object-cover grayscale-0" alt="Základní tábor" />
@@ -93,61 +93,62 @@ const Summit = ({ scrollProgress }) => {
             {/* Content Block */}
             <motion.div
                 style={{ opacity: contentOpacity, y: contentY }}
-                className="relative z-50 text-center max-w-3xl pointer-events-auto px-6 py-10 md:py-12 rounded-3xl bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_0_50px_rgba(0,0,0,0.3)]"
+                className="relative z-50 text-center w-full h-full max-w-3xl pointer-events-auto flex flex-col items-center justify-center"
             >
+                <div className="w-full px-6 py-6 md:py-8 lg:py-12 rounded-3xl bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_0_50px_rgba(0,0,0,0.3)] [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
                 <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                    className="mb-8 flex justify-center"
+                    className="mb-2 md:mb-4 flex justify-center"
                 >
-                    <div className="p-4 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
-                        <Trophy className="w-12 h-12 text-gold-500" />
+                    <div className="p-3 md:p-4 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
+                        <Trophy className="w-8 h-8 md:w-10 md:h-10 text-gold-500" />
                     </div>
                 </motion.div>
 
-                <h4 className="text-gold-700 font-sans uppercase tracking-[0.4em] text-sm font-bold mb-4 drop-shadow-md">
+                <h4 className="text-gold-700 font-sans uppercase tracking-[0.4em] text-xs md:text-sm font-bold mb-2 md:mb-4 drop-shadow-md">
                     Zdravotní osvěta & média — 8848 m
                 </h4>
 
-                <h2 className="font-serif text-6xl md:text-7xl text-slate-950 mb-8 leading-none tracking-tight drop-shadow-md">
+                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-slate-950 mb-4 md:mb-6 leading-none tracking-tight drop-shadow-md">
                     Kašpárek s nemocí, co to překonává.
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-5xl mx-auto mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left max-w-5xl mx-auto mt-4 md:mt-8">
                     <div 
                         onClick={() => setIsOsvetaOpen(true)}
-                        className="glass-card bg-white/60 hover:bg-white/80 transition-colors cursor-pointer border-white/40 p-8 shadow-xl group"
+                        className="glass-card bg-white/60 hover:bg-white/80 transition-colors cursor-pointer border-white/40 p-6 md:p-8 shadow-xl group"
                     >
-                        <h3 className="font-serif text-3xl text-slate-950 mb-4 group-hover:text-gold-600 transition-colors">Osvěta &rarr;</h3>
-                        <p className="font-sans text-slate-800 leading-relaxed text-lg mb-4 font-medium">
+                        <h3 className="font-serif text-2xl md:text-3xl text-slate-950 mb-4 group-hover:text-gold-600 transition-colors">Osvěta &rarr;</h3>
+                        <p className="font-sans text-slate-800 leading-relaxed text-base md:text-lg mb-4 font-medium">
                             Spolupráce a osvěta pro FUCK CANCER a REVMA LIGA.
                         </p>
-                        <p className="font-sans text-slate-700 leading-relaxed text-sm">
+                        <p className="font-sans text-slate-700 leading-relaxed text-xs md:text-sm">
                             Spolupráce s lékaři: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková, Martin Pospíchal.
                         </p>
                     </div>
-                    <div className="glass-card bg-white/60 border-white/40 p-8 shadow-xl flex flex-col justify-center">
-                        <h3 className="font-serif text-3xl text-slate-950 mb-6">Média & Kontakt</h3>
-                        <div className="space-y-4 flex flex-col">
+                    <div className="glass-card bg-white/60 border-white/40 p-6 md:p-8 shadow-xl flex flex-col justify-center">
+                        <h3 className="font-serif text-2xl md:text-3xl text-slate-950 mb-4 md:mb-6">Média & Kontakt</h3>
+                        <div className="space-y-3 md:space-y-4 flex flex-col">
                             <button 
                                 onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
-                                className="text-left font-sans text-lg font-medium text-slate-800 hover:text-gold-600 transition flex items-center justify-between group"
+                                className="w-full px-5 py-3 bg-white/50 hover:bg-slate-900 hover:text-white rounded-xl text-left font-sans text-base font-bold text-slate-800 transition-all flex items-center justify-between group shadow-sm border border-slate-200/50 hover:border-slate-900"
                             >
                                 Blog (Příběhy z expedic)
                                 <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
                             </button>
                             <button 
                                 onClick={() => window.scrollTo({ top: document.body.scrollHeight * 0.90, behavior: 'smooth' })}
-                                className="text-left font-sans text-lg font-medium text-slate-800 hover:text-gold-600 transition flex items-center justify-between group"
+                                className="w-full px-5 py-3 bg-white/50 hover:bg-slate-900 hover:text-white rounded-xl text-left font-sans text-base font-bold text-slate-800 transition-all flex items-center justify-between group shadow-sm border border-slate-200/50 hover:border-slate-900"
                             >
                                 YouTube & Podcast 2027
                                 <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
                             </button>
-                            <div className="h-px w-full bg-slate-200 my-2" />
+                            <div className="h-4 w-full" />
                             <button 
                                 onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
-                                className="text-left font-sans text-lg font-bold text-slate-950 hover:text-gold-600 transition flex items-center justify-between group"
+                                className="w-full px-5 py-4 bg-gold-500 hover:bg-gold-600 text-white rounded-xl text-left font-sans text-lg font-bold transition-all flex items-center justify-between group shadow-lg"
                             >
                                 Kontakt a Booking
                                 <span className="opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
@@ -156,12 +157,12 @@ const Summit = ({ scrollProgress }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center gap-6 mt-16">
+                <div className="flex flex-col items-center gap-4 mt-8 md:mt-12">
                     <button
                         onClick={scrollToTop}
-                        className="group relative px-12 py-5 bg-slate-900 text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-gold-500 rounded-full shadow-lg shadow-black/20 hover:shadow-gold-500/40 hover:-translate-y-1"
+                        className="group relative px-10 md:px-12 py-4 md:py-5 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs md:text-sm transition-all hover:bg-gold-500 rounded-full shadow-lg shadow-black/20 hover:shadow-gold-500/40 hover:-translate-y-1"
                     >
-                        <span className="relative z-10 flex items-center gap-3">
+                        <span className="relative z-10 flex items-center gap-2 md:gap-3">
                             ZPĚT DO ÚDOLÍ <ChevronUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
                         </span>
                     </button>
@@ -171,6 +172,7 @@ const Summit = ({ scrollProgress }) => {
                         <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
                         <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
                     </div>
+                </div>
                 </div>
             </motion.div>
 

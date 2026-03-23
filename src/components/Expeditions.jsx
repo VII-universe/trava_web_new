@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, X, MapPin } from 'lucide-react';
 import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
@@ -88,6 +88,15 @@ const Expeditions = ({ scrollProgress }) => {
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
     const [selectedMoreExped, setSelectedMoreExped] = useState(null);
 
+    // Prevent body scroll when modal is open
+    useEffect(() => {
+        if (selectedExped) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [selectedExped]);
     return (
         <motion.div
             style={{ opacity: containerOpacity }}
@@ -114,26 +123,27 @@ const Expeditions = ({ scrollProgress }) => {
                 style={{ y: contentY }}
                 className="w-full h-full relative flex flex-col items-center justify-center px-6"
             >
-                <div className="text-center mb-10 md:mb-16 relative z-10 pt-10 md:pt-0 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 mb-6 drop-shadow-lg opacity-90" />
+                <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
+                    <div className="text-center mb-6 md:mb-8 xl:mb-12 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-32 md:w-48 xl:w-56 mb-4 xl:mb-6 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
                         04 — Expedice (4500 m)
                     </h4>
-                    <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-4 drop-shadow-md">
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 drop-shadow-md">
                         Od himálajských vrcholů po točené v Káthmándú
                     </h2>
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Protože cesta nekončí, když slezeš z hory.</p>
                 </div>
 
-                <div className="relative z-10 max-w-7xl w-full flex justify-center px-2 md:px-6">
-                    <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6">
+                    <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
 
                         <motion.div
                             initial={{ rotate: -20, x: -100, y: 40, opacity: 0 }}
                             whileInView={{ rotate: -12, x: -60, y: -20, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
-                            className="hidden lg:block absolute -top-16 -left-36 z-0 w-80 bg-[#f8f9fa] p-4 pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
+                            className="hidden lg:block absolute -top-16 lg:-left-12 xl:-left-24 z-0 lg:w-64 xl:w-80 bg-[#f8f9fa] p-3 xl:p-4 pb-12 xl:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50 pointer-events-none"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                                 <img 
@@ -226,12 +236,12 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
 
-                        <motion.div className="glass-card p-6 md:p-10 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/75 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-4 drop-shadow-md">S kým do hor</h3>
-                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight drop-shadow-lg">
+                        <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/75 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center rounded-2xl">
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-[11px] font-bold mb-3 md:mb-4 drop-shadow-md">S kým do hor</h3>
+                            <h2 className="font-serif text-2xl md:text-3xl text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
                                 Osmitisícovky i treky bez přetvářky
                             </h2>
-                            <p className="font-sans text-slate-100 font-medium leading-relaxed text-base md:text-lg mb-4 drop-shadow-sm">
+                            <p className="font-sans text-slate-100 font-medium leading-relaxed text-sm md:text-base lg:text-lg mb-3 drop-shadow-sm">
                                 Honza Tráva má za sebou 6 osmitisícovek. Miri Jirková vystoupala na nespočet šestitisícovek...
                             </p>
                             <p className="font-sans text-slate-200 leading-relaxed text-sm md:text-base drop-shadow-sm">
@@ -239,15 +249,15 @@ const Expeditions = ({ scrollProgress }) => {
                             </p>
                         </motion.div>
 
-                        <motion.div className="glass-card p-4 md:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[11px] font-bold mb-6 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
+                        <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-[11px] font-bold mb-4 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
                             
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2 md:gap-3">
                                 {EXPEDITIONS.map((exped) => (
                                     <button
                                         key={exped.id}
                                         onClick={() => setSelectedExped(exped)}
-                                        className="group text-left p-4 md:p-5 rounded-xl border border-white/10 bg-black/60 hover:bg-black/80 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-md flex items-center justify-between shadow-lg"
+                                        className="group text-left p-3 md:p-4 rounded-xl border border-white/10 bg-black/60 hover:bg-black/80 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-md flex items-center justify-between shadow-lg"
                                     >
                                         <div>
                                             <h4 className="font-serif text-lg md:text-xl text-white drop-shadow-md group-hover:text-gold-400 transition-colors">{exped.title}</h4>
@@ -273,6 +283,7 @@ const Expeditions = ({ scrollProgress }) => {
                             </button>
                         </motion.div>
                     </div>
+                </div>
                 </div>
             </motion.div>
 

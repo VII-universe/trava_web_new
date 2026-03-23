@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'lucide-react';
 import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
@@ -18,6 +18,16 @@ const Nepal = ({ scrollProgress }) => {
     const [openHotel, setOpenHotel] = useState(false);
     const [openPub, setOpenPub] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+
+    // Prevent body scroll when any modal is open
+    useEffect(() => {
+        if (openHotel || openPub || selectedImage) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [openHotel, openPub, selectedImage]);
 
     // PHASE 5: 0.42 -> 0.58 with hold (minimum gap to Expedice)
     const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
@@ -44,14 +54,15 @@ const Nepal = ({ scrollProgress }) => {
             </div>
 
             <div
-                className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-12 pointer-events-none"
+                className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none"
             >
-                {/* Single main glass card combining Hotel, Pub and Gallery */}
-                <motion.div 
-                    className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-[2rem] p-8 md:p-14 flex flex-col pointer-events-auto overflow-hidden"
-                    whileHover={{ y: -5 }}
-                >
-                    <div className="text-center mb-10">
+                <div className="w-full flex items-center justify-center p-2 md:p-6 md:pr-24 lg:p-8 lg:pr-36 xl:px-12 pointer-events-none [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
+                    {/* Single main glass card combining Hotel, Pub and Gallery */}
+                    <motion.div 
+                        className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-2xl md:rounded-[2rem] p-4 md:p-6 lg:p-10 flex flex-col pointer-events-auto overflow-hidden"
+                        whileHover={{ y: -5 }}
+                    >
+                    <div className="text-center mb-4 md:mb-6">
                         <div className="flex items-center justify-center gap-2 text-gold-600 mb-3">
                             <MapPin className="w-5 h-5" />
                             <span className="text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
@@ -59,16 +70,16 @@ const Nepal = ({ scrollProgress }) => {
                         <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight">Czech Pub Nepal</h2>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[60px] md:h-[90px] w-auto object-contain object-left mb-2 self-start" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[40px] md:h-[60px] lg:h-[70px] w-auto object-contain object-left mb-2 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
                             <button
                                 onClick={() => setOpenHotel(true)}
-                                className="mt-6 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition self-start"
+                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
                             >
                                 Více & galerie
                             </button>
@@ -76,13 +87,13 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[60px] md:h-[90px] w-auto object-contain object-left mb-2 self-start" />
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[40px] md:h-[60px] lg:h-[70px] w-auto object-contain object-left mb-2 self-start" />
                             <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                             <button
                                 onClick={() => setOpenPub(true)}
-                                className="mt-6 text-xs uppercase tracking-[0.2em] font-bold text-slate-900 border-b border-slate-900 hover:text-gold-600 hover:border-gold-600 transition self-start"
+                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
                             >
                                 Více & galerie
                             </button>
@@ -90,7 +101,7 @@ const Nepal = ({ scrollProgress }) => {
                     </div>
 
                     {/* Horizontal scrolling gallery inside the box */}
-                    <div className="pt-8 border-t border-slate-900/10">
+                    <div className="pt-4 md:pt-6 border-t border-slate-900/10">
                         <motion.div
                             className="flex gap-4"
                             animate={{ x: ['0%', '-50%'] }}
@@ -105,6 +116,7 @@ const Nepal = ({ scrollProgress }) => {
                         </motion.div>
                     </div>
                 </motion.div>
+                </div>
             </div>
         </motion.div>
 
@@ -168,10 +180,10 @@ const Nepal = ({ scrollProgress }) => {
                             </div>
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
-                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
+                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
                                 {[HotelImg2, HotelImg3, HotelImg4].map((src, i) => (
-                                    <div key={i} className="cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="w-32 h-24 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
+                                    <div key={i} className="cursor-pointer group relative flex-shrink-0 h-28" onClick={() => setSelectedImage(src)}>
+                                        <img src={src} className="h-full w-auto object-contain bg-slate-900/5 rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
                                     </div>
                                 ))}
@@ -246,10 +258,10 @@ const Nepal = ({ scrollProgress }) => {
                             </div>
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
-                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
+                            <div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
                                 {[PubImg2, PubImg3, PubImg4].map((src, i) => (
-                                    <div key={i} className="cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="w-32 h-24 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
+                                    <div key={i} className="cursor-pointer group relative flex-shrink-0 h-28" onClick={() => setSelectedImage(src)}>
+                                        <img src={src} className="h-full w-auto object-contain bg-slate-900/5 rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
                                     </div>
                                 ))}

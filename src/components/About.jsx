@@ -118,7 +118,7 @@ const About = ({ scrollProgress }) => {
                 {/* Content */}
                 <motion.div
                     style={{ opacity: exitOpacity, y: exitY, x: exitX }}
-                    className="relative z-50 max-w-xl p-10 md:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto mt-20"
+                    className="relative z-50 max-w-xl p-6 md:p-10 lg:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto mt-6 md:mt-20 lg:mt-32"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Kdo je Honza Tráva — 800 m</h4>
@@ -165,7 +165,7 @@ const About = ({ scrollProgress }) => {
                                 </button>
 
                                 {/* Left: Text Content */}
-                                <div className="w-full md:w-1/2 p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar">
+                                <div className="w-full md:w-1/2 p-6 md:p-10 lg:p-16 overflow-y-auto custom-scrollbar">
                                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
                                         Příběh, který se stal
                                     </h4>

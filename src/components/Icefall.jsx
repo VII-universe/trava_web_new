@@ -20,8 +20,9 @@ const FLAGS = [
         left: '18%',
         // Mammut colours: black + white + gold tusk logo
         stripes: ['#1a1a1a', '#ffffff', '#1a1a1a'],
+        clipPath: 'polygon(0% 0%, 100% 0%, 99% 70%, 96% 100%, 88% 95%, 72% 98%, 55% 93%, 35% 98%, 15% 92%, 0% 98%)',
         logo: (
-            <img src={LogoMammut} alt="Mammut Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
+            <img src={LogoMammut} alt="Mammut Logo" className="w-full h-full object-cover" />
         ),
     },
     {
@@ -32,8 +33,9 @@ const FLAGS = [
         image: 'https://images.unsplash.com/photo-1628135899479-245edda2b57f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '50%',
         stripes: ['#CC0000', '#FECF00', '#CC0000'],
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 85% 92%, 75% 100%, 65% 85%, 55% 95%, 40% 90%, 20% 96%, 0% 90%)',
         logo: (
-            <img src={LogoRedBull} alt="Red Bull Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
+            <img src={LogoRedBull} alt="Red Bull Logo" className="w-full h-full object-cover" />
         ),
     },
     {
@@ -44,8 +46,9 @@ const FLAGS = [
         image: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '82%',
         stripes: ['#1A5C2A', '#F5E6C8', '#1A5C2A'],
+        clipPath: 'polygon(0% 0%, 100% 0%, 98% 98%, 85% 90%, 75% 96%, 60% 88%, 45% 96%, 25% 90%, 10% 98%, 0% 92%)',
         logo: (
-            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
+            <img src={LogoPrazdroj} alt="Prazdroj Logo" className="w-full h-full object-cover" />
         ),
     },
     {
@@ -56,8 +59,9 @@ const FLAGS = [
         image: 'https://images.unsplash.com/photo-1516682703881-80a22a30bbdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '34%',
         stripes: ['#1F2937', '#F59E0B', '#1F2937'],
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 92%, 80% 97%, 60% 90%, 40% 98%, 20% 90%, 5% 80%, 0% 70%)',
         logo: (
-            <img src={LogoHanibal} alt="Hanibal Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
+            <img src={LogoHanibal} alt="Hanibal Logo" className="w-full h-full object-cover" />
         ),
     },
     {
@@ -68,8 +72,9 @@ const FLAGS = [
         image: 'https://images.unsplash.com/photo-1601002220970-d0232d398cf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '66%',
         stripes: ['#111827', '#94A3B8', '#111827'],
+        clipPath: 'polygon(0% 0%, 100% 0%, 99% 95%, 85% 90%, 70% 98%, 55% 80%, 45% 95%, 30% 88%, 15% 98%, 0% 92%)',
         logo: (
-            <img src={LogoTilak} alt="Tilak Logo" className="w-full h-full object-cover rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20" />
+            <img src={LogoTilak} alt="Tilak Logo" className="w-full h-full object-cover" />
         ),
     },
 ];
@@ -92,6 +97,16 @@ const flagStyles = `
   0%   { opacity: 0.08; }
   45%  { opacity: 0.18; }
   100% { opacity: 0.08; }
+}
+
+.cloth-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 `;
 
@@ -125,25 +140,34 @@ const Flag = ({ flag, index, onSelect }) => {
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
                     onClick={() => onSelect(flag)}
-                    className="relative cursor-pointer group"
+                    className="relative cursor-pointer group w-24 h-24 md:w-36 md:h-36 cloth-texture bg-white"
                     style={{
-                        width: 144,
-                        height: 144,
                         animation: `flutter ${flutter}s ${delay}s ease-in-out infinite`,
                         transformOrigin: 'top center',
                         transition: 'transform 0.3s ease-out',
                         transform: hovered ? 'scale(1.05)' : 'scale(1)',
+                        clipPath: flag.clipPath,
+                        /* Apply organic SVG displacement for microscopic frays + shadow */
+                        filter: 'url(#frayedEdge)'
                     }}
                 >
+                    {/* Detailed cloth seams at the top */}
+                    <div className="absolute top-1.5 left-0 right-0 h-[3px] border-t-[1.5px] border-dashed border-black/50 z-20 pointer-events-none mix-blend-multiply opacity-60" />
+                    <div className="absolute top-3.5 left-0 right-0 h-[2px] border-t-[1px] border-dashed border-black/40 z-20 pointer-events-none mix-blend-multiply opacity-50" />
+
+                    {/* Gradient shading for realistic folds feeling */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/30 z-10 pointer-events-none mix-blend-multiply" />
+                    <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none mix-blend-multiply" />
+
                     {/* Hover text over the logo without square background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center pointer-events-none">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center pointer-events-none">
                         <span className="text-white font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                             Zobrazit <ExternalLink className="w-3 h-3" />
                         </span>
                     </div>
 
                     {/* Logo */}
-                    <div className="absolute inset-0 flex items-center justify-center group-hover:scale-[0.98] group-hover:opacity-60 transition-all duration-300">
+                    <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-60 transition-all duration-300 pointer-events-none">
                         {flag.logo}
                     </div>
                 </div>
@@ -197,6 +221,16 @@ const Icefall = ({ scrollProgress }) => {
             }}
             className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
+            {/* SVG Filter Definition for the cloth frays */}
+            <svg width="0" height="0" className="absolute pointer-events-none">
+                <filter id="frayedEdge" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.05 0.1" numOctaves="4" result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+                    {/* Drop shadow explicitly on the frayed shape */}
+                    <feDropShadow dx="0" dy="5" stdDeviation="5" floodColor="#000" floodOpacity="0.35" />
+                </filter>
+            </svg>
+
             <div className="w-full h-full relative">
                 <div className="absolute inset-0 z-0"
                     style={{
@@ -279,7 +313,7 @@ const Icefall = ({ scrollProgress }) => {
 
                 {/* ── Original Icefall tagline at bottom ── */}
                 <div className="absolute bottom-[10%] left-0 right-0 text-center z-20 pointer-events-none">
-                    <h3 className="font-serif text-3xl text-slate-700 opacity-60 italic drop-shadow-sm">
+                    <h3 className="font-serif text-3xl text-slate-800 opacity-80 italic drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
                         Tanec na ostří ledu.
                     </h3>
                 </div>

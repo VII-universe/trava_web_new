@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import Polaroid1 from '../assets/zmensene/portrety/prednasky/photohanny-129.jpg';
@@ -24,6 +24,16 @@ const Lectures = ({ scrollProgress }) => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showAllProjects, setShowAllProjects] = useState(false);
     const [selectedMoreProject, setSelectedMoreProject] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    useEffect(() => {
+        if (open || showAllProjects || selectedImage) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [open, showAllProjects, selectedImage]);
 
     // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
     const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);
@@ -144,21 +154,24 @@ const Lectures = ({ scrollProgress }) => {
 
             <motion.div
                 style={{ y: containerY }}
-                className="relative z-50 max-w-3xl w-full px-6 text-center pointer-events-auto"
+                className="relative z-50 w-full h-full px-6 pointer-events-auto flex flex-col items-center justify-center"
             >
-                <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-6">
+                <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
+                    <div className="max-w-3xl w-full text-center">
+                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3 md:mb-6">
                     06 — Projekty & Přednášky (7500 m)
                 </h4>
 
-                <h2 className="font-serif text-4xl md:text-6xl text-white mb-8 leading-tight">
+                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-8 leading-tight">
                     Projekty & Přednášky
                 </h2>
 
-                <p className="font-sans text-slate-300 text-xl leading-relaxed mb-12 max-w-3xl mx-auto">
+                <p className="font-sans text-slate-300 text-lg md:text-xl leading-relaxed mb-6 md:mb-10 lg:mb-12 max-w-3xl mx-auto">
                     50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
-                </p>
+                        </p>
+                    </div>
 
-                <div className="relative max-w-6xl mx-auto w-full mb-16 px-4 md:px-0 mt-20">
+                <div className="relative max-w-6xl mx-auto w-full mb-8 md:mb-12 lg:mb-16 px-4 md:px-0 mt-8 md:mt-12 lg:mt-20">
                     
                     {/* POLAROID 1 - Left */}
                     <motion.div
@@ -166,7 +179,7 @@ const Lectures = ({ scrollProgress }) => {
                         whileInView={{ rotate: -15, x: -100, y: -40, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -top-16 -left-12 md:-top-24 md:-left-28 lg:-top-20 lg:-left-44 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
+                        className="absolute -top-16 -left-8 md:-top-24 md:-left-12 lg:-top-20 lg:-left-24 z-0 w-44 md:w-56 lg:w-72 bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden sm:block pointer-events-none"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                             <img src={Polaroid1} className="w-full h-full object-cover filter opacity-100" alt="Přednáška" />
@@ -181,7 +194,7 @@ const Lectures = ({ scrollProgress }) => {
                         whileInView={{ rotate: 12, x: 100, y: 0, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, delay: 0.1, type: "spring", bounce: 0.3 }}
-                        className="absolute -bottom-10 -right-12 md:-bottom-16 md:-right-28 lg:-bottom-10 lg:-right-40 z-0 w-48 md:w-64 lg:w-80 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden sm:block"
+                        className="absolute -bottom-10 -right-8 md:-bottom-16 md:-right-12 lg:-bottom-10 lg:-right-20 z-0 w-44 md:w-56 lg:w-72 bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden sm:block pointer-events-none"
                     >
                         <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
                             <img src={Polaroid2} className="w-full h-full object-cover filter opacity-100" alt="Tým" />
@@ -196,7 +209,7 @@ const Lectures = ({ scrollProgress }) => {
                         whileInView={{ rotate: -5, x: -60, y: 80, opacity: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, delay: 0.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -bottom-24 -left-12 lg:-bottom-32 lg:-left-24 z-0 w-44 md:w-60 lg:w-72 bg-[#f8f9fa] p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/50 hidden lg:block"
+                        className="absolute -bottom-24 -left-8 lg:-bottom-24 lg:-left-12 z-0 w-40 md:w-52 lg:w-64 bg-slate-200 p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden lg:block pointer-events-none"
                     >
                         <div className="w-full aspect-[4/3] bg-slate-200 overflow-hidden relative">
                             <img src={Polaroid3} className="w-full h-full object-cover object-top filter opacity-100" alt="Vrchol" />
@@ -218,9 +231,11 @@ const Lectures = ({ scrollProgress }) => {
                                 <Calendar className="w-6 h-6 text-gold-600 mb-4" />
                                 <h5 className="font-serif text-2xl text-slate-900 mb-2">{event.city}</h5>
                                 <p className="text-slate-700 text-sm leading-relaxed font-medium mb-4">{event.venue}</p>
-                                <div className="flex items-center text-gold-600 font-bold text-xs tracking-widest uppercase">
-                                    Více informací
-                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                <div className="mt-6 flex items-center justify-start">
+                                    <div className="px-5 py-2.5 bg-slate-900 text-white hover:bg-gold-600 font-bold text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-colors flex items-center gap-2 shadow-md">
+                                        Více informací
+                                        <ArrowRight className="w-3 h-3" />
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}
@@ -249,6 +264,7 @@ const Lectures = ({ scrollProgress }) => {
                     >
                         Booking & Kontakt
                     </button>
+                </div>
                 </div>
             </motion.div>
 

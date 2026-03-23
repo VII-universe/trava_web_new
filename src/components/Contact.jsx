@@ -50,7 +50,8 @@ const Contact = ({ scrollProgress }) => {
                 ))}
             </div>
 
-            <div className="relative z-10 w-full max-w-6xl px-6 md:px-12 pointer-events-auto h-full flex flex-col justify-center">
+            {/* Content Container */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
                 
                 <div className="text-center mb-16 md:mb-20">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
@@ -103,8 +104,8 @@ const Contact = ({ scrollProgress }) => {
                         </div>
 
                         {/* Social Links */}
-                        <div className="mt-16 lg:mt-0 pt-10 border-t border-white/10">
-                            <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-6">Sledujte cestu</h5>
+                        <div className="mt-8 lg:mt-0 pt-6 border-t border-white/10">
+                            <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-4 md:mb-6">Sledujte cestu</h5>
                             <div className="flex gap-4">
                                 <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110">
                                     <Instagram className="w-5 h-5" />
@@ -117,7 +118,7 @@ const Contact = ({ scrollProgress }) => {
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group/form">
+                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden group/form">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-1000" />
                         
                         <form className="relative space-y-8">
@@ -147,29 +148,29 @@ const Contact = ({ scrollProgress }) => {
                             </div>
                             
                             <div className="relative pt-4">
-                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'subject' ? 'top-0 text-xs text-gold-500' : 'top-7 text-base text-slate-500'}`}>
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'subject' ? 'top-0 text-xs text-gold-500' : 'top-5 text-base text-slate-500'}`}>
                                     Předmět / O co jde?
                                 </label>
                                 <input 
                                     type="text"
                                     onFocus={() => setFocusedInput('subject')}
                                     onBlur={(e) => setFocusedInput(e.target.value ? 'subject' : null)}
-                                    className="w-full bg-transparent border-b border-white/20 pb-3 pt-7 text-white focus:border-gold-500 focus:outline-none transition-colors"
+                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 text-white focus:border-gold-500 focus:outline-none transition-colors"
                                 />
                             </div>
 
                             <div className="relative pt-4">
-                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'message' ? 'top-0 text-xs text-gold-500' : 'top-7 text-base text-slate-500'}`}>
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'message' ? 'top-0 text-xs text-gold-500' : 'top-5 text-base text-slate-500'}`}>
                                     Vaše zpráva
                                 </label>
                                 <textarea 
                                     onFocus={() => setFocusedInput('message')}
                                     onBlur={(e) => setFocusedInput(e.target.value ? 'message' : null)}
-                                    className="w-full bg-transparent border-b border-white/20 pb-3 pt-7 min-h-[120px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
+                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 min-h-[80px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
                                 />
                             </div>
 
-                            <button type="button" className="group w-full md:w-auto mt-8 flex items-center justify-center gap-4 bg-white text-slate-900 py-4 px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-500 hover:text-white transition-all duration-300">
+                            <button type="button" className="group w-full md:w-auto mt-6 flex items-center justify-center gap-4 bg-white text-slate-900 py-3 md:py-4 px-8 md:px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-500 hover:text-white transition-all duration-300 shadow-md">
                                 Odeslat zprávu
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </button>
@@ -178,7 +179,7 @@ const Contact = ({ scrollProgress }) => {
                 </div>
 
                 {/* Footer text */}
-                <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs font-mono uppercase tracking-widest">
+                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] md:text-xs font-mono uppercase tracking-widest">
                     <p>© {new Date().getFullYear()} Honza Trávníček. Všechna práva vyhrazena.</p>
                     <p>Designed for the summit.</p>
                 </div>

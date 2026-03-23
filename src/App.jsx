@@ -34,7 +34,7 @@ function App() {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
           {/* Navigation Overlay */}
-          <Nav />
+          <Nav scrollProgress={smoothProgress} />
 
           {/* Global Progress Indicators */}
           <ProgressBar scrollProgress={smoothProgress} />
