@@ -244,7 +244,7 @@ const Lectures = ({ scrollProgress }) => {
                     <div className="mt-8 relative z-10 flex justify-center">
                         <button
                             onClick={() => setShowAllProjects(true)}
-                            className="bg-transparent border border-white/20 text-white font-sans tracking-[0.2em] uppercase text-xs font-bold py-4 px-10 rounded-full hover:bg-white/10 hover:border-white/40 transition-all backdrop-blur-sm shadow-xl flex items-center group"
+                            className="bg-gold-500 text-white font-sans tracking-[0.2em] uppercase text-xs font-bold py-4 px-10 rounded-full hover:bg-gold-400 transition-all backdrop-blur-sm shadow-lg shadow-black/20 flex items-center group"
                         >
                             Více projektů
                             <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
@@ -256,11 +256,11 @@ const Lectures = ({ scrollProgress }) => {
                     Další firmy: Summit Drive s.r.o. (s Karlem Křížem) - outdoor a stěna v Plzni. Ice Adventure Production s.r.o. (s Petrem Horkým).
                 </div>
 
-                <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+                <div className="relative group mt-4 mb-16 md:mb-24 lg:mb-32">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-full blur opacity-40 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
                     <button
                         onClick={() => setOpen(true)}
-                        className="relative w-full py-6 bg-slate-900 border border-white/10 rounded-2xl text-white font-sans tracking-[0.3em] uppercase text-xs font-bold hover:bg-slate-800 transition-all"
+                        className="relative w-full py-5 px-10 md:px-16 bg-gold-500 border border-gold-400/50 rounded-full text-white font-sans tracking-[0.2em] md:tracking-[0.3em] uppercase text-xs md:text-sm font-bold hover:bg-gold-400 transition-all shadow-xl shadow-black/20"
                     >
                         Booking & Kontakt
                     </button>
