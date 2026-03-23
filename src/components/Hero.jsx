@@ -60,7 +60,7 @@ const Hero = ({ scrollProgress }) => {
                     <img 
                         src={LogoMain} 
                         alt="Honza Tráva Logo" 
-                        className="w-full max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-[1000px] max-h-[40vh] md:max-h-[50vh] h-auto object-contain drop-shadow-2xl" 
+                        className="w-full max-w-[95vw] md:max-w-[90vw] lg:max-w-[85vw] xl:max-w-[1200px] max-h-[55vh] md:max-h-[65vh] lg:max-h-[70vh] h-auto object-contain drop-shadow-2xl" 
                     />
                 </motion.div>
                 

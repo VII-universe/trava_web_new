@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
-import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer } from 'lucide-react';
+import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer, ChevronLeft, ChevronRight } from 'lucide-react';
 import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
 import HotelImg2 from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.jpg';
 import HotelImg3 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.jpg';
@@ -18,6 +18,29 @@ const Nepal = ({ scrollProgress }) => {
     const [openHotel, setOpenHotel] = useState(false);
     const [openPub, setOpenPub] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+
+    const hotelImages = [HotelImg2, HotelImg3, HotelImg4];
+    const pubImages = [PubImg2, PubImg3, PubImg4];
+    const activeGallery = openHotel ? hotelImages : openPub ? pubImages : [];
+    const selectedIndex = activeGallery.indexOf(selectedImage);
+
+    const handleNext = (e) => {
+        e.stopPropagation();
+        if (selectedIndex < activeGallery.length - 1) {
+            setSelectedImage(activeGallery[selectedIndex + 1]);
+        } else {
+            setSelectedImage(activeGallery[0]);
+        }
+    };
+
+    const handlePrev = (e) => {
+        e.stopPropagation();
+        if (selectedIndex > 0) {
+            setSelectedImage(activeGallery[selectedIndex - 1]);
+        } else {
+            setSelectedImage(activeGallery[activeGallery.length - 1]);
+        }
+    };
 
     // Prevent body scroll when any modal is open
     useEffect(() => {
@@ -181,7 +204,7 @@ const Nepal = ({ scrollProgress }) => {
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
                             <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
-                                {[HotelImg2, HotelImg3, HotelImg4].map((src, i) => (
+                                {hotelImages.map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
                                         <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
@@ -259,7 +282,7 @@ const Nepal = ({ scrollProgress }) => {
 
                             <h5 className="font-sans uppercase tracking-widest text-xs text-slate-400 mb-4 font-bold">Galerie</h5>
                             <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
-                                {[PubImg2, PubImg3, PubImg4].map((src, i) => (
+                                {pubImages.map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
                                         <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
@@ -286,22 +309,46 @@ const Nepal = ({ scrollProgress }) => {
                     onClick={() => setSelectedImage(null)}
                     className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-900/95 backdrop-blur-md p-4 md:p-12 cursor-zoom-out"
                 >
+                    <button
+                        onClick={handlePrev}
+                        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-sm cursor-pointer z-[115]"
+                        aria-label="Předchozí"
+                    >
+                        <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
+                    </button>
+                    
                     <motion.img
+                        key={selectedImage}
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                        transition={{ duration: 0.2 }}
                         src={selectedImage}
                         alt="Zvětšený náhled"
                         className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
                     />
+
+                    <button
+                        onClick={handleNext}
+                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-sm cursor-pointer z-[115]"
+                        aria-label="Další"
+                    >
+                        <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
+                    </button>
+
                     <button
                         onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
-                        className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-sm"
+                        className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-sm z-[115]"
                         aria-label="Zavřít"
                     >
                         <X className="w-6 h-6" />
                     </button>
+                    
+                    {/* Image Counter */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-base font-sans font-bold tracking-widest bg-black/50 px-5 py-2 rounded-full pointer-events-none z-[115]">
+                        {selectedIndex + 1} / {activeGallery.length}
+                    </div>
                 </motion.div>
             )}
         </AnimatePresence>

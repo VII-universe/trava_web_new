@@ -106,12 +106,12 @@ const About = ({ scrollProgress }) => {
                         opacity: honzaOpacity,
                         filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.1))'
                     }}
-                    className="absolute right-0 bottom-0 w-[60%] h-[90%] z-20 pointer-events-none flex items-end justify-end overflow-hidden"
+                    className="absolute right-0 bottom-0 w-[60%] md:w-[50%] h-[90%] md:h-[100%] z-20 pointer-events-none flex items-end justify-end"
                 >
                     <img
                         src={HonzaProfile}
                         alt="Honza"
-                        className="w-full h-full object-contain object-right-bottom mix-blend-normal"
+                        className="w-full h-full object-contain object-right-bottom mix-blend-normal scale-[1.3] md:scale-[1.6] lg:scale-[1.8] origin-bottom-right translate-x-[15%] sm:translate-x-[25%] md:translate-x-[35%] lg:translate-x-[20%] xl:translate-x-[10%]"
                     />
                 </motion.div>
 

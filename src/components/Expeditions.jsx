@@ -276,10 +276,10 @@ const Expeditions = ({ scrollProgress }) => {
                             {/* Více expedicí Button */}
                             <button 
                                 onClick={() => setShowAllExpeditions(true)}
-                                className="mt-6 w-full py-4 px-6 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3 group shadow-md"
+                                className="mt-6 w-full py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-400 transition-all duration-300 flex items-center justify-center gap-3 group shadow-lg shadow-black/20"
                             >
-                                <span className="drop-shadow-sm group-hover:text-gold-400 transition-colors">Více expedicí</span>
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 group-hover:text-gold-400 transition-all" />
+                                <span className="drop-shadow-sm transition-colors">Více expedicí</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
                             </button>
                         </motion.div>
                     </div>
