@@ -125,18 +125,18 @@ const Expeditions = ({ scrollProgress }) => {
                 className="w-full h-full relative flex flex-col items-center justify-center px-6 pb-16 md:pb-24 xl:pb-32"
             >
                 <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
-                    <div className="text-center mb-6 md:mb-8 xl:mb-12 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 xl:w-80 mb-2 xl:mb-4 drop-shadow-lg opacity-90 scale-110 md:scale-125" />
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4 mt-6 md:mt-10">
+                    <div className="text-center mb-2 md:mb-4 xl:mb-6 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90 scale-110 md:scale-125" />
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3 mt-2 md:mt-4">
                         04 — Expedice (4500 m)
                     </h4>
-                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 drop-shadow-md">
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 md:mb-2 drop-shadow-md">
                         Vydej se se mnou na cesty
                     </h2>
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Protože cesta nekončí, když slezeš z hory.</p>
                 </div>
 
-                <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6">
+                <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mt-0">
                     <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
 
                         <motion.div
