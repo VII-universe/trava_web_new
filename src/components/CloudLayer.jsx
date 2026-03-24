@@ -71,9 +71,9 @@ const CLOUDS = [
 
     // ─── About / Base Camp (0.20 – 0.40): BOTTOM edge mask ────
     // About photo has mask gradient at bottom ~80%. Cover with clouds.
-    { src: CloudA, ix: -10, iy: 74, w: 75, fx: 0, fy: 0, op: 0.80, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
-    { src: CloudB, ix: 30, iy: 78, w: 65, fx: 0, fy: 0, op: 0.72, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
-    { src: CloudA, ix: 60, iy: 72, w: 55, fx: 0, fy: 0, op: 0.60, sIn: 0.22, sMid: 0.28, sOut: 0.38, z: 45 },
+    { src: CloudA, ix: -10, iy: 84, w: 75, fx: 0, fy: 0, op: 0.80, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
+    { src: CloudB, ix: 30, iy: 88, w: 65, fx: 0, fy: 0, op: 0.72, sIn: 0.20, sMid: 0.27, sOut: 0.38, z: 55 },
+    { src: CloudA, ix: 60, iy: 82, w: 55, fx: 0, fy: 0, op: 0.60, sIn: 0.22, sMid: 0.28, sOut: 0.38, z: 45 },
     // TOP edge — About enters from below, top has gradient from white
     { src: CloudB, ix: -8, iy: -8, w: 70, fx: 0, fy: 0, op: 0.65, sIn: 0.20, sMid: 0.26, sOut: 0.37, z: 45 },
     { src: CloudA, ix: 40, iy: -5, w: 60, fx: 0, fy: 0, op: 0.55, sIn: 0.21, sMid: 0.27, sOut: 0.37, z: 45 },
@@ -81,27 +81,27 @@ const CLOUDS = [
 
     // ─── Icefall / Partners (0.40 – 0.60): BOTTOM + TOP edges ─
     // Icefall enters from top, so BOTTOM edge is visible and harsh
-    { src: CloudB, ix: -12, iy: 72, w: 80, fx: 0, fy: 0, op: 0.82, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
-    { src: CloudA, ix: 25, iy: 76, w: 70, fx: 0, fy: 0, op: 0.75, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
-    { src: CloudB, ix: 62, iy: 70, w: 58, fx: 0, fy: 0, op: 0.62, sIn: 0.42, sMid: 0.48, sOut: 0.58, z: 45 },
+    { src: CloudB, ix: -12, iy: 82, w: 80, fx: 0, fy: 0, op: 0.82, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
+    { src: CloudA, ix: 25, iy: 86, w: 70, fx: 0, fy: 0, op: 0.75, sIn: 0.40, sMid: 0.47, sOut: 0.58, z: 55 },
+    { src: CloudB, ix: 62, iy: 80, w: 58, fx: 0, fy: 0, op: 0.62, sIn: 0.42, sMid: 0.48, sOut: 0.58, z: 45 },
     // TOP edge — covers top of icefall bg
     { src: CloudA, ix: -5, iy: -10, w: 72, fx: 0, fy: 0, op: 0.60, sIn: 0.40, sMid: 0.46, sOut: 0.57, z: 45 },
     { src: CloudB, ix: 45, iy: -6, w: 62, fx: 0, fy: 0, op: 0.52, sIn: 0.41, sMid: 0.47, sOut: 0.57, z: 45 },
     { src: CloudA, ix: 72, iy: -8, w: 48, fx: 0, fy: 0, op: 0.46, sIn: 0.41, sMid: 0.47, sOut: 0.57, z: 45 },
 
     // ─── Climb / Death Zone (0.60 – 0.80): BOTTOM + TOP edges ─
-    { src: CloudA, ix: -8, iy: 68, w: 82, fx: 0, fy: 0, op: 0.80, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
-    { src: CloudB, ix: 28, iy: 74, w: 72, fx: 0, fy: 0, op: 0.73, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
-    { src: CloudA, ix: 65, iy: 71, w: 56, fx: 0, fy: 0, op: 0.60, sIn: 0.62, sMid: 0.68, sOut: 0.78, z: 45 },
+    { src: CloudA, ix: -8, iy: 82, w: 82, fx: 0, fy: 0, op: 0.80, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
+    { src: CloudB, ix: 28, iy: 88, w: 72, fx: 0, fy: 0, op: 0.73, sIn: 0.60, sMid: 0.67, sOut: 0.78, z: 55 },
+    { src: CloudA, ix: 65, iy: 85, w: 56, fx: 0, fy: 0, op: 0.60, sIn: 0.62, sMid: 0.68, sOut: 0.78, z: 45 },
     // TOP
     { src: CloudB, ix: -6, iy: -8, w: 74, fx: 0, fy: 0, op: 0.62, sIn: 0.60, sMid: 0.66, sOut: 0.77, z: 45 },
     { src: CloudA, ix: 42, iy: -5, w: 65, fx: 0, fy: 0, op: 0.50, sIn: 0.61, sMid: 0.67, sOut: 0.77, z: 45 },
     { src: CloudB, ix: 70, iy: -7, w: 50, fx: 0, fy: 0, op: 0.44, sIn: 0.61, sMid: 0.67, sOut: 0.77, z: 45 },
 
     // ─── Summit (0.80 – 1.0): BOTTOM edge mask ─────────────────
-    { src: CloudB, ix: -10, iy: 70, w: 85, fx: 0, fy: 0, op: 0.78, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
-    { src: CloudA, ix: 30, iy: 75, w: 75, fx: 0, fy: 0, op: 0.70, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
-    { src: CloudB, ix: 65, iy: 68, w: 60, fx: 0, fy: 0, op: 0.58, sIn: 0.82, sMid: 0.88, sOut: 0.98, z: 45 },
+    { src: CloudB, ix: -10, iy: 85, w: 85, fx: 0, fy: 0, op: 0.78, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
+    { src: CloudA, ix: 30, iy: 88, w: 75, fx: 0, fy: 0, op: 0.70, sIn: 0.80, sMid: 0.87, sOut: 0.98, z: 55 },
+    { src: CloudB, ix: 65, iy: 80, w: 60, fx: 0, fy: 0, op: 0.58, sIn: 0.82, sMid: 0.88, sOut: 0.98, z: 45 },
     // TOP — Summit comes from top, cover its top edge
     { src: CloudA, ix: -4, iy: -10, w: 76, fx: 0, fy: 0, op: 0.65, sIn: 0.80, sMid: 0.86, sOut: 0.97, z: 45 },
     { src: CloudB, ix: 38, iy: -6, w: 66, fx: 0, fy: 0, op: 0.55, sIn: 0.81, sMid: 0.87, sOut: 0.97, z: 45 },

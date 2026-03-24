@@ -139,131 +139,124 @@ const Lectures = ({ scrollProgress }) => {
     ];
 
     return (
-        <motion.div
-            style={{ opacity: containerOpacity }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-gradient-to-b from-[#1A202C] to-[#0F172A]"
-        >
-            {/* Visual: Peak view with clouds below */}
-            <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-white/20 to-transparent blur-[60px] opacity-40" />
-            
-            {/* Lightening Overlay */}
-            <motion.div 
-                className="absolute inset-0 bg-[#f8f9fa] z-0" 
-                style={{ opacity: lightenOpacity }} 
-            />
-
+        <>
+            {/* BACKGROUND LAYER (behind clouds) */}
             <motion.div
-                style={{ y: containerY }}
-                className="relative z-50 w-full h-full px-6 pointer-events-auto flex flex-col items-center justify-center"
+                style={{ opacity: containerOpacity, zIndex: 40 }}
+                className="absolute inset-0 w-full h-full pointer-events-none bg-gradient-to-b from-[#1A202C] to-[#0F172A]"
             >
-                <div className="w-full flex flex-col items-center justify-center translate-y-20 md:translate-y-24 lg:translate-y-12 [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
-                    <div className="max-w-3xl w-full text-center mt-16 md:mt-24 lg:mt-12 relative z-20">
-                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3 md:mb-6">
-                    06 — Projekty & Přednášky (7500 m)
-                </h4>
+                {/* Visual: Peak view with clouds below */}
+                <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-white/20 to-transparent blur-[60px] opacity-40" />
+                
+                {/* Lightening Overlay */}
+                <motion.div 
+                    className="absolute inset-0 bg-[#f8f9fa]" 
+                    style={{ opacity: lightenOpacity }} 
+                />
+            </motion.div>
 
-                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 lg:mb-6 leading-tight">
-                    Projekty & Přednášky
-                </h2>
+            {/* CONTENT LAYER (in front of clouds - zIndex 60 is CloudLayer, so 65 is above) */}
+            <motion.div
+                style={{ opacity: containerOpacity, zIndex: 65 }}
+                className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center"
+            >
+                <motion.div
+                    style={{ y: containerY }}
+                    className="relative w-full h-full px-6 pointer-events-auto flex flex-col items-center justify-center"
+                >
+                    <div className="w-full flex flex-col items-center justify-center translate-y-16 md:translate-y-20 lg:translate-y-8 [@media(max-height:1050px)]:scale-[0.90] [@media(max-height:900px)]:scale-[0.80] [@media(max-height:800px)]:scale-[0.70] [@media(max-height:700px)]:scale-[0.60] [@media(max-height:600px)]:scale-[0.50] origin-center transition-transform duration-300">
+                    <div className="max-w-3xl w-full text-center mt-12 md:mt-16 lg:mt-8 relative z-20">
+                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-4">
+                            06 — Projekty & Přednášky (7500 m)
+                        </h4>
 
-                <p className="font-sans text-slate-300 text-sm md:text-lg lg:text-xl leading-relaxed mb-4 md:mb-6 lg:mb-8 max-w-3xl mx-auto">
-                    50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
+                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 leading-tight">
+                            Projekty & Přednášky
+                        </h2>
+
+                        <p className="font-sans text-slate-300 text-[13px] md:text-base lg:text-lg leading-relaxed mb-4 md:mb-6 max-w-3xl mx-auto">
+                            50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
                         </p>
                     </div>
 
-                <div className="relative max-w-6xl mx-auto w-full mb-8 md:mb-12 lg:mb-16 px-4 md:px-0 mt-0 lg:mt-4">
-                    
-                    {/* POLAROID 1 - Left */}
-                    <motion.div
-                        initial={{ rotate: -25, x: -70, y: 80, opacity: 0 }}
-                        whileInView={{ rotate: -15, x: -100, y: -40, opacity: 1 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -top-16 -left-8 md:-top-24 md:-left-12 lg:-top-20 lg:-left-24 z-0 w-44 md:w-56 lg:w-72 bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden sm:block pointer-events-none"
-                    >
-                        <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                            <img src={Polaroid1} className="w-full h-full object-cover filter opacity-100" alt="Přednáška" />
-                            <div className="absolute inset-0 bg-gold-900/10 mix-blend-overlay" />
-                        </div>
-                    </motion.div>
-
-                    {/* POLAROID 2 - Right */}
-                    <motion.div
-                        initial={{ rotate: 15, x: 70, y: 100, opacity: 0 }}
-                        whileInView={{ rotate: 12, x: 100, y: 0, opacity: 1 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1.2, delay: 0.1, type: "spring", bounce: 0.3 }}
-                        className="absolute -bottom-10 -right-8 md:-bottom-16 md:-right-12 lg:-bottom-10 lg:-right-20 z-0 w-44 md:w-56 lg:w-72 bg-slate-200 p-3 md:p-4 pb-12 md:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden sm:block pointer-events-none"
-                    >
-                        <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                            <img src={Polaroid2} className="w-full h-full object-cover filter opacity-100" alt="Tým" />
-                            <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
-                        </div>
-                    </motion.div>
-                    
-                    {/* POLAROID 3 - Bottom Left */}
-                    <motion.div
-                        initial={{ rotate: -10, x: -60, y: -40, opacity: 0 }}
-                        whileInView={{ rotate: -5, x: -60, y: 80, opacity: 1 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1.2, delay: 0.2, type: "spring", bounce: 0.3 }}
-                        className="absolute -bottom-24 -left-8 lg:-bottom-24 lg:-left-12 z-0 w-40 md:w-52 lg:w-64 bg-slate-200 p-3 md:p-4 pb-12 md:pb-14 shadow-[0_25px_60px_rgba(0,0,0,0.5)] rounded-sm border border-slate-300/50 hidden lg:block pointer-events-none"
-                    >
-                        <div className="w-full aspect-[4/3] bg-slate-200 overflow-hidden relative">
-                            <img src={Polaroid3} className="w-full h-full object-cover object-top filter opacity-100" alt="Vrchol" />
-                            <div className="absolute inset-0 bg-slate-900/20 mix-blend-overlay" />
-                        </div>
-                    </motion.div>
-
-                    {/* Cards Grid (on top) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 max-w-5xl mx-auto backdrop-blur-sm">
-                        {events.map(event => (
-                            <motion.div 
-                                key={event.id} 
-                                onClick={() => setSelectedEvent(event)}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="glass-card p-8 bg-white/60 hover:bg-white/80 border-white/40 text-left shadow-2xl cursor-pointer transition-colors"
-                            >
-                                <Calendar className="w-6 h-6 text-gold-600 mb-4" />
-                                <h5 className="font-serif text-2xl text-slate-900 mb-2">{event.city}</h5>
-                                <p className="text-slate-700 text-sm leading-relaxed font-medium mb-4">{event.venue}</p>
-                                <div className="mt-6 flex items-center justify-start">
-                                    <div className="px-5 py-2.5 bg-slate-900 text-white hover:bg-gold-600 font-bold text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-colors flex items-center gap-2 shadow-md">
-                                        Více informací
-                                        <ArrowRight className="w-3 h-3" />
+                    <div className="relative z-[70] max-w-6xl mx-auto w-full mb-6 md:mb-8 px-4 md:px-0 mt-2 md:mt-4">
+                        
+                        {/* Cards Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 relative max-w-5xl mx-auto">
+                            {events.map(event => (
+                                <motion.div 
+                                    key={event.id} 
+                                    onClick={() => setSelectedEvent(event)}
+                                    whileHover={{ y: -6 }}
+                                    className="group bg-white/95 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/80 cursor-pointer flex flex-col relative"
+                                >
+                                    {/* Image Container - Switched to aspect-video to save vertical height */}
+                                    <div className="w-full aspect-video overflow-hidden relative p-3 pb-0">
+                                        <img 
+                                            src={event.image} 
+                                            className="w-full h-full object-cover rounded-xl md:rounded-2xl group-hover:scale-105 transition-transform duration-700" 
+                                            alt={event.city} 
+                                        />
+                                        <div className="absolute top-5 left-5 px-3 py-1.5 bg-white/95 backdrop-blur-md rounded-full shadow-sm">
+                                            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gold-600 flex items-center gap-1.5">
+                                                <Calendar className="w-3 h-3" />
+                                                {event.id === 'tour50' ? 'Turné 2026' : 'Speciální projekty'}
+                                            </span>
+                                        </div>
+                                        <div className="absolute inset-x-3 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-b-xl md:rounded-b-2xl" />
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
+
+                                    {/* Text Content */}
+                                    <div className="p-5 md:p-6 lg:p-8 flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-1.5 group-hover:text-gold-600 transition-colors">{event.city}</h3>
+                                            <p className="text-slate-500 font-sans text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3">
+                                                {event.venue}
+                                            </p>
+                                            <p className="text-slate-600 text-[12px] md:text-[13px] leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
+                                                {event.description}
+                                            </p>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-between mt-auto">
+                                            <div className="flex items-center gap-2 text-gold-500 font-bold text-[9px] md:text-[10px] tracking-widest uppercase">
+                                                Detail projektu
+                                                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Action Buttons Row */}
+                        <div className="max-w-4xl mx-auto mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 md:gap-4 items-center justify-center">
+                            <button
+                                onClick={() => setShowAllProjects(true)}
+                                className="w-full sm:w-auto px-6 md:px-8 py-3.5 bg-white/90 hover:bg-white text-slate-800 border border-slate-200 shadow-lg rounded-xl font-sans tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold transition-all flex items-center justify-center gap-3 group"
+                            >
+                                Více projektů
+                                <ArrowRight className="w-3 md:w-4 h-3 md:h-4 text-gold-400 group-hover:translate-x-1 transition-transform" />
+                            </button>
+
+                            <div className="relative group w-full sm:w-auto">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
+                                <button
+                                    onClick={() => setOpen(true)}
+                                    className="relative w-full sm:w-auto px-6 md:px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-white rounded-xl font-sans tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold shadow-xl shadow-gold-900/10 transition-all flex items-center justify-center gap-2"
+                                >
+                                    Booking & Kontakt
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="text-center text-slate-500 text-[9px] md:text-[10px] max-w-3xl mx-auto mt-6 md:mt-8">
+                            Další firmy: <span className="text-slate-400">Summit Drive s.r.o.</span> (s Karlem Křížem) - outdoor a stěna v Plzni. <span className="text-slate-400">Ice Adventure Production s.r.o.</span> (s Petrem Horkým).
+                        </div>
                     </div>
-
-                    <div className="mt-8 relative z-10 flex justify-center">
-                        <button
-                            onClick={() => setShowAllProjects(true)}
-                            className="bg-gold-500 text-white font-sans tracking-[0.2em] uppercase text-xs font-bold py-4 px-10 rounded-full hover:bg-gold-400 transition-all backdrop-blur-sm shadow-lg shadow-black/20 flex items-center group"
-                        >
-                            Více projektů
-                            <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="text-center text-slate-300 text-sm max-w-4xl mx-auto mb-8">
-                    Další firmy: Summit Drive s.r.o. (s Karlem Křížem) - outdoor a stěna v Plzni. Ice Adventure Production s.r.o. (s Petrem Horkým).
-                </div>
-
-                <div className="relative group mt-4 mb-16 md:mb-24 lg:mb-32">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-full blur opacity-40 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
-                    <button
-                        onClick={() => setOpen(true)}
-                        className="relative w-full py-5 px-10 md:px-16 bg-gold-500 border border-gold-400/50 rounded-full text-white font-sans tracking-[0.2em] md:tracking-[0.3em] uppercase text-xs md:text-sm font-bold hover:bg-gold-400 transition-all shadow-xl shadow-black/20"
-                    >
-                        Booking & Kontakt
-                    </button>
-                </div>
                 </div>
             </motion.div>
+        </motion.div>
 
             {open && (
                 <motion.div
@@ -617,7 +610,7 @@ const Lectures = ({ scrollProgress }) => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.div>
+        </>
     );
 };
 
