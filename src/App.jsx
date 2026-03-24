@@ -14,6 +14,8 @@ import SnowOverlay from './components/SnowOverlay';
 import CloudLayer from './components/CloudLayer';
 import Media from './components/Media';
 import Nav from './components/Nav';
+import { ReactLenis } from 'lenis/react';
+import 'lenis/dist/lenis.css';
 
 function App() {
   const containerRef = useRef(null);
@@ -28,7 +30,8 @@ function App() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 40, damping: 25, restDelta: 0.001 });
 
   return (
-    <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
+    <ReactLenis root>
+      <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
       {/* Sticky viewport (camera frame) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -74,6 +77,7 @@ function App() {
       </div>
 
     </div>
+    </ReactLenis>
   );
 }
 
