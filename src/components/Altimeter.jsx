@@ -23,41 +23,41 @@ const Altimeter = ({ scrollProgress }) => {
     }, [altitude]);
 
     return (
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-center gap-4 pointer-events-none mix-blend-difference text-slate-800">
+        <div className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-center gap-4 pointer-events-none">
             {/* Upper Scale */}
-            <div className="h-32 w-12 flex items-center justify-center relative">
-                <div className="h-full w-px bg-slate-800/30 relative">
+            <div className="h-24 md:h-32 w-12 flex items-center justify-center relative">
+                <div className="h-full w-px bg-white/30 relative shadow-[0_0_10px_rgba(0,0,0,0.5)]">
                     {/* Tick Marks */}
                     {[...Array(6)].map((_, i) => (
                         <div
                             key={i}
-                            className="absolute right-0 h-px bg-slate-800/30"
+                            className="absolute right-0 h-px bg-white/40 shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
                             style={{ top: `${i * 20}%`, width: i % 2 === 0 ? '12px' : '6px' }}
                         />
                     ))}
                     <motion.div
                         style={{ height: useTransform(scrollProgress, [0, 1], ["0%", "100%"]) }}
-                        className="absolute top-0 w-full bg-gold-400"
+                        className="absolute top-0 w-full bg-gold-400 shadow-[0_0_8px_rgba(212,175,55,0.8)]"
                     />
                 </div>
             </div>
 
             {/* Altitude Display */}
-            <div className="flex flex-col items-center min-w-[80px] py-4 px-2 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg">
-                <span className="font-serif text-3xl font-bold tracking-wider text-slate-800 tabular-nums">
+            <div className="flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)]">
+                <span className="font-serif text-2xl md:text-3xl font-bold tracking-wider text-white tabular-nums drop-shadow-md">
                     {currentAlt}
                 </span>
-                <span className="text-[10px] font-sans tracking-[0.3em] font-bold opacity-70 uppercase mt-1">m n.m.</span>
+                <span className="text-[9px] md:text-[10px] font-sans tracking-[0.3em] font-bold text-gold-400 uppercase mt-1 drop-shadow-sm">m n.m.</span>
             </div>
 
             {/* Lower Scale */}
-            <div className="h-32 w-12 flex items-center justify-center relative">
-                <div className="h-full w-px bg-slate-800/30">
+            <div className="h-24 md:h-32 w-12 flex items-center justify-center relative">
+                <div className="h-full w-px bg-white/30 shadow-[0_0_10px_rgba(0,0,0,0.5)]">
                     {/* Tick Marks */}
                     {[...Array(6)].map((_, i) => (
                         <div
                             key={i}
-                            className="absolute right-0 h-px bg-slate-800/30"
+                            className="absolute right-0 h-px bg-white/40 shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
                             style={{ top: `${i * 20}%`, width: i % 2 === 0 ? '12px' : '6px' }}
                         />
                     ))}
