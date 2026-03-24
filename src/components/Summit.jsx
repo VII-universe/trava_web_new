@@ -9,6 +9,15 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Summit = ({ scrollProgress }) => {
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
 
+    useEffect(() => {
+        if (isOsvetaOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isOsvetaOpen]);
+
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
 
     const opacity = useTransform(scrollProgress, [0.79, 0.81, 0.94, 0.99], [0, 1, 1, 1]);
