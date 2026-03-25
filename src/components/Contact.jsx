@@ -51,7 +51,7 @@ const Contact = ({ scrollProgress }) => {
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-start md:justify-center overflow-y-auto md:overflow-visible pt-6 md:pt-0 origin-center transition-transform duration-300 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                 
                 <div className="text-center mb-3 md:mb-16 lg:mb-20">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-1 md:mb-4">
@@ -68,7 +68,7 @@ const Contact = ({ scrollProgress }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-12 lg:gap-20 items-stretch">
                     
                     {/* Left Column: Contact Info - hidden on mobile to save space */}
-                    <div className="hidden md:flex lg:col-span-5 flex-col justify-between">
+                    <div className="hidden lg:flex lg:col-span-5 flex-col justify-between">
                         <div className="space-y-6 md:space-y-12">
                             {/* Contact Item */}
                             <div className="group">

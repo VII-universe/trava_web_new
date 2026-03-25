@@ -67,7 +67,7 @@ const Summit = ({ scrollProgress }) => {
                 style={{ opacity: contentOpacity, y: contentY }}
                 className="relative z-50 w-full h-full max-w-6xl pointer-events-auto flex flex-col items-center justify-center mx-auto px-4"
             >
-                <div className="w-full p-5 md:p-8 lg:p-10 rounded-[2rem] bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_rgba(0,0,0,0.15)] [@media(max-height:850px)]:scale-[0.90] [@media(max-height:750px)]:scale-[0.80] [@media(max-height:650px)]:scale-[0.70] origin-center transition-transform duration-300 flex flex-col">
+                <div className="w-full p-5 md:p-8 lg:p-10 rounded-[2rem] bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_rgba(0,0,0,0.15)] origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.80] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.70] flex flex-col">
                     
                     <div className="flex flex-col md:flex-row gap-6 lg:gap-10 w-full items-center text-left">
                         {/* Left Side: Text and Actions */}

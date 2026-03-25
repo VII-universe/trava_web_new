@@ -162,9 +162,9 @@ const Lectures = ({ scrollProgress }) => {
             >
                 <motion.div
                     style={{ y: containerY }}
-                    className="relative w-full h-full px-4 md:px-6 pointer-events-auto flex flex-col items-center justify-start md:justify-center overflow-y-auto md:overflow-visible pt-4 md:pt-0"
+                    className="relative w-full h-full px-4 md:px-6 pointer-events-auto flex flex-col items-center justify-center"
                 >
-                    <div className="w-full flex flex-col items-center justify-center md:translate-y-20 lg:translate-y-8 origin-center transition-transform duration-300 [@media(max-height:1050px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:900px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:800px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:700px)_and_(min-width:768px)]:scale-[0.60] [@media(max-height:600px)_and_(min-width:768px)]:scale-[0.50]">
+                    <div className="w-full flex flex-col items-center justify-center md:translate-y-20 lg:translate-y-8 origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1050px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:900px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:800px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:700px)_and_(min-width:768px)]:scale-[0.60] [@media(max-height:600px)_and_(min-width:768px)]:scale-[0.50]">
                     <div className="max-w-3xl w-full text-center mt-4 md:mt-16 lg:mt-8 relative z-20">
                         <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-4">
                             06 — Projekty & Přednášky (7500 m)
