@@ -53,14 +53,14 @@ const Contact = ({ scrollProgress }) => {
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
                 
-                <div className="text-center mb-16 md:mb-20">
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                <div className="text-center mb-4 md:mb-16 lg:mb-20">
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-4">
                         Kontakt
                     </h4>
-                    <h2 className="font-serif text-5xl md:text-7xl text-white mb-6">
+                    <h2 className="font-serif text-3xl md:text-5xl lg:text-7xl text-white mb-3 md:mb-6">
                         Pojďme do toho.
                     </h2>
-                    <p className="font-sans text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
+                    <p className="font-sans text-slate-400 text-sm md:text-lg lg:text-xl max-w-2xl mx-auto font-light line-clamp-2 md:line-clamp-none">
                         Ať už jde o sdílení příběhů, přednášku, nebo přípravu na další vrchol – nejlepší výpravy začínají prvním krokem.
                     </p>
                 </div>

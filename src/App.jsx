@@ -33,9 +33,9 @@ function App() {
     offset: ["start start", "end end"]
   });
 
-  // Tighter spring on mobile so sections feel more responsive
+  // Snappier spring on mobile so sections track finger immediately
   const smoothProgress = useSpring(scrollYProgress, isMobile
-    ? { stiffness: 120, damping: 30, restDelta: 0.001 }
+    ? { stiffness: 500, damping: 60, restDelta: 0.001 }
     : { stiffness: 40, damping: 25, restDelta: 0.001 }
   );
 

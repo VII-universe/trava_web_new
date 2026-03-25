@@ -86,8 +86,8 @@ const Summit = ({ scrollProgress }) => {
                                 </h4>
                             </motion.div>
 
-                            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-5 leading-tight tracking-tight">
-                                Kašpárek s nemocí,<br className="hidden lg:block"/>co to překonává.
+                            <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-slate-900 mb-3 md:mb-5 leading-tight tracking-tight">
+                                Kašpárek s nemocí,<br className="hidden lg:block"/>co to překonává.
                             </h2>
 
                             <div className="flex flex-col gap-3 md:gap-4">
@@ -126,8 +126,8 @@ const Summit = ({ scrollProgress }) => {
                             </div>
                         </div>
 
-                        {/* Right Side: Photo Gallery (Horizontal stack) */}
-                        <div className="w-full md:w-[45%] lg:w-[40%] flex flex-col gap-3 shrink-0 mt-4 md:mt-0">
+                        {/* Right Side: Photo Gallery (hidden on mobile to save space) */}
+                        <div className="hidden md:flex w-full md:w-[45%] lg:w-[40%] flex-col gap-3 shrink-0 mt-4 md:mt-0">
                             {/* Main large image */}
                             <div className="w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden shadow-md relative group">
                                 <img src={ClimbersImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Tým v akci" />

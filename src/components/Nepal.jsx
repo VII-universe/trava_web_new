@@ -86,19 +86,19 @@ const Nepal = ({ scrollProgress }) => {
                         className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-2xl md:rounded-[2rem] p-4 md:p-6 lg:p-10 flex flex-col pointer-events-auto overflow-hidden"
                         whileHover={{ y: -5 }}
                     >
-                    <div className="text-center mb-4 md:mb-6">
-                        <div className="flex items-center justify-center gap-2 text-gold-600 mb-3">
-                            <MapPin className="w-5 h-5" />
-                            <span className="text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
+                    <div className="text-center mb-2 md:mb-6">
+                        <div className="flex items-center justify-center gap-2 text-gold-600 mb-2 md:mb-3">
+                            <MapPin className="w-4 h-4 md:w-5 md:h-5" />
+                            <span className="text-[10px] md:text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
                         </div>
-                        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight">Cesta nekončí, když slezeš z hory</h2>
+                        <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-slate-900 leading-tight">Cesta nekončí, když slezeš z hory</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[150px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1 mt-4 md:mt-6">
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[100px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-6 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-6 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
                             <button
@@ -111,8 +111,8 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[150px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
-                            <p className="font-sans text-slate-800 text-lg leading-relaxed flex-1 mt-4 md:mt-6">
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[100px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-6 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-6 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                             <button
