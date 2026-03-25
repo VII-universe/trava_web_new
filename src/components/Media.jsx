@@ -98,7 +98,7 @@ const Media = ({ scrollProgress }) => {
                     </p>
                 </div>
 
-                <div className="flex flex-row md:grid md:grid-cols-3 gap-4 md:gap-8 lg:gap-10 relative w-full items-start overflow-x-auto md:overflow-visible snap-x snap-mandatory pt-2 pb-8 md:pb-0 px-6 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-8 lg:gap-10 relative w-full items-start px-4 md:px-0">
                     {/* Video Card */}
                     <motion.div 
                         initial={{ opacity: 0, y: 30 }}
@@ -106,22 +106,22 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8 }}
                         onClick={() => setActiveItem(MEDIA_DATA.video[0])} 
-                        className="group cursor-pointer flex flex-col items-center min-w-[80vw] sm:min-w-[60vw] md:min-w-0 snap-center shrink-0"
+                        className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full aspect-video md:aspect-[4/3] rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.video[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Video" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-14 h-14 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl scale-95 group-hover:scale-105 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
-                                    <Play className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" />
+                                <div className="w-8 h-8 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
+                                    <Play className="w-3 h-3 md:w-6 md:h-6 ml-0.5" fill="currentColor" />
                                 </div>
                             </div>
-                            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-slate-900 shadow-sm">
+                            <div className="absolute top-2 left-2 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-1.5 py-0.5 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-xs font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-slate-900 shadow-sm">
                                 YouTube
                             </div>
                         </div>
-                        <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-2 group-hover:text-gold-600 transition-colors text-center">Vlogy a expedice</h3>
-                        <p className="text-slate-500 text-xs md:text-sm text-center leading-relaxed">Máte obsah, je potřeba systematicky publikovat. Rozhovory a pod pokličkou.</p>
+                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Vlogy a expedice</h3>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Máte obsah, je potřeba systematicky publikovat.</p>
                     </motion.div>
 
                     {/* Podcast Card */}
@@ -131,22 +131,22 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         onClick={() => setActiveItem(MEDIA_DATA.podcast[0])} 
-                        className="group cursor-pointer flex flex-col items-center min-w-[80vw] sm:min-w-[60vw] md:min-w-0 snap-center shrink-0"
+                        className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full aspect-video md:aspect-[4/3] rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.podcast[0].image} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Podcast" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-14 h-14 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl scale-95 group-hover:scale-105 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
-                                    <Mic className="w-5 h-5 md:w-6 md:h-6" />
+                                <div className="w-8 h-8 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
+                                    <Mic className="w-3 h-3 md:w-6 md:h-6" />
                                 </div>
                             </div>
-                            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-slate-900 shadow-sm">
+                            <div className="absolute top-2 left-2 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-1.5 py-0.5 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-xs font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-slate-900 shadow-sm">
                                 Podcast
                             </div>
                         </div>
-                        <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-2 group-hover:text-gold-600 transition-colors text-center">Poslech na cestách</h3>
-                        <p className="text-slate-500 text-xs md:text-sm text-center leading-relaxed">Cestovatelská témata, zajímavé světové lokality a unikátní hosté (2027).</p>
+                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Poslech na cestách</h3>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Cestovatelská témata a hosté (2027).</p>
                     </motion.div>
 
                     {/* Blog Card */}
@@ -156,22 +156,22 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                         onClick={() => setActiveItem(MEDIA_DATA.blog[0])} 
-                        className="group cursor-pointer flex flex-col items-center min-w-[80vw] sm:min-w-[60vw] md:min-w-0 snap-center shrink-0"
+                        className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full aspect-video md:aspect-[4/3] rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.blog[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Blog" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-14 h-14 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl scale-95 group-hover:scale-105 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
-                                    <FileText className="w-5 h-5 md:w-6 md:h-6" />
+                                <div className="w-8 h-8 md:w-16 md:h-16 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 shadow-xl group-hover:bg-gold-500 group-hover:text-white transition-all duration-300">
+                                    <FileText className="w-3 h-3 md:w-6 md:h-6" />
                                 </div>
                             </div>
-                            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-slate-900 shadow-sm">
+                            <div className="absolute top-2 left-2 md:top-6 md:left-6 bg-white/95 backdrop-blur-md px-1.5 py-0.5 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-xs font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-slate-900 shadow-sm">
                                 Blog
                             </div>
                         </div>
-                        <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-2 group-hover:text-gold-600 transition-colors text-center">Psané příběhy</h3>
-                        <p className="text-slate-500 text-xs md:text-sm text-center leading-relaxed">Osobní deníky, syrové zápisky z expedic a zamyšlení mimo videa.</p>
+                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Psané příběhy</h3>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Osobní deníky a zápisky z expedic.</p>
                     </motion.div>
                 </div>
             </div>
