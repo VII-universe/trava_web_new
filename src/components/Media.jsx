@@ -98,7 +98,7 @@ const Media = ({ scrollProgress }) => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-8 lg:gap-10 relative w-full items-start px-4 md:px-0">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 lg:gap-10 relative w-full items-start px-4 md:px-0">
                     {/* Video Card */}
                     <motion.div 
                         initial={{ opacity: 0, y: 30 }}
@@ -108,7 +108,7 @@ const Media = ({ scrollProgress }) => {
                         onClick={() => setActiveItem(MEDIA_DATA.video[0])} 
                         className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
                             <img src={MEDIA_DATA.video[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Video" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -120,8 +120,11 @@ const Media = ({ scrollProgress }) => {
                                 YouTube
                             </div>
                         </div>
-                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Vlogy a expedice</h3>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Máte obsah, je potřeba systematicky publikovat.</p>
+                        <div className="flex items-center justify-between w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Vlogy a expedice</h3>
+                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        </div>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Máte obsah, je potřeba systematicky publikovat.</p>
                     </motion.div>
 
                     {/* Podcast Card */}
@@ -133,7 +136,7 @@ const Media = ({ scrollProgress }) => {
                         onClick={() => setActiveItem(MEDIA_DATA.podcast[0])} 
                         className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
                             <img src={MEDIA_DATA.podcast[0].image} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Podcast" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -145,8 +148,11 @@ const Media = ({ scrollProgress }) => {
                                 Podcast
                             </div>
                         </div>
-                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Poslech na cestách</h3>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Cestovatelská témata a hosté (2027).</p>
+                        <div className="flex items-center justify-between w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Poslech na cestách</h3>
+                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        </div>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Cestovatelská témata a hosté (2027).</p>
                     </motion.div>
 
                     {/* Blog Card */}
@@ -158,7 +164,7 @@ const Media = ({ scrollProgress }) => {
                         onClick={() => setActiveItem(MEDIA_DATA.blog[0])} 
                         className="group cursor-pointer flex flex-col items-center"
                     >
-                        <div className="w-full h-[100px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-2 md:mb-4 bg-white border border-slate-100">
+                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
                             <img src={MEDIA_DATA.blog[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Blog" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -170,8 +176,11 @@ const Media = ({ scrollProgress }) => {
                                 Blog
                             </div>
                         </div>
-                        <h3 className="font-serif text-[11px] md:text-2xl lg:text-3xl text-slate-900 mb-1 md:mb-2 group-hover:text-gold-600 transition-colors text-center leading-tight">Psané příběhy</h3>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed">Osobní deníky a zápisky z expedic.</p>
+                        <div className="flex items-center justify-between w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Psané příběhy</h3>
+                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        </div>
+                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Osobní deníky a zápisky z expedic.</p>
                     </motion.div>
                 </div>
             </div>
