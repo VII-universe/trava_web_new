@@ -8,6 +8,22 @@
   body {
     @apply bg-ivory text-slate-800 font-sans antialiased overflow-x-hidden;
   }
+}
+
+/* Mobile scroll-snap: stops swipes at section boundaries */
+@media (max-width: 767px) {
+  .h-\[1600vh\] {
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-snap-anchor-start {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@layer base {
 
   h1,
   h2,

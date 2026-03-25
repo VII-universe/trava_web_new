@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -19,6 +19,13 @@ import 'lenis/dist/lenis.css';
 
 function App() {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Track scroll over extended height for 9 sections
   const { scrollYProgress } = useScroll({
@@ -26,12 +33,24 @@ function App() {
     offset: ["start start", "end end"]
   });
 
-  // Updated spring settings: slightly softer for more "floaty" feel
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 40, damping: 25, restDelta: 0.001 });
+  // Tighter spring on mobile so sections feel more responsive
+  const smoothProgress = useSpring(scrollYProgress, isMobile
+    ? { stiffness: 120, damping: 30, restDelta: 0.001 }
+    : { stiffness: 40, damping: 25, restDelta: 0.001 }
+  );
 
   return (
-    <ReactLenis root>
+    <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
       <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
+
+        {/* Mobile scroll-snap anchors — invisible, snap touch swipes to section starts */}
+        {[0.00, 0.12, 0.19, 0.28, 0.44, 0.54, 0.68, 0.79, 0.96].map((pct, i) => (
+          <div
+            key={i}
+            className="absolute w-full h-0 scroll-snap-anchor-start"
+            style={{ top: `${pct * 100}%` }}
+          />
+        ))}
 
       {/* Sticky viewport (camera frame) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">

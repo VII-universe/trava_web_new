@@ -23,15 +23,15 @@ const Altimeter = ({ scrollProgress }) => {
     }, [altitude]);
 
     const SECTIONS = [
-        { label: 'Úvod', y: 0.05 },
-        { label: 'Příběh', y: 0.20 },
-        { label: 'Partneři', y: 0.35 },
-        { label: 'Expedice', y: 0.52 },
-        { label: 'Nepál', y: 0.68 },
-        { label: 'Projekty', y: 0.78 },
-        { label: 'Média', y: 0.88 },
-        { label: 'Osvěta', y: 0.94 },
-        { label: 'Kontakt', y: 0.98 }
+        { label: 'Úvod',      y: 0.02 },
+        { label: 'Příběh',    y: 0.12 },
+        { label: 'Partneři',  y: 0.20 },
+        { label: 'Expedice',  y: 0.29 },
+        { label: 'Nepál',     y: 0.44 },
+        { label: 'Projekty',  y: 0.55 },
+        { label: 'Média',     y: 0.69 },
+        { label: 'Osvěta',    y: 0.80 },
+        { label: 'Kontakt',   y: 0.96 },
     ];
 
     const handleScrollTo = (yPercent) => {
