@@ -328,7 +328,10 @@ const Lectures = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right Form Area */}
-                        <div className="md:w-[60%] p-8 md:p-12 overflow-y-auto relative text-left flex flex-col">
+                        <div 
+                            className="md:w-[60%] p-8 md:p-12 overflow-y-auto relative text-left flex flex-col overscroll-contain"
+                            data-lenis-prevent
+                        >
                             <button
                                 onClick={() => setOpen(false)}
                                 className="absolute top-6 right-6 p-2 bg-slate-100/80 hover:bg-slate-200 rounded-full transition text-slate-600 z-10"
@@ -447,7 +450,10 @@ const Lectures = ({ scrollProgress }) => {
                             </div>
 
                             {/* Content Side */}
-                            <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto text-left flex flex-col justify-center">
+                            <div 
+                                className="md:w-1/2 p-8 md:p-12 overflow-y-auto text-left flex flex-col justify-center overscroll-contain"
+                                data-lenis-prevent
+                            >
                                 <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] font-bold mb-4">
                                     {selectedEvent.date}
                                 </h4>
@@ -508,7 +514,10 @@ const Lectures = ({ scrollProgress }) => {
                             </button>
                         </div>
 
-                        <div className="flex-1 w-full max-w-7xl mx-auto overflow-y-auto overflow-x-hidden pb-20 scrollbar-hide">
+                        <div 
+                            className="flex-1 w-full max-w-7xl mx-auto overflow-y-auto overflow-x-hidden pb-20 scrollbar-hide overscroll-contain"
+                            data-lenis-prevent
+                        >
                             <AnimatePresence mode="wait">
                                 {selectedMoreProject ? (
                                     <motion.div
@@ -530,7 +539,10 @@ const Lectures = ({ scrollProgress }) => {
                                             </button>
                                         </div>
 
-                                        <div className="md:w-1/2 p-8 md:p-14 overflow-y-auto text-left flex flex-col justify-center bg-white">
+                                        <div 
+                                            className="md:w-1/2 p-8 md:p-14 overflow-y-auto text-left flex flex-col justify-center bg-white overscroll-contain"
+                                            data-lenis-prevent
+                                        >
                                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] font-bold mb-4">
                                                 {selectedMoreProject.subtitle}
                                             </h4>

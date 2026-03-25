@@ -173,7 +173,10 @@ const About = ({ scrollProgress }) => {
                                 </button>
 
                                 {/* Left: Text Content */}
-                                <div className="w-full md:w-1/2 p-6 md:p-10 lg:p-16 overflow-y-auto custom-scrollbar">
+                                <div 
+                                    className="w-full md:w-1/2 p-6 md:p-10 lg:p-16 overflow-y-auto custom-scrollbar overscroll-contain"
+                                    data-lenis-prevent
+                                >
                                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
                                         Příběh, který se stal
                                     </h4>
@@ -201,7 +204,10 @@ const About = ({ scrollProgress }) => {
                                 </div>
 
                                 {/* Right: Photo Grid */}
-                                <div className="w-full md:w-1/2 bg-slate-900 p-2 md:p-4 grid grid-cols-2 grid-rows-2 gap-2 md:gap-4 overflow-y-auto">
+                                <div 
+                                    className="w-full md:w-1/2 bg-slate-900 p-2 md:p-4 grid grid-cols-2 grid-rows-2 gap-2 md:gap-4 overflow-y-auto overscroll-contain"
+                                    data-lenis-prevent
+                                >
                                     <div className="relative rounded-2xl overflow-hidden group">
                                         <img src={StoryImg1} alt="Mountain Landscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     </div>

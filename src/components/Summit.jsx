@@ -184,7 +184,10 @@ const Summit = ({ scrollProgress }) => {
                             </button>
 
                             {/* Left: Text Content */}
-                            <div className="w-full md:w-[55%] p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar">
+                            <div 
+                                className="w-full md:w-[55%] p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar overscroll-contain"
+                                data-lenis-prevent
+                            >
                                 <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
                                     Pomáháme a sdílíme
                                 </h4>

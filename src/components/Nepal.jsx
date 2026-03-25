@@ -173,7 +173,10 @@ const Nepal = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right content area */}
-                        <div className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left">
+                        <div 
+                            className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left overscroll-contain"
+                            data-lenis-prevent
+                        >
                             <button
                                 onClick={() => setOpenHotel(false)}
                                 className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600 z-10"
@@ -251,7 +254,10 @@ const Nepal = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right content area */}
-                        <div className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left">
+                        <div 
+                            className="md:w-[55%] p-6 md:p-8 overflow-y-auto flex flex-col text-left overscroll-contain"
+                            data-lenis-prevent
+                        >
                             <button
                                 onClick={() => setOpenPub(false)}
                                 className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition text-slate-600"

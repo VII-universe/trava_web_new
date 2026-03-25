@@ -342,7 +342,10 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </div>
 
-                            <div className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center">
+                            <div 
+                                className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
+                                data-lenis-prevent
+                            >
                                 {!isOrdering ? (
                                     <>
                                         <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
@@ -468,7 +471,10 @@ const Expeditions = ({ scrollProgress }) => {
                                             </div>
                                         </div>
 
-                                        <div className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center">
+                                        <div 
+                                            className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
+                                            data-lenis-prevent
+                                        >
                                             {!isOrdering ? (
                                                 <>
                                                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
@@ -570,7 +576,10 @@ const Expeditions = ({ scrollProgress }) => {
                                         </button>
                                     </div>
 
-                                    <div className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar">
+                                    <div 
+                                        className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar overscroll-contain"
+                                        data-lenis-prevent
+                                    >
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {MORE_EXPEDITIONS.map((exped) => (
                                                 <div 

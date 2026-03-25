@@ -199,7 +199,8 @@ const Media = ({ scrollProgress }) => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 30 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="bg-white/95 backdrop-blur-3xl border border-white/50 shadow-[0_30px_100px_rgba(0,0,0,0.6)] rounded-[2rem] max-w-5xl w-full max-h-[95vh] overflow-y-auto relative flex flex-col"
+                            className="bg-white/95 backdrop-blur-3xl border border-white/50 shadow-[0_30px_100px_rgba(0,0,0,0.6)] rounded-[2rem] max-w-5xl w-full max-h-[95vh] overflow-y-auto relative flex flex-col overscroll-contain touch-pan-y"
+                            data-lenis-prevent
                         >
                             <button
                                 onClick={() => {
