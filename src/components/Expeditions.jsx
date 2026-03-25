@@ -122,11 +122,11 @@ const Expeditions = ({ scrollProgress }) => {
 
             <motion.div
                 style={{ y: contentY }}
-                className="w-full h-full relative flex flex-col items-center justify-center px-6 pb-16 md:pb-24 xl:pb-32"
+                className="w-full h-full relative flex flex-col items-center justify-start md:justify-center px-4 md:px-6 pt-6 md:pt-0 pb-4 md:pb-24 xl:pb-32 overflow-y-auto md:overflow-visible"
             >
-                <div className="w-full flex flex-col items-center justify-center [@media(max-height:1000px)]:scale-[0.90] [@media(max-height:850px)]:scale-[0.80] [@media(max-height:750px)]:scale-[0.70] [@media(max-height:650px)]:scale-[0.60] origin-center transition-transform duration-300">
-                    <div className="text-center mb-2 md:mb-4 xl:mb-6 relative z-10 pt-4 md:pt-0 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-48 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90 scale-110 md:scale-125" />
+                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+                    <div className="text-center mb-2 md:mb-4 xl:mb-6 relative z-10 pt-2 md:pt-0 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3 mt-2 md:mt-4">
                         04 — Expedice (4500 m)
                     </h4>
