@@ -98,7 +98,7 @@ const Media = ({ scrollProgress }) => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 lg:gap-10 relative w-full items-start px-4 md:px-0">
+                <div className="flex flex-col md:grid md:grid-cols-3 gap-0 md:gap-8 lg:gap-10 relative w-full items-stretch px-4 md:px-0 flex-1 justify-between">
                     {/* Video Card */}
                     <motion.div 
                         initial={{ opacity: 0, y: 30 }}
@@ -106,9 +106,9 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8 }}
                         onClick={() => setActiveItem(MEDIA_DATA.video[0])} 
-                        className="group cursor-pointer flex flex-col items-center"
+                        className="group cursor-pointer flex flex-col items-center flex-1 min-h-0 py-1 md:py-0"
                     >
-                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
+                        <div className="w-full flex-1 min-h-0 md:aspect-[4/3] md:flex-none rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.video[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Video" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -134,9 +134,9 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         onClick={() => setActiveItem(MEDIA_DATA.podcast[0])} 
-                        className="group cursor-pointer flex flex-col items-center"
+                        className="group cursor-pointer flex flex-col items-center flex-1 min-h-0 py-1 md:py-0"
                     >
-                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
+                        <div className="w-full flex-1 min-h-0 md:aspect-[4/3] md:flex-none rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.podcast[0].image} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Podcast" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -162,9 +162,9 @@ const Media = ({ scrollProgress }) => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                         onClick={() => setActiveItem(MEDIA_DATA.blog[0])} 
-                        className="group cursor-pointer flex flex-col items-center"
+                        className="group cursor-pointer flex flex-col items-center flex-1 min-h-0 py-1 md:py-0"
                     >
-                        <div className="w-full h-[70px] md:aspect-[4/3] md:h-auto rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100 flex-shrink-0">
+                        <div className="w-full flex-1 min-h-0 md:aspect-[4/3] md:flex-none rounded-xl md:rounded-[2rem] overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-500 mb-1 md:mb-4 bg-white border border-slate-100">
                             <img src={MEDIA_DATA.blog[0].image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Blog" />
                             <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/30 transition-colors" />
                             <div className="absolute inset-0 flex items-center justify-center">
