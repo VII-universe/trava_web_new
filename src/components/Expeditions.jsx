@@ -122,7 +122,7 @@ const Expeditions = ({ scrollProgress }) => {
 
             <motion.div
                 style={{ y: contentY }}
-                className="w-full h-full relative flex flex-col items-center justify-center px-4 md:px-6 pb-0 md:pb-24 xl:pb-32"
+                className="w-full h-full relative flex flex-col items-center justify-start md:justify-center px-4 md:px-6 pt-6 md:pt-0 pb-0 md:pb-24 xl:pb-32"
             >
                 <div className="w-full flex flex-col items-center justify-center origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.70] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                     <div className="text-center mb-2 md:mb-4 xl:mb-6 relative z-10 pt-2 md:pt-0 flex flex-col items-center">
