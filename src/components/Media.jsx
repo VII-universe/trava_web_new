@@ -65,7 +65,7 @@ const Media = ({ scrollProgress }) => {
             style={{ opacity: containerOpacity, y }}
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-[#f8f9fa]"
         >
-            <div className="relative z-10 max-w-7xl w-full px-0 md:px-12 py-0 md:py-12 lg:py-16 mx-auto pointer-events-auto flex flex-col justify-center h-full origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.65]">
+            <div className="relative z-10 max-w-7xl w-full px-0 md:px-12 mx-auto pointer-events-auto flex flex-col justify-center h-full origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.65]">
                 <div className="text-center mb-4 md:mb-12 mt-0 md:mt-0 shrink-0 px-6">
                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-2 md:mb-4">
                         07 — Média &amp; Obsah
