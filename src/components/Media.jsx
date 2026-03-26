@@ -78,7 +78,7 @@ const Media = ({ scrollProgress }) => {
                     </p>
                 </div>
 
-                <div className="flex flex-col md:grid md:grid-cols-3 gap-0 md:gap-8 lg:gap-10 relative w-full items-stretch px-4 md:px-0 flex-1 justify-between">
+                <div className="flex flex-col md:grid md:grid-cols-3 gap-0 md:gap-8 lg:gap-10 relative w-full items-stretch px-4 md:px-0 flex-1 justify-center">
                     {/* Video Card */}
                     <motion.div 
                         initial={{ opacity: 0, y: 30 }}
