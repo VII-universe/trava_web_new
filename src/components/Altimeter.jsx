@@ -43,7 +43,7 @@ const Altimeter = ({ scrollProgress }) => {
     };
 
     return (
-        <div className="fixed right-0 top-0 h-screen z-[100] w-[130px] md:w-[180px] flex items-center justify-end pointer-events-none pr-0">
+        <div className="fixed right-0 top-0 h-screen z-[100] w-[110px] md:w-[160px] flex items-center justify-end pointer-events-none pr-0">
             
             {/* Background Gradient for readability (fades in from About section onwards) */}
             <motion.div 
@@ -53,8 +53,8 @@ const Altimeter = ({ scrollProgress }) => {
 
             {/* Content Container (h-60 or 70 vh centered) */}
             <div className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-end">
-                {/* Main Axis Line (moved inward more) */}
-                <div className="absolute right-12 md:right-16 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
+                {/* Main Axis Line (moved closer to right edge) */}
+                <div className="absolute right-2 md:right-4 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
                     {/* Gold fill line */}
                     <motion.div
                         style={{ height: useTransform(scrollProgress, [0, 1], ["0%", "100%"]) }}
