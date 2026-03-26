@@ -28,6 +28,7 @@ const Summit = ({ scrollProgress }) => {
     };
 
     return (
+        <>
         <motion.div
             style={{ opacity, y }}
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden z-40"
@@ -52,8 +53,6 @@ const Summit = ({ scrollProgress }) => {
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
-                
-                {/* Removed Absolute Polaroids for much cleaner UX/UI */}
             </motion.div>
 
             {/* Content Block */}
@@ -80,7 +79,7 @@ const Summit = ({ scrollProgress }) => {
                                 </h4>
                             </motion.div>
 
-                            <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-slate-900 mb-3 md:mb-5 leading-tight tracking-tight">
+                            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-3 md:mb-5 leading-tight tracking-tight">
                                 Kašpárek s nemocí,<br className="hidden lg:block"/>co to překonává.
                             </h2>
 
@@ -152,90 +151,91 @@ const Summit = ({ scrollProgress }) => {
                     </div>
                 </div>
             </motion.div>
-
-            {/* Osvěta Modal */}
-            <AnimatePresence>
-                {isOsvetaOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
-                        onClick={() => setIsOsvetaOpen(false)}
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
-                        >
-                            <button 
-                                onClick={() => setIsOsvetaOpen(false)}
-                                className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/50 hover:bg-white/80 text-slate-900 transition-colors backdrop-blur-md shadow-sm border border-white/40"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
-
-                            {/* Left: Text Content */}
-                            <div 
-                                className="w-full md:w-[55%] p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar overscroll-contain"
-                                data-lenis-prevent
-                            >
-                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
-                                    Pomáháme a sdílíme
-                                </h4>
-                                <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                                    Zdravotní osvěta
-                                </h2>
-                                
-                                <div className="prose prose-slate prose-lg max-w-none">
-                                    <p className="font-sans text-slate-800 leading-relaxed font-medium mb-6">
-                                        Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.
-                                    </p>
-                                    
-                                    <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Revma Liga a psoriatická artritida</h3>
-                                    <p className="font-sans text-slate-700 leading-relaxed mb-6">
-                                        Aktivně spolupracujeme s <strong>Revma Ligou</strong>. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci – ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování. Snažíme se bořit mýty a dodávat pacientům motivaci.
-                                    </p>
-
-                                    <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Fuck Cancer</h3>
-                                    <p className="font-sans text-slate-700 leading-relaxed mb-6">
-                                        Podporuji iniciativu <strong>Fuck Cancer</strong>, která sdružuje mladé pacienty onkologických onemocnění (tzv. Heroes), survivors a všechny ty, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.
-                                    </p>
-
-                                    <div className="mt-12 p-6 bg-slate-100 rounded-2xl border border-slate-200">
-                                        <h4 className="font-serif text-xl text-slate-900 mb-3">Odborná spolupráce</h4>
-                                        <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">
-                                            Mé kroky v osvětě a péči nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny, se kterými konzultuji a spolupracuji: <br/><br/>
-                                            <strong>Doc. MUDr. Monika Arenbergerová</strong>, <strong>MUDr. Liliana Šedová</strong>, <strong>MUDr. Tomáš Brisuda</strong>, <strong>PhDr. Helena Vomáčková</strong>, <strong>MUDr. Martin Pospíchal</strong> a dalším odborníkům, kteří mě udržují v chodu a pomáhají naší osvětové cestě odbornou erudicí.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Right: Image */}
-                            <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
-                                <img src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-                                <div className="absolute bottom-8 left-8 right-8 text-white z-10">
-                                    <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
-                                        <div className="flex gap-2 mb-4">
-                                            <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
-                                            <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
-                                            <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
-                                        </div>
-                                        <p className="font-serif italic text-xl md:text-2xl text-white leading-snug font-medium drop-shadow-md">
-                                            "Hory jsou jen skály. Opravdový boj se odehrává v nás a našem těle."
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </motion.div>
+
+        {/* Osvěta Modal */}
+        <AnimatePresence>
+            {isOsvetaOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setIsOsvetaOpen(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                    >
+                        <button 
+                            onClick={() => setIsOsvetaOpen(false)}
+                            className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/50 hover:bg-white/80 text-slate-900 transition-colors backdrop-blur-md shadow-sm border border-white/40"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* Left: Text Content */}
+                        <div 
+                            className="w-full md:w-[55%] p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
+                                Pomáháme a sdílíme
+                            </h4>
+                            <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
+                                Zdravotní osvěta
+                            </h2>
+                            
+                            <div className="prose prose-slate prose-lg max-w-none">
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-6">
+                                    Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.
+                                </p>
+                                
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Revma Liga a psoriatická artritida</h3>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-6">
+                                    Aktivně spolupracujeme s <strong>Revma Ligou</strong>. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci – ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování. Snažíme se bořit mýty a dodávat pacientům motivaci.
+                                </p>
+
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Fuck Cancer</h3>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-6">
+                                    Podporuji iniciativu <strong>Fuck Cancer</strong>, která sdružuje mladé pacienty onkologických onemocnění (tzv. Heroes), survivors a všechny ty, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.
+                                </p>
+
+                                <div className="mt-12 p-6 bg-slate-100 rounded-2xl border border-slate-200">
+                                    <h4 className="font-serif text-xl text-slate-900 mb-3">Odborná spolupráce</h4>
+                                    <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">
+                                        Mé kroky v osvětě a péči nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny, se kterými konzultuji a spolupracuji: <br/><br/>
+                                        <strong>Doc. MUDr. Monika Arenbergerová</strong>, <strong>MUDr. Liliana Šedová</strong>, <strong>MUDr. Tomáš Brisuda</strong>, <strong>PhDr. Helena Vomáčková</strong>, <strong>MUDr. Martin Pospíchal</strong> a dalším odborníkům, kteří mě udržují v chodu a pomájí naší osvětové cestě odbornou erudicí.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Right: Image */}
+                        <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
+                            <img src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                            <div className="absolute bottom-8 left-8 right-8 text-white z-10">
+                                <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
+                                    <div className="flex gap-2 mb-4">
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400"/>
+                                    </div>
+                                    <p className="font-serif italic text-xl md:text-2xl text-white leading-snug font-medium drop-shadow-md">
+                                        "Hory jsou jen skály. Opravdový boj se odehrává v nás a našem těle."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 

@@ -92,7 +92,9 @@ const Expeditions = ({ scrollProgress }) => {
 
     // Prevent body scroll when modal is open
     useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped);
+    
     return (
+        <>
         <motion.div
             style={{ opacity: containerOpacity }}
             className="absolute inset-0 w-full h-full bg-[#1A202C] pointer-events-none"
@@ -298,317 +300,318 @@ const Expeditions = ({ scrollProgress }) => {
                 </div>
                 </div>
             </motion.div>
+        </motion.div>
 
-            <AnimatePresence>
-                {selectedExped && (
+        <AnimatePresence>
+            {selectedExped && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setSelectedExped(null)}
+                >
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
-                        onClick={() => setSelectedExped(null)}
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
                     >
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: -30 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-ivory w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                        <button 
+                            onClick={() => setSelectedExped(null)}
+                            className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
                         >
-                            <button 
-                                onClick={() => setSelectedExped(null)}
-                                className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
-                            >
-                                <X className="w-5 h-5 md:w-6 md:h-6" />
-                            </button>
+                            <X className="w-5 h-5 md:w-6 md:h-6" />
+                        </button>
 
-                            <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
-                                <img src={selectedExped.image} alt={selectedExped.title} className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
-                                <div className="absolute bottom-6 left-6 flex flex-col gap-2">
-                                    <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
-                                        {selectedExped.duration}
-                                    </div>
-                                    <div className="px-4 py-1.5 bg-gold-500/80 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
-                                        {selectedExped.difficulty}
-                                    </div>
+                        <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
+                            <img src={selectedExped.image} alt={selectedExped.title} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
+                            <div className="absolute bottom-6 left-6 flex flex-col gap-2">
+                                <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                    {selectedExped.duration}
+                                </div>
+                                <div className="px-4 py-1.5 bg-gold-500/80 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                    {selectedExped.difficulty}
                                 </div>
                             </div>
+                        </div>
 
-                            <div 
-                                className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
-                                data-lenis-prevent
-                            >
-                                {!isOrdering ? (
-                                    <>
-                                        <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
-                                            Detail Výpravy
-                                        </h4>
-                                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
-                                            {selectedExped.title}
-                                        </h2>
-                                        
-                                        <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
-                                            {selectedExped.description}
-                                        </p>
+                        <div 
+                            className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            {!isOrdering ? (
+                                <>
+                                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
+                                        Detail Výpravy
+                                    </h4>
+                                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+                                        {selectedExped.title}
+                                    </h2>
+                                    
+                                    <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+                                        {selectedExped.description}
+                                    </p>
 
-                                        <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
-                                            <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
-                                            <ul className="space-y-3">
-                                                {selectedExped.highlights.map((highlight, idx) => (
-                                                    <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
-                                                        <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
-                                                        <span className="leading-snug">{highlight}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                    <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                        <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
+                                        <ul className="space-y-3">
+                                            {selectedExped.highlights.map((highlight, idx) => (
+                                                <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
+                                                    <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
+                                                    <span className="leading-snug">{highlight}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <button 
+                                        onClick={() => setIsOrdering(true)}
+                                        className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                                    >
+                                        Mám zájem
+                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="flex flex-col h-full animate-in fade-in duration-500">
+                                    <button 
+                                        onClick={() => setIsOrdering(false)}
+                                        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
+                                    >
+                                        <ArrowLeft className="w-4 h-4" />
+                                        Zpět
+                                    </button>
+                                    <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
+                                    <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a mi se vám co nejdříve ozveme s detaily k: {selectedExped.title}.</p>
+                                    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
+                                            <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
                                         </div>
-
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
+                                                <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                                                <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
+                                            <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
+                                        </div>
                                         <button 
-                                            onClick={() => setIsOrdering(true)}
-                                            className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                                            type="button"
+                                            onClick={() => {
+                                                alert("Poptávka na " + selectedExped.title + " byla odeslána! (Demo)");
+                                                setIsOrdering(false);
+                                                setSelectedExped(null);
+                                            }}
+                                            className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
                                         >
-                                            Mám zájem
+                                            Odeslat nezávaznou poptávku
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
-                                    </>
-                                ) : (
-                                    <div className="flex flex-col h-full animate-in fade-in duration-500">
-                                        <button 
-                                            onClick={() => setIsOrdering(false)}
-                                            className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
-                                        >
-                                            <ArrowLeft className="w-4 h-4" />
-                                            Zpět
-                                        </button>
-                                        <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
-                                        <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a my se vám co nejdříve ozveme s detaily k: {selectedExped.title}.</p>
-                                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                                            <div>
-                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
-                                                <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
-                                            </div>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div>
-                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
-                                                    <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
-                                                    <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
-                                                <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
-                                            </div>
-                                            <button 
-                                                type="button"
-                                                onClick={() => {
-                                                    alert("Poptávka na " + selectedExped.title + " byla odeslána! (Demo)");
-                                                    setIsOrdering(false);
-                                                    setSelectedExped(null);
-                                                }}
-                                                className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
-                                            >
-                                                Odeslat nezávaznou poptávku
-                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                            </button>
-                                        </form>
-                                    </div>
-                                )}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* ── All Expeditions Grid Modal ── */}
-            <AnimatePresence>
-                {showAllExpeditions && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
-                        onClick={() => setShowAllExpeditions(false)}
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: -30 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-[#111827] w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col relative"
-                        >
-                            {selectedMoreExped ? (
-                                <div className="w-full h-full flex flex-col items-center justify-center p-4">
-                                    <div className="bg-ivory w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative">
-                                        <button 
-                                            onClick={() => setSelectedMoreExped(null)}
-                                            className="absolute top-4 left-4 md:top-6 md:left-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
-                                        >
-                                            <ArrowRight className="w-5 h-5 md:w-6 md:h-6 rotate-180" />
-                                        </button>
-
-                                        <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
-                                            <img src={selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
-                                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
-                                            <div className="absolute bottom-6 left-6 flex flex-col gap-2">
-                                                <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
-                                                    {selectedMoreExped.duration}
-                                                </div>
-                                                <div className="px-4 py-1.5 bg-gold-500/80 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
-                                                    {selectedMoreExped.difficulty}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div 
-                                            className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
-                                            data-lenis-prevent
-                                        >
-                                            {!isOrdering ? (
-                                                <>
-                                                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
-                                                        Detail Výpravy
-                                                    </h4>
-                                                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
-                                                        {selectedMoreExped.title}
-                                                    </h2>
-                                                    
-                                                    <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
-                                                        {selectedMoreExped.description}
-                                                    </p>
-
-                                                    <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
-                                                        <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
-                                                        <ul className="space-y-3">
-                                                            {selectedMoreExped.highlights.map((highlight, idx) => (
-                                                                <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
-                                                                    <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
-                                                                    <span className="leading-snug">{highlight}</span>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-
-                                                    <button 
-                                                        onClick={() => setIsOrdering(true)}
-                                                        className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
-                                                    >
-                                                        Mám zájem
-                                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <div className="flex flex-col h-full animate-in fade-in duration-500">
-                                                    <button 
-                                                        onClick={() => setIsOrdering(false)}
-                                                        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
-                                                    >
-                                                        <ArrowLeft className="w-4 h-4" />
-                                                        Zpět
-                                                    </button>
-                                                    <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
-                                                    <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a my se vám co nejdříve ozveme s detaily k: {selectedMoreExped.title}.</p>
-                                                    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                                                        <div>
-                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
-                                                            <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
-                                                        </div>
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                            <div>
-                                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
-                                                                <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
-                                                            </div>
-                                                            <div>
-                                                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
-                                                                <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
-                                                            <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
-                                                        </div>
-                                                        <button 
-                                                            type="button"
-                                                            onClick={() => {
-                                                                alert("Poptávka na " + selectedMoreExped.title + " byla odeslána! (Demo)");
-                                                                setIsOrdering(false);
-                                                                setSelectedMoreExped(null);
-                                                                setShowAllExpeditions(false);
-                                                            }}
-                                                            className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
-                                                        >
-                                                            Odeslat nezávaznou poptávku
-                                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            ) : (
-                                <>
-                                    <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-20 bg-gradient-to-b from-[#111827] to-transparent">
-                                        <div>
-                                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-2">
-                                                Kompletní přehled
-                                            </h4>
-                                            <h2 className="font-serif text-3xl md:text-4xl text-white">
-                                                Všechny Expedice
-                                            </h2>
+                            )}
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── All Expeditions Grid Modal ── */}
+        <AnimatePresence>
+            {showAllExpeditions && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setShowAllExpeditions(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-[#111827] w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col relative"
+                    >
+                        {selectedMoreExped ? (
+                            <div className="w-full h-full flex flex-col items-center justify-center p-4">
+                                <div className="bg-ivory w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative">
+                                    <button 
+                                        onClick={() => setSelectedMoreExped(null)}
+                                        className="absolute top-4 left-4 md:top-6 md:left-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
+                                    >
+                                        <ArrowRight className="w-5 h-5 md:w-6 md:h-6 rotate-180" />
+                                    </button>
+
+                                    <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
+                                        <img src={selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
+                                        <div className="absolute bottom-6 left-6 flex flex-col gap-2">
+                                            <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                                {selectedMoreExped.duration}
+                                            </div>
+                                            <div className="px-4 py-1.5 bg-gold-500/80 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
+                                                {selectedMoreExped.difficulty}
+                                            </div>
                                         </div>
-                                        <button 
-                                            onClick={() => setShowAllExpeditions(false)}
-                                            className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md border border-transparent hover:border-white/30"
-                                        >
-                                            <X className="w-5 h-5 md:w-6 md:h-6" />
-                                        </button>
                                     </div>
 
                                     <div 
-                                        className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar overscroll-contain"
+                                        className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
                                         data-lenis-prevent
                                     >
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {MORE_EXPEDITIONS.map((exped) => (
-                                                <div 
-                                                    key={exped.id}
-                                                    onClick={() => { setSelectedMoreExped(exped); setIsOrdering(false); }}
-                                                    className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
+                                        {!isOrdering ? (
+                                            <>
+                                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">
+                                                    Detail Výpravy
+                                                </h4>
+                                                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 leading-tight">
+                                                    {selectedMoreExped.title}
+                                                </h2>
+                                                
+                                                <p className="font-sans text-slate-700 leading-relaxed text-base md:text-lg mb-8">
+                                                    {selectedMoreExped.description}
+                                                </p>
+
+                                                <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                                    <h4 className="font-serif text-xl text-slate-900 mb-4">Program zkratce:</h4>
+                                                    <ul className="space-y-3">
+                                                        {selectedMoreExped.highlights.map((highlight, idx) => (
+                                                            <li key={idx} className="flex gap-3 text-slate-700 font-sans items-start">
+                                                                <span className="text-gold-500 mt-1"><ArrowRight className="w-4 h-4" /></span>
+                                                                <span className="leading-snug">{highlight}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <button 
+                                                    onClick={() => setIsOrdering(true)}
+                                                    className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
                                                 >
-                                                    <img 
-                                                        src={exped.image} 
-                                                        alt={exped.alt} 
-                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                                                    />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                                                    
-                                                    <div className="absolute inset-x-0 bottom-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 flex flex-col justify-end">
-                                                        <h3 className="font-serif text-2xl text-white mb-2">{exped.title}</h3>
-                                                        <p className="font-sans text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 mb-4 line-clamp-2">
-                                                            {exped.description}
-                                                        </p>
-                                                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                                                            <span className="font-sans text-[10px] text-white/70 tracking-wider uppercase bg-white/10 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.duration}</span>
-                                                            <span className="font-sans text-[10px] text-gold-400 tracking-wider uppercase bg-black/40 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.difficulty}</span>
+                                                    Mám zájem
+                                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <div className="flex flex-col h-full animate-in fade-in duration-500">
+                                                <button 
+                                                    onClick={() => setIsOrdering(false)}
+                                                    className="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-bold uppercase tracking-widest mb-6 transition-colors w-fit"
+                                                >
+                                                    <ArrowLeft className="w-4 h-4" />
+                                                    Zpět
+                                                </button>
+                                                <h3 className="font-serif text-3xl text-slate-900 mb-2">Rezervace výpravy</h3>
+                                                <p className="text-slate-600 mb-8 font-sans">Vyplňte formulář a mi se vám co nejdříve ozveme s detaily k: {selectedMoreExped.title}.</p>
+                                                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                                    <div>
+                                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Jméno a příjmení</label>
+                                                        <input type="text" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="Jan Novák" />
+                                                    </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">E-mail</label>
+                                                            <input type="email" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="jan@novak.cz" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                                                            <input type="tel" className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors text-slate-900" placeholder="+420" />
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                                    <div>
+                                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Zpráva (volitelné)</label>
+                                                        <textarea rows={3} className="w-full px-4 py-3 bg-slate-100/50 border border-slate-200 rounded-xl focus:outline-none focus:border-gold-500 transition-colors resize-none text-slate-900" placeholder="Vaše poznámka..."></textarea>
+                                                    </div>
+                                                    <button 
+                                                        type="button"
+                                                        onClick={() => {
+                                                            alert("Poptávka na " + selectedMoreExped.title + " byla odeslána! (Demo)");
+                                                            setIsOrdering(false);
+                                                            setSelectedMoreExped(null);
+                                                            setShowAllExpeditions(false);
+                                                        }}
+                                                        className="w-full mt-4 py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group shadow-lg shadow-gold-500/20"
+                                                    >
+                                                        Odeslat nezávaznou poptávku
+                                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        )}
                                     </div>
-                                </>
-                            )}
-                        </motion.div>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-20 bg-gradient-to-b from-[#111827] to-transparent">
+                                    <div>
+                                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-2">
+                                            Kompletní přehled
+                                        </h4>
+                                        <h2 className="font-serif text-3xl md:text-4xl text-white">
+                                            Všechny Expedice
+                                        </h2>
+                                    </div>
+                                    <button 
+                                        onClick={() => setShowAllExpeditions(false)}
+                                        className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-md border border-transparent hover:border-white/30"
+                                    >
+                                        <X className="w-5 h-5 md:w-6 md:h-6" />
+                                    </button>
+                                </div>
+
+                                <div 
+                                    className="p-6 md:p-8 pt-32 md:pt-36 overflow-y-auto custom-scrollbar overscroll-contain"
+                                    data-lenis-prevent
+                                >
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {MORE_EXPEDITIONS.map((exped) => (
+                                            <div 
+                                                key={exped.id}
+                                                onClick={() => { setSelectedMoreExped(exped); setIsOrdering(false); }}
+                                                className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
+                                            >
+                                                <img 
+                                                    src={exped.image} 
+                                                    alt={exped.alt} 
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                                                
+                                                <div className="absolute inset-x-0 bottom-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 flex flex-col justify-end">
+                                                    <h3 className="font-serif text-2xl text-white mb-2">{exped.title}</h3>
+                                                    <p className="font-sans text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 mb-4 line-clamp-2">
+                                                        {exped.description}
+                                                    </p>
+                                                    <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                                                        <span className="font-sans text-[10px] text-white/70 tracking-wider uppercase bg-white/10 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.duration}</span>
+                                                        <span className="font-sans text-[10px] text-gold-400 tracking-wider uppercase bg-black/40 px-2 py-1 rounded backdrop-blur-sm border border-white/10">{exped.difficulty}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 

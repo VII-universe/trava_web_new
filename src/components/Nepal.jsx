@@ -74,7 +74,7 @@ const Nepal = ({ scrollProgress }) => {
             <div
                 className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none"
             >
-                <div className="w-full flex items-center justify-center p-2 md:p-6 md:pr-24 lg:p-8 lg:pr-36 xl:px-12 pointer-events-none origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+                <div className="w-full flex items-center justify-center p-2 md:p-6 lg:p-8 xl:px-12 pointer-events-none origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                     {/* Single main glass card combining Hotel, Pub and Gallery */}
                     <motion.div 
                         className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-2xl md:rounded-[2rem] p-4 md:p-6 lg:p-10 flex flex-col pointer-events-auto overflow-hidden"

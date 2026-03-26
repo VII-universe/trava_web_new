@@ -215,6 +215,7 @@ const Icefall = ({ scrollProgress }) => {
     const ropeSkew = useTransform(scrollProgress, [0.32, 0.50], [-0.8, 0.8]);
 
     return (
+        <>
         <motion.div
             style={{ 
                 y: containerY, 
@@ -346,74 +347,75 @@ const Icefall = ({ scrollProgress }) => {
                         Tanec na ostří ledu.
                     </h3>
                 </div>
-
-                {/* ── Marketing Modal ── */}
-                <AnimatePresence>
-                    {selectedFlag && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/80 backdrop-blur-sm"
-                            onClick={() => setSelectedFlag(null)}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                                onClick={(e) => e.stopPropagation()}
-                                className="bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row"
-                            >
-                                {/* Modal Image */}
-                                <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                                    <img src={selectedFlag.image} alt={selectedFlag.name} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-80" />
-                                </div>
-                                
-                                {/* Modal Content */}
-                                <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col">
-                                    <button 
-                                        onClick={() => setSelectedFlag(null)}
-                                        className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
-                                    >
-                                        <X className="w-5 h-5" />
-                                    </button>
-                                    
-                                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
-                                        Partner Výpravy
-                                    </h4>
-                                    
-                                    <div className="flex bg-slate-900 border border-white/10 w-16 h-10 mb-6 flex-shrink-0 items-center justify-center rounded-lg p-1.5 opacity-90">
-                                        {selectedFlag.logo}
-                                    </div>
-                                    
-                                    <h2 className="font-serif text-4xl text-white mb-2">
-                                        {selectedFlag.name}
-                                    </h2>
-                                    
-                                    <p className="font-sans text-gold-500 text-sm leading-relaxed mb-6 italic">
-                                        „{selectedFlag.quote}“
-                                    </p>
-
-                                    <div className="h-px w-12 bg-white/10 mb-6" />
-                                    
-                                    <p className="font-sans text-slate-300 leading-relaxed font-light mb-auto">
-                                        {selectedFlag.description}
-                                    </p>
-
-                                    <button 
-                                        onClick={() => setSelectedFlag(null)} // Later can be an external link 
-                                        className="mt-8 flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-white text-slate-900 font-bold uppercase text-xs tracking-widest hover:bg-gold-500 hover:text-white transition-all w-full"
-                                    >
-                                        Zpět na stěnu
-                                    </button>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
         </motion.div>
+
+        {/* ── Marketing Modal ── */}
+        <AnimatePresence>
+            {selectedFlag && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/80 backdrop-blur-sm"
+                    onClick={() => setSelectedFlag(null)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row"
+                    >
+                        {/* Modal Image */}
+                        <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+                            <img src={selectedFlag.image} alt={selectedFlag.name} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-80" />
+                        </div>
+                        
+                        {/* Modal Content */}
+                        <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col">
+                            <button 
+                                onClick={() => setSelectedFlag(null)}
+                                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                            
+                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                                Partner Výpravy
+                            </h4>
+                            
+                            <div className="flex bg-slate-900 border border-white/10 w-16 h-10 mb-6 flex-shrink-0 items-center justify-center rounded-lg p-1.5 opacity-90">
+                                {selectedFlag.logo}
+                            </div>
+                            
+                            <h2 className="font-serif text-4xl text-white mb-2">
+                                {selectedFlag.name}
+                            </h2>
+                            
+                            <p className="font-sans text-gold-500 text-sm leading-relaxed mb-6 italic">
+                                „{selectedFlag.quote}“
+                            </p>
+
+                            <div className="h-px w-12 bg-white/10 mb-6" />
+                            
+                            <p className="font-sans text-slate-300 leading-relaxed font-light mb-auto">
+                                {selectedFlag.description}
+                            </p>
+
+                            <button 
+                                onClick={() => setSelectedFlag(null)} // Later can be an external link 
+                                className="mt-8 flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-white text-slate-900 font-bold uppercase text-xs tracking-widest hover:bg-gold-500 hover:text-white transition-all w-full"
+                            >
+                                Zpět na stěnu
+                            </button>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 
