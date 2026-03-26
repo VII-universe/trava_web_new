@@ -47,8 +47,12 @@ const Altimeter = ({ scrollProgress }) => {
             
             {/* Background Gradient for readability (fades in from About section onwards) */}
             <motion.div 
-                style={{ opacity: bgOpacity }}
-                className="absolute inset-y-0 right-0 w-[160px] md:w-[240px] bg-gradient-to-l from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"
+                style={{ 
+                    opacity: bgOpacity,
+                    maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+                }}
+                className="absolute inset-y-0 right-0 w-[80px] md:w-[120px] bg-gradient-to-l from-slate-950/80 to-transparent pointer-events-none"
             />
             {/* Main Axis Line */}
             <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
