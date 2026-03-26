@@ -21,53 +21,53 @@ const Altimeter = ({ scrollProgress }) => {
     // 0.85 - 0.92: LIGHT (Media)
     // 0.92 - 1.0: DARK (Summit, Contact)
     
-    const rangePoints = [0, 0.48, 0.52, 0.84, 0.88, 0.93, 0.95, 1];
+    const rangePoints = [0, 0.47, 0.49, 0.85, 0.87, 0.89, 0.91, 1];
     
     // Axis line color
     const axisColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.15)", // Dark (Hero)
-        "rgba(15, 23, 42, 0.15)", // Dark (Icefall end)
-        "rgba(255, 255, 255, 0.2)", // Light (Expeditions)
-        "rgba(255, 255, 255, 0.2)", // Light (Lectures end)
-        "rgba(15, 23, 42, 0.15)", // Dark (Media)
-        "rgba(15, 23, 42, 0.15)", // Dark (Media end)
-        "rgba(255, 255, 255, 0.2)", // Light (Summit)
-        "rgba(255, 255, 255, 0.2)"  // Light (Contact)
+        "rgba(15, 23, 42, 0.3)", // DARK (Hero/About/Icefall)
+        "rgba(15, 23, 42, 0.3)",
+        "rgba(255, 255, 255, 0.45)", // LIGHT (Expeditions/Nepal/Lectures)
+        "rgba(255, 255, 255, 0.45)",
+        "rgba(15, 23, 42, 0.3)", // DARK (Media)
+        "rgba(15, 23, 42, 0.3)",
+        "rgba(255, 255, 255, 0.45)", // LIGHT (Summit/Contact)
+        "rgba(255, 255, 255, 0.45)"
     ]);
 
     // Text label color
     const textColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.5)", // Dark
-        "rgba(15, 23, 42, 0.5)", 
-        "rgba(255, 255, 255, 0.6)", // Light
-        "rgba(255, 255, 255, 0.6)",
-        "rgba(15, 23, 42, 0.5)", // Dark
-        "rgba(15, 23, 42, 0.5)",
-        "rgba(255, 255, 255, 0.6)", // Light
-        "rgba(255, 255, 255, 0.6)"
+        "rgba(15, 23, 42, 0.75)", // DARK
+        "rgba(15, 23, 42, 0.75)", 
+        "rgba(255, 255, 255, 0.9)", // LIGHT
+        "rgba(255, 255, 255, 0.9)",
+        "rgba(15, 23, 42, 0.75)", // DARK
+        "rgba(15, 23, 42, 0.75)",
+        "rgba(255, 255, 255, 0.9)", // LIGHT
+        "rgba(255, 255, 255, 0.9)"
     ]);
 
-    // Hover text color (stays gold but more prominent on dark)
+    // Hover text color
     const textHoverColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.9)", 
-        "rgba(15, 23, 42, 0.9)",
+        "rgba(15, 23, 42, 1)", 
+        "rgba(15, 23, 42, 1)",
         "rgba(255, 255, 255, 1)",
         "rgba(255, 255, 255, 1)",
-        "rgba(15, 23, 42, 0.9)",
-        "rgba(15, 23, 42, 0.9)",
+        "rgba(15, 23, 42, 1)",
+        "rgba(15, 23, 42, 1)",
         "rgba(255, 255, 255, 1)",
         "rgba(255, 255, 255, 1)"
     ]);
 
     const markerColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.3)",
-        "rgba(15, 23, 42, 0.3)",
-        "rgba(255, 255, 255, 0.4)",
-        "rgba(255, 255, 255, 0.4)",
-        "rgba(15, 23, 42, 0.3)",
-        "rgba(15, 23, 42, 0.3)",
-        "rgba(255, 255, 255, 0.4)",
-        "rgba(255, 255, 255, 0.4)"
+        "rgba(15, 23, 42, 0.5)",
+        "rgba(15, 23, 42, 0.5)",
+        "rgba(255, 255, 255, 0.6)",
+        "rgba(255, 255, 255, 0.6)",
+        "rgba(15, 23, 42, 0.5)",
+        "rgba(15, 23, 42, 0.5)",
+        "rgba(255, 255, 255, 0.6)",
+        "rgba(255, 255, 255, 0.6)"
     ]);
 
     // Fade in a dark background for readability only when on dark sections? 
