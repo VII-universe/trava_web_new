@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+// Force redeploy to 69a0781 state
 import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
