@@ -21,7 +21,7 @@ const Altimeter = ({ scrollProgress }) => {
     // 0.85 - 0.92: LIGHT (Media)
     // 0.92 - 1.0: DARK (Summit, Contact)
     
-    const rangePoints = [0, 0.47, 0.49, 0.85, 0.87, 0.89, 0.91, 1];
+    const rangePoints = [0, 0.32, 0.34, 0.68, 0.70, 0.84, 0.86, 1];
     
     // Axis line color
     const axisColor = useTransform(scrollProgress, rangePoints, [
