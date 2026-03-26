@@ -48,18 +48,18 @@ const About = ({ scrollProgress }) => {
 
     return (
         <>
-        <motion.div
-            style={{ 
-                opacity: containerOpacity,
-                maskImage: 'linear-gradient(to bottom, black 0%, black 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 100%)'
-            }}
-            className="absolute inset-0 w-full h-full flex items-end justify-center pointer-events-none overflow-hidden"
-        >
+        <>
             {/* BACKGROUND LAYER - Behind Clouds */}
             <motion.div
-                style={{ scale: containerScale, y: containerY, zIndex: 0 }}
-                className="w-full h-full relative"
+                style={{ 
+                    opacity: containerOpacity,
+                    scale: containerScale, 
+                    y: containerY, 
+                    zIndex: 0,
+                    maskImage: 'linear-gradient(to bottom, black 0%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 100%)'
+                }}
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
             >
                 <motion.div
                     style={{
@@ -113,7 +113,12 @@ const About = ({ scrollProgress }) => {
 
             {/* CONTENT LAYER - Above Clouds */}
             <motion.div
-                style={{ scale: containerScale, y: containerY, zIndex: 70 }}
+                style={{ 
+                    opacity: containerOpacity,
+                    scale: containerScale, 
+                    y: containerY, 
+                    zIndex: 70 
+                }}
                 className="w-full h-full absolute inset-0 flex items-center justify-start px-6 md:px-20 lg:px-32 pointer-events-none"
             >
                 <motion.div
@@ -139,7 +144,7 @@ const About = ({ scrollProgress }) => {
                     </button>
                 </motion.div>
             </motion.div>
-        </motion.div>
+        </>
 
         {/* ── Story Modal ── */}
         <AnimatePresence>
