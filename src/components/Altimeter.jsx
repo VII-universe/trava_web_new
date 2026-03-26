@@ -43,7 +43,7 @@ const Altimeter = ({ scrollProgress }) => {
     };
 
     return (
-        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] h-[60vh] md:h-[70vh] w-[140px] md:w-[180px] flex items-center justify-end pointer-events-none pr-4 md:pr-8">
+        <div className="fixed right-2 md:right-6 top-1/2 -translate-y-1/2 z-[100] h-[60vh] md:h-[70vh] w-[140px] md:w-[180px] flex items-center justify-end pointer-events-none pr-4 md:pr-8">
             
             {/* Background Gradient for readability (fades in from About section onwards) */}
             <motion.div 
@@ -80,7 +80,7 @@ const Altimeter = ({ scrollProgress }) => {
             </div>
 
             {/* Altitude Display Middle Pill */}
-            <div className="relative z-10 mr-[-35px] md:mr-[-40px] flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] pointer-events-auto">
+            <div className="relative z-10 mr-[-28px] md:mr-[-35px] flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] pointer-events-auto transition-transform hover:scale-110">
                 <span className="font-serif text-2xl md:text-3xl font-bold tracking-wider text-white tabular-nums drop-shadow-md">
                     {currentAlt}
                 </span>
