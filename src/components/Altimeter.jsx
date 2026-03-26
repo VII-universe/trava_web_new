@@ -43,7 +43,7 @@ const Altimeter = ({ scrollProgress }) => {
     };
 
     return (
-        <div className="fixed right-0 top-0 h-screen z-[100] w-[110px] md:w-[160px] flex items-center justify-end pointer-events-none pr-4 md:pr-8">
+        <div className="fixed right-0 top-0 h-screen z-[100] w-[130px] md:w-[180px] flex items-center justify-end pointer-events-none pr-0">
             
             {/* Background Gradient for readability (fades in from About section onwards) */}
             <motion.div 
@@ -53,8 +53,8 @@ const Altimeter = ({ scrollProgress }) => {
 
             {/* Content Container (h-60 or 70 vh centered) */}
             <div className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-end">
-                {/* Main Axis Line (back to right edge of container) */}
-                <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
+                {/* Main Axis Line (moved inward more) */}
+                <div className="absolute right-12 md:right-16 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
                     {/* Gold fill line */}
                     <motion.div
                         style={{ height: useTransform(scrollProgress, [0, 1], ["0%", "100%"]) }}
@@ -77,9 +77,9 @@ const Altimeter = ({ scrollProgress }) => {
                     ))}
                 </div>
 
-                {/* Altitude Display Middle Pill (statically placed between Expedice and Nepál) */}
+                {/* Altitude Display Middle Pill (statically placed between Expedice and Nepál, 10px from right) */}
                 <div 
-                    className="absolute right-6 md:right-10 z-10 flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] pointer-events-auto transition-transform hover:scale-110 -translate-y-1/2"
+                    className="absolute right-[10px] z-10 flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] pointer-events-auto transition-transform hover:scale-110 -translate-y-1/2"
                     style={{ top: '37.5%' }} // Middle point between Expedice (27%) and Nepál (48%)
                 >
                     <span className="font-serif text-2xl md:text-3xl font-bold tracking-wider text-white tabular-nums drop-shadow-md">
