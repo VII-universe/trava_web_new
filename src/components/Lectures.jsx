@@ -160,23 +160,23 @@ const Lectures = ({ scrollProgress }) => {
                 >
                     <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1050px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:900px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:800px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:700px)_and_(min-width:768px)]:scale-[0.60] [@media(max-height:600px)_and_(min-width:768px)]:scale-[0.50]">
                     <div className="max-w-3xl w-full text-center relative z-20">
-                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-4">
+                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-1 md:mb-4">
                             06 — Projekty & Přednášky (7500 m)
                         </h4>
 
-                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-2 md:mb-4 leading-tight">
+                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 md:mb-4 leading-tight">
                             Projekty & Přednášky
                         </h2>
 
-                        <p className="font-sans text-slate-300 text-[13px] md:text-base lg:text-lg leading-relaxed mb-4 md:mb-6 max-w-3xl mx-auto">
+                        <p className="font-sans text-slate-300 text-[13px] md:text-base lg:text-lg leading-relaxed mb-2 md:mb-6 max-w-3xl mx-auto">
                             50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
                         </p>
                     </div>
 
-                    <div className="relative z-[70] max-w-6xl mx-auto w-full mb-6 md:mb-8 px-4 md:px-0 mt-2 md:mt-4">
+                    <div className="relative z-[70] max-w-6xl mx-auto w-full mb-4 md:mb-8 px-4 md:px-0 mt-1 md:mt-4">
                         
                         {/* Cards Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 relative max-w-5xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 lg:gap-6 relative max-w-5xl mx-auto">
                             {events.map(event => (
                                 <motion.div 
                                     key={event.id} 
@@ -201,13 +201,13 @@ const Lectures = ({ scrollProgress }) => {
                                     </div>
 
                                     {/* Text Content */}
-                                    <div className="p-5 md:p-6 lg:p-8 flex-1 flex flex-col justify-between">
+                                    <div className="p-4 md:p-6 lg:p-8 flex-1 flex flex-col justify-between">
                                         <div>
                                             <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-1.5 group-hover:text-gold-600 transition-colors">{event.city}</h3>
                                             <p className="text-slate-500 font-sans text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3">
                                                 {event.venue}
                                             </p>
-                                            <p className="text-slate-600 text-[12px] md:text-[13px] leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
+                                            <p className="text-slate-600 text-[12px] md:text-[13px] leading-relaxed mb-2 md:mb-4 line-clamp-2 md:line-clamp-3">
                                                 {event.description}
                                             </p>
                                         </div>
@@ -224,7 +224,7 @@ const Lectures = ({ scrollProgress }) => {
                         </div>
 
                         {/* Action Buttons Row */}
-                        <div className="max-w-4xl mx-auto mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 md:gap-4 items-center justify-center">
+                        <div className="max-w-4xl mx-auto mt-4 md:mt-8 flex flex-col sm:flex-row gap-3 md:gap-4 items-center justify-center">
                             <button
                                 onClick={() => setShowAllProjects(true)}
                                 className="w-full sm:w-auto px-6 md:px-8 py-3.5 bg-white/90 hover:bg-white text-slate-800 border border-slate-200 shadow-lg rounded-xl font-sans tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold transition-all flex items-center justify-center gap-3 group"
@@ -244,7 +244,7 @@ const Lectures = ({ scrollProgress }) => {
                             </div>
                         </div>
 
-                        <div className="text-center text-slate-500 text-[9px] md:text-[10px] max-w-3xl mx-auto mt-6 md:mt-8">
+                        <div className="text-center text-slate-500 text-[9px] md:text-[10px] max-w-3xl mx-auto mt-4 md:mt-8">
                             Další firmy: <span className="text-slate-400">Summit Drive s.r.o.</span> (s Karlem Křížem) - outdoor a stěna v Plzni. <span className="text-slate-400">Ice Adventure Production s.r.o.</span> (s Petrem Horkým).
                         </div>
                     </div>
