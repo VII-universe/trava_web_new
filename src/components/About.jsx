@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowRight, X } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
@@ -10,14 +11,7 @@ import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091
 const About = ({ scrollProgress }) => {
     const [isStoryOpen, setIsStoryOpen] = useState(false);
 
-    useEffect(() => {
-        if (isStoryOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [isStoryOpen]);
+    useScrollLock(isStoryOpen);
 
     // PHASE 2: 0.20 -> 0.40
 

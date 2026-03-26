@@ -16,6 +16,7 @@ import CloudLayer from './components/CloudLayer';
 import Media from './components/Media';
 import Nav from './components/Nav';
 import { ReactLenis } from 'lenis/react';
+import { ScrollLockHandler } from './hooks/useScrollLock';
 import 'lenis/dist/lenis.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
+      <ScrollLockHandler />
       <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
         {/* Mobile scroll-snap anchors — invisible, snap touch swipes to section starts */}

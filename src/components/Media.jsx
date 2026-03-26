@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { Play, Mic, FileText, X, PlayCircle } from 'lucide-react';
 import ClimbersImg from '../assets/climbers_bg.jpg';
 import HonzaImg from '../assets/honza_profile.png';
@@ -52,14 +53,7 @@ const Media = ({ scrollProgress }) => {
     const [activeItem, setActiveItem] = useState(null);
     const [readingArticle, setReadingArticle] = useState(false);
 
-    useEffect(() => {
-        if (activeItem || readingArticle) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [activeItem, readingArticle]);
+    useScrollLock(activeItem || readingArticle);
 
     // PHASE 7: 0.68 -> 0.84 with hold (slightly closer)
     const containerOpacity = useTransform(scrollProgress, [0.68, 0.72, 0.80, 0.85], [0, 1, 1, 1]); // Keeping opacity solid while leaving so no fade gap

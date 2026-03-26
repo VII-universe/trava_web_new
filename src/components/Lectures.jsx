@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import Polaroid1 from '../assets/zmensene/portrety/prednasky/photohanny-129.jpg';
 import Polaroid2 from '../assets/zmensene/portrety/prednasky/dsd_8450.jpg';
@@ -26,14 +27,7 @@ const Lectures = ({ scrollProgress }) => {
     const [selectedMoreProject, setSelectedMoreProject] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
 
-    useEffect(() => {
-        if (open || showAllProjects || selectedImage || selectedEvent) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [open, showAllProjects, selectedImage, selectedEvent]);
+    useScrollLock(open || showAllProjects || selectedImage || selectedEvent);
 
     // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
     const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);

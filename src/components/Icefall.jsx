@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { X, ExternalLink } from 'lucide-react';
 import IcefallImg from '../assets/icefall_bg.jpg';
 
@@ -198,14 +199,7 @@ const Flag = ({ flag, index, onSelect }) => {
 const Icefall = ({ scrollProgress }) => {
     const [selectedFlag, setSelectedFlag] = useState(null);
 
-    useEffect(() => {
-        if (selectedFlag) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [selectedFlag]);
+    useScrollLock(selectedFlag);
 
     // PHASE 3: 0.18 -> 0.31 with hold (entry matches About exit exactly)
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { Trophy, Star, ChevronUp, X } from 'lucide-react';
 import SummitImg from '../assets/summit_bg.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
@@ -9,14 +10,7 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Summit = ({ scrollProgress }) => {
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
 
-    useEffect(() => {
-        if (isOsvetaOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [isOsvetaOpen]);
+    useScrollLock(isOsvetaOpen);
 
     // PHASE 8: 0.82 -> 0.96 with slower exit + earlier Contact following
 

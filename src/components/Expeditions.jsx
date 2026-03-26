@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowLeft, ArrowRight, X, MapPin } from 'lucide-react';
 import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
 import SummitImage from '../assets/summit_bg.png';
@@ -90,14 +91,7 @@ const Expeditions = ({ scrollProgress }) => {
     const [isOrdering, setIsOrdering] = useState(false);
 
     // Prevent body scroll when modal is open
-    useEffect(() => {
-        if (selectedExped) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [selectedExped]);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped);
     return (
         <motion.div
             style={{ opacity: containerOpacity }}

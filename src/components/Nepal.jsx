@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer, ChevronLeft, ChevronRight } from 'lucide-react';
 import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
 import HotelImg2 from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.jpg';
@@ -44,14 +45,7 @@ const Nepal = ({ scrollProgress }) => {
     };
 
     // Prevent body scroll when any modal is open
-    useEffect(() => {
-        if (openHotel || openPub || selectedImage) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [openHotel, openPub, selectedImage]);
+    useScrollLock(openHotel || openPub || selectedImage);
 
     // PHASE 5: 0.42 -> 0.58 with hold (minimum gap to Expedice)
     const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
