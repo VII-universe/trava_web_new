@@ -107,11 +107,10 @@ const Media = ({ scrollProgress }) => {
                                 YouTube
                             </div>
                         </div>
-                        <div className="flex items-center justify-between w-full">
-                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Vlogy a expedice</h3>
-                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        <div className="text-center w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight mb-1 md:mb-2 text-center w-full">Vlogy a expedice</h3>
+                            <p className="hidden md:block text-slate-500 text-xs md:text-sm leading-relaxed mt-1">Máte obsah, je potřeba systematicky publikovat.</p>
                         </div>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Máte obsah, je potřeba systematicky publikovat.</p>
                     </motion.div>
 
                     {/* Podcast Card */}
@@ -135,11 +134,10 @@ const Media = ({ scrollProgress }) => {
                                 Podcast
                             </div>
                         </div>
-                        <div className="flex items-center justify-between w-full">
-                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Poslech na cestách</h3>
-                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        <div className="text-center w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight mb-1 md:mb-2 text-center w-full">Poslech na cestách</h3>
+                            <p className="hidden md:block text-slate-500 text-xs md:text-sm leading-relaxed mt-1">Cestovatelská témata a hosté (2027).</p>
                         </div>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Cestovatelská témata a hosté (2027).</p>
                     </motion.div>
 
                     {/* Blog Card */}
@@ -163,11 +161,10 @@ const Media = ({ scrollProgress }) => {
                                 Blog
                             </div>
                         </div>
-                        <div className="flex items-center justify-between w-full">
-                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight">Psané příběhy</h3>
-                            <span className="text-gold-500 text-[11px] font-bold font-sans ml-2 hidden md:inline">→</span>
+                        <div className="text-center w-full">
+                            <h3 className="font-serif text-[13px] md:text-2xl lg:text-3xl text-slate-900 group-hover:text-gold-600 transition-colors leading-tight mb-1 md:mb-2 text-center w-full">Psané příběhy</h3>
+                            <p className="hidden md:block text-slate-500 text-xs md:text-sm leading-relaxed mt-1">Osobní deníky a zápisky z expedic.</p>
                         </div>
-                        <p className="hidden md:block text-slate-500 text-xs md:text-sm text-center leading-relaxed mt-1">Osobní deníky a zápisky z expedic.</p>
                     </motion.div>
                 </div>
             </div>
