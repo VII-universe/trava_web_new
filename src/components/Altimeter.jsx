@@ -29,8 +29,8 @@ const Altimeter = ({ scrollProgress }) => {
         { label: 'Úvod',      y: 0.02 },
         { label: 'Příběh',    y: 0.12 },
         { label: 'Partneři',  y: 0.20 },
-        { label: 'Expedice',  y: 0.29 },
-        { label: 'Nepál',     y: 0.44 },
+        { label: 'Expedice',  y: 0.27 },
+        { label: 'Nepál',     y: 0.48 },
         { label: 'Projekty',  y: 0.55 },
         { label: 'Média',     y: 0.69 },
         { label: 'Osvěta',    y: 0.80 },
@@ -80,7 +80,7 @@ const Altimeter = ({ scrollProgress }) => {
                 {/* Altitude Display Middle Pill (statically placed between Expedice and Nepál) */}
                 <div 
                     className="absolute right-6 md:right-10 z-10 flex flex-col items-center min-w-[70px] md:min-w-[80px] py-3 md:py-4 px-2 rounded-xl bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] pointer-events-auto transition-transform hover:scale-110 -translate-y-1/2"
-                    style={{ top: '36.5%' }} // Middle point between Expedice (29%) and Nepál (44%)
+                    style={{ top: '37.5%' }} // Middle point between Expedice (27%) and Nepál (48%)
                 >
                     <span className="font-serif text-2xl md:text-3xl font-bold tracking-wider text-white tabular-nums drop-shadow-md">
                         {currentAlt}
