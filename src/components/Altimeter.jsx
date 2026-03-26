@@ -21,7 +21,7 @@ const Altimeter = ({ scrollProgress }) => {
     // 0.85 - 0.92: LIGHT (Media)
     // 0.92 - 1.0: DARK (Summit, Contact)
     
-    const rangePoints = [0, 0.44, 0.48, 0.84, 0.88, 0.92, 0.95, 1];
+    const rangePoints = [0, 0.48, 0.52, 0.84, 0.88, 0.93, 0.95, 1];
     
     // Axis line color
     const axisColor = useTransform(scrollProgress, rangePoints, [
@@ -83,14 +83,14 @@ const Altimeter = ({ scrollProgress }) => {
     }, [altitude]);
 
     const SECTIONS = [
-        { label: 'Úvod',      y: 0.02 },
-        { label: 'Příběh',    y: 0.12 },
-        { label: 'Partneři',  y: 0.20 },
-        { label: 'Expedice',  y: 0.27 },
-        { label: 'Nepál',     y: 0.48 },
-        { label: 'Projekty',  y: 0.55 },
-        { label: 'Média',     y: 0.69 },
-        { label: 'Osvěta',    y: 0.80 },
+        { label: 'Úvod',      y: 0.0 },
+        { label: 'Příběh',    y: 0.20 },
+        { label: 'Partneři',  y: 0.32 },
+        { label: 'Expedice',  y: 0.48 },
+        { label: 'Nepál',     y: 0.64 },
+        { label: 'Projekty',  y: 0.78 },
+        { label: 'Média',     y: 0.86 },
+        { label: 'Osvěta',    y: 0.90 },
         { label: 'Kontakt',   y: 0.96 },
     ];
 
