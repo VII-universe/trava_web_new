@@ -216,37 +216,19 @@ const Icefall = ({ scrollProgress }) => {
 
     return (
         <>
-        <motion.div
-            style={{ 
-                y: containerY, 
-                opacity,
-                maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)',
-                WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)'
-            }}
-            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
-        >
-            {/* SVG Filter Definition for the cloth frays */}
-            <svg width="0" height="0" className="absolute pointer-events-none">
-                <filter id="frayedEdge" x="-10%" y="-10%" width="120%" height="120%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.05 0.1" numOctaves="4" result="noise" />
-                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="displaced" />
-                    {/* Drop shadow explicitly on the frayed shape */}
-                    <feDropShadow dx="0" dy="5" stdDeviation="5" floodColor="#000" floodOpacity="0.35" />
-                </filter>
-            </svg>
-
-            <div className="w-full h-full relative">
+            {/* BACKGROUND LAYER - Behind Clouds */}
+            <motion.div
+                style={{ y: containerY, opacity, zIndex: 0 }}
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+            >
                 <div className="absolute inset-0 z-0"
                     style={{
-                        // Top fade only, bottom is now sharp explicitly for gradient override
                         maskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black 100%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 60px, black 100%)'
                     }}
                 >
                     <div className="absolute inset-0 bg-[#F0F4F8]" />
-                    {/* Gradient blending edge with previous section */}
                     <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#f8f9fa] to-transparent z-10" />
-                    {/* IMAGE AND BOTTOM GRADIENT WRAPPER */}
                     <motion.div
                         style={{ y: bgY, opacity: imageOpacity }}
                         className="absolute inset-0 w-full h-full scale-125 origin-center"
@@ -256,165 +238,169 @@ const Icefall = ({ scrollProgress }) => {
                             alt="Khumbu Icefall"
                             className="absolute inset-0 w-full h-full object-cover object-center filter contrast-125 brightness-110 saturate-0"
                         />
-                        {/* Bottom White Gradient Overlay precisely locked to image bottom */}
                         <div 
                             className="absolute bottom-0 left-0 w-full h-[150px] bg-gradient-to-t from-white via-white/80 to-transparent z-40 pointer-events-none" 
                         />
                     </motion.div>
                     <div className="absolute inset-0 bg-gradient-to-tr from-slate-200/40 to-blue-200/20 mix-blend-multiply" />
-                    {/* Soft vignette so text is legible */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/30" />
                 </div>
+            </motion.div>
 
+            {/* CONTENT LAYER - Above Clouds */}
+            <motion.div
+                style={{ 
+                    y: containerY, 
+                    opacity,
+                    zIndex: 70,
+                    maskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%, black 100%)'
+                }}
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+            >
+                <div className="w-full h-full relative">
+                    {/* ── Header text ── */}
+                    <div className="absolute top-[8%] md:top-[12%] left-0 right-0 text-center z-20 px-4">
+                        <h4 className="text-slate-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3">
+                            Partneři — 3000 m
+                        </h4>
+                        <h2 className="font-serif text-2xl md:text-5xl lg:text-6xl text-slate-800 leading-tight drop-shadow-sm">
+                            Bez nich bych tam <span className="italic text-slate-500">zmrznul.</span>
+                        </h2>
+                    </div>
 
-                {/* ── Header text ── */}
-                <div className="absolute top-[8%] md:top-[12%] left-0 right-0 text-center z-20 px-4">
-                    <h4 className="text-slate-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3">
-                        Partneři — 3000 m
-                    </h4>
-                    <h2 className="font-serif text-2xl md:text-5xl lg:text-6xl text-slate-800 leading-tight drop-shadow-sm">
-                        Bez nich bych tam <span className="italic text-slate-500">zmrznul.</span>
-                    </h2>
-                </div>
+                    {/* ── Desktop: single rope (hidden on mobile) ── */}
+                    <div className="absolute z-20 pointer-events-auto hidden md:block" style={{ top: '36%', left: 0, right: 0 }}>
+                        <motion.div style={{ skewY: ropeSkew, transformOrigin: 'center' }} className="w-full">
+                            <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 40, display: 'block' }}>
+                                <path d="M0,24 C240,4 480,36 720,20 C960,4 1200,36 1440,20" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round" />
+                                <path d="M0,22 C240,2 480,34 720,18 C960,2 1200,34 1440,18" fill="none" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round" />
+                                <path d="M0,20 C240,0 480,32 720,16 C960,0 1200,32 1440,16" fill="none" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round" />
+                            </svg>
+                        </motion.div>
+                        <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
+                            <style>{flagStyles}</style>
+                            {FLAGS.map((flag, i) => (
+                                <Flag key={flag.id} flag={flag} index={i} onSelect={setSelectedFlag} />
+                            ))}
+                        </div>
+                    </div>
 
-                {/* ── Desktop: single rope (hidden on mobile) ── */}
-                <div className="absolute z-20 pointer-events-auto hidden md:block" style={{ top: '36%', left: 0, right: 0 }}>
-                    <motion.div style={{ skewY: ropeSkew, transformOrigin: 'center' }} className="w-full">
-                        <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 40, display: 'block' }}>
-                            <path d="M0,24 C240,4 480,36 720,20 C960,4 1200,36 1440,20" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round" />
-                            <path d="M0,22 C240,2 480,34 720,18 C960,2 1200,34 1440,18" fill="none" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round" />
-                            <path d="M0,20 C240,0 480,32 720,16 C960,0 1200,32 1440,16" fill="none" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round" />
-                        </svg>
-                    </motion.div>
-                    <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
+                    {/* ── Mobile: 3 angled rope rows (hidden on desktop) ── */}
+                    <div className="md:hidden absolute z-20 pointer-events-auto" style={{ top: '24%', left: 0, right: 0, padding: '0 16px' }}>
                         <style>{flagStyles}</style>
-                        {FLAGS.map((flag, i) => (
-                            <Flag key={flag.id} flag={flag} index={i} onSelect={setSelectedFlag} />
+
+                        {[
+                            { flags: [FLAGS[0], FLAGS[1]], angle: -2 },
+                            { flags: [FLAGS[3], FLAGS[4]], angle: 1.5 },
+                            { flags: [FLAGS[2]], angle: -1 },
+                        ].map((row, rowIdx) => (
+                            <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 8 }}>
+                                <svg viewBox="0 0 400 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 24, display: 'block' }}>
+                                    <path d="M0,16 C133,4 266,20 400,12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
+                                    <path d="M0,14 C133,2 266,18 400,10" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
+                                    <path d="M0,12 C133,0 266,16 400,8" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
+                                </svg>
+                                <div className="relative w-full" style={{ height: 110, marginTop: -4 }}>
+                                    {row.flags.map((flag, i) => (
+                                        <div
+                                            key={flag.id}
+                                            className="absolute flex flex-col items-center cursor-pointer"
+                                            style={{
+                                                left: row.flags.length === 1 ? '47%' : (i === 0 ? '22%' : '72%'),
+                                                top: -8,
+                                                transform: 'translateX(-50%)'
+                                            }}
+                                            onClick={() => setSelectedFlag(flag)}
+                                        >
+                                            <div
+                                                className="relative cloth-texture bg-white"
+                                                style={{
+                                                    width: 68, height: 68,
+                                                    animation: `flutter ${2.4 + (rowIdx * 2 + i) * 0.6}s ${(rowIdx * 2 + i) * 0.4}s ease-in-out infinite`,
+                                                    clipPath: flag.clipPath,
+                                                    filter: 'url(#frayedEdge)'
+                                                }}
+                                            >
+                                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
+                                                <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
+                                            </div>
+                                            <span className="mt-1 font-sans text-[9px] font-bold text-slate-600 uppercase tracking-wider text-center leading-tight">{flag.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         ))}
                     </div>
+
+                    {/* ── Original Icefall tagline at bottom ── */}
+                    <div className="absolute bottom-[10%] left-0 right-0 text-center z-20 pointer-events-none">
+                        <h3 className="font-serif text-3xl text-slate-800 opacity-80 italic drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
+                            Tanec na ostří ledu.
+                        </h3>
+                    </div>
                 </div>
+            </motion.div>
 
-                {/* ── Mobile: 3 angled rope rows (hidden on desktop) ── */}
-                <div className="md:hidden absolute z-20 pointer-events-auto" style={{ top: '24%', left: 0, right: 0, padding: '0 16px' }}>
-                    <style>{flagStyles}</style>
-
-                    {[
-                        { flags: [FLAGS[0], FLAGS[1]], angle: -2 },
-                        { flags: [FLAGS[3], FLAGS[4]], angle: 1.5 },
-                        { flags: [FLAGS[2]], angle: -1 },
-                    ].map((row, rowIdx) => (
-                        <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 8 }}>
-                            <svg viewBox="0 0 400 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 24, display: 'block' }}>
-                                <path d="M0,16 C133,4 266,20 400,12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
-                                <path d="M0,14 C133,2 266,18 400,10" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
-                                <path d="M0,12 C133,0 266,16 400,8" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
-                            </svg>
-                            <div className="relative w-full" style={{ height: 110, marginTop: -4 }}>
-                                {row.flags.map((flag, i) => (
-                                    <div
-                                        key={flag.id}
-                                        className="absolute flex flex-col items-center cursor-pointer"
-                                        style={{
-                                            left: row.flags.length === 1 ? '47%' : (i === 0 ? '22%' : '72%'),
-                                            top: -8,
-                                            transform: 'translateX(-50%)'
-                                        }}
-                                        onClick={() => setSelectedFlag(flag)}
-                                    >
-                                        <div
-                                            className="relative cloth-texture bg-white"
-                                            style={{
-                                                width: 68, height: 68,
-                                                animation: `flutter ${2.4 + (rowIdx * 2 + i) * 0.6}s ${(rowIdx * 2 + i) * 0.4}s ease-in-out infinite`,
-                                                clipPath: flag.clipPath,
-                                                filter: 'url(#frayedEdge)'
-                                            }}
-                                        >
-                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
-                                            <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
-                                        </div>
-                                        <span className="mt-1 font-sans text-[9px] font-bold text-slate-600 uppercase tracking-wider text-center leading-tight">{flag.name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* ── Original Icefall tagline at bottom ── */}
-                <div className="absolute bottom-[10%] left-0 right-0 text-center z-20 pointer-events-none">
-                    <h3 className="font-serif text-3xl text-slate-800 opacity-80 italic drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
-                        Tanec na ostří ledu.
-                    </h3>
-                </div>
-            </div>
-        </motion.div>
-
-        {/* ── Marketing Modal ── */}
-        <AnimatePresence>
-            {selectedFlag && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/80 backdrop-blur-sm"
-                    onClick={() => setSelectedFlag(null)}
-                >
+            <AnimatePresence>
+                {selectedFlag && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                        onClick={(e) => e.stopPropagation()}
-                        className="bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/80 backdrop-blur-sm"
+                        onClick={() => setSelectedFlag(null)}
                     >
-                        {/* Modal Image */}
-                        <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                            <img src={selectedFlag.image} alt={selectedFlag.name} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-80" />
-                        </div>
-                        
-                        {/* Modal Content */}
-                        <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col">
-                            <button 
-                                onClick={() => setSelectedFlag(null)}
-                                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                            
-                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
-                                Partner Výpravy
-                            </h4>
-                            
-                            <div className="flex bg-slate-900 border border-white/10 w-16 h-10 mb-6 flex-shrink-0 items-center justify-center rounded-lg p-1.5 opacity-90">
-                                {selectedFlag.logo}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-slate-900 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row"
+                        >
+                            <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+                                <img src={selectedFlag.image} alt={selectedFlag.name} className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-80" />
                             </div>
                             
-                            <h2 className="font-serif text-4xl text-white mb-2">
-                                {selectedFlag.name}
-                            </h2>
-                            
-                            <p className="font-sans text-gold-500 text-sm leading-relaxed mb-6 italic">
-                                „{selectedFlag.quote}“
-                            </p>
-
-                            <div className="h-px w-12 bg-white/10 mb-6" />
-                            
-                            <p className="font-sans text-slate-300 leading-relaxed font-light mb-auto">
-                                {selectedFlag.description}
-                            </p>
-
-                            <button 
-                                onClick={() => setSelectedFlag(null)} // Later can be an external link 
-                                className="mt-8 flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-white text-slate-900 font-bold uppercase text-xs tracking-widest hover:bg-gold-500 hover:text-white transition-all w-full"
-                            >
-                                Zpět na stěnu
-                            </button>
-                        </div>
+                            <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col">
+                                <button 
+                                    onClick={() => setSelectedFlag(null)}
+                                    className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                                
+                                <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-4">
+                                    Partner Výpravy
+                                </h4 >
+                                
+                                <div className="flex bg-slate-900 border border-white/10 w-16 h-10 mb-6 flex-shrink-0 items-center justify-center rounded-lg p-1.5 opacity-90">
+                                    {selectedFlag.logo}
+                                </div>
+                                
+                                <h2 className="font-serif text-4xl text-white mb-2">
+                                    {selectedFlag.name}
+                                </h2>
+                                
+                                <p className="font-sans text-gold-500 text-sm leading-relaxed mb-6 italic">
+                                    „{selectedFlag.quote}“
+                                </p>
+                                <div className="h-px w-12 bg-white/10 mb-6" />
+                                <p className="font-sans text-slate-300 leading-relaxed font-light mb-auto">
+                                    {selectedFlag.description}
+                                </p>
+                                <button 
+                                    onClick={() => setSelectedFlag(null)}
+                                    className="mt-8 flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-white text-slate-900 font-bold uppercase text-xs tracking-widest hover:bg-gold-500 hover:text-white transition-all w-full"
+                                >
+                                    Zpět na stěnu
+                                </button>
+                            </div>
+                        </motion.div>
                     </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                )}
+            </AnimatePresence>
         </>
     );
 };

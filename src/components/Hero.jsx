@@ -54,7 +54,7 @@ const Hero = ({ scrollProgress }) => {
             {/* Text */}
             <motion.div
                 style={{ y: textY, opacity: textOpacity, scale: textScale }}
-                className="relative z-50 text-center flex flex-col items-center w-full px-4"
+                className="relative z-70 text-center flex flex-col items-center w-full px-4"
             >
                 <motion.div className="flex justify-center w-full mb-6">
                     <img 
@@ -72,7 +72,7 @@ const Hero = ({ scrollProgress }) => {
             {/* Scroll Indicator */}
             <motion.div 
                 style={{ y: textY, opacity: textOpacity }}
-                className="absolute bottom-4 md:bottom-8 left-0 right-0 z-50 flex flex-col items-center gap-2"
+                className="absolute bottom-4 md:bottom-8 left-0 right-0 z-70 flex flex-col items-center gap-2"
             >
                 <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-bold drop-shadow-md">Začni výstup.</span>
                 <ChevronDown className="w-5 md:w-6 h-5 md:h-6 text-gold-500 animate-bounce" />

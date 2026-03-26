@@ -149,9 +149,9 @@ const Lectures = ({ scrollProgress }) => {
                 />
             </motion.div>
 
-            {/* CONTENT LAYER (in front of clouds - zIndex 60 is CloudLayer, so 65 is above) */}
+            {/* CONTENT LAYER (in front of clouds - zIndex 60 is CloudLayer, so 70 is above) */}
             <motion.div
-                style={{ opacity: containerOpacity, zIndex: 65 }}
+                style={{ opacity: containerOpacity, zIndex: 70 }}
                 className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center"
             >
                 <motion.div

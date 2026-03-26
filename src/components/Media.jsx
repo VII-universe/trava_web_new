@@ -61,9 +61,16 @@ const Media = ({ scrollProgress }) => {
 
     return (
         <>
+        {/* BACKGROUND LAYER - Behind Clouds */}
         <motion.div
-            style={{ opacity: containerOpacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-[#f8f9fa]"
+            style={{ opacity: containerOpacity, y, zIndex: 0 }}
+            className="absolute inset-0 w-full h-full bg-[#f8f9fa] pointer-events-none"
+        />
+
+        {/* CONTENT LAYER - Above Clouds */}
+        <motion.div
+            style={{ opacity: containerOpacity, y, zIndex: 70 }}
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none"
         >
             <div className="relative z-10 max-w-7xl w-full px-0 md:px-12 mx-auto pointer-events-auto flex flex-col justify-center h-full origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.65]">
                 <div className="text-center mb-4 md:mb-12 mt-0 md:mt-0 shrink-0 px-6">

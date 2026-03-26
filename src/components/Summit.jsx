@@ -29,9 +29,10 @@ const Summit = ({ scrollProgress }) => {
 
     return (
         <>
+        {/* BACKGROUND LAYER - Behind Clouds */}
         <motion.div
-            style={{ opacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden z-40"
+            style={{ opacity, y, zIndex: 0 }}
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
             <motion.div
                 style={{
@@ -54,7 +55,13 @@ const Summit = ({ scrollProgress }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-700/15 to-ivory/55" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.28)_100%)]" />
             </motion.div>
+        </motion.div>
 
+        {/* CONTENT LAYER - Above Clouds */}
+        <motion.div
+            style={{ opacity, y, zIndex: 70 }}
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+        >
             {/* Content Block */}
             <motion.div
                 style={{ opacity: contentOpacity, y: contentY }}

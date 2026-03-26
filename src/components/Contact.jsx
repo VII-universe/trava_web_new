@@ -24,11 +24,12 @@ const Contact = ({ scrollProgress }) => {
     }));
 
     return (
+        <>
+        {/* BACKGROUND LAYER - Behind Clouds */}
         <motion.div
-            style={{ opacity: containerOpacity, y }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none bg-slate-900 overflow-hidden z-[60]"
+            style={{ opacity: containerOpacity, y, zIndex: 0 }}
+            className="absolute inset-0 w-full h-full bg-slate-900 overflow-hidden pointer-events-none"
         >
-            {/* Background elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <img src={BaseCampImg} className="w-full h-full object-cover opacity-10 mix-blend-luminosity scale-110" alt="Background" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900" />
@@ -49,7 +50,13 @@ const Contact = ({ scrollProgress }) => {
                     />
                 ))}
             </div>
+        </motion.div>
 
+        {/* CONTENT LAYER - Above Clouds */}
+        <motion.div
+            style={{ opacity: containerOpacity, y, zIndex: 70 }}
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+        >
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                 
@@ -185,6 +192,7 @@ const Contact = ({ scrollProgress }) => {
                 </div>
             </div>
         </motion.div>
+        </>
     );
 };
 

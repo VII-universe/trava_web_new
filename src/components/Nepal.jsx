@@ -57,11 +57,11 @@ const Nepal = ({ scrollProgress }) => {
 
     return (
         <>
+        {/* BACKGROUND LAYER - Behind Clouds */}
         <motion.div
-            style={{ opacity: containerOpacity, y: containerY }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+            style={{ opacity: containerOpacity, y: containerY, zIndex: 0 }}
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
-            {/* Full width background image */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <motion.img
                     style={{ y: bgY, opacity: imageOpacity }}
@@ -70,7 +70,13 @@ const Nepal = ({ scrollProgress }) => {
                     className="absolute inset-0 w-full h-full object-cover scale-125 origin-center"
                 />
             </div>
+        </motion.div>
 
+        {/* CONTENT LAYER - Above Clouds */}
+        <motion.div
+            style={{ opacity: containerOpacity, y: containerY, zIndex: 70 }}
+            className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
+        >
             <div
                 className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none"
             >

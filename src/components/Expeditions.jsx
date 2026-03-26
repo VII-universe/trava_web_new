@@ -95,8 +95,9 @@ const Expeditions = ({ scrollProgress }) => {
     
     return (
         <>
+        {/* BACKGROUND LAYER - Behind Clouds */}
         <motion.div
-            style={{ opacity: containerOpacity }}
+            style={{ opacity: containerOpacity, zIndex: 0 }}
             className="absolute inset-0 w-full h-full bg-[#1A202C] pointer-events-none"
         >
             <motion.div
@@ -115,7 +116,13 @@ const Expeditions = ({ scrollProgress }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-[#1A202C] via-transparent to-[#1A202C]" />
             </motion.div>
+        </motion.div>
 
+        {/* CONTENT LAYER - Above Clouds */}
+        <motion.div
+            style={{ opacity: containerOpacity, zIndex: 70 }}
+            className="absolute inset-0 w-full h-full pointer-events-none"
+        >
             <motion.div
                 style={{ y: contentY }}
                 className="w-full h-full relative flex flex-col items-center justify-center px-4 md:px-6"

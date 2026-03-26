@@ -56,22 +56,18 @@ const About = ({ scrollProgress }) => {
             }}
             className="absolute inset-0 w-full h-full flex items-end justify-center pointer-events-none overflow-hidden"
         >
+            {/* BACKGROUND LAYER - Behind Clouds */}
             <motion.div
-                style={{ scale: containerScale, y: containerY }}
-                className="w-full h-full relative flex items-center justify-start px-6 md:px-20 lg:px-32"
+                style={{ scale: containerScale, y: containerY, zIndex: 0 }}
+                className="w-full h-full relative"
             >
-                {/* Top White Gradient Overlay has been moved down directly into the image layer for better blending */}
-
                 <motion.div
                     style={{
                         opacity: exitOpacity, scale: exitScale, y: exitY, x: exitX
                     }}
                     className="w-full h-full absolute inset-0 z-0 origin-bottom"
                 >
-                    {/* SOLID BACKING LAYER - Blocks previous section */}
                     <div className="absolute inset-0 bg-ivory" />
-
-                    {/* IMAGE AND TOP GRADIENT WRAPPER - Unified scale context */}
                     <motion.div
                         style={{ y: bgY, opacity: imageOpacity }}
                         className="absolute inset-0 w-full h-full scale-110 origin-center"
@@ -81,17 +77,13 @@ const About = ({ scrollProgress }) => {
                             alt="Base Camp Tents"
                             className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
                         />
-                        {/* Top White Gradient Overlay precisely locked to image top */}
                         <div 
                             className="absolute top-0 left-0 w-full h-[150px] bg-gradient-to-b from-ivory via-ivory/80 to-transparent z-40 pointer-events-none" 
                         />
                     </motion.div>
-                    
-                    {/* Gradient blending edge with next section */}
                     <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#f8f9fa] to-transparent z-10" />
                 </motion.div>
 
-                {/* Layers */}
                 <motion.div
                     style={{ x: sideLayerLeftX, opacity: sideLayerOpacity }}
                     className="absolute left-0 bottom-0 w-[30%] h-[80%] z-10 bg-ivory/20 blur-[40px] mix-blend-screen pointer-events-none"
@@ -101,7 +93,6 @@ const About = ({ scrollProgress }) => {
                     className="absolute right-0 bottom-0 w-[30%] h-[80%] z-10 bg-ivory/20 blur-[40px] mix-blend-screen pointer-events-none"
                 />
 
-                {/* HONZA PROFILE LAYER */}
                 <motion.div
                     style={{
                         x: honzaX,
@@ -118,15 +109,20 @@ const About = ({ scrollProgress }) => {
                         className="w-full h-full object-contain object-right-bottom mix-blend-normal scale-[1.3] md:scale-[1.6] lg:scale-[1.8] origin-bottom-right translate-x-[15%] sm:translate-x-[25%] md:translate-x-[35%] lg:translate-x-[20%] xl:translate-x-[10%]"
                     />
                 </motion.div>
+            </motion.div>
 
-                {/* Content */}
+            {/* CONTENT LAYER - Above Clouds */}
+            <motion.div
+                style={{ scale: containerScale, y: containerY, zIndex: 70 }}
+                className="w-full h-full absolute inset-0 flex items-center justify-start px-6 md:px-20 lg:px-32 pointer-events-none"
+            >
                 <motion.div
                     style={{ opacity: exitOpacity, y: exitY, x: exitX }}
-                    className="relative z-50 max-w-xl p-6 md:p-10 lg:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto"
+                    className="relative max-w-xl p-6 md:p-10 lg:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
                     <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Kdo je Honza Tráva — 800 m</h4>
-                    <h2 className="font-serif text-4xl md:text-5ified text-slate-900 mb-8 leading-tight">
+                    <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
                         Nehraju si na <span className="italic text-slate-600">hrdinu.</span>
                     </h2>
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
