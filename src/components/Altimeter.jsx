@@ -14,6 +14,9 @@ const Altimeter = ({ scrollProgress }) => {
         [0, 800, 5364, 6400, 8000, 8848]
     );
 
+    // Fade in a dark background for readability starting at "About" section
+    const bgOpacity = useTransform(scrollProgress, [0.08, 0.12], [0, 1]);
+
     const [currentAlt, setCurrentAlt] = useState(0);
 
     useEffect(() => {
@@ -40,8 +43,13 @@ const Altimeter = ({ scrollProgress }) => {
     };
 
     return (
-        <div className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-[100] h-[60vh] md:h-[70vh] w-[120px] flex items-center justify-end pointer-events-none">
+        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[100] h-[60vh] md:h-[70vh] w-[140px] md:w-[180px] flex items-center justify-end pointer-events-none pr-4 md:pr-8">
             
+            {/* Background Gradient for readability (fades in from About section onwards) */}
+            <motion.div 
+                style={{ opacity: bgOpacity }}
+                className="absolute inset-y-0 right-0 w-full bg-[radial-gradient(ellipse_at_right,rgba(15,23,42,0.6)_0%,transparent_80%)] md:bg-[radial-gradient(ellipse_at_right,rgba(15,23,42,0.7)_0%,transparent_75%)] pointer-events-none"
+            />
             {/* Main Axis Line */}
             <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-white/20 shadow-[0_0_10px_rgba(0,0,0,0.5)] z-0 rounded-full">
                 {/* Gold fill line */}
