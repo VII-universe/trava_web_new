@@ -273,51 +273,77 @@ const Icefall = ({ scrollProgress }) => {
 
 
                 {/* ── Header text ── */}
-                <div className="absolute top-[12%] left-0 right-0 text-center z-20">
-                    <h4 className="text-slate-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-3">
+                <div className="absolute top-[8%] md:top-[12%] left-0 right-0 text-center z-20 px-4">
+                    <h4 className="text-slate-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3">
                         Partneři — 3000 m
                     </h4>
-                    <h2 className="font-serif text-5xl md:text-6xl text-slate-800 leading-none drop-shadow-sm">
+                    <h2 className="font-serif text-2xl md:text-5xl lg:text-6xl text-slate-800 leading-tight drop-shadow-sm">
                         Bez nich bych tam <span className="italic text-slate-500">zmrznul.</span>
                     </h2>
                 </div>
 
-                {/* ── Rope + Flags ── */}
-                <div className="absolute z-20 pointer-events-auto" style={{ top: '36%', left: 0, right: 0 }}>
-
-                    {/* Rope SVG */}
+                {/* ── Desktop: single rope (hidden on mobile) ── */}
+                <div className="absolute z-20 pointer-events-auto hidden md:block" style={{ top: '36%', left: 0, right: 0 }}>
                     <motion.div style={{ skewY: ropeSkew, transformOrigin: 'center' }} className="w-full">
-                        <svg
-                            viewBox="0 0 1440 40"
-                            xmlns="http://www.w3.org/2000/svg"
-                            preserveAspectRatio="none"
-                            style={{ width: '100%', height: 40, display: 'block' }}
-                        >
-                            {/* Shadow */}
-                            <path
-                                d="M0,24 C240,4 480,36 720,20 C960,4 1200,36 1440,20"
-                                fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round"
-                            />
-                            {/* Rope — cream/hemp colour */}
-                            <path
-                                d="M0,22 C240,2 480,34 720,18 C960,2 1200,34 1440,18"
-                                fill="none" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round"
-                            />
-                            {/* Rope highlight */}
-                            <path
-                                d="M0,20 C240,0 480,32 720,16 C960,0 1200,32 1440,16"
-                                fill="none" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round"
-                            />
+                        <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 40, display: 'block' }}>
+                            <path d="M0,24 C240,4 480,36 720,20 C960,4 1200,36 1440,20" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round" />
+                            <path d="M0,22 C240,2 480,34 720,18 C960,2 1200,34 1440,18" fill="none" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round" />
+                            <path d="M0,20 C240,0 480,32 720,16 C960,0 1200,32 1440,16" fill="none" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round" />
                         </svg>
                     </motion.div>
-
-                    {/* Flags hanging from rope */}
                     <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
                         <style>{flagStyles}</style>
                         {FLAGS.map((flag, i) => (
                             <Flag key={flag.id} flag={flag} index={i} onSelect={setSelectedFlag} />
                         ))}
                     </div>
+                </div>
+
+                {/* ── Mobile: 3 angled rope rows (hidden on desktop) ── */}
+                <div className="md:hidden absolute z-20 pointer-events-auto" style={{ top: '24%', left: 0, right: 0, padding: '0 16px' }}>
+                    <style>{flagStyles}</style>
+
+                    {[
+                        { flags: [FLAGS[0], FLAGS[1]], angle: -2 },
+                        { flags: [FLAGS[3], FLAGS[4]], angle: 1.5 },
+                        { flags: [FLAGS[2]], angle: -1 },
+                    ].map((row, rowIdx) => (
+                        <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 8 }}>
+                            <svg viewBox="0 0 400 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 24, display: 'block' }}>
+                                <path d="M0,16 C133,4 266,20 400,12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
+                                <path d="M0,14 C133,2 266,18 400,10" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
+                                <path d="M0,12 C133,0 266,16 400,8" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
+                            </svg>
+                            <div className="relative w-full" style={{ height: 110, marginTop: -4 }}>
+                                {row.flags.map((flag, i) => (
+                                    <div
+                                        key={flag.id}
+                                        className="absolute flex flex-col items-center cursor-pointer"
+                                        style={{
+                                            left: row.flags.length === 1 ? '47%' : (i === 0 ? '22%' : '72%'),
+                                            top: -8,
+                                            transform: 'translateX(-50%)'
+                                        }}
+                                        onClick={() => setSelectedFlag(flag)}
+                                    >
+                                        <div
+                                            className="relative cloth-texture bg-white"
+                                            style={{
+                                                width: 68, height: 68,
+                                                animation: `flutter ${2.4 + (rowIdx * 2 + i) * 0.6}s ${(rowIdx * 2 + i) * 0.4}s ease-in-out infinite`,
+                                                clipPath: flag.clipPath,
+                                                filter: 'url(#frayedEdge)'
+                                            }}
+                                        >
+                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
+                                            <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
+                                        </div>
+                                        <span className="mt-1 font-sans text-[9px] font-bold text-slate-600 uppercase tracking-wider text-center leading-tight">{flag.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
 
                 {/* ── Original Icefall tagline at bottom ── */}
