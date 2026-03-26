@@ -22,6 +22,12 @@ import PolaroidBaseCamp from '../assets/zmensene/portrety/expedice_a_treky/20240
 import PolaroidCesta from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
 import PolaroidVrchol from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.jpg';
 
+// Miri Assets
+import MiriLead from '../assets/zmensene/portrety/miri/dsc05711.jpg';
+import MiriGallery1 from '../assets/zmensene/portrety/miri/dsc05687.jpg';
+import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.jpg';
+import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.jpg';
+
 const EXPEDITIONS = [
     {
         id: 'nepal',
@@ -89,9 +95,10 @@ const Expeditions = ({ scrollProgress }) => {
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
     const [selectedMoreExped, setSelectedMoreExped] = useState(null);
     const [isOrdering, setIsOrdering] = useState(false);
+    const [isMiriOpen, setIsMiriOpen] = useState(false);
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen);
     
     return (
         <>
@@ -127,7 +134,7 @@ const Expeditions = ({ scrollProgress }) => {
                 style={{ y: contentY }}
                 className="w-full h-full relative flex flex-col items-center justify-center px-4 md:px-6"
             >
-                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.70] [@media(max-width:767px)]:-translate-y-8 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.70] [@media(max-width:767px)]:-translate-y-8 [@media(min-width:768px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
                     <div className="text-center mb-0.5 md:mb-4 xl:mb-6 relative z-10 pt-0 md:pt-0 flex flex-col items-center">
                     <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3 mt-0.5 md:mt-4">
@@ -252,7 +259,16 @@ const Expeditions = ({ scrollProgress }) => {
                                 Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
                             </p>
                             
-                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10">
+                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4 items-center sm:items-stretch">
+                                <button 
+                                    onClick={() => setIsMiriOpen(true)}
+                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-3 py-4 md:py-5 px-6 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
+                                >
+                                    <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O Miri</span>
+                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                </button>
+
                                 <button 
                                     onClick={() => {
                                         const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -261,10 +277,10 @@ const Expeditions = ({ scrollProgress }) => {
                                             behavior: 'smooth'
                                         });
                                     }}
-                                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 py-4 md:py-5 px-8 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
+                                    className="group relative w-full flex-[1.5] inline-flex items-center justify-center gap-3 py-4 md:py-5 px-6 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md">Chci jet na expedici</span>
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">Chci na expedici</span>
                                     <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
                                 </button>
                             </div>
@@ -614,6 +630,93 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </>
                         )}
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── MIRI BIOGRAPHICAL MODAL ── */}
+        <AnimatePresence>
+            {isMiriOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setIsMiriOpen(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                    >
+                        <button 
+                            onClick={() => setIsMiriOpen(false)}
+                            className="absolute top-6 right-6 z-10 p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* Left Content */}
+                        <div 
+                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col justify-center text-left overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
+                                Logistika & Trekking Manager
+                            </h4>
+                            <h2 className="font-serif text-4xl md:text-6xl text-slate-900 mb-8 leading-tight">
+                                Miri <span className="italic text-slate-600">Jirková.</span>
+                            </h2>
+                            
+                            <div className="prose prose-slate prose-lg">
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
+                                    Mozek i srdce našich výprav. Miri není jen Honzovou partnerkou, ale především zkušenou horolezkyní a nepostradatelnou manažerkou, která stojí za každým detailem našich cest do Himálaje i And.
+                                </p>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-4">
+                                    Vystoupala na desítky šestitisícovek po celém světě. V našem týmu má na starosti kompletní logistiku – od vyjednávání s místními šerpy v Káthmándú až po zajištění bezpečného zázemí v základních táborech.
+                                </p>
+                                <p className="font-sans text-slate-700 leading-relaxed">
+                                    Díky své empatii a organizačnímu talentu dokáže vytvořit pocit domova i v těch nejdrsnějších podmínkách. S Miri nejste na expedici jen s "vůdcem", ale s rodinou, která se o vás postará od prvního e-mailu až po závěrečnou oslavu v Thamelu.
+                                </p>
+                            </div>
+
+                            <div className="mt-12 pt-8 border-t border-slate-300 flex items-center gap-6">
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">12+</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Expedic</div>
+                                </div>
+                                <div className="w-px h-10 bg-slate-200" />
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">6476m</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Max Altitude</div>
+                                </div>
+                                <div className="w-px h-10 bg-slate-200" />
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">100%</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Dedikace</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Gallery Grid */}
+                        <div 
+                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 grid-rows-2 gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-1">
+                                <img src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={MiriGallery2} alt="Miri Trekking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                        </div>
                     </motion.div>
                 </motion.div>
             )}
