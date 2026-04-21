@@ -6,12 +6,9 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Contact = ({ scrollProgress }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
-    // PHASE 9: 0.94 -> 1.0 (End of the page)
-    // PHASE 9: 0.94 -> 1.0 (End of the page)
-    // Make it sticky by sliding exactly in sync with Summit.jsx exit (-100% to 0% as Summit goes 0% to 100%)
-    // Start overlapping slightly earlier (0.92 instead of 0.94) to aggressively eliminate gaps
-    const containerOpacity = useTransform(scrollProgress, [0.91, 0.92, 0.98, 1.0], [0, 1, 1, 1]);
-    const y = useTransform(scrollProgress, [0.92, 0.97, 1.0], ["-100%", "0%", "0%"]);
+    // PHASE 10: 0.87 -> 1.0 (End of the page)
+    const containerOpacity = useTransform(scrollProgress, [0.87, 0.91, 0.96, 1.0], [0, 1, 1, 1]);
+    const y = useTransform(scrollProgress, [0.87, 0.92, 1.0], ["-100%", "0%", "0%"]);
 
     // Generate random snow particles once
     const snowParticles = Array.from({ length: 70 }).map((_, i) => ({
@@ -58,10 +55,10 @@ const Contact = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
         >
             {/* Content Container */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.95] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                 
                 <div className="text-center mb-3 md:mb-16 lg:mb-20">
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-1 md:mb-4">
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-1 md:mb-4">
                         Kontakt
                     </h4>
                     <h2 className="font-serif text-2xl md:text-5xl lg:text-7xl text-white mb-2 md:mb-6">
@@ -186,7 +183,7 @@ const Contact = ({ scrollProgress }) => {
                 </div>
 
                 {/* Footer text */}
-                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] md:text-xs font-mono uppercase tracking-widest">
+                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs md:text-xs font-mono uppercase tracking-widest">
                     <p>© {new Date().getFullYear()} Honza Trávníček. Všechna práva vyhrazena.</p>
                     <p>Designed for the summit.</p>
                 </div>

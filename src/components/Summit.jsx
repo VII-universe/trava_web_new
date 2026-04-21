@@ -67,7 +67,7 @@ const Summit = ({ scrollProgress }) => {
                 style={{ opacity: contentOpacity, y: contentY }}
                 className="relative z-50 w-full h-full max-w-6xl pointer-events-auto flex flex-col items-center justify-center mx-auto px-4"
             >
-                <div className="w-full p-5 md:p-8 lg:p-10 rounded-[2rem] bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_rgba(0,0,0,0.15)] origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.80] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.70] flex flex-col">
+                <div className="w-full p-5 md:p-8 lg:p-10 rounded-[2rem] bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_60px_rgba(0,0,0,0.15)] origin-top transition-transform duration-300 [@media(max-width:767px)]:scale-[0.95] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.70] flex flex-col">
                     
                     <div className="flex flex-col md:flex-row gap-6 lg:gap-10 w-full items-center text-left">
                         {/* Left Side: Text and Actions */}
@@ -81,8 +81,8 @@ const Summit = ({ scrollProgress }) => {
                                 <div className="p-2.5 md:p-3 shrink-0 rounded-full bg-gold-400/20 backdrop-blur-sm border border-gold-400/30">
                                     <Trophy className="w-5 h-5 md:w-6 md:h-6 text-gold-600" />
                                 </div>
-                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] font-bold leading-snug">
-                                    Zdravotní osvěta & neziskovky<br/><span className="text-slate-500 font-medium tracking-widest text-[8px] md:text-[9px]">8848 m. n. m.</span>
+                                <h4 className="text-gold-600 font-sans uppercase tracking-[0.15em] md:tracking-[0.2em] text-xs font-bold leading-snug">
+                                    Zdravotní osvěta & neziskovky<br/><span className="text-slate-500 font-medium tracking-widest text-[10px]">8848 m. n. m.</span>
                                 </h4>
                             </motion.div>
 
@@ -103,7 +103,7 @@ const Summit = ({ scrollProgress }) => {
                                     <p className="font-sans text-slate-700 leading-relaxed text-sm mb-2 font-medium relative z-10">
                                         Spolupráce pro FUCK CANCER a REVMA LIGA. Ukazujeme, že s nemocí život nekončí.
                                     </p>
-                                    <p className="font-sans text-slate-500 leading-relaxed text-[10px] md:text-[11px] relative z-10 line-clamp-1">
+                                    <p className="font-sans text-slate-500 leading-relaxed text-xs relative z-10 line-clamp-1">
                                         Odborníci: doc. Arenbergerová, dr. Šedová, dr. Brisulda, Helča Vomáčková...
                                     </p>
                                 </div>
@@ -151,7 +151,7 @@ const Summit = ({ scrollProgress }) => {
                     <div className="flex justify-center w-full mt-6 md:mt-8 border-t border-slate-200/60 pt-5 md:pt-6">
                         <button
                             onClick={scrollToTop}
-                            className="group relative px-6 py-2.5 bg-slate-900 text-white font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-all hover:bg-gold-500 rounded-full shadow-md hover:-translate-y-0.5 flex items-center gap-2"
+                            className="group relative px-6 py-2.5 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs transition-all hover:bg-gold-500 rounded-full shadow-md hover:-translate-y-0.5 flex items-center gap-2"
                         >
                             ZPĚT NA ZAČÁTEK <ChevronUp className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform" />
                         </button>

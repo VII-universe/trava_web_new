@@ -1,50 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRight, X, Star } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
+import ClimbersImg from '../assets/climbers_bg.jpg';
 import StoryImg1 from '../assets/zmensene/portrety/historie/trava30.jpg';
 import StoryImg2 from '../assets/zmensene/portrety/historie/037.jpg';
 import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.jpg';
 
 const About = ({ scrollProgress }) => {
     const [isStoryOpen, setIsStoryOpen] = useState(false);
+    const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
 
-    useScrollLock(isStoryOpen);
+    useScrollLock(isStoryOpen || isOsvetaOpen);
 
-    // PHASE 2: 0.20 -> 0.40
+    // PHASE 2: 0.08 -> 0.18
 
     // Transition In
-    // PHASE 2: start earlier and exit earlier with overlap handoff (0.12 -> 0.25)
-    const containerOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.22, 0.25], [0, 1, 1, 0]);
-    const containerScale = useTransform(scrollProgress, [0.12, 0.16], [0.9, 1]);
-    const containerY = useTransform(scrollProgress, [0.12, 0.16, 0.19, 0.24], ["100%", "0%", "0%", "87%"]);
-    const bgY = useTransform(scrollProgress, [0.10, 0.26], ["-15%", "15%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.08, 0.11, 0.17, 0.21], [0, 1, 1, 0]);
+    const containerScale = useTransform(scrollProgress, [0.08, 0.11], [0.9, 1]);
+    const containerY = useTransform(scrollProgress, [0.08, 0.11, 0.17, 0.21], ["100%", "0%", "0%", "87%"]);
+    const bgY = useTransform(scrollProgress, [0.06, 0.22], ["-15%", "15%"]);
 
     // Parallax Layers
-    const sideLayerLeftX = useTransform(scrollProgress, [0.14, 0.22], ["0%", "-50%"]);
-    const sideLayerRightX = useTransform(scrollProgress, [0.14, 0.22], ["0%", "50%"]);
-    const sideLayerOpacity = useTransform(scrollProgress, [0.14, 0.22], [0.8, 0]);
+    const sideLayerLeftX = useTransform(scrollProgress, [0.10, 0.18], ["0%", "-50%"]);
+    const sideLayerRightX = useTransform(scrollProgress, [0.10, 0.18], ["0%", "50%"]);
+    const sideLayerOpacity = useTransform(scrollProgress, [0.10, 0.18], [0.8, 0]);
 
     // Honza Profile Layer — faster arrival
-    const honzaX = useTransform(scrollProgress, [0.12, 0.20], ["18%", "5%"]); // Coming from right faster
-    const honzaY = useTransform(scrollProgress, [0.12, 0.18, 0.19, 0.24], ["24%", "0%", "0%", "5%"]); // earlier float
-    const honzaScale = useTransform(scrollProgress, [0.12, 0.20], [0.95, 1.12]); // quicker zoom
-    const honzaOpacity = useTransform(scrollProgress, [0.12, 0.16, 0.22, 0.25], [0, 1, 1, 0]);
+    const honzaX = useTransform(scrollProgress, [0.08, 0.16], ["18%", "5%"]);
+    const honzaY = useTransform(scrollProgress, [0.08, 0.14, 0.16, 0.21], ["24%", "0%", "0%", "5%"]);
+    const honzaScale = useTransform(scrollProgress, [0.08, 0.16], [0.95, 1.12]);
+    const honzaOpacity = useTransform(scrollProgress, [0.08, 0.11, 0.17, 0.21], [0, 1, 1, 0]);
 
-    // Transition Out — "odsunutí" sekce při nájezdu Icefall
-    // Icefall přijíždí shora ([-100% -> 0%]), takže About se současně
-    // odsouvá dolů přes hlavní containerY. Zde vypínáme dodatečný pohyb dolů, 
-    // aby se rychlost nesčítala a vrstvy se posouvaly synchronně s Partnery.
-    // Pro minimalizaci mezery prodlužujeme zobrazení až do 0.25
-    const exitOpacity = useTransform(scrollProgress, [0.19, 0.24], [1, 0.4]);
-    const exitScale = useTransform(scrollProgress, [0.19, 0.24], [1, 0.98]);
-    const exitY = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
-    const exitX = useTransform(scrollProgress, [0.19, 0.24], ['0%', '0%']);
-    // Fast fade out for the background image specifically, so it doesn't hard-cut under Icefall
-    // Starts fading just as Icefall enters at 0.19, fully gone by 0.23 (slower)
-    const imageOpacity = useTransform(scrollProgress, [0.19, 0.23], [0.8, 0]);
+    // Transition Out
+    const exitOpacity = useTransform(scrollProgress, [0.17, 0.21], [1, 0.4]);
+    const exitScale = useTransform(scrollProgress, [0.17, 0.21], [1, 0.98]);
+    const exitY = useTransform(scrollProgress, [0.17, 0.21], ['0%', '0%']);
+    const exitX = useTransform(scrollProgress, [0.17, 0.21], ['0%', '0%']);
+    const imageOpacity = useTransform(scrollProgress, [0.17, 0.21], [0.8, 0]);
 
     return (
         <>
@@ -126,22 +121,31 @@ const About = ({ scrollProgress }) => {
                     className="relative max-w-xl p-6 md:p-10 lg:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
-                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Kdo je Honza Tráva — 800 m</h4>
+                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Honza Tráva — profesionální dobrodruh</h4>
                     <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                        Nehraju si na <span className="italic text-slate-600">hrdinu.</span>
+                        Horolezec. Cestovatel. <span className="italic text-slate-600">Podnikatel.</span>
                     </h2>
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
-                        Horolezec, cestovatel, dobrodruh, podnikatel. Život mezi ČR a Nepálem. Jsem autentický příběh člověka, který překonal rakovinu i psoriatická artritida. Ne proto, abych dobyl vrchol, ale abych našel cestu zpátky.
+                        Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.
                     </p>
                     
-                    <button 
-                        onClick={() => setIsStoryOpen(true)}
-                        className="group relative inline-flex items-center justify-center gap-3 py-4 px-8 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden w-full sm:w-auto mt-2"
-                    >
-                        <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                        <span className="relative z-10 drop-shadow-md">Můj celý příběh</span>
-                        <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                        <button
+                            onClick={() => setIsStoryOpen(true)}
+                            className="group relative inline-flex items-center justify-center gap-3 py-4 px-8 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden w-full sm:w-auto"
+                        >
+                            <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                            <span className="relative z-10 drop-shadow-md">Můj celý příběh</span>
+                            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+                        </button>
+                        <button
+                            onClick={() => setIsOsvetaOpen(true)}
+                            className="group relative inline-flex items-center justify-center gap-3 py-4 px-8 bg-white/70 hover:bg-white/90 text-slate-800 font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl transition-all duration-300 border border-slate-300/60 hover:border-slate-400/60 backdrop-blur-sm w-full sm:w-auto"
+                        >
+                            <span className="relative z-10">Osvěta & Zdraví</span>
+                            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+                        </button>
+                    </div>
                 </motion.div>
             </motion.div>
         </>
@@ -176,27 +180,30 @@ const About = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
-                                Příběh, který se stal
+                                Honza Tráva — profesionální dobrodruh
                             </h4>
                             <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                                Cesta zpátky <br/><span className="italic text-slate-600">k sobě.</span>
+                                Život jako <br/><span className="italic text-slate-600">expedice.</span>
                             </h2>
-                            
+
                             <div className="prose prose-slate prose-lg">
                                 <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
-                                    Nikdy jsem neplánoval být na osmitisícovkách. Můj život byl donedávna o něčem úplně jiném. Až do chvíle, kdy mi do života vstoupila rakovina a psoriatická artritida. Tyto dvě rány mě srazily na úplné dno, z místa, kde se svět zdál být jako jistota.
+                                    Honza Tráva je horolezec, cestovatel, podnikatel a přednášející — člověk, který žije mezi Českou republikou a Nepálem. Stojí za 14 Summits Expedition, hotelem a českým pubem v srdci Káthmándú a za přednáškovým turné, které prošlo stovkami sálů napříč republikou.
                                 </p>
                                 <p className="font-sans text-slate-700 leading-relaxed mb-4">
-                                    Lékaři, nemocnice, nejistota. Změnilo to všechny moje plány a hodnoty. Najednou nešlo o to, co vybuduji v kariéře, ale jestli vůbec přežiju. Místo toho, abych se poddal, rozhodl jsem se vzepřít. Hory se staly mým lékem, mým psychickým i fyzickým útočištěm.
+                                    Na kontě má výstupy na Manáslu (8163 m), Meru Peak, desítky treků v Himálaji i expedice na dalších kontinentech. Jako průvodce a organizátor expedic ví, co znamená nést zodpovědnost za tým v nadmořských výškách, kde chyba nemá druhou šanci.
                                 </p>
                                 <p className="font-sans text-slate-700 leading-relaxed mb-4">
-                                    Dnes žiju napůl v České republice a napůl v Nepálu. Himaláje nejsou jenom obří skály, které chci dobýt; jsou mým druhým domovem, místem, kde cítím nejhlubší pokoru. Každý krok nahoru za hranici 8000 metrů beru jako dar. Dýchám za ty, kteří už nemohou, a snažím se ukázat, že překonat se dá i to, co vypadá jako konec.
+                                    Součástí jeho cesty je i osobní příběh — překonání rakoviny a psoriatické artritidy, nemocí, které ho zpomalily, ale nakonec nasměrovaly. Dnes spolupracuje s Revma Ligou a iniciativou Fuck Cancer a ukazuje, že diagnóza není tečka, ale nové zaměření cesty.
+                                </p>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-4">
+                                    Po jeho boku stojí Miri Jirková, logistická a trekingová manažerka s dvanácti expedicemi za sebou, a Subin Tamang, místní expert a nepostradatelný pilíř všeho, co se děje přímo v terénu Nepálu.
                                 </p>
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-slate-300">
                                 <blockquote className="font-serif text-2xl text-slate-800 italic leading-snug">
-                                    „Nehraju si na hrdinu. V horách nikdo není hrdina, všechny nás dříve nebo později srovnají na kolena.“
+                                    „Život není jen o samotných vrcholech, ale i o nádherné cestě k nim."
                                 </blockquote>
                             </div>
                         </div>
@@ -214,6 +221,89 @@ const About = ({ scrollProgress }) => {
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
                                 <img src={StoryImg3} alt="Nepal Valley" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── Osvěta Modal ── */}
+        <AnimatePresence>
+            {isOsvetaOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setIsOsvetaOpen(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                    >
+                        <button
+                            onClick={() => setIsOsvetaOpen(false)}
+                            className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/50 hover:bg-white/80 text-slate-900 transition-colors backdrop-blur-md shadow-sm border border-white/40"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* Left: Text Content */}
+                        <div
+                            className="w-full md:w-[55%] p-8 md:p-14 lg:p-16 overflow-y-auto custom-scrollbar overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
+                                Pomáháme a sdílíme
+                            </h4>
+                            <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
+                                Zdravotní osvěta
+                            </h2>
+
+                            <div className="prose prose-slate prose-lg max-w-none">
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-6">
+                                    Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.
+                                </p>
+
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Revma Liga a psoriatická artritida</h3>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-6">
+                                    Aktivně spolupracujeme s <strong>Revma Ligou</strong>. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci — ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování.
+                                </p>
+
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Fuck Cancer</h3>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-6">
+                                    Podporuji iniciativu <strong>Fuck Cancer</strong>, která sdružuje mladé pacienty onkologických onemocnění, survivors a všechny, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.
+                                </p>
+
+                                <div className="mt-10 p-6 bg-slate-100 rounded-2xl border border-slate-200">
+                                    <h4 className="font-serif text-xl text-slate-900 mb-3">Odborná spolupráce</h4>
+                                    <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">
+                                        Mé kroky v osvětě nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny:<br /><br />
+                                        <strong>Doc. MUDr. Monika Arenbergerová</strong>, <strong>MUDr. Liliana Šedová</strong>, <strong>MUDr. Tomáš Brisuda</strong>, <strong>PhDr. Helena Vomáčková</strong>, <strong>MUDr. Martin Pospíchal</strong> a dalším odborníkům, kteří mě udržují v chodu a pomáhají naší osvětové cestě odbornou erudicí.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right: Image + Quote */}
+                        <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
+                            <img src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                            <div className="absolute bottom-8 left-8 right-8 z-10">
+                                <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
+                                    <div className="flex gap-2 mb-4">
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400" />
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400" />
+                                        <Star className="w-5 h-5 text-gold-400 fill-gold-400" />
+                                    </div>
+                                    <p className="font-serif italic text-xl md:text-2xl text-white leading-snug font-medium drop-shadow-md">
+                                        "Hory jsou jen skály. Opravdový boj se odehrává v nás a v našem těle."
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </motion.div>

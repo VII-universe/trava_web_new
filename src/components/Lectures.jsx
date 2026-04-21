@@ -1,40 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { Calendar, X, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
-import Polaroid1 from '../assets/zmensene/portrety/prednasky/photohanny-129.jpg';
-import Polaroid2 from '../assets/zmensene/portrety/prednasky/dsd_8450.jpg';
-import Polaroid3 from '../assets/zmensene/portrety/prednasky/photohanny-134.jpg';
+import { Calendar, X, Mail, CheckCircle2, ArrowRight } from 'lucide-react';
 import BookingBg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
-
 import Tour50Img from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import CollabImg from '../assets/zmensene/portrety/prednasky/dsc04123.jpg';
-
-import PjjImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
-import HorkyImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.jpg';
-import LangosImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240715_133229.jpg';
-import AudyImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
-import FormanImg from '../assets/zmensene/kathmandu/dsc08157.jpg';
-import TourMainImg from '../assets/zmensene/portrety/prednasky/1r2a2034.jpg';
-import JesteImg from '../assets/zmensene/projekty/jeste_jsme_neskoncili/20240806_151350.jpg';
-import NehaImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07645.jpg';
-import DalsiImg from '../assets/zmensene/skupinky/whatsapp_image_2025-06-15_at_18_53_30__2_.jpg';
 
 const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [showAllProjects, setShowAllProjects] = useState(false);
-    const [selectedMoreProject, setSelectedMoreProject] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
 
-    useScrollLock(open || showAllProjects || selectedImage || selectedEvent);
+    useScrollLock(open || selectedEvent);
 
-    // PHASE 6: 0.54 -> 0.72 with hold (much closer to Nepal)
-    const containerOpacity = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.54, 0.58, 0.68, 0.72], ["-120%", "0%", "0%", "120%"]);
-    
+    // PHASE 7: 0.59 -> 0.68 with hold
+    const containerOpacity = useTransform(scrollProgress, [0.59, 0.62, 0.67, 0.71], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.59, 0.62, 0.67, 0.71], ["-120%", "0%", "0%", "120%"]);
+
     // Lightens the background as it exits
-    const lightenOpacity = useTransform(scrollProgress, [0.60, 0.69], [0, 1]);
+    const lightenOpacity = useTransform(scrollProgress, [0.64, 0.70], [0, 1]);
+
+    const lectCarouselRef = useRef(null);
+    const lectCarouselProgress = useTransform(scrollProgress, [0.62, 0.67], [0, 1]);
+    useEffect(() => {
+        return lectCarouselProgress.on("change", (latest) => {
+            const el = lectCarouselRef.current;
+            if (!el) return;
+            const maxScroll = el.scrollWidth - el.clientWidth;
+            el.scrollLeft = Math.max(0, Math.min(1, latest) * maxScroll);
+        });
+    }, [lectCarouselProgress]);
 
     const events = [
         { 
@@ -57,80 +51,6 @@ const Lectures = ({ scrollProgress }) => {
         }
     ];
 
-    const MORE_PROJECTS = [
-        {
-            id: 'pjj',
-            title: "Petr Jan Juračka",
-            subtitle: "Něha Himálaje, balón Annapurna, Everest Marathon",
-            image: PjjImg,
-            description: "Spolupráce na dechberoucích projektech s fantastickým fotografem a filmařem. Od knihy a filmu Něha Himálaje, přes unikátní projekt létání balónem u Annapurny až po Everest Marathon. Vizuální i lidský zážitek.",
-            highlights: ["Kniha a film Něha Himálaje", "Projekt balón Annapurna", "Everest Marathon"]
-        },
-        {
-            id: 'horky',
-            title: "Petr Horký",
-            subtitle: "Filmy, projekty, společné akce",
-            image: HorkyImg,
-            description: "Dlouhodobá spolupráce s vynikajícím režisérem a polárníkem Petrem Horkým. Tvoříme společně filmy, pořádáme poutavé přednášky a vymýšlíme další nezapomenutelné společné akce, které mají přesah.",
-            highlights: ["Dokumentární filmy", "Společné projekty", "Sdílení zkušeností"]
-        },
-        {
-            id: 'langos',
-            title: "Jirka „Langoš“ Langmajer",
-            subtitle: "Přednášky, promo, společné projekty",
-            image: LangosImg,
-            description: "Netradiční spojení světa hor a divadla. S Jirkou Langmajerem pořádáme společné přednášky plné humoru i drsných historek, natáčíme promo videa a připravujeme další unikátní projekty.",
-            highlights: ["Zábavné společné přednášky", "Marketingová promo videa", "Nové formáty vyprávění"]
-        },
-        {
-            id: 'audy',
-            title: "Marek Audy",
-            subtitle: "3D projekce",
-            image: AudyImg,
-            description: "Zážitek, který vás vtáhne přímo do děje. Díky spolupráci s Markem Audym přinášíme unikátní 3D projekce z našich expedic, které divákům zprostředkovávají naprosto realistický pocit z vysokých hor.",
-            highlights: ["Vtahující 3D fotografie", "Realistický vizuální zážitek z hor", "Využití moderních technologií v přednáškách"]
-        },
-        {
-            id: 'forman',
-            title: "Petr Forman",
-            subtitle: "Divadlo, audiokniha, COPATUTOJE",
-            image: FormanImg,
-            description: "Kreativní přesahy mimo klasické horolezectví. S Petrem Formanem jsme se potkali mimo jiné při tvorbě divadla, nahrávání audioknihy nebo u fantastického regionálního projektu COPATUTOJE.",
-            highlights: ["Netradiční divadelní fúze", "Spolupráce na audioknize", "Projekt COPATUTOJE pro Plzeň"]
-        },
-        {
-            id: 'tour2026',
-            title: "50 let tour (únor–březen 2026)",
-            subtitle: "Velká přednášková tour, zapojení partnerů",
-            image: TourMainImg,
-            description: "Velkolepá oslava 50. narozenin Honzy Trávy přímo na pódiích napříč republikou. Čeká nás velká přednášková tour plná těch nejlepších příběhů, hostů a překvapení. Exkluzivní možnost zapojení pro partnery projektu.",
-            highlights: ["Republikové turné", "Nejlepší historky z 8 osmitisícovek", "Výrazný prostor pro partnery"]
-        },
-        {
-            id: 'jsmeneskoncili',
-            title: "Jestejsmeneskoncili",
-            subtitle: "S Miri, Horkým, Langošem a J. Votavou",
-            image: JesteImg,
-            description: "Silná sestava, silné poselství. Unikátní sdílený projekt, ve kterém se spojují osobnosti z různých sfér (Miri Jirková, Petr Horký, Jirka Langmajer, Jirka Votava a Honza Tráva), aby ukázali, že po dosažení vrcholu nebo překonání krize to teprve začíná.",
-            highlights: ["Synergie pěti osobností", "Inspirace pro životní změny", "Zcela nový formát spolupráce"]
-        },
-        {
-            id: 'neha_himalaje',
-            title: "Něha Himálaje",
-            subtitle: "Kniha / film / audio s PJJ",
-            image: NehaImg,
-            description: "Multimediální projekt mapující lidskou i horolezeckou tvář himálajských expedic v podání Petra Jana Juračky a Honzy Trávy. Zahrnuje velmi úspěšnou knihu, filmový dokument, audioknihu a celou řadu navazujících přednáškových aktivit.",
-            highlights: ["Úspěšná knižní publikace", "Emocionálně silný dokumentární film", "Rozsáhlá osvětová činnost"]
-        },
-        {
-            id: 'narazove',
-            title: "Další aktivity",
-            subtitle: "Havlík, Kopka, 1000 mil...",
-            image: DalsiImg,
-            description: "Život není jen o osmitisícovkách. Rádi se vrháme do dalších výzev – ať už jde o natáčení s režisérem Rudou Havlíkem, drsný cyklo výlet v Nepálu s extrémním bikerem Honzou Kopkou, účast na závodě 1000 mil nebo pořádání různých komunitních akcí pro radost.",
-            highlights: ["Spolupráce s filmovou produkcí Rudiho Havlíka", "Extrémní cyklo expedice v Nepálu", "Účast na komunitních projektech"]
-        }
-    ];
 
     return (
         <>
@@ -149,108 +69,159 @@ const Lectures = ({ scrollProgress }) => {
                 />
             </motion.div>
 
-            {/* CONTENT LAYER (in front of clouds - zIndex 60 is CloudLayer, so 70 is above) */}
+            {/* CONTENT LAYER */}
             <motion.div
                 style={{ opacity: containerOpacity, zIndex: 70 }}
-                className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center"
+                className="absolute inset-0 w-full h-full pointer-events-none"
             >
                 <motion.div
                     style={{ y: containerY }}
-                    className="relative w-full h-full px-4 md:px-6 pointer-events-auto flex flex-col items-center justify-center"
+                    className="w-full h-full"
                 >
-                    <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1050px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:900px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:800px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:700px)_and_(min-width:768px)]:scale-[0.60] [@media(max-height:600px)_and_(min-width:768px)]:scale-[0.50]">
-                    <div className="max-w-3xl w-full text-center relative z-20">
-                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-1 md:mb-4">
-                            06 — Projekty & Přednášky (7500 m)
-                        </h4>
+                    {/* ── Mobile layout: compact header + horizontal carousel ── */}
+                    <div className="md:hidden w-full h-full flex flex-col justify-center px-4 pointer-events-auto gap-3">
 
-                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 md:mb-4 leading-tight">
-                            Projekty & Přednášky
-                        </h2>
+                        {/* Mobile header */}
+                        <div className="shrink-0 text-center">
+                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-1">
+                                07 — Přednášky (7200 m)
+                            </h4>
+                            <h2 className="font-serif text-2xl text-white mb-1.5 leading-tight">
+                                Přednášky & Spolupráce
+                            </h2>
+                            <p className="font-sans text-slate-400 text-xs leading-relaxed max-w-xs mx-auto">
+                                50 let tour 2026 · Projekty s osobnostmi · Booking
+                            </p>
+                        </div>
 
-                        <p className="font-sans text-slate-300 text-[13px] md:text-base lg:text-lg leading-relaxed mb-2 md:mb-6 max-w-3xl mx-auto">
-                            50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
-                        </p>
-                    </div>
-
-                    <div className="relative z-[70] max-w-6xl mx-auto w-full mb-4 md:mb-8 px-4 md:px-0 mt-1 md:mt-4">
-                        
-                        {/* Cards Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 lg:gap-6 relative max-w-5xl mx-auto">
-                            {events.map(event => (
-                                <motion.div 
-                                    key={event.id} 
-                                    onClick={() => setSelectedEvent(event)}
-                                    whileHover={{ y: -6 }}
-                                    className="group bg-white/95 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/80 cursor-pointer flex flex-col relative"
-                                >
-                                    {/* Image Container - Switched to aspect-video to save vertical height */}
-                                    <div className="w-full aspect-video overflow-hidden relative p-3 pb-0">
-                                        <img 
-                                            src={event.image} 
-                                            className="w-full h-full object-cover rounded-xl md:rounded-2xl group-hover:scale-105 transition-transform duration-700" 
-                                            alt={event.city} 
-                                        />
-                                        <div className="absolute top-5 left-5 px-3 py-1.5 bg-white/95 backdrop-blur-md rounded-full shadow-sm">
-                                            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gold-600 flex items-center gap-1.5">
-                                                <Calendar className="w-3 h-3" />
-                                                {event.id === 'tour50' ? 'Turné 2026' : 'Speciální projekty'}
-                                            </span>
+                        {/* Horizontal carousel */}
+                        <div className="shrink-0 -mx-4 px-4">
+                            <div
+                                ref={lectCarouselRef}
+                                className="flex gap-3 overflow-x-auto pb-2"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                            >
+                                {events.map(event => (
+                                    <div
+                                        key={event.id}
+                                        onClick={() => setSelectedEvent(event)}
+                                        className="shrink-0 snap-start w-[82vw] rounded-2xl overflow-hidden bg-white/95 border border-white/60 shadow-lg cursor-pointer active:scale-[0.98] transition-transform"
+                                    >
+                                        <div className="w-full aspect-[3/2] overflow-hidden relative">
+                                            <img
+                                                src={event.image}
+                                                className="w-full h-full object-cover"
+                                                alt={event.city}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                                            <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/95 rounded-full">
+                                                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-600 flex items-center gap-1">
+                                                    <Calendar className="w-3 h-3" />
+                                                    {event.id === 'tour50' ? 'Turné 2026' : 'Projekty'}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="absolute inset-x-3 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-b-xl md:rounded-b-2xl" />
-                                    </div>
-
-                                    {/* Text Content */}
-                                    <div className="p-4 md:p-6 lg:p-8 flex-1 flex flex-col justify-between">
-                                        <div>
-                                            <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-slate-900 mb-1.5 group-hover:text-gold-600 transition-colors">{event.city}</h3>
-                                            <p className="text-slate-500 font-sans text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3">
-                                                {event.venue}
-                                            </p>
-                                            <p className="text-slate-600 text-[12px] md:text-[13px] leading-relaxed mb-2 md:mb-4 line-clamp-2 md:line-clamp-3">
-                                                {event.description}
-                                            </p>
-                                        </div>
-                                        
-                                        <div className="flex items-center justify-between mt-auto">
-                                            <div className="flex items-center gap-2 text-gold-500 font-bold text-[9px] md:text-[10px] tracking-widest uppercase">
-                                                Detail projektu
-                                                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                        <div className="p-4">
+                                            <h3 className="font-serif text-lg text-slate-900 leading-tight mb-1">{event.city}</h3>
+                                            <p className="text-slate-500 text-[10px] uppercase tracking-widest font-bold mb-2">{event.venue}</p>
+                                            <p className="text-slate-600 text-xs leading-relaxed line-clamp-2">{event.description}</p>
+                                            <div className="flex items-center gap-1.5 text-gold-500 font-bold text-[10px] tracking-widest uppercase mt-3">
+                                                Detail projektu <ArrowRight className="w-3 h-3" />
                                             </div>
                                         </div>
                                     </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* Action Buttons Row */}
-                        <div className="max-w-4xl mx-auto mt-4 md:mt-8 flex flex-col sm:flex-row gap-3 md:gap-4 items-center justify-center">
-                            <button
-                                onClick={() => setShowAllProjects(true)}
-                                className="w-full sm:w-auto px-6 md:px-8 py-3.5 bg-white/90 hover:bg-white text-slate-800 border border-slate-200 shadow-lg rounded-xl font-sans tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold transition-all flex items-center justify-center gap-3 group"
-                            >
-                                Více projektů
-                                <ArrowRight className="w-3 md:w-4 h-3 md:h-4 text-gold-400 group-hover:translate-x-1 transition-transform" />
-                            </button>
-
-                            <div className="relative group w-full sm:w-auto">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
-                                <button
-                                    onClick={() => setOpen(true)}
-                                    className="relative w-full sm:w-auto px-6 md:px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-white rounded-xl font-sans tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold shadow-xl shadow-gold-900/10 transition-all flex items-center justify-center gap-2"
-                                >
-                                    Booking & Kontakt
-                                </button>
+                                ))}
                             </div>
                         </div>
 
-                        <div className="text-center text-slate-500 text-[9px] md:text-[10px] max-w-3xl mx-auto mt-4 md:mt-8">
-                            Další firmy: <span className="text-slate-400">Summit Drive s.r.o.</span> (s Karlem Křížem) - outdoor a stěna v Plzni. <span className="text-slate-400">Ice Adventure Production s.r.o.</span> (s Petrem Horkým).
+                        {/* Mobile buttons row */}
+                        <div className="shrink-0 flex gap-3 justify-center">
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000" />
+                                <button
+                                    onClick={() => setOpen(true)}
+                                    className="relative px-6 py-3.5 bg-gold-500 hover:bg-gold-400 text-white rounded-xl font-sans tracking-[0.15em] uppercase text-sm font-bold shadow-xl transition-all flex items-center gap-2"
+                                >
+                                    Booking
+                                </button>
+                            </div>
+                            <button
+                                onClick={() => setOpen(true)}
+                                className="px-5 py-3.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
+                            >
+                                Více přednášek
+                            </button>
                         </div>
                     </div>
-                </div>
+
+                    {/* ── Desktop layout: original content ── */}
+                    <div className="hidden md:flex w-full h-full flex-col items-center justify-center px-6">
+                        <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-height:1050px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:900px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:800px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:700px)_and_(min-width:768px)]:scale-[0.60] [@media(max-height:600px)_and_(min-width:768px)]:scale-[0.50]">
+                            <div className="max-w-3xl w-full text-center relative z-20">
+                                <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-4">
+                                    07 — Přednášky (7200 m)
+                                </h4>
+                                <h2 className="font-serif text-4xl lg:text-5xl text-white mb-4 leading-tight">
+                                    Přednášky & Spolupráce
+                                </h2>
+                                <p className="font-sans text-slate-300 text-base lg:text-lg leading-relaxed mb-6 max-w-3xl mx-auto">
+                                    50 let tour (únor–březen 2026): Velká přednášková tour. Propojení s osobnostmi: Petr Jan Juračka (Něha Himálaje), Petr Horký, Jirka Langmajer (Jestejsmeneskoncili), Marek Audy, Petr Forman.
+                                </p>
+                            </div>
+
+                            <div className="relative z-[70] max-w-6xl mx-auto w-full mb-8 mt-4">
+                                <div className="grid grid-cols-2 gap-4 lg:gap-6 relative max-w-5xl mx-auto">
+                                    {events.map(event => (
+                                        <motion.div
+                                            key={event.id}
+                                            onClick={() => setSelectedEvent(event)}
+                                            whileHover={{ y: -6 }}
+                                            className="group bg-white/95 backdrop-blur-2xl rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/80 cursor-pointer flex flex-col relative"
+                                        >
+                                            <div className="w-full aspect-video overflow-hidden relative p-3 pb-0">
+                                                <img
+                                                    src={event.image}
+                                                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
+                                                    alt={event.city}
+                                                />
+                                                <div className="absolute top-5 left-5 px-3 py-1.5 bg-white/95 backdrop-blur-md rounded-full shadow-sm">
+                                                    <span className="text-xs font-bold uppercase tracking-[0.15em] text-gold-600 flex items-center gap-1.5">
+                                                        <Calendar className="w-3 h-3" />
+                                                        {event.id === 'tour50' ? 'Turné 2026' : 'Speciální projekty'}
+                                                    </span>
+                                                </div>
+                                                <div className="absolute inset-x-3 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-b-2xl" />
+                                            </div>
+                                            <div className="p-6 lg:p-8 flex-1 flex flex-col justify-between">
+                                                <div>
+                                                    <h3 className="font-serif text-2xl lg:text-3xl text-slate-900 mb-1.5 group-hover:text-gold-600 transition-colors">{event.city}</h3>
+                                                    <p className="text-slate-500 font-sans text-xs font-bold uppercase tracking-widest mb-3">{event.venue}</p>
+                                                    <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">{event.description}</p>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-gold-500 font-bold text-xs tracking-widest uppercase">
+                                                    Detail projektu
+                                                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                                <div className="max-w-4xl mx-auto mt-8 flex items-center justify-center">
+                                    <div className="relative group">
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
+                                        <button
+                                            onClick={() => setOpen(true)}
+                                            className="relative px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-white rounded-xl font-sans tracking-[0.15em] uppercase text-xs font-bold shadow-xl shadow-gold-900/10 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            Booking & Kontakt
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </motion.div>
-        </motion.div>
 
             {open && (
                 <motion.div
@@ -312,10 +283,6 @@ const Lectures = ({ scrollProgress }) => {
                                     <div className="flex items-center gap-3 text-sm text-slate-300">
                                         <Mail className="w-4 h-4 text-gold-500" />
                                         <span>booking@honzatrava.cz</span>
-                                    </div>
-                                    <div className="flex items-center gap-3 text-sm text-slate-300">
-                                        <Phone className="w-4 h-4 text-gold-500" />
-                                        <span>+420 123 456 789</span>
                                     </div>
                                 </div>
                             </div>
@@ -486,136 +453,6 @@ const Lectures = ({ scrollProgress }) => {
                 )}
             </AnimatePresence>
 
-            {/* "Více projektů" Modal Area */}
-            <AnimatePresence>
-                {showAllProjects && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[120] bg-[#0E131F]/90 backdrop-blur-xl flex flex-col p-4 md:p-10 pointer-events-auto"
-                    >
-                        <div className="flex justify-between items-center w-full max-w-7xl mx-auto mb-8 relative z-20">
-                            <h2 className="font-serif text-3xl md:text-5xl text-white">Všechny projekty</h2>
-                            <button
-                                onClick={() => {
-                                    setShowAllProjects(false);
-                                    setSelectedMoreProject(null);
-                                }}
-                                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition text-white backdrop-blur-md"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
-                        </div>
-
-                        <div 
-                            className="flex-1 w-full max-w-7xl mx-auto overflow-y-auto overflow-x-hidden pb-20 scrollbar-hide overscroll-contain"
-                            data-lenis-prevent
-                        >
-                            <AnimatePresence mode="wait">
-                                {selectedMoreProject ? (
-                                    <motion.div
-                                        key="detail"
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="bg-[#fcfbf9] border border-white/20 shadow-2xl rounded-[2rem] w-full overflow-hidden relative flex flex-col md:flex-row min-h-[70vh]"
-                                    >
-                                        <div className="md:w-1/2 relative min-h-[300px] md:min-h-0">
-                                            <img src={selectedMoreProject.image} className="absolute inset-0 w-full h-full object-cover" alt={selectedMoreProject.title} />
-                                            <button
-                                                onClick={() => setSelectedMoreProject(null)}
-                                                className="absolute top-6 left-6 flex items-center bg-black/40 hover:bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-colors"
-                                            >
-                                                <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                                                Zpět na přehled
-                                            </button>
-                                        </div>
-
-                                        <div 
-                                            className="md:w-1/2 p-8 md:p-14 overflow-y-auto text-left flex flex-col justify-center bg-white overscroll-contain"
-                                            data-lenis-prevent
-                                        >
-                                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] font-bold mb-4">
-                                                {selectedMoreProject.subtitle}
-                                            </h4>
-                                            <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6 leading-tight">
-                                                {selectedMoreProject.title}
-                                            </h2>
-                                            
-                                            <p className="font-sans text-slate-600 leading-relaxed mb-8 text-lg">
-                                                {selectedMoreProject.description}
-                                            </p>
-
-                                            <div className="bg-slate-50 border border-slate-100 p-8 rounded-2xl mb-10">
-                                                <h5 className="font-serif text-slate-800 text-xl mb-5">V čem spočívá spolupráce?</h5>
-                                                <ul className="space-y-4">
-                                                    {selectedMoreProject.highlights.map((h, i) => (
-                                                        <li key={i} className="flex items-start text-base text-slate-600">
-                                                            <ArrowRight className="w-5 h-5 text-gold-500 mr-4 mt-0.5 shrink-0" />
-                                                            <span>{h}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            <button
-                                                onClick={() => {
-                                                    setSelectedMoreProject(null);
-                                                    setShowAllProjects(false);
-                                                    setOpen(true);
-                                                }}
-                                                className="w-full sm:w-auto self-start bg-slate-900 text-white font-sans tracking-[0.2em] uppercase text-sm font-bold py-5 px-10 rounded-xl hover:bg-gold-600 transition-colors shadow-xl shadow-slate-900/20"
-                                            >
-                                                Mám zájem
-                                            </button>
-                                        </div>
-                                    </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="grid"
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                                    >
-                                        {MORE_PROJECTS.map((project, idx) => (
-                                            <motion.div
-                                                key={project.id}
-                                                whileHover={{ y: -5 }}
-                                                onClick={() => setSelectedMoreProject(project)}
-                                                className="group cursor-pointer bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-sm hover:bg-white/10 transition-colors"
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: idx * 0.05 }}
-                                            >
-                                                <div className="w-full h-48 overflow-hidden relative">
-                                                    <img 
-                                                        src={project.image} 
-                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                                                        alt={project.title} 
-                                                    />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E131F] to-transparent" />
-                                                </div>
-                                                <div className="p-6">
-                                                    <h3 className="text-white font-serif text-2xl mb-2 group-hover:text-gold-400 transition-colors">{project.title}</h3>
-                                                    <p className="text-slate-400 text-sm font-sans mb-6 line-clamp-2">{project.subtitle}</p>
-                                                    
-                                                    <div className="flex items-center text-gold-500 font-bold text-[10px] tracking-[0.2em] uppercase">
-                                                        Zobrazit více <ArrowRight className="w-3 h-3 ml-2 group-hover:translate-x-1 transition-transform" />
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                        ))}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </>
     );
 };

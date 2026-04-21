@@ -5,33 +5,35 @@ import LogoWhite from '../assets/svg/honza_trava_logo_negativni_V1.svg';
 import LogoBlack from '../assets/svg/honza_trava_logo_V1.svg';
 
 const navItems = [
-    { label: 'Úvod', progress: 0.0 },
-    { label: 'O Honzovi', progress: 0.16 },
-    { label: 'Partneři', progress: 0.24 },
-    { label: 'Expedice & 14 Summits', progress: 0.31 },
-    { label: 'Nepál — Pub & Hotel', progress: 0.46 },
-    { label: 'Přednášky & Projekty', progress: 0.58 },
-    { label: 'Média & Obsah', progress: 0.72 },
-    { label: 'Kašpárek & Osvěta', progress: 0.84 },
-    { label: 'Kontakt', progress: 0.98 }
+    { label: 'Úvod',               progress: 0.00 },
+    { label: 'O Honzovi',          progress: 0.08 },
+    { label: 'Partneři',           progress: 0.18 },
+    { label: 'Expedice & 14 Summits', progress: 0.27 },
+    { label: 'Nepál — Pub & Hotel', progress: 0.38 },
+    { label: 'E-shop',             progress: 0.49 },
+    { label: 'Přednášky',          progress: 0.59 },
+    { label: 'Projekty',           progress: 0.68 },
+    { label: 'Média & Obsah',      progress: 0.77 },
+    { label: 'Kontakt',            progress: 0.87 },
 ];
 
 const Nav = ({ scrollProgress }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
-    // Fade logo colors based on background brightness phases
-    // Hero(Light) -> About(Dark) -> Icefall(Light) -> Expe, Nepal, Lectr(Dark) -> Media(Light) -> Summit, Contact(Dark)
+    // Logo color: LIGHT bg (black logo) → DARK bg (white logo)
+    // Light: Hero/About/Icefall (0-0.30), Eshop (0.49-0.59), Media (0.77-0.87)
+    // Dark:  Expeditions/Nepal (0.27-0.52), Lectures/Projects (0.59-0.80), Contact (0.87-1.0)
     const whiteOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.12, 0.16, 0.28, 0.32, 0.44, 0.48, 0.84, 0.86, 0.88, 0.91, 1.0],
-        [0, 0,    1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
+        [0, 0.27, 0.30, 0.49, 0.53, 0.59, 0.62, 0.77, 0.81, 0.87, 0.91, 1.0],
+        [0,  0,   1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
     ) : 1;
 
     const blackOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.12, 0.16, 0.28, 0.32, 0.44, 0.48, 0.84, 0.86, 0.88, 0.91, 1.0],
-        [1, 1,    0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
+        [0, 0.27, 0.30, 0.49, 0.53, 0.59, 0.62, 0.77, 0.81, 0.87, 0.91, 1.0],
+        [1,  1,   0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
     ) : 0;
 
     // Close menu on escape key

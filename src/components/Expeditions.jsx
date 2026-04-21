@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowLeft, ArrowRight, X, MapPin } from 'lucide-react';
@@ -27,6 +27,11 @@ import MiriLead from '../assets/zmensene/portrety/miri/dsc05711.jpg';
 import MiriGallery1 from '../assets/zmensene/portrety/miri/dsc05687.jpg';
 import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.jpg';
 import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.jpg';
+
+// Subin Assets
+import SubinLead from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
+import SubinGallery1 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07046.jpg';
+import SubinGallery2 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240729_142322.jpg';
 
 const EXPEDITIONS = [
     {
@@ -86,19 +91,31 @@ const MORE_EXPEDITIONS = [
 ];
 
 const Expeditions = ({ scrollProgress }) => {
-    const containerOpacity = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], [0, 1, 1, 0]);
-    const backgroundY = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], ["-105%", "0%", "0%", "130%"]);
-    const contentY = useTransform(scrollProgress, [0.28, 0.31, 0.40, 0.44], ["-105%", "0%", "0%", "130%"]);
-    const bgY = useTransform(scrollProgress, [0.25, 0.48], ["-15%", "15%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], [0, 1, 1, 0]);
+    const backgroundY = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], ["-105%", "0%", "0%", "130%"]);
+    const contentY = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], ["-105%", "0%", "0%", "130%"]);
+    const bgY = useTransform(scrollProgress, [0.24, 0.43], ["-15%", "15%"]);
 
     const [selectedExped, setSelectedExped] = useState(null);
     const [showAllExpeditions, setShowAllExpeditions] = useState(false);
     const [selectedMoreExped, setSelectedMoreExped] = useState(null);
     const [isOrdering, setIsOrdering] = useState(false);
     const [isMiriOpen, setIsMiriOpen] = useState(false);
+    const [isSubinOpen, setIsSubinOpen] = useState(false);
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen);
+
+    const expedCarouselRef = useRef(null);
+    const expedCarouselProgress = useTransform(scrollProgress, [0.30, 0.37], [0, 1]);
+    useEffect(() => {
+        return expedCarouselProgress.on("change", (latest) => {
+            const el = expedCarouselRef.current;
+            if (!el) return;
+            const maxScroll = el.scrollWidth - el.clientWidth;
+            el.scrollLeft = Math.max(0, Math.min(1, latest) * maxScroll);
+        });
+    }, [expedCarouselProgress]);
     
     return (
         <>
@@ -132,18 +149,80 @@ const Expeditions = ({ scrollProgress }) => {
         >
             <motion.div
                 style={{ y: contentY }}
-                className="w-full h-full relative flex flex-col items-center justify-center px-4 md:px-6"
+                className="w-full h-full"
             >
-                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.70] [@media(max-width:767px)]:-translate-y-8 [@media(min-width:768px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
+                {/* ── Mobile carousel ── */}
+                <div className="md:hidden w-full h-full flex flex-col justify-center pointer-events-auto overflow-hidden">
+                    <div className="px-4 shrink-0 text-center mb-2">
+                        <img src={Logo14Summits} alt="14 Summits Logo" className="w-28 mx-auto mb-2 drop-shadow-lg opacity-90" />
+                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-1">04 — Expedice (4500 m)</h4>
+                        <h2 className="font-serif text-2xl text-white leading-tight mb-1">Vydej se se mnou na cesty</h2>
+                        <p className="text-slate-400 font-serif italic text-xs tracking-widest">Dobří parťáci jsou to nejcennější.</p>
+                    </div>
+                    <div className="shrink-0">
+                        <div ref={expedCarouselRef} className="flex gap-3 overflow-x-auto px-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                            {/* S kým do hor card */}
+                            <div className="shrink-0 snap-start w-[82vw] rounded-2xl bg-slate-950/75 backdrop-blur-xl border border-slate-700/50 p-5 flex flex-col gap-3">
+                                <div>
+                                    <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-2">S kým do hor</h3>
+                                    <h2 className="font-serif text-xl text-white leading-tight mb-2">Osmitisícovky i treky bez přetvářky</h2>
+                                    <p className="font-sans text-slate-300 text-xs leading-relaxed">Honza Tráva má za sebou 6 osmitisícovek. Nejsme sterilní cestovka — zakládáme si na osobním přístupu a vlastním týmu šerpů.</p>
+                                </div>
+                                <div className="flex flex-col gap-2 mt-auto">
+                                    <div className="flex gap-2">
+                                        <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O Miri</button>
+                                        <button onClick={() => setIsSubinOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O Subinovi</button>
+                                    </div>
+                                    <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-gradient-to-r from-gold-500 to-gold-600 text-white font-bold uppercase tracking-wider text-xs rounded-xl text-center flex items-center justify-center gap-2">
+                                        Chci do Nepálu <ArrowRight className="w-3.5 h-3.5" />
+                                    </a>
+                                </div>
+                            </div>
+                            {/* Expedition cards */}
+                            {EXPEDITIONS.map((exped) => (
+                                <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[82vw] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.98] transition-transform">
+                                    <div className="w-full aspect-[3/2] overflow-hidden relative">
+                                        <img src={exped.image} className="w-full h-full object-cover" alt={exped.title} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
+                                        <div className="absolute bottom-3 left-3 right-3">
+                                            <h4 className="font-serif text-base text-white leading-tight mb-1.5">{exped.title}</h4>
+                                            <div className="flex gap-2">
+                                                <span className="text-[9px] text-white/70 tracking-wider uppercase bg-white/10 px-2 py-0.5 rounded backdrop-blur-sm">{exped.duration}</span>
+                                                <span className="text-[9px] text-gold-400 tracking-wider uppercase bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm">{exped.difficulty}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="p-3 bg-slate-950/75 backdrop-blur-md">
+                                        <p className="font-sans text-slate-300 text-xs line-clamp-2 leading-relaxed">{exped.description}</p>
+                                        <div className="flex items-center gap-1.5 text-gold-400 text-[10px] font-bold uppercase tracking-wider mt-2">
+                                            Detail <ArrowRight className="w-3 h-3" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* More expeditions card */}
+                            <div onClick={() => setShowAllExpeditions(true)} className="shrink-0 snap-start w-[55vw] rounded-2xl border border-white/20 bg-white/5 flex flex-col items-center justify-center gap-3 cursor-pointer active:scale-[0.98] transition-transform p-5">
+                                <div className="w-12 h-12 rounded-full border border-gold-500/50 flex items-center justify-center bg-gold-500/10">
+                                    <ArrowRight className="w-5 h-5 text-gold-400" />
+                                </div>
+                                <p className="font-sans font-bold text-white text-xs uppercase tracking-widest text-center">Více expedicí</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── Desktop layout ── */}
+                <div className="hidden md:flex w-full h-full flex-col items-center justify-center px-4 md:px-6">
+                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(min-width:768px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
                     <div className="text-center mb-0.5 md:mb-4 xl:mb-6 relative z-10 pt-0 md:pt-0 flex flex-col items-center">
                     <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2 md:mb-3 mt-0.5 md:mt-4">
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2 md:mb-3 mt-0.5 md:mt-4">
                         04 — Expedice (4500 m)
                     </h4>
                     <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 md:mb-2 drop-shadow-md">
                         Vydej se se mnou na cesty
                     </h2>
-                    <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Protože cesta nekončí, když slezeš z hory.</p>
+                    <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Dobří parťáci na cestě jsou to nejcennější.</p>
                 </div>
 
                 <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mt-0">
@@ -248,7 +327,7 @@ const Expeditions = ({ scrollProgress }) => {
                         </motion.div>
 
                         <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/75 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-[11px] font-bold mb-3 md:mb-4 drop-shadow-md">S kým do hor</h3>
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-sm md:text-[11px] font-bold mb-3 md:mb-4 drop-shadow-md">S kým do hor</h3>
                             <h2 className="font-serif text-2xl md:text-3xl text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
                                 Osmitisícovky i treky bez přetvářky
                             </h2>
@@ -259,35 +338,40 @@ const Expeditions = ({ scrollProgress }) => {
                                 Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
                             </p>
                             
-                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4 items-center sm:items-stretch">
-                                <button 
+                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 items-center sm:items-stretch">
+                                <button
                                     onClick={() => setIsMiriOpen(true)}
-                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-3 py-4 md:py-5 px-6 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
+                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
                                     <span className="relative z-10 drop-shadow-md whitespace-nowrap">O Miri</span>
-                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                                 </button>
 
-                                <button 
-                                    onClick={() => {
-                                        const totalHeight = document.body.scrollHeight - window.innerHeight;
-                                        window.scrollTo({
-                                            top: totalHeight * 0.98,
-                                            behavior: 'smooth'
-                                        });
-                                    }}
-                                    className="group relative w-full flex-[1.5] inline-flex items-center justify-center gap-3 py-4 md:py-5 px-6 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
+                                <button
+                                    onClick={() => setIsSubinOpen(true)}
+                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
+                                >
+                                    <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O Subinovi</span>
+                                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                </button>
+
+                                <a
+                                    href="https://14summitsexpedition.cz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group relative w-full flex-[1.4] inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">Chci na expedici</span>
-                                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-                                </button>
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">Chci do Nepálu</span>
+                                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+                                </a>
                             </div>
                         </motion.div>
 
                         <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-[10px] md:text-[11px] font-bold mb-4 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-sm md:text-[11px] font-bold mb-4 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
                             
                             <div className="flex flex-col gap-2 md:gap-3">
                                 {EXPEDITIONS.map((exped) => (
@@ -299,8 +383,8 @@ const Expeditions = ({ scrollProgress }) => {
                                         <div>
                                             <h4 className="font-serif text-lg md:text-xl text-white drop-shadow-md group-hover:text-gold-400 transition-colors">{exped.title}</h4>
                                             <div className="flex gap-4 mt-2">
-                                                <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
-                                                <span className="font-sans text-xs text-slate-200 font-medium tracking-wider uppercase">• {exped.difficulty}</span>
+                                                <span className="font-sans text-sm text-slate-200 font-medium tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
+                                                <span className="font-sans text-sm text-slate-200 font-medium tracking-wider uppercase">• {exped.difficulty}</span>
                                             </div>
                                         </div>
                                         <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-gold-500 group-hover:border-gold-500 transition-colors">
@@ -313,13 +397,14 @@ const Expeditions = ({ scrollProgress }) => {
                             {/* Více expedicí Button */}
                             <button 
                                 onClick={() => setShowAllExpeditions(true)}
-                                className="mt-6 w-full py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-400 transition-all duration-300 flex items-center justify-center gap-3 group shadow-lg shadow-black/20"
+                                className="mt-6 w-full py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-gold-400 transition-all duration-300 flex items-center justify-center gap-3 group shadow-lg shadow-black/20"
                             >
                                 <span className="drop-shadow-sm transition-colors">Více expedicí</span>
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
                             </button>
                         </motion.div>
                     </div>
+                </div>
                 </div>
                 </div>
             </motion.div>
@@ -630,6 +715,93 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </>
                         )}
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── SUBIN BIOGRAPHICAL MODAL ── */}
+        <AnimatePresence>
+            {isSubinOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setIsSubinOpen(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                    >
+                        <button
+                            onClick={() => setIsSubinOpen(false)}
+                            className="absolute top-6 right-6 z-10 p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* Left Content */}
+                        <div
+                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col justify-center text-left overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
+                                Terénní expert & Sherpa
+                            </h4>
+                            <h2 className="font-serif text-4xl md:text-6xl text-slate-900 mb-8 leading-tight">
+                                Subin <span className="italic text-slate-600">Tamang.</span>
+                            </h2>
+
+                            <div className="prose prose-slate prose-lg">
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
+                                    Subin je náš nepostradatelný man on the ground. Nepálský terénní expert, který zná Himálaj jako svůj dvorek — od tras v Khumbu po přístupy na osmitisícovky, které nejsou v žádném průvodci.
+                                </p>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-4">
+                                    Stará se o terénní logistiku přímo v Nepálu: koordinuje místní šerpy, zajišťuje vybavení a zásobování, naviguje skupiny v podmínkách, kdy GPS nestačí. S Subinem nikdy nejdete do neznáma — on tam byl dávno před vámi.
+                                </p>
+                                <p className="font-sans text-slate-700 leading-relaxed">
+                                    Jeho znalost místní kultury, jazyků a kontaktů v horských vesnicích dělá z každé naší expedice zážitek, který jiné cestovní kanceláře prostě nemohou nabídnout.
+                                </p>
+                            </div>
+
+                            <div className="mt-12 pt-8 border-t border-slate-300 flex items-center gap-6">
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">15+</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Let v terénu</div>
+                                </div>
+                                <div className="w-px h-10 bg-slate-200" />
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">Nepal</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Rodná zem</div>
+                                </div>
+                                <div className="w-px h-10 bg-slate-200" />
+                                <div className="text-center">
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">8000m</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Zkušenosti</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Gallery Grid */}
+                        <div
+                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 grid-rows-2 gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-1">
+                                <img src={SubinLead} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery1} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery2} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                        </div>
                     </motion.div>
                 </motion.div>
             )}

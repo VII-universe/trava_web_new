@@ -47,13 +47,13 @@ const Nepal = ({ scrollProgress }) => {
     // Prevent body scroll when any modal is open
     useScrollLock(openHotel || openPub || selectedImage);
 
-    // PHASE 5: 0.42 -> 0.58 with hold (minimum gap to Expedice)
-    const containerOpacity = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.42, 0.46, 0.54, 0.58], ["-120%", "0%", "0%", "130%"]);
-    const bgY = useTransform(scrollProgress, [0.38, 0.62], ["-15%", "15%"]);
-    
+    // PHASE 5: 0.38 -> 0.49 with hold
+    const containerOpacity = useTransform(scrollProgress, [0.38, 0.42, 0.48, 0.52], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.38, 0.42, 0.48, 0.52], ["-120%", "0%", "0%", "130%"]);
+    const bgY = useTransform(scrollProgress, [0.34, 0.56], ["-15%", "15%"]);
+
     // Background image fades in from 0
-    const imageOpacity = useTransform(scrollProgress, [0.42, 0.46], [0, 1]);
+    const imageOpacity = useTransform(scrollProgress, [0.38, 0.42], [0, 1]);
 
     return (
         <>
@@ -80,7 +80,7 @@ const Nepal = ({ scrollProgress }) => {
             <div
                 className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none"
             >
-                <div className="w-full flex items-center justify-center p-2 md:p-6 lg:p-8 xl:px-12 pointer-events-none origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.72] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+                <div className="w-full flex items-center justify-center p-2 md:p-6 lg:p-8 xl:px-12 pointer-events-none origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-[0.95] [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
                     {/* Single main glass card combining Hotel, Pub and Gallery */}
                     <motion.div 
                         className="max-w-5xl w-full bg-white/85 backdrop-blur-2xl border border-white/60 shadow-2xl rounded-2xl md:rounded-[2rem] p-4 md:p-6 lg:p-10 flex flex-col pointer-events-auto overflow-hidden"
@@ -89,7 +89,7 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="text-center mb-2 md:mb-6">
                         <div className="flex items-center justify-center gap-2 text-gold-600 mb-2 md:mb-3">
                             <MapPin className="w-4 h-4 md:w-5 md:h-5" />
-                            <span className="text-[10px] md:text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
+                            <span className="text-xs tracking-widest font-bold uppercase">Kathmandu Base Camp</span>
                         </div>
                         <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-slate-900 leading-tight">Cesta nekončí, když slezeš z hory</h2>
                     </div>
@@ -97,13 +97,13 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[100px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-6 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-6 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
                             <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
                             <button
                                 onClick={() => setOpenHotel(true)}
-                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
+                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-[0.18em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
                             >
                                 Více & galerie
                             </button>
@@ -111,13 +111,13 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[100px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-6 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-6 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
                             <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
                             <button
                                 onClick={() => setOpenPub(true)}
-                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
+                                className="mt-4 md:mt-6 px-5 py-2 md:px-6 md:py-3 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-[0.18em] font-bold rounded-full transition-all duration-300 shadow-md hover:shadow-xl self-start w-max"
                             >
                                 Více & galerie
                             </button>
@@ -184,7 +184,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-8 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-8 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
                             <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
@@ -217,7 +217,7 @@ const Nepal = ({ scrollProgress }) => {
                             </div>
 
                             <div className="mt-auto flex flex-col sm:flex-row gap-4">
-                                <a href="#" className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-xl uppercase tracking-widest text-xs font-bold hover:bg-gold-600 transition shadow-lg shadow-slate-900/20">
+                                <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-xl uppercase tracking-widest text-xs font-bold hover:bg-gold-600 transition shadow-lg shadow-slate-900/20">
                                     Rezervovat pokoj <ExternalLink className="w-4 h-4"/>
                                 </a>
                             </div>
@@ -265,7 +265,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[120px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-8 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-8 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
                             <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Místo, kde se potkávají dobrodruzi</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
@@ -298,7 +298,7 @@ const Nepal = ({ scrollProgress }) => {
                             </div>
 
                             <div className="mt-auto flex flex-col sm:flex-row gap-4">
-                                <a href="#" className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-xl uppercase tracking-widest text-xs font-bold hover:bg-gold-600 transition shadow-lg shadow-slate-900/20">
+                                <a href="https://maps.app.goo.gl/czechpubnepal" target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center items-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-xl uppercase tracking-widest text-xs font-bold hover:bg-gold-600 transition shadow-lg shadow-slate-900/20">
                                     Navštívit na mapě <ExternalLink className="w-4 h-4"/>
                                 </a>
                             </div>

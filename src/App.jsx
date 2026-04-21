@@ -6,8 +6,9 @@ import About from './components/About';
 import Icefall from './components/Icefall';
 import Expeditions from './components/Expeditions';
 import Nepal from './components/Nepal';
+import Eshop from './components/Eshop';
 import Lectures from './components/Lectures';
-import Summit from './components/Summit';
+import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Altimeter from './components/Altimeter';
 import ProgressBar from './components/ProgressBar';
@@ -46,8 +47,8 @@ function App() {
       <ScrollLockHandler />
       <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
-        {/* Mobile scroll-snap anchors — invisible, snap touch swipes to section starts */}
-        {[0.00, 0.12, 0.19, 0.28, 0.44, 0.54, 0.68, 0.79, 0.96].map((pct, i) => (
+        {/* Mobile scroll-snap anchors — 10 sections */}
+        {[0.00, 0.08, 0.18, 0.27, 0.38, 0.49, 0.59, 0.68, 0.77, 0.87].map((pct, i) => (
           <div
             key={i}
             className="absolute w-full h-0 scroll-snap-anchor-start"
@@ -69,31 +70,34 @@ function App() {
           {/* Cloud transitions between sections */}
           <CloudLayer scrollProgress={smoothProgress} />
 
-          {/* Phase 1: Hero (0.0 - 0.2) */}
+          {/* Phase 1: Hero (0.00 - 0.11) */}
           <Hero scrollProgress={smoothProgress} />
 
-          {/* Phase 2: About / Base Camp (0.2 - 0.4) */}
+          {/* Phase 2: O Honzovi (0.08 - 0.21) */}
           <About scrollProgress={smoothProgress} />
 
-          {/* Phase 3: Partneři — flags rope (0.32 - 0.50) */}
+          {/* Phase 3: Partneři (0.18 - 0.30) */}
           <Icefall scrollProgress={smoothProgress} />
 
-          {/* Phase 4: Expedice & 14Summits (0.48 - 0.66) */}
+          {/* Phase 4: Expedice & 14Summits (0.27 - 0.41) */}
           <Expeditions scrollProgress={smoothProgress} />
 
-          {/* Phase 5: Nepal — Pub & Hotel (0.64 - 0.80) */}
+          {/* Phase 5: Nepal — Pub & Hotel (0.38 - 0.52) */}
           <Nepal scrollProgress={smoothProgress} />
 
-          {/* Phase 6: Projekty & Přednášky (0.78 - 0.90) */}
+          {/* Phase 6: E-shop (0.49 - 0.62) */}
+          <Eshop scrollProgress={smoothProgress} />
+
+          {/* Phase 7: Přednášky (0.59 - 0.71) */}
           <Lectures scrollProgress={smoothProgress} />
 
-          {/* Phase 7: Média & Obsah (0.86 - 0.96) */}
+          {/* Phase 8: Projekty (0.68 - 0.80) */}
+          <Projects scrollProgress={smoothProgress} />
+
+          {/* Phase 9: Média & Obsah (0.77 - 0.90) */}
           <Media scrollProgress={smoothProgress} />
 
-          {/* Phase 8: Zdravotní osvěta (0.90 - 0.98) */}
-          <Summit scrollProgress={smoothProgress} />
-
-          {/* Phase 9: Kontakt (0.96 - 1.0) */}
+          {/* Phase 10: Kontakt (0.87 - 1.0) */}
           <Contact scrollProgress={smoothProgress} />
         </div>
       </div>
