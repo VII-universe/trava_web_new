@@ -735,15 +735,20 @@ const Icefall = ({ scrollProgress }) => {
                                 </AnimatePresence>
                             </div>
 
-                            {/* Right: Scrollable content — partner detail or event detail */}
-                            <div className="relative flex-1 overflow-hidden">
-                                <button
-                                    onClick={closeModal}
-                                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-white transition-colors"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
+                            {/* Right: close row + scrollable content */}
+                            <div className="flex-1 flex flex-col min-h-0">
+                                {/* Close button — stays outside scroll area so it's always visible */}
+                                <div className="shrink-0 flex justify-end px-4 pt-4 pb-1">
+                                    <button
+                                        onClick={closeModal}
+                                        className="p-2 rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-white transition-colors"
+                                    >
+                                        <X className="w-5 h-5" />
+                                    </button>
+                                </div>
 
+                                {/* Scroll container — flex-1 + min-h-0 is the key for mobile flex overflow */}
+                                <div className="flex-1 overflow-y-auto overscroll-contain min-h-0" data-lenis-prevent>
                                 <AnimatePresence mode="wait">
                                     {selectedEvent ? (
                                         /* ── Event detail panel ── */
@@ -753,10 +758,8 @@ const Icefall = ({ scrollProgress }) => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: -24 }}
                                             transition={{ duration: 0.25, ease: 'easeOut' }}
-                                            className="h-full overflow-y-auto overscroll-contain"
-                                            data-lenis-prevent
                                         >
-                                            <div className="p-6 md:p-10 pt-14 md:pt-12 space-y-6">
+                                            <div className="px-6 pb-8 md:px-10 md:pb-10 space-y-6">
                                                 <button
                                                     onClick={() => setSelectedEvent(null)}
                                                     className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
@@ -801,10 +804,8 @@ const Icefall = ({ scrollProgress }) => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: 24 }}
                                             transition={{ duration: 0.25, ease: 'easeOut' }}
-                                            className="h-full overflow-y-auto overscroll-contain"
-                                            data-lenis-prevent
                                         >
-                                            <div className="p-6 md:p-10 pt-14 md:pt-10 space-y-7">
+                                            <div className="px-6 pb-8 md:px-10 md:pb-10 space-y-7">
 
                                                 {/* Logo mini + quote */}
                                                 <div className="flex items-start gap-4">
@@ -927,7 +928,8 @@ const Icefall = ({ scrollProgress }) => {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                            </div>
+                                </div>{/* end scroll container */}
+                            </div>{/* end flex-col right panel */}
                         </motion.div>
                     </motion.div>
                 )}
