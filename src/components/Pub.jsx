@@ -134,11 +134,11 @@ const Pub = ({ scrollProgress }) => {
                 <div className="flex md:hidden w-full overflow-hidden pointer-events-none" style={{ paddingLeft: '9vw' }}>
                     <motion.div
                         ref={trackRef}
-                        className="flex gap-3"
-                        style={{ x: trackX }}
+                        className="flex gap-3 pointer-events-auto"
+                        style={{ x: trackX, touchAction: 'pan-y' }}
                         drag="x"
                         dragConstraints={{ left: -(window.innerWidth * 0.82 + 12), right: 0 }}
-                        dragElastic={0.08}
+                        dragElastic={0.05}
                         dragMomentum={false}
                         onDragStart={() => { isDragging.current = true; }}
                         onDragEnd={(_, info) => {
@@ -146,14 +146,14 @@ const Pub = ({ scrollProgress }) => {
                             const cardW = window.innerWidth * 0.82 + 12;
                             const cur = trackX.get();
                             const totalH = document.documentElement.scrollHeight - window.innerHeight;
-                            const fastLeft  = info.velocity.x < -200;
-                            const fastRight = info.velocity.x > 200;
-                            if ((cur < -cardW * 0.3 || fastLeft)  && activeDot === 0) {
-                                lenis?.scrollTo(totalH * 0.525, { duration: 0.7 });
-                            } else if ((cur > -cardW * 0.7 || fastRight) && activeDot === 1) {
-                                lenis?.scrollTo(totalH * 0.495, { duration: 0.7 });
+                            const fastLeft  = info.velocity.x < -300;
+                            const fastRight = info.velocity.x > 300;
+                            if ((cur < -cardW * 0.35 || fastLeft) && activeDot === 0) {
+                                lenis?.scrollTo(totalH * 0.525, { duration: 0.6 });
+                            } else if ((cur > -cardW * 0.65 || fastRight) && activeDot === 1) {
+                                lenis?.scrollTo(totalH * 0.495, { duration: 0.6 });
                             } else {
-                                fmAnimate(trackX, activeDot === 1 ? -cardW : 0, { duration: 0.3, ease: [0.25, 1, 0.5, 1] });
+                                fmAnimate(trackX, activeDot === 1 ? -cardW : 0, { duration: 0.35, ease: [0.25, 1, 0.5, 1] });
                             }
                         }}
                     >
@@ -201,8 +201,8 @@ const Pub = ({ scrollProgress }) => {
                             <div className="relative flex-1 min-h-0 mb-2 overflow-hidden rounded-xl">
                                 <motion.div
                                     ref={mobRef}
-                                    className="flex gap-1.5 h-full cursor-grab active:cursor-grabbing select-none"
-                                    style={{ x: mobX }}
+                                    className="flex gap-1.5 h-full cursor-grab active:cursor-grabbing select-none pointer-events-auto"
+                                    style={{ x: mobX, touchAction: 'pan-y' }}
                                     drag="x"
                                     dragConstraints={{ left: -9999, right: 9999 }}
                                     dragElastic={0}

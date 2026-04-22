@@ -39,12 +39,12 @@ function App() {
 
   // Snappier spring on mobile so sections track finger immediately
   const smoothProgress = useSpring(scrollYProgress, isMobile
-    ? { stiffness: 600, damping: 55, restDelta: 0.001 }
+    ? { stiffness: 160, damping: 32, restDelta: 0.001 }
     : { stiffness: 120, damping: 28, restDelta: 0.001 }
   );
 
   return (
-    <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
+    <ReactLenis root options={{ smoothTouch: true, lerp: 0.08, touchMultiplier: 0.7 }}>
       <ScrollLockHandler />
       <div ref={containerRef} className="relative h-[1400vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
