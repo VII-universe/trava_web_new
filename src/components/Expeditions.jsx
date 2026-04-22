@@ -747,7 +747,7 @@ const Expeditions = ({ scrollProgress }) => {
 
                         {/* Left Content */}
                         <div
-                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col justify-center text-left overscroll-contain"
+                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col text-left overscroll-contain"
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
@@ -833,8 +833,8 @@ const Expeditions = ({ scrollProgress }) => {
                         </button>
 
                         {/* Left Content */}
-                        <div 
-                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col justify-center text-left overscroll-contain"
+                        <div
+                            className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar flex flex-col text-left overscroll-contain"
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
