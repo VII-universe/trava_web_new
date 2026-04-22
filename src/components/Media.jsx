@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import {
-    Play, Mic, FileText, X, PlayCircle,
+    Play, Mic, FileText, X,
     ExternalLink, Tv, Radio, Newspaper, Globe, Headphones, ArrowRight
 } from 'lucide-react';
 import ClimbersImg from '../assets/climbers_bg.jpg';
@@ -73,34 +73,44 @@ const PRESS_ITEMS = [
 ];
 
 const TYPE_CONFIG = {
-    'TV':      { Icon: Tv,         color: 'text-blue-600',    bg: 'bg-blue-50',    border: 'border-blue-200'    },
-    'Rádio':   { Icon: Radio,      color: 'text-amber-600',   bg: 'bg-amber-50',   border: 'border-amber-200'   },
-    'Tisk':    { Icon: Newspaper,  color: 'text-violet-600',  bg: 'bg-violet-50',  border: 'border-violet-200'  },
-    'Online':  { Icon: Globe,      color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200' },
-    'Podcast': { Icon: Headphones, color: 'text-gold-600',    bg: 'bg-gold-50',    border: 'border-gold-200'    },
+    'TV':      { Icon: Tv,         accent: 'text-sky-400'     },
+    'Rádio':   { Icon: Radio,      accent: 'text-amber-400'   },
+    'Tisk':    { Icon: Newspaper,  accent: 'text-slate-300'   },
+    'Online':  { Icon: Globe,      accent: 'text-emerald-400' },
+    'Podcast': { Icon: Headphones, accent: 'text-gold-400'    },
 };
+
+const CONTENT_BUTTONS = [
+    { key: 'video',   Icon: Play,     label: 'Vlogy & Expedice', sub: 'YouTube',      iconBg: 'from-red-500 to-red-700',       glow: 'shadow-red-500/30'    },
+    { key: 'podcast', Icon: Mic,      label: 'Podcast',          sub: 'Audio — 2027', iconBg: 'from-violet-500 to-purple-700', glow: 'shadow-violet-500/30' },
+    { key: 'blog',    Icon: FileText, label: 'Psané příběhy',    sub: 'Blog',         iconBg: 'from-gold-500 to-amber-600',    glow: 'shadow-gold-500/30'   },
+];
 
 const TYPES = ['Vše', 'TV', 'Rádio', 'Tisk', 'Online', 'Podcast'];
 const YEARS = ['Vše', 2026, 2025, 2024];
 
-/* ── Press item row (shared between inline + modal) ── */
-const PressRow = ({ item, compact = false }) => {
-    const { Icon, color, bg, border } = TYPE_CONFIG[item.type];
+/* ── Press row — dark (inline) + light (modal) variants ── */
+const PressRow = ({ item, compact = false, dark = false }) => {
+    const { Icon, accent } = TYPE_CONFIG[item.type];
     return (
         <a
             href={item.href}
-            className={`group flex items-center gap-3 bg-white border border-slate-100 rounded-xl hover:border-slate-300 hover:shadow-md transition-all ${compact ? 'p-2.5' : 'p-3.5'}`}
+            className={`group flex items-center gap-3 rounded-xl transition-all ${
+                dark
+                    ? `bg-white/[0.06] border border-white/10 hover:bg-white/[0.11] hover:border-white/20 ${compact ? 'p-2.5' : 'p-3'}`
+                    : `bg-white border border-slate-100 hover:border-slate-200 hover:shadow-md ${compact ? 'p-2.5' : 'p-3.5'}`
+            }`}
         >
-            <div className={`shrink-0 rounded-lg border flex items-center justify-center ${bg} ${border} ${compact ? 'w-7 h-7' : 'w-9 h-9'}`}>
-                <Icon className={`${compact ? 'w-3 h-3' : 'w-4 h-4'} ${color}`} />
+            <div className={`shrink-0 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-md ${compact ? 'w-8 h-8' : 'w-9 h-9'}`}>
+                <Icon className={`${compact ? 'w-3.5 h-3.5' : 'w-4 h-4'} ${accent}`} />
             </div>
             <div className="flex-1 min-w-0">
-                <p className={`font-sans font-bold text-slate-700 truncate ${compact ? 'text-[11px]' : 'text-xs md:text-sm'}`}>{item.outlet}</p>
-                <p className={`font-sans text-slate-400 truncate ${compact ? 'text-[10px]' : 'text-[11px] md:text-xs'}`}>{item.title}</p>
+                <p className={`font-sans font-bold truncate ${compact ? 'text-[11px]' : 'text-xs md:text-sm'} ${dark ? 'text-white/90' : 'text-slate-800'}`}>{item.outlet}</p>
+                <p className={`font-sans truncate ${compact ? 'text-[10px]' : 'text-[11px] md:text-xs'} ${dark ? 'text-white/40' : 'text-slate-400'}`}>{item.title}</p>
             </div>
             <div className="shrink-0 flex items-center gap-2">
-                <span className={`text-slate-400 font-mono hidden md:block ${compact ? 'text-[10px]' : 'text-[11px]'}`}>{item.date}</span>
-                <ExternalLink className={`text-slate-300 group-hover:text-slate-600 transition-colors ${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'}`} />
+                <span className={`font-mono hidden md:block ${compact ? 'text-[10px]' : 'text-[11px]'} ${dark ? 'text-white/30' : 'text-slate-400'}`}>{item.date}</span>
+                <ExternalLink className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'} transition-colors ${dark ? 'text-white/20 group-hover:text-white/50' : 'text-slate-300 group-hover:text-slate-500'}`} />
             </div>
         </a>
     );
@@ -118,6 +128,7 @@ const Media = ({ scrollProgress }) => {
     // PHASE 10: 0.77 -> 0.90
     const containerOpacity = useTransform(scrollProgress, [0.77, 0.80, 0.87, 0.90], [0, 1, 1, 0]);
     const y = useTransform(scrollProgress, [0.77, 0.80, 0.87, 0.90], ["-120%", "0%", "0%", "100%"]);
+    const bgParallax = useTransform(scrollProgress, [0.75, 0.92], ['-10%', '10%']);
 
     const filteredPress = useMemo(() => PRESS_ITEMS.filter(item => {
         const typeMatch = pressFilter === 'Vše' || item.type === pressFilter;
@@ -127,11 +138,21 @@ const Media = ({ scrollProgress }) => {
 
     return (
         <>
-        {/* BACKGROUND */}
+        {/* BACKGROUND — dark cinematic mountain photo */}
         <motion.div
             style={{ opacity: containerOpacity, y, zIndex: 0 }}
-            className="absolute inset-0 w-full h-full bg-[#f8f9fa] pointer-events-none"
-        />
+            className="absolute inset-0 pointer-events-none overflow-hidden"
+        >
+            <motion.div style={{ y: bgParallax }} className="absolute inset-0 scale-110 origin-center">
+                <img src={ClimbersImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            </motion.div>
+            {/* Main dark overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/88" />
+            {/* Top gold-tinted atmospheric glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_35%_at_50%_0%,rgba(212,175,55,0.07)_0%,transparent_70%)]" />
+            {/* Bottom dark anchor */}
+            <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-slate-950/70 to-transparent" />
+        </motion.div>
 
         {/* CONTENT */}
         <motion.div
@@ -141,20 +162,21 @@ const Media = ({ scrollProgress }) => {
             {/* ── Mobile layout ── */}
             <div className="md:hidden w-full h-full flex flex-col pointer-events-auto overflow-hidden">
 
-                {/* Dark photo header — title + stats overlaid on mountain photo */}
-                <div className="shrink-0 relative overflow-hidden" style={{ height: '42%' }}>
+                {/* Photo header */}
+                <div className="shrink-0 relative overflow-hidden" style={{ height: '38%' }}>
                     <img src={BaseCampImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900/75 via-slate-900/60 to-[#f8f9fa]" />
-                    <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 pb-6 gap-3">
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/55 to-slate-950/80" />
+                    <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 pb-4 gap-3">
                         <div className="text-center">
-                            <h4 className="text-gold-400 font-sans uppercase tracking-[0.3em] text-[9px] font-bold mb-1.5">
-                                09 — Média &amp; Obsah
-                            </h4>
+                            <div className="flex items-center justify-center gap-2 mb-2">
+                                <div className="h-px w-6 bg-gold-400/60" />
+                                <span className="text-gold-400 font-mono uppercase tracking-[0.3em] text-[9px] font-bold">09 — Média</span>
+                                <div className="h-px w-6 bg-gold-400/60" />
+                            </div>
                             <h2 className="font-serif text-2xl text-white leading-tight">
                                 Příběhy z batohu i éteru
                             </h2>
                         </div>
-                        {/* Stats inline in photo header */}
                         <div className="flex gap-6">
                             {[
                                 { num: '16+', label: 'Médií' },
@@ -163,33 +185,29 @@ const Media = ({ scrollProgress }) => {
                             ].map(({ num, label }) => (
                                 <div key={label} className="text-center">
                                     <p className="font-serif text-2xl text-white font-bold leading-none">{num}</p>
-                                    <p className="text-white/60 text-[9px] uppercase tracking-wider font-bold mt-0.5">{label}</p>
+                                    <p className="text-white/50 text-[9px] uppercase tracking-wider font-bold mt-0.5">{label}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/* Light content area */}
+                {/* Dark content area */}
                 <div className="flex-1 flex flex-col min-h-0 px-4 pt-3 pb-3 gap-2.5 overflow-hidden">
 
-                    {/* Own content — horizontal 3-tile strip */}
+                    {/* Own content tiles */}
                     <div className="shrink-0 flex gap-2">
-                        {[
-                            { data: MEDIA_DATA.video[0],   Icon: Play,     label: 'YouTube', sub: 'Vlogy' },
-                            { data: MEDIA_DATA.podcast[0], Icon: Mic,      label: 'Podcast', sub: '2027' },
-                            { data: MEDIA_DATA.blog[0],    Icon: FileText, label: 'Blog',    sub: 'Zápisky' },
-                        ].map(({ data, Icon, label, sub }) => (
+                        {CONTENT_BUTTONS.map(({ key, Icon, label, sub, iconBg, glow }) => (
                             <button
-                                key={data.id}
-                                onClick={() => setActiveItem(data)}
-                                className="flex-1 flex flex-col items-center gap-1.5 py-3 px-2 bg-white border border-slate-200 rounded-xl hover:border-gold-400 hover:bg-gold-50/30 transition-all shadow-sm active:scale-95"
+                                key={key}
+                                onClick={() => setActiveItem(MEDIA_DATA[key][0])}
+                                className="flex-1 flex flex-col items-center gap-2 py-3 px-2 bg-white/[0.07] border border-white/10 rounded-xl hover:bg-white/[0.12] hover:border-white/20 transition-all active:scale-95"
                             >
-                                <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                                    <Icon className="w-4 h-4 text-slate-600" fill={Icon === Play ? 'currentColor' : 'none'} />
+                                <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${iconBg} flex items-center justify-center shadow-lg ${glow}`}>
+                                    <Icon className="w-4 h-4 text-white" fill={key === 'video' ? 'currentColor' : 'none'} />
                                 </div>
-                                <p className="font-sans font-bold text-slate-800 text-[10px] uppercase tracking-wider">{label}</p>
-                                <p className="font-sans text-slate-400 text-[9px]">{sub}</p>
+                                <p className="font-sans font-bold text-white/80 text-[10px] uppercase tracking-wider leading-none">{label}</p>
+                                <p className="font-sans text-white/35 text-[9px] leading-none">{sub}</p>
                             </button>
                         ))}
                     </div>
@@ -197,22 +215,20 @@ const Media = ({ scrollProgress }) => {
                     {/* Press section — mobile */}
                     <div className="flex-1 flex flex-col min-h-0">
                         <div className="flex items-center justify-between mb-1.5 shrink-0">
-                            <span className="text-slate-500 font-sans text-[9px] uppercase tracking-[0.25em] font-bold">V médiích</span>
-                            <span className="text-slate-400 text-[9px] font-mono">{filteredPress.length} výstupů</span>
+                            <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.25em] font-bold">V médiích</span>
+                            <span className="text-white/30 text-[9px] font-mono">{filteredPress.length} výstupů</span>
                         </div>
-
-                        {/* Mobile filter pills */}
                         <div className="flex flex-wrap gap-1 mb-2 shrink-0">
                             {TYPES.map(t => (
                                 <button key={t} onClick={() => setPressFilter(t)}
                                     className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider transition-all border ${
-                                        pressFilter === t ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200'
+                                        pressFilter === t
+                                            ? 'bg-white/90 text-slate-900 border-white/80'
+                                            : 'bg-white/[0.07] text-white/50 border-white/15 hover:text-white/80'
                                     }`}
                                 >{t}</button>
                             ))}
                         </div>
-
-                        {/* Mobile press list */}
                         <div className="flex flex-col gap-1.5 overflow-hidden">
                             <AnimatePresence mode="popLayout">
                                 {filteredPress.slice(0, 3).map((item, idx) => (
@@ -222,15 +238,14 @@ const Media = ({ scrollProgress }) => {
                                         exit={{ opacity: 0 }}
                                         transition={{ delay: idx * 0.04 }}
                                     >
-                                        <PressRow item={item} compact />
+                                        <PressRow item={item} compact dark />
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
                         </div>
-
                         {filteredPress.length > 3 && (
                             <button onClick={() => setShowAllPress(true)}
-                                className="mt-1.5 text-center text-[9px] font-bold uppercase tracking-wider text-gold-600 flex items-center justify-center gap-1 shrink-0"
+                                className="mt-1.5 text-center text-[9px] font-bold uppercase tracking-wider text-gold-400 flex items-center justify-center gap-1 shrink-0"
                             >
                                 Zobrazit všech {filteredPress.length} <ArrowRight className="w-3 h-3" />
                             </button>
@@ -241,69 +256,69 @@ const Media = ({ scrollProgress }) => {
 
             {/* ── Desktop layout ── */}
             <div className="hidden md:flex w-full h-full items-center justify-center px-8 lg:px-16 xl:px-20 pointer-events-auto">
-                <div className="w-full max-w-6xl flex flex-col gap-6 lg:gap-8">
+                <div className="w-full max-w-6xl flex flex-col gap-5 lg:gap-7">
 
                     {/* Desktop header */}
                     <div className="text-center shrink-0">
-                        <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2">
-                            09 — Média &amp; Obsah (7800 m)
-                        </h4>
-                        <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl text-slate-900 leading-tight mb-2">
-                            Příběhy, které se<br /> do batohu nevešly
+                        <div className="flex items-center justify-center gap-3 mb-3">
+                            <div className="h-px w-12 bg-gold-400/50" />
+                            <span className="text-gold-400 font-mono uppercase tracking-[0.35em] text-[10px] font-bold">09 — Média &amp; Obsah</span>
+                            <div className="h-px w-12 bg-gold-400/50" />
+                        </div>
+                        <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl text-white leading-tight mb-2">
+                            Příběhy, které se<br />
+                            <span className="italic text-white/60">do batohu nevešly</span>
                         </h2>
-                        <p className="font-sans text-slate-500 text-sm lg:text-base max-w-lg mx-auto">
+                        <p className="font-sans text-white/45 text-sm lg:text-base max-w-lg mx-auto">
                             Vlastní obsah z expedic i mediální výstupy — vše na jednom místě.
                         </p>
                     </div>
 
                     {/* Two-column body */}
-                    <div className="grid grid-cols-[5fr_8fr] gap-8 lg:gap-12 xl:gap-16 w-full">
+                    <div className="grid grid-cols-[5fr_8fr] gap-8 lg:gap-12 xl:gap-14 w-full">
 
                         {/* Left: Own content */}
                         <div>
                             {/* Featured photo card */}
-                            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-md group cursor-pointer"
+                            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-2xl group cursor-pointer border border-white/10"
                                 onClick={() => setActiveItem(MEDIA_DATA.video[0])}
                             >
-                                <img src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                                <img src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
+                                <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-4">
-                                    <p className="text-gold-400 font-sans text-[10px] font-bold uppercase tracking-widest mb-1">Vlastní obsah</p>
+                                    <p className="text-gold-400 font-mono text-[9px] font-bold uppercase tracking-widest mb-1">Vlastní obsah</p>
                                     <h5 className="font-serif text-white text-lg leading-tight">Přímý přenos z expedic</h5>
-                                    <p className="font-sans text-white/60 text-xs mt-0.5">Vlogy · Podcast · Blog</p>
+                                    <p className="font-sans text-white/45 text-xs mt-0.5">Vlogy · Podcast · Blog</p>
                                 </div>
                                 <div className="absolute top-3 right-3 flex gap-1.5">
                                     {[
                                         { num: '9+', label: 'videí' },
                                         { num: '9+', label: 'podcastů' },
                                     ].map(({ num, label }) => (
-                                        <div key={label} className="bg-slate-900/70 backdrop-blur-sm px-2.5 py-1 rounded-full text-center">
+                                        <div key={label} className="bg-slate-950/70 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/10">
                                             <span className="font-serif text-white font-bold text-sm">{num}</span>
-                                            <span className="font-sans text-white/60 text-[9px] ml-1">{label}</span>
+                                            <span className="font-sans text-white/50 text-[9px] ml-1">{label}</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                {[
-                                    { data: MEDIA_DATA.video[0],   Icon: Play,     label: 'Vlogy & Expedice', sub: 'YouTube' },
-                                    { data: MEDIA_DATA.podcast[0], Icon: Mic,      label: 'Podcast',          sub: 'Audio — 2027' },
-                                    { data: MEDIA_DATA.blog[0],    Icon: FileText, label: 'Psané příběhy',    sub: 'Blog' },
-                                ].map(({ data, Icon, label, sub }) => (
+                                {CONTENT_BUTTONS.map(({ key, Icon, label, sub, iconBg, glow }) => (
                                     <button
-                                        key={data.id}
-                                        onClick={() => setActiveItem(data)}
-                                        className="group flex items-center gap-3.5 p-3.5 bg-white border border-slate-200 rounded-xl hover:border-gold-400 hover:bg-gold-50/40 transition-all text-left shadow-sm hover:shadow-md"
+                                        key={key}
+                                        onClick={() => setActiveItem(MEDIA_DATA[key][0])}
+                                        className="group flex items-center gap-3.5 p-3 bg-white/[0.06] border border-white/[0.09] rounded-xl hover:bg-white/[0.11] hover:border-white/20 transition-all text-left"
                                     >
-                                        <div className="w-10 h-10 rounded-xl bg-slate-100 group-hover:bg-gold-500 flex items-center justify-center transition-colors shrink-0">
-                                            <Icon className="w-4 h-4 text-slate-600 group-hover:text-white transition-colors" fill={Icon === Play ? 'currentColor' : 'none'} />
+                                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${iconBg} flex items-center justify-center shadow-lg ${glow} shrink-0 group-hover:scale-105 transition-transform duration-200`}>
+                                            <Icon className="w-4.5 h-4.5 text-white" fill={key === 'video' ? 'currentColor' : 'none'} />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-sans font-bold text-slate-800 text-xs uppercase tracking-widest">{label}</p>
-                                            <p className="font-sans text-slate-400 text-[11px] mt-0.5">{sub}</p>
+                                            <p className="font-sans font-bold text-white/85 text-xs uppercase tracking-widest">{label}</p>
+                                            <p className="font-sans text-white/35 text-[11px] mt-0.5">{sub}</p>
                                         </div>
-                                        <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-gold-500 shrink-0 group-hover:translate-x-0.5 transition-all" />
+                                        <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-white/60 shrink-0 group-hover:translate-x-1 transition-all duration-200" />
                                     </button>
                                 ))}
                             </div>
@@ -312,10 +327,10 @@ const Media = ({ scrollProgress }) => {
                         {/* Right: Press */}
                         <div>
                             <div className="flex items-center justify-between mb-3">
-                                <h5 className="text-slate-400 font-sans text-[10px] uppercase tracking-[0.3em] font-bold">
+                                <h5 className="text-white/40 font-mono text-[10px] uppercase tracking-[0.3em] font-bold">
                                     V médiích
                                 </h5>
-                                <span className="text-slate-400 text-[10px] font-mono">{filteredPress.length} výstupů</span>
+                                <span className="text-white/25 text-[10px] font-mono">{filteredPress.length} výstupů</span>
                             </div>
 
                             {/* Filter bar */}
@@ -323,22 +338,26 @@ const Media = ({ scrollProgress }) => {
                                 {TYPES.map(t => (
                                     <button key={t} onClick={() => setPressFilter(t)}
                                         className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all border ${
-                                            pressFilter === t ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'
+                                            pressFilter === t
+                                                ? 'bg-white/90 text-slate-900 border-white/80'
+                                                : 'bg-white/[0.06] text-white/50 border-white/10 hover:bg-white/[0.11] hover:text-white/80 hover:border-white/20'
                                         }`}
                                     >{t}</button>
                                 ))}
-                                <span className="w-px bg-slate-200 self-stretch mx-0.5" />
+                                <span className="w-px bg-white/10 self-stretch mx-0.5" />
                                 {YEARS.map(yr => (
                                     <button key={yr} onClick={() => setPressYear(yr === pressYear ? 'Vše' : yr)}
                                         className={`px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest transition-all border ${
-                                            pressYear === yr ? 'bg-gold-500 text-white border-gold-500' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'
+                                            pressYear === yr
+                                                ? 'bg-gold-500 text-white border-gold-500'
+                                                : 'bg-white/[0.06] text-white/50 border-white/10 hover:bg-white/[0.11] hover:text-white/80 hover:border-white/20'
                                         }`}
                                     >{yr}</button>
                                 ))}
                             </div>
 
                             {/* Press list */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1.5">
                                 <AnimatePresence mode="popLayout">
                                     {filteredPress.slice(0, 5).map((item, idx) => (
                                         <motion.div key={item.id}
@@ -347,7 +366,7 @@ const Media = ({ scrollProgress }) => {
                                             exit={{ opacity: 0, x: 8 }}
                                             transition={{ delay: idx * 0.04, duration: 0.2 }}
                                         >
-                                            <PressRow item={item} />
+                                            <PressRow item={item} dark />
                                         </motion.div>
                                     ))}
                                 </AnimatePresence>
@@ -355,7 +374,7 @@ const Media = ({ scrollProgress }) => {
 
                             {filteredPress.length > 5 && (
                                 <button onClick={() => setShowAllPress(true)}
-                                    className="mt-3 w-full text-center text-[10px] font-bold uppercase tracking-widest text-gold-600 hover:text-gold-500 transition-colors flex items-center justify-center gap-1.5"
+                                    className="mt-3 w-full text-center text-[10px] font-bold uppercase tracking-widest text-gold-400 hover:text-gold-300 transition-colors flex items-center justify-center gap-1.5"
                                 >
                                     Zobrazit všech {filteredPress.length} výstupů
                                     <ArrowRight className="w-3 h-3" />
@@ -367,7 +386,7 @@ const Media = ({ scrollProgress }) => {
             </div>
         </motion.div>
 
-        {/* ── Own content detail modal ── */}
+        {/* ── Own content detail modal (light) ── */}
         <AnimatePresence>
             {activeItem && (
                 <motion.div
@@ -396,9 +415,11 @@ const Media = ({ scrollProgress }) => {
                                             <div className={`w-full ${activeItem.type === 'video' ? 'md:w-3/5' : 'md:w-1/2'} aspect-video bg-slate-900 rounded-2xl overflow-hidden relative shadow-2xl group`}>
                                                 <img src={activeItem.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500" alt={activeItem.title} />
                                                 <div className="absolute inset-0 flex items-center justify-center">
-                                                    {activeItem.type === 'video'   && <PlayCircle className="w-20 h-20 text-white hover:scale-110 hover:text-gold-400 transition-all cursor-pointer drop-shadow-xl" strokeWidth={1.5} />}
-                                                    {activeItem.type === 'podcast' && <Mic className="w-16 h-16 text-white hover:scale-110 hover:text-gold-400 transition-all cursor-pointer drop-shadow-xl" strokeWidth={1.5} />}
-                                                    {activeItem.type === 'blog'    && <FileText className="w-16 h-16 text-white hover:scale-110 hover:text-gold-400 transition-all cursor-pointer drop-shadow-xl" strokeWidth={1.5} />}
+                                                    <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/25 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all cursor-pointer shadow-2xl">
+                                                        {activeItem.type === 'video'   && <Play     className="w-8 h-8 text-white fill-white ml-1 drop-shadow-lg" />}
+                                                        {activeItem.type === 'podcast' && <Mic      className="w-8 h-8 text-white drop-shadow-lg" strokeWidth={1.5} />}
+                                                        {activeItem.type === 'blog'    && <FileText className="w-8 h-8 text-white drop-shadow-lg" strokeWidth={1.5} />}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="flex-1 text-left flex flex-col justify-center">
@@ -479,7 +500,7 @@ const Media = ({ scrollProgress }) => {
             )}
         </AnimatePresence>
 
-        {/* ── All press modal ── */}
+        {/* ── All press modal (light) ── */}
         <AnimatePresence>
             {showAllPress && (
                 <motion.div
@@ -518,24 +539,24 @@ const Media = ({ scrollProgress }) => {
                         <div className="flex-1 overflow-y-auto p-6 md:p-7 flex flex-col gap-2 overscroll-contain" data-lenis-prevent>
                             <AnimatePresence mode="popLayout">
                                 {filteredPress.map((item, idx) => {
-                                    const { Icon, color, bg, border } = TYPE_CONFIG[item.type];
+                                    const { Icon, accent } = TYPE_CONFIG[item.type];
                                     return (
                                         <motion.a key={item.id} href={item.href}
                                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                                             transition={{ delay: idx * 0.025, duration: 0.2 }}
-                                            className="group flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-slate-300 hover:bg-white hover:shadow-md transition-all"
+                                            className="group flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-xl hover:border-slate-200 hover:shadow-md transition-all"
                                         >
-                                            <div className={`shrink-0 w-10 h-10 rounded-xl border flex items-center justify-center ${bg} ${border}`}>
-                                                <Icon className={`w-4 h-4 ${color}`} />
+                                            <div className="shrink-0 w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-md">
+                                                <Icon className={`w-4 h-4 ${accent}`} />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-sans font-bold text-slate-700 text-xs md:text-sm">{item.outlet}</p>
+                                                <p className="font-sans font-bold text-slate-800 text-xs md:text-sm">{item.outlet}</p>
                                                 <p className="font-sans text-slate-500 text-xs truncate">{item.title}</p>
                                             </div>
                                             <div className="shrink-0 flex items-center gap-2.5">
                                                 <span className="text-slate-400 text-[10px] font-mono hidden md:block">{item.date}</span>
-                                                <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${bg} ${border} ${color}`}>{item.type}</span>
-                                                <ExternalLink className="w-4 h-4 text-slate-300 group-hover:text-slate-600 transition-colors" />
+                                                <span className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">{item.type}</span>
+                                                <ExternalLink className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors" />
                                             </div>
                                         </motion.a>
                                     );

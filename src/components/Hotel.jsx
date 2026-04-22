@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee } from 'lucide-react';
+import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee, Images, ZoomIn } from 'lucide-react';
 
 import HotelBg        from '../assets/zmensene/hotel/czech-pub-highlander-006-hires.jpg';
 import HotelHero      from '../assets/zmensene/hotel/czech-pub-highlander-004-hires.jpg';
@@ -39,6 +39,7 @@ const FEATURES = [
 const Hotel = ({ scrollProgress }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeDot, setActiveDot]         = useState(0);
+    const [galleryOpen, setGalleryOpen]     = useState(false);
     const lenis      = useLenis();
     const trackRef   = useRef(null);
     const trackX     = useMotionValue(0);
@@ -49,12 +50,13 @@ const Hotel = ({ scrollProgress }) => {
     const mobCtrl = useRef(null);
     const mobRun  = useRef(null);
 
-    const dskX    = useMotionValue(0);
-    const dskRef  = useRef(null);
-    const dskCtrl = useRef(null);
-    const dskRun  = useRef(null);
+    const dskX         = useMotionValue(0);
+    const dskRef       = useRef(null);
+    const dskCtrl      = useRef(null);
+    const dskRun       = useRef(null);
+    const dskDragging  = useRef(false);
 
-    useScrollLock(!!selectedImage);
+    useScrollLock(!!selectedImage || galleryOpen);
 
     const si = galleryImages.indexOf(selectedImage);
     const handleNext = (e) => { e.stopPropagation(); setSelectedImage(galleryImages[(si + 1) % galleryImages.length]); };
@@ -171,8 +173,8 @@ const Hotel = ({ scrollProgress }) => {
                                 <img src={HotelHero} className="w-full h-full object-cover" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
-                                    <img src={HotelLogoLight} alt="" className="h-12 w-auto object-contain object-left -ml-1 mb-1.5 pointer-events-none opacity-95" />
-                                    <div className="flex items-center gap-1 text-gold-300 mb-1">
+                                    <img src={HotelLogoLight} alt="" className="h-40 w-auto object-contain object-left -ml-2 mb-1 pointer-events-none opacity-95" />
+                                    <div className="inline-flex items-center gap-1 text-gold-400 mb-1 bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded-full">
                                         <MapPin className="w-3 h-3 flex-shrink-0" />
                                         <span className="text-[9px] uppercase tracking-widest font-bold">Thamel, Káthmándú</span>
                                     </div>
@@ -194,7 +196,6 @@ const Hotel = ({ scrollProgress }) => {
                         {/* Card 2 – Features + Gallery + CTA */}
                         <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl flex flex-col bg-white border border-white/50 p-4 pointer-events-auto"
                              style={{ width: '82vw', height: '76vh' }}>
-                            <img src={HotelLogo} alt="" className="h-[48px] w-auto object-contain object-left -ml-1 -mt-1 mb-2 pointer-events-none" />
                             <div className="grid grid-cols-2 gap-x-2 gap-y-2 mb-3">
                                 {FEATURES.map(({ icon, label }, i) => (
                                     <div key={i} className="flex items-center gap-1.5">
@@ -204,7 +205,10 @@ const Hotel = ({ scrollProgress }) => {
                                 ))}
                             </div>
                             <p className="text-[9px] uppercase tracking-widest font-bold text-slate-400 mb-1.5">Galerie</p>
-                            <div className="relative flex-1 min-h-0 mb-2 overflow-hidden rounded-xl">
+                            <div className="relative flex-1 min-h-0 mb-2 rounded-xl"
+                                style={{ overflowX: 'clip', overflowY: 'visible' }}
+                                onMouseEnter={() => mobCtrl.current?.stop()}
+                                onMouseLeave={() => mobRun.current?.()}>
                                 <motion.div
                                     ref={mobRef}
                                     className="flex gap-1.5 h-full cursor-grab active:cursor-grabbing select-none pointer-events-auto"
@@ -218,13 +222,17 @@ const Hotel = ({ scrollProgress }) => {
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])}
-                                            className="flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 active:scale-[0.97] transition-transform">
+                                            className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 active:scale-[0.97] hover:scale-[2.5] hover:z-10 transition-all duration-300">
                                             <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
                             </div>
                             <div className="flex flex-col gap-2">
+                                <button onClick={() => setGalleryOpen(true)}
+                                    className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-[11px] uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
+                                    <Images className="w-3.5 h-3.5 text-gold-500" /> Celá galerie ({galleryImages.length})
+                                </button>
                                 <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-[11px] uppercase tracking-widest font-bold py-3.5 px-4 rounded-xl transition-all shadow-lg">
                                     Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
@@ -250,7 +258,7 @@ const Hotel = ({ scrollProgress }) => {
                             <img src={HotelHero} className="w-full h-full object-cover" alt="" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/20 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
-                                <div className="flex items-center gap-1.5 text-gold-300 mb-2">
+                                <div className="inline-flex items-center gap-1.5 text-gold-400 mb-2 bg-slate-900/60 backdrop-blur-sm px-2.5 py-1 rounded-full">
                                     <MapPin className="w-3.5 h-3.5" />
                                     <span className="text-[10px] uppercase tracking-[0.2em] font-bold">Thamel, Káthmándú</span>
                                 </div>
@@ -259,7 +267,7 @@ const Hotel = ({ scrollProgress }) => {
                         </div>
                         {/* Right content – no overflow-y, no lenis-prevent → page scroll works freely */}
                         <div className="w-[58%] flex flex-col p-7">
-                            <img src={HotelLogo} alt="" className="h-[150px] lg:h-[190px] w-auto object-contain object-left -mt-9 lg:-mt-12 -ml-5 -mb-7 lg:-mb-9 self-start pointer-events-none scale-125 origin-left drop-shadow-sm" />
+                            <img src={HotelLogo} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none drop-shadow-sm" />
                             <h2 className="font-serif text-2xl lg:text-3xl text-slate-900 mt-4 mb-2 leading-snug">Květinová oáza klidu<br/>uprostřed Thamelu</h2>
                             <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-2">
                                 Jsme na dosah dění, a přesto tu vládne ticho. Snídaně plná čerstvého ovoce, pečiva a vajec tě připraví na výpravu nebo vrátí do pořádku po návratu z hor. Zahrada plná květin — útočiště od káthmándúského ruchu.
@@ -276,26 +284,34 @@ const Hotel = ({ scrollProgress }) => {
                                 ))}
                             </div>
                             <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-2">Galerie</p>
-                            <div className="overflow-hidden rounded-xl mb-3">
+                            <div className="rounded-xl mb-3"
+                                style={{ overflowX: 'clip', overflowY: 'visible' }}
+                                onMouseEnter={() => dskCtrl.current?.stop()}
+                                onMouseLeave={() => { if (!dskDragging.current) dskRun.current?.(); }}>
                                 <motion.div
                                     ref={dskRef}
                                     className="flex gap-2 cursor-grab active:cursor-grabbing select-none"
-                                    style={{ x: dskX }}
+                                    style={{ x: dskX, touchAction: 'none' }}
                                     drag="x"
                                     dragConstraints={{ left: -9999, right: 9999 }}
                                     dragElastic={0}
                                     dragMomentum={false}
-                                    onDragStart={() => dskCtrl.current?.stop()}
-                                    onDragEnd={() => dskRun.current?.()}
+                                    onDragStart={() => { dskDragging.current = true; dskCtrl.current?.stop(); }}
+                                    onDragEnd={() => { dskDragging.current = false; dskRun.current?.(); }}
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
-                                        <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-slate-200 hover:scale-105 transition-transform shadow-sm">
+                                        <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:scale-[2.5] hover:z-10 transition-all duration-300">
                                             <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
                             </div>
-                            <div className="mt-auto">
+                            <div className="mt-auto flex flex-col gap-2">
+                                <button onClick={() => setGalleryOpen(true)}
+                                    className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 hover:text-slate-900 text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all">
+                                    <Images className="w-4 h-4 text-gold-500" />
+                                    Celá galerie ({galleryImages.length} fotek)
+                                </button>
                                 <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-slate-900/20">
                                     Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
@@ -307,6 +323,51 @@ const Hotel = ({ scrollProgress }) => {
 
             </div>
         </motion.div>
+
+        {/* GALLERY MODAL */}
+        <AnimatePresence>
+            {galleryOpen && (
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className="fixed inset-0 z-[108] bg-slate-950 flex flex-col"
+                >
+                    <div className="flex items-center justify-between px-5 md:px-10 py-4 md:py-5 border-b border-white/10 shrink-0 bg-slate-950/95 backdrop-blur-md">
+                        <div>
+                            <p className="text-gold-400 font-mono text-[10px] uppercase tracking-[0.35em] font-bold mb-0.5">Fotogalerie</p>
+                            <h3 className="text-white font-serif text-lg md:text-2xl leading-none">Hotel Kathmandu Base Camp</h3>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <span className="hidden md:block text-slate-500 font-mono text-sm">{galleryImages.length} fotek</span>
+                            <button onClick={() => setGalleryOpen(false)} className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-3 md:p-6 lg:p-8" data-lenis-prevent>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+                            {galleryImages.map((src, i) => (
+                                <motion.button
+                                    key={i}
+                                    initial={{ opacity: 0, scale: 0.94 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: i * 0.035, duration: 0.3 }}
+                                    onClick={() => { setGalleryOpen(false); setSelectedImage(src); }}
+                                    className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900"
+                                >
+                                    <img src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
+                                        <ZoomIn className="w-7 h-7 text-white drop-shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    </div>
+                                </motion.button>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
 
         {/* LIGHTBOX */}
         <AnimatePresence>

@@ -29,9 +29,9 @@ import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.jpg';
 import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.jpg';
 
 // Subin Assets
-import SubinLead from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
-import SubinGallery1 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07046.jpg';
-import SubinGallery2 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240729_142322.jpg';
+import SubinLead from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07682.jpg';
+import SubinGallery1 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20241015_120407.jpg';
+import SubinGallery2 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240729_142531.jpg';
 
 const EXPEDITIONS = [
     {

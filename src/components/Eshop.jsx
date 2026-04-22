@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ShoppingBag, ExternalLink, X, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ExternalLink, X, ArrowRight, Mountain } from 'lucide-react';
+import IcefallBg from '../assets/icefall_bg.jpg';
 import MedTubaImg from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
-import HonzaProfile from '../assets/honza_profile.png';
 import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.jpg';
 import KnihaImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import TrickoImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
@@ -27,6 +27,9 @@ const PRODUCTS = [
         tag: 'Novinka',
         tagColor: 'bg-emerald-600',
         img: MedTubaImg,
+        highlight: true,
+        highlightBg: 'bg-emerald-600',
+        highlightDot: 'bg-emerald-300',
     },
     {
         id: 'kalendar',
@@ -34,8 +37,11 @@ const PRODUCTS = [
         subtitle: 'Himálaj každý měsíc',
         desc: '12 fotografií z expedic Honzy Trávy. Osm tisícovek, treky, lidé — příběhy, které nevidíte na Instagramu.',
         tag: 'Limitovaná edice',
-        tagColor: 'bg-slate-700',
+        tagColor: 'bg-amber-700',
         img: KalendarImg,
+        highlight: true,
+        highlightBg: 'bg-amber-700',
+        highlightDot: 'bg-amber-300',
     },
     {
         id: 'kniha',
@@ -94,18 +100,31 @@ const Eshop = ({ scrollProgress }) => {
             style={{ opacity: containerOpacity, y: containerY, zIndex: 0 }}
             className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
-            <div className="absolute inset-0 bg-ivory" />
-            <motion.div
-                style={{ y: bgY }}
-                className="absolute inset-0 w-full h-full scale-110 origin-center opacity-15"
-            >
-                <img
-                    src={HonzaProfile}
-                    alt=""
-                    className="w-full h-full object-cover object-right-bottom filter grayscale"
-                />
+            {/* Warm ivory base */}
+            <div className="absolute inset-0 bg-[#F5F0EA]" />
+
+            {/* Icefall rock parallax photo */}
+            <motion.div style={{ y: bgY }} className="absolute inset-0 w-full h-full scale-110 origin-center">
+                <img src={IcefallBg} alt="" className="w-full h-full object-cover object-center"
+                    style={{ opacity: 0.18, filter: 'sepia(0.4) contrast(1.15) brightness(0.95)' }} />
             </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-r from-ivory via-ivory/95 to-ivory/50" />
+
+            {/* Left-to-right ivory curtain — keeps content readable */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#F5F0EA] via-[#F5F0EA]/93 to-[#F5F0EA]/55" />
+
+            {/* Top radial warm light source */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_15%_10%,rgba(245,240,234,0.75)_0%,transparent_70%)]" />
+
+            {/* Bottom atmospheric mist */}
+            <div className="absolute bottom-0 inset-x-0 h-2/5 bg-gradient-to-t from-[#F5F0EA]/85 to-transparent" />
+
+            {/* Subtle warm gold vignette right edge */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_60%_at_95%_50%,rgba(212,175,55,0.06)_0%,transparent_70%)]" />
+
+            {/* Grain texture overlay */}
+            <div className="absolute inset-0 opacity-[0.025]"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'1\'/%3E%3C/svg%3E")',
+                    backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
         </motion.div>
 
         {/* CONTENT */}
@@ -118,16 +137,21 @@ const Eshop = ({ scrollProgress }) => {
 
                 {/* Mobile header */}
                 <div className="shrink-0">
-                    <div className="flex items-center gap-2 mb-1">
-                        <ShoppingBag className="w-3.5 h-3.5 text-gold-500" />
-                        <span className="text-gold-600 font-sans uppercase tracking-[0.25em] text-xs font-bold">E-shop</span>
+                    <div className="flex items-center gap-2 mb-1.5">
+                        <div className="w-px h-3.5 bg-gold-500" />
+                        <ShoppingBag className="w-3 h-3 text-gold-500" />
+                        <span className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[10px] font-bold">E-shop</span>
                     </div>
                     <h2 className="font-serif text-2xl text-slate-900 leading-tight">
-                        Kus cesty <span className="italic text-slate-500">domov.</span>
+                        Kus cesty <span className="italic text-amber-800/70">domov.</span>
                     </h2>
-                    <p className="font-sans text-slate-600 text-sm leading-relaxed mt-1">
+                    <p className="font-sans text-slate-500 text-sm leading-relaxed mt-1">
                         Produkty, které Honza osobně používá a doporučuje.
                     </p>
+                    <div className="mt-2 flex items-center gap-2">
+                        <div className="h-px w-8 bg-gold-400" />
+                        <div className="h-px w-2 bg-gold-400/40" />
+                    </div>
                 </div>
 
                 {/* Horizontal scroll strip — no overflow-y, no scroll trap */}
@@ -158,22 +182,34 @@ const Eshop = ({ scrollProgress }) => {
                             </div>
                         </button>
 
-                        {/* Remaining products — white cards */}
-                        {PRODUCTS.slice(1).map((product) => (
+                        {/* Remaining products — premium light */}
+                        {PRODUCTS.slice(1).map((product, idx) => (
                             <button
                                 key={product.id}
                                 onClick={() => setDetailOpen(product)}
-                                className="shrink-0 snap-start w-[75vw] text-left rounded-xl border border-slate-200 bg-white/80 hover:border-gold-400/60 transition-all duration-300 overflow-hidden shadow-sm active:scale-95"
+                                className="group shrink-0 snap-start w-[75vw] text-left rounded-xl overflow-hidden bg-white border border-slate-100 active:scale-95 transition-all duration-300 shadow-sm"
                             >
-                                <div className="w-full aspect-[4/3] overflow-hidden">
-                                    <img src={product.img} alt={product.name} className="w-full h-full object-cover" />
+                                <div className="relative w-full aspect-[4/3] overflow-hidden">
+                                    <img src={product.img} alt={product.name}
+                                        className="w-full h-full object-cover transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                                    {!product.highlight && (
+                                        <span className={`absolute top-2.5 left-2.5 text-[9px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${product.tagColor} shadow-sm`}>
+                                            {product.tag}
+                                        </span>
+                                    )}
+                                    <span className="absolute top-2.5 right-2.5 font-mono text-[10px] text-white/35 font-black">0{idx + 2}</span>
                                 </div>
-                                <div className="p-2.5">
-                                    <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-1.5 py-0.5 rounded-full ${product.tagColor} inline-block mb-1`}>
-                                        {product.tag}
-                                    </span>
+                                {product.highlight && (
+                                    <div className={`flex items-center gap-2 px-3 py-1.5 ${product.highlightBg}`}>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${product.highlightDot} animate-pulse shrink-0`} />
+                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white">{product.tag}</span>
+                                    </div>
+                                )}
+                                <div className="p-3 relative">
+                                    <div className="absolute bottom-0 inset-x-3 h-[1.5px] bg-gradient-to-r from-transparent via-gold-400/50 to-transparent" />
                                     <h3 className="font-serif text-sm text-slate-900 leading-tight">{product.name}</h3>
-                                    <p className="font-sans text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-0.5 leading-tight">{product.subtitle}</p>
+                                    <p className="font-mono text-[9px] text-gold-600 uppercase tracking-widest font-bold mt-0.5">{product.subtitle}</p>
                                 </div>
                             </button>
                         ))}
@@ -205,17 +241,26 @@ const Eshop = ({ scrollProgress }) => {
                 <div className="w-full max-w-6xl">
 
                     {/* Header */}
-                    <div className="mb-5 lg:mb-7">
-                        <div className="flex items-center gap-3 mb-2">
-                            <ShoppingBag className="w-4 h-4 text-gold-500" />
-                            <span className="text-gold-600 font-sans uppercase tracking-[0.25em] text-xs font-bold">E-shop</span>
+                    <div className="mb-5 lg:mb-7 relative">
+                        <span className="absolute -top-6 right-0 font-mono text-[90px] lg:text-[120px] font-black text-slate-900/[0.04] leading-none select-none pointer-events-none tracking-tighter">
+                            8848
+                        </span>
+                        <div className="flex items-center gap-2.5 mb-2">
+                            <div className="w-px h-4 bg-gold-500" />
+                            <ShoppingBag className="w-3.5 h-3.5 text-gold-500" />
+                            <span className="text-gold-600 font-sans uppercase tracking-[0.3em] text-[11px] font-bold">E-shop</span>
                         </div>
                         <h2 className="font-serif text-4xl lg:text-5xl text-slate-900 leading-tight mb-2">
-                            Kus cesty <span className="italic text-slate-500">domov.</span>
+                            Kus cesty <span className="italic text-amber-800/70">domov.</span>
                         </h2>
-                        <p className="font-sans text-slate-600 text-base leading-relaxed max-w-xl">
+                        <p className="font-sans text-slate-500 text-sm leading-relaxed max-w-md">
                             Produkty, které Honza osobně používá, vozí nebo doporučuje.
                         </p>
+                        <div className="mt-3 flex items-center gap-2">
+                            <div className="h-px w-10 bg-gold-400" />
+                            <div className="h-px w-3 bg-gold-400/50" />
+                            <div className="h-px w-1.5 bg-gold-400/25" />
+                        </div>
                     </div>
 
                     {/* Featured + grid layout */}
@@ -223,79 +268,105 @@ const Eshop = ({ scrollProgress }) => {
                         {/* Featured product — dark hero card */}
                         <button
                             onClick={() => setDetailOpen(PRODUCTS[0])}
-                            className="group relative text-left rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 row-span-2 bg-slate-900"
+                            className="group relative text-left rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 row-span-2 bg-slate-900"
+                            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.12)' }}
                         >
-                            {/* Full-bleed image */}
                             <div className="absolute inset-0">
-                                <img
-                                    src={PRODUCTS[0].img}
-                                    alt={PRODUCTS[0].name}
-                                    className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700"
-                                />
+                                <img src={PRODUCTS[0].img} alt={PRODUCTS[0].name}
+                                    className="w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700" />
                             </div>
-                            {/* Gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
-                            {/* Gold top accent line */}
-                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-80" />
-                            {/* Content */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/50 to-slate-800/10" />
+                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
                             <div className="relative z-10 flex flex-col h-full p-5 lg:p-6 justify-end">
-                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${PRODUCTS[0].tagColor} inline-block mb-3 self-start`}>
+                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2.5 py-1 rounded-full ${PRODUCTS[0].tagColor} inline-block mb-3 self-start shadow-sm`}>
                                     {PRODUCTS[0].tag}
                                 </span>
-                                <h3 className="font-serif text-2xl lg:text-3xl text-white leading-tight mb-1 drop-shadow-md">
+                                <h3 className="font-serif text-2xl lg:text-3xl text-white leading-tight mb-1.5 drop-shadow-md">
                                     {PRODUCTS[0].name}
                                 </h3>
-                                <p className="font-sans text-xs text-gold-400 uppercase tracking-wider font-bold mb-3">
+                                <p className="font-sans text-[11px] text-gold-400 uppercase tracking-widest font-bold mb-3">
                                     {PRODUCTS[0].subtitle}
                                 </p>
-                                <p className="font-sans text-sm text-white/70 leading-relaxed line-clamp-2 mb-4">
+                                <p className="font-sans text-sm text-white/65 leading-relaxed line-clamp-2 mb-5">
                                     {PRODUCTS[0].desc}
                                 </p>
-                                <div className="flex items-center gap-2 text-white/60 group-hover:text-gold-400 transition-colors text-[10px] font-bold uppercase tracking-widest">
-                                    Zobrazit detail <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                <div className="flex items-center gap-2 bg-white/10 group-hover:bg-gold-500/20 border border-white/15 group-hover:border-gold-400/40 rounded-lg px-3 py-2 transition-all duration-300 self-start">
+                                    <span className="text-white/70 group-hover:text-gold-300 text-[10px] font-bold uppercase tracking-widest transition-colors">Detail</span>
+                                    <ArrowRight className="w-3 h-3 text-white/50 group-hover:text-gold-300 group-hover:translate-x-1 transition-all" />
                                 </div>
                             </div>
                         </button>
 
-                        {/* 4 products in 2-column right grid */}
-                        {PRODUCTS.slice(1, 5).map((product) => (
+                        {/* 4 products — premium light cards */}
+                        {PRODUCTS.slice(1, 5).map((product, idx) => (
                             <button
                                 key={product.id}
                                 onClick={() => setDetailOpen(product)}
-                                className="group text-left rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-sm hover:border-gold-400/60 hover:bg-white/90 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
+                                className="group text-left rounded-2xl overflow-hidden bg-white border border-slate-100 hover:border-gold-200 hover:-translate-y-1 transition-all duration-300"
+                                style={{ boxShadow: product.highlight ? '0 4px 20px rgba(0,0,0,0.10)' : '0 2px 12px rgba(0,0,0,0.06)' }}
+                                onMouseEnter={e => e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(212,175,55,0.08)'}
+                                onMouseLeave={e => e.currentTarget.style.boxShadow = product.highlight ? '0 4px 20px rgba(0,0,0,0.10)' : '0 2px 12px rgba(0,0,0,0.06)'}
                             >
-                                <div className="w-full aspect-[16/9] overflow-hidden">
-                                    <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                {/* Image */}
+                                <div className="relative w-full aspect-video overflow-hidden">
+                                    <img src={product.img} alt={product.name}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                                    {/* Non-highlighted: small pill on image */}
+                                    {!product.highlight && (
+                                        <span className={`absolute top-2.5 left-2.5 text-[8px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${product.tagColor} shadow-sm`}>
+                                            {product.tag}
+                                        </span>
+                                    )}
+                                    <span className="absolute top-2.5 right-2.5 font-mono text-[10px] text-white/35 font-black tracking-wider select-none">
+                                        0{idx + 2}
+                                    </span>
                                 </div>
-                                <div className="p-3 lg:p-4">
-                                    <div className="flex items-start justify-between gap-2 mb-1">
-                                        <h3 className="font-serif text-base lg:text-lg text-slate-900 leading-tight">{product.name}</h3>
-                                        <span className={`shrink-0 text-[8px] font-bold uppercase tracking-wider text-white px-1.5 py-0.5 rounded-full ${product.tagColor}`}>
+
+                                {/* Highlight banner — colored strip between image and text */}
+                                {product.highlight && (
+                                    <div className={`flex items-center gap-2 px-3 py-1.5 ${product.highlightBg}`}>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${product.highlightDot} animate-pulse shrink-0`} />
+                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white">
                                             {product.tag}
                                         </span>
                                     </div>
-                                    <p className="font-sans text-[10px] text-slate-500 uppercase tracking-wider font-medium">{product.subtitle}</p>
+                                )}
+
+                                {/* Text */}
+                                <div className="relative p-3 lg:p-3.5">
+                                    <div className="absolute bottom-0 inset-x-3 h-[1.5px] bg-gradient-to-r from-transparent via-gold-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                                    <div className="flex items-start justify-between gap-1.5 mb-0.5">
+                                        <h3 className="font-serif text-sm lg:text-[15px] text-slate-900 leading-tight group-hover:text-amber-900 transition-colors duration-300">
+                                            {product.name}
+                                        </h3>
+                                        <ArrowRight className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
+                                    </div>
+                                    <p className="font-mono text-[9px] text-gold-600 uppercase tracking-widest font-bold">
+                                        {product.subtitle}
+                                    </p>
                                 </div>
                             </button>
                         ))}
                     </div>
 
                     {/* Bottom CTA row */}
-                    <div className="flex items-center justify-center gap-3">
+                    <div className="flex items-center justify-between gap-3">
                         <button
                             onClick={() => setShowAllProducts(true)}
-                            className="inline-flex items-center gap-2 px-6 py-3.5 border border-slate-300 bg-white hover:border-gold-400 text-slate-800 font-bold uppercase tracking-[0.2em] text-xs rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                            className="inline-flex items-center gap-2 px-5 py-3 border border-slate-300/80 bg-white/80 backdrop-blur-sm hover:border-gold-400 hover:bg-white text-slate-700 font-bold uppercase tracking-[0.2em] text-[11px] rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                         >
-                            Zobrazit více produktů
+                            Všechny produkty ({PRODUCTS.length})
                         </button>
                         <a
                             href="https://honzatrava.myshoptet.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.2em] text-xs rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                            className="group inline-flex items-center gap-2.5 px-6 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.2em] text-[11px] rounded-xl transition-all duration-300 shadow-lg shadow-slate-900/20 hover:shadow-xl hover:shadow-gold-500/20"
                         >
                             <span>Vstoupit do e-shopu</span>
-                            <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                            <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
                         </a>
                     </div>
                 </div>
