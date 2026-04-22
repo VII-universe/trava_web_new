@@ -5,7 +5,8 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Icefall from './components/Icefall';
 import Expeditions from './components/Expeditions';
-import Nepal from './components/Nepal';
+import Hotel from './components/Hotel';
+import Pub from './components/Pub';
 import Eshop from './components/Eshop';
 import Lectures from './components/Lectures';
 import Projects from './components/Projects';
@@ -30,7 +31,7 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Track scroll over extended height for 9 sections
+  // Track scroll over extended height for 11 sections
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -45,10 +46,10 @@ function App() {
   return (
     <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
       <ScrollLockHandler />
-      <div ref={containerRef} className="relative h-[1600vh] bg-ivory selection:bg-gold-400 selection:text-white">
+      <div ref={containerRef} className="relative h-[1760vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
-        {/* Mobile scroll-snap anchors — 10 sections */}
-        {[0.00, 0.08, 0.18, 0.27, 0.38, 0.49, 0.59, 0.68, 0.77, 0.87].map((pct, i) => (
+        {/* Mobile scroll-snap anchors — 11 sections */}
+        {[0.00, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.90].map((pct, i) => (
           <div
             key={i}
             className="absolute w-full h-0 scroll-snap-anchor-start"
@@ -82,22 +83,25 @@ function App() {
           {/* Phase 4: Expedice & 14Summits (0.27 - 0.41) */}
           <Expeditions scrollProgress={smoothProgress} />
 
-          {/* Phase 5: Nepal — Pub & Hotel (0.38 - 0.52) */}
-          <Nepal scrollProgress={smoothProgress} />
+          {/* Phase 5: Hotel (0.36 - 0.47) */}
+          <Hotel scrollProgress={smoothProgress} />
 
-          {/* Phase 6: E-shop (0.49 - 0.62) */}
+          {/* Phase 6: Czech Pub (0.45 - 0.56) */}
+          <Pub scrollProgress={smoothProgress} />
+
+          {/* Phase 7: E-shop (0.54 - 0.65) */}
           <Eshop scrollProgress={smoothProgress} />
 
-          {/* Phase 7: Přednášky (0.59 - 0.71) */}
+          {/* Phase 8: Přednášky (0.63 - 0.74) */}
           <Lectures scrollProgress={smoothProgress} />
 
-          {/* Phase 8: Projekty (0.68 - 0.80) */}
+          {/* Phase 9: Projekty (0.72 - 0.83) */}
           <Projects scrollProgress={smoothProgress} />
 
-          {/* Phase 9: Média & Obsah (0.77 - 0.90) */}
+          {/* Phase 10: Média & Obsah (0.81 - 0.93) */}
           <Media scrollProgress={smoothProgress} />
 
-          {/* Phase 10: Kontakt (0.87 - 1.0) */}
+          {/* Phase 11: Kontakt (0.90 - 1.0) */}
           <Contact scrollProgress={smoothProgress} />
         </div>
       </div>

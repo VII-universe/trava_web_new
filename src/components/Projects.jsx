@@ -102,9 +102,9 @@ const Projects = ({ scrollProgress }) => {
     const [showAllProjects, setShowAllProjects] = useState(false);
     useScrollLock(!!selected || showAllProjects);
 
-    // PHASE 8: 0.68 -> 0.80
-    const containerOpacity = useTransform(scrollProgress, [0.68, 0.71, 0.76, 0.80], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.68, 0.71, 0.76, 0.80], ['-120%', '0%', '0%', '130%']);
+    // PHASE 9: 0.72 -> 0.83
+    const containerOpacity = useTransform(scrollProgress, [0.72, 0.75, 0.80, 0.83], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.72, 0.75, 0.80, 0.83], ['-120%', '0%', '0%', '130%']);
 
     return (
         <>

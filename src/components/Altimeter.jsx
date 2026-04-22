@@ -6,11 +6,11 @@ import { ChevronUp, ChevronDown } from 'lucide-react';
 const Altimeter = ({ scrollProgress }) => {
 
     const altitude = useTransform(scrollProgress,
-        [0, 0.08, 0.18, 0.27, 0.38, 0.49, 0.59, 0.68, 0.77, 0.87, 1.0],
-        [0, 500, 5364, 6400, 6800, 7000, 7200, 7500, 7800, 8200, 8848]
+        [0, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.90, 1.0],
+        [0, 500, 5364, 6400, 6800, 7000, 7100, 7400, 7700, 8100, 8450, 8848]
     );
 
-    const rangePoints = [0, 0.27, 0.30, 0.49, 0.53, 0.59, 0.62, 0.77, 0.81, 0.87, 0.91, 1.0];
+    const rangePoints = [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0];
 
     const axisColor = useTransform(scrollProgress, rangePoints, [
         "rgba(15, 23, 42, 0.25)", "rgba(15, 23, 42, 0.25)",
@@ -39,15 +39,16 @@ const Altimeter = ({ scrollProgress }) => {
 
     const SECTIONS = [
         { label: 'Úvod',       y: 0.00, target: 0.00 },
-        { label: 'Příběh',     y: 0.08, target: 0.14 },
+        { label: 'Příběh',     y: 0.09, target: 0.14 },
         { label: 'Partneři',   y: 0.18, target: 0.25 },
         { label: 'Expedice',   y: 0.27, target: 0.34 },
-        { label: 'Nepál',      y: 0.38, target: 0.45 },
-        { label: 'E-shop',     y: 0.49, target: 0.56 },
-        { label: 'Přednášky',  y: 0.59, target: 0.65 },
-        { label: 'Projekty',   y: 0.68, target: 0.74 },
-        { label: 'Média',      y: 0.77, target: 0.83 },
-        { label: 'Kontakt',    y: 0.87, target: 0.93 },
+        { label: 'Hotel',      y: 0.36, target: 0.42 },
+        { label: 'Czech Pub',  y: 0.45, target: 0.51 },
+        { label: 'E-shop',     y: 0.54, target: 0.60 },
+        { label: 'Přednášky',  y: 0.63, target: 0.69 },
+        { label: 'Projekty',   y: 0.72, target: 0.78 },
+        { label: 'Média',      y: 0.81, target: 0.87 },
+        { label: 'Kontakt',    y: 0.90, target: 0.94 },
     ];
 
     useEffect(() => {

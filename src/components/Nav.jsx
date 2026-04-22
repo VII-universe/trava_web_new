@@ -10,12 +10,13 @@ const navItems = [
     { label: 'O Honzovi',          progress: 0.14 },
     { label: 'Partneři',           progress: 0.25 },
     { label: 'Expedice & 14 Summits', progress: 0.34 },
-    { label: 'Nepál — Pub & Hotel', progress: 0.45 },
-    { label: 'E-shop',             progress: 0.56 },
-    { label: 'Přednášky',          progress: 0.65 },
-    { label: 'Projekty',           progress: 0.74 },
-    { label: 'Média & Obsah',      progress: 0.83 },
-    { label: 'Kontakt',            progress: 0.93 },
+    { label: 'Hotel Káthmándú',     progress: 0.40 },
+    { label: 'Czech Pub Nepal',     progress: 0.49 },
+    { label: 'E-shop',             progress: 0.58 },
+    { label: 'Přednášky',          progress: 0.67 },
+    { label: 'Projekty',           progress: 0.76 },
+    { label: 'Média & Obsah',      progress: 0.85 },
+    { label: 'Kontakt',            progress: 0.94 },
 ];
 
 const Nav = ({ scrollProgress }) => {
@@ -23,17 +24,17 @@ const Nav = ({ scrollProgress }) => {
     const [scrolled, setScrolled] = useState(false);
 
     // Logo color: LIGHT bg (black logo) → DARK bg (white logo)
-    // Light: Hero/About/Icefall (0-0.30), Eshop (0.49-0.59), Media (0.77-0.87)
-    // Dark:  Expeditions/Nepal (0.27-0.52), Lectures/Projects (0.59-0.80), Contact (0.87-1.0)
+    // Light: Hero/About/Icefall (0-0.30), Eshop (0.54-0.63), Media (0.81-0.90)
+    // Dark:  Expeditions/Hotel/Pub (0.27-0.57), Lectures/Projects (0.63-0.83), Contact (0.90-1.0)
     const whiteOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.27, 0.30, 0.49, 0.53, 0.59, 0.62, 0.77, 0.81, 0.87, 0.91, 1.0],
+        [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
         [0,  0,   1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
     ) : 1;
 
     const blackOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.27, 0.30, 0.49, 0.53, 0.59, 0.62, 0.77, 0.81, 0.87, 0.91, 1.0],
+        [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
         [1,  1,   0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
     ) : 0;
 
