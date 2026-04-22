@@ -106,6 +106,18 @@ const Expeditions = ({ scrollProgress }) => {
     // Prevent body scroll when modal is open
     useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen);
 
+    // Allow external components (About story modal) to open team modals
+    useEffect(() => {
+        const onMiri = () => setIsMiriOpen(true);
+        const onSubin = () => setIsSubinOpen(true);
+        window.addEventListener('openMiriModal', onMiri);
+        window.addEventListener('openSubinModal', onSubin);
+        return () => {
+            window.removeEventListener('openMiriModal', onMiri);
+            window.removeEventListener('openSubinModal', onSubin);
+        };
+    }, []);
+
     const expedCarouselRef = useRef(null);
     const expedCarouselProgress = useTransform(scrollProgress, [0.30, 0.37], [0, 1]);
     useEffect(() => {
