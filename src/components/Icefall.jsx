@@ -37,7 +37,7 @@ const FLAGS = [
         left: '21%',
         stripes: ['#7c1c1c', '#f5f5f5', '#7c1c1c'],
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 85% 92%, 75% 100%, 65% 85%, 55% 95%, 40% 90%, 20% 96%, 0% 90%)',
-        logo: <div className="w-full h-full flex items-center justify-center bg-[#7c1c1c] p-2"><img src={SingingRockLogo} alt="Singing Rock" className="w-full h-full object-contain" style={{ filter: 'brightness(0) invert(1)' }} /></div>,
+        logo: <div className="absolute inset-0 flex items-center justify-center bg-[#7c1c1c] px-3 py-4"><img src={SingingRockLogo} alt="Singing Rock" className="w-full h-auto" style={{ filter: 'brightness(0) invert(1)' }} /></div>,
     },
     {
         id: 'rockpoint',
@@ -402,20 +402,42 @@ const Icefall = ({ scrollProgress }) => {
                     </div>
 
                     {/* ── Tagline + secondary partners ── */}
-                    <div className="absolute bottom-[3%] left-0 right-0 text-center z-20 pointer-events-none flex flex-col items-center gap-2 md:gap-3 px-4">
+                    <div className="absolute bottom-[3%] left-0 right-0 text-center z-20 pointer-events-none flex flex-col items-center gap-2 md:gap-4 px-4">
                         <h3 className="font-serif text-xl md:text-3xl text-slate-800 opacity-80 italic drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
                             S&nbsp;těmi, kteří věří ve stejné vrcholy.
                         </h3>
-                        <div className="flex flex-col md:flex-row items-center gap-2 flex-wrap justify-center w-full">
-                            <span className="text-[10px] md:text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-slate-600 opacity-80 shrink-0">Také spolupracuji s:</span>
+
+                        {/* Mobile: pill buttons */}
+                        <div className="md:hidden flex flex-col items-center gap-2 w-full">
+                            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-slate-600 opacity-80">Také spolupracuji s:</span>
                             <div className="flex flex-wrap gap-1.5 justify-center pointer-events-auto">
                                 {SECONDARY_PARTNERS.map((partner) => (
                                     <button
                                         key={partner.id}
                                         onClick={() => setSelectedFlag(partner)}
-                                        className="text-[11px] md:text-[9px] font-sans font-bold uppercase tracking-[0.12em] text-slate-700 opacity-90 px-3 py-1 rounded-full border border-slate-400/40 bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white hover:border-gold-400/60 hover:opacity-100 transition-all duration-200 cursor-pointer"
+                                        className="text-[11px] font-sans font-bold uppercase tracking-[0.12em] text-slate-700 px-3 py-1 rounded-full border border-slate-400/40 bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white hover:border-gold-400/60 transition-all duration-200 cursor-pointer"
                                     >
                                         {partner.name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Desktop: card row */}
+                        <div className="hidden md:flex flex-col items-center gap-3 w-full pointer-events-auto">
+                            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.25em] text-slate-500">Také spolupracuji s:</span>
+                            <div className="flex gap-3 justify-center flex-wrap">
+                                {SECONDARY_PARTNERS.map((partner) => (
+                                    <button
+                                        key={partner.id}
+                                        onClick={() => setSelectedFlag(partner)}
+                                        className="group flex items-center gap-3 px-4 py-2.5 bg-white/75 backdrop-blur-md border border-white/60 rounded-xl shadow-sm hover:bg-white hover:border-gold-400/50 hover:shadow-md transition-all duration-200 cursor-pointer"
+                                    >
+                                        <div className="w-1.5 h-1.5 rounded-full bg-gold-400 group-hover:bg-gold-500 transition-colors shrink-0" />
+                                        <div className="text-left">
+                                            <p className="font-sans font-bold text-slate-800 text-xs uppercase tracking-wider leading-none">{partner.name}</p>
+                                            <p className="font-sans text-slate-500 text-[10px] tracking-wider mt-0.5 leading-none">{partner.partnership}</p>
+                                        </div>
                                     </button>
                                 ))}
                             </div>

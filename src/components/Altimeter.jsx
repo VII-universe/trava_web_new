@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTransform, motion } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 
 const Altimeter = ({ scrollProgress }) => {
@@ -34,17 +35,19 @@ const Altimeter = ({ scrollProgress }) => {
     const [currentAlt, setCurrentAlt] = useState(0);
     const [currentSectionIdx, setCurrentSectionIdx] = useState(0);
 
+    const lenis = useLenis();
+
     const SECTIONS = [
-        { label: 'Úvod',       y: 0.00 },
-        { label: 'Příběh',     y: 0.08 },
-        { label: 'Partneři',   y: 0.18 },
-        { label: 'Expedice',   y: 0.27 },
-        { label: 'Nepál',      y: 0.38 },
-        { label: 'E-shop',     y: 0.49 },
-        { label: 'Přednášky',  y: 0.59 },
-        { label: 'Projekty',   y: 0.68 },
-        { label: 'Média',      y: 0.77 },
-        { label: 'Kontakt',    y: 0.87 },
+        { label: 'Úvod',       y: 0.00, target: 0.00 },
+        { label: 'Příběh',     y: 0.08, target: 0.14 },
+        { label: 'Partneři',   y: 0.18, target: 0.25 },
+        { label: 'Expedice',   y: 0.27, target: 0.34 },
+        { label: 'Nepál',      y: 0.38, target: 0.45 },
+        { label: 'E-shop',     y: 0.49, target: 0.56 },
+        { label: 'Přednášky',  y: 0.59, target: 0.65 },
+        { label: 'Projekty',   y: 0.68, target: 0.74 },
+        { label: 'Média',      y: 0.77, target: 0.83 },
+        { label: 'Kontakt',    y: 0.87, target: 0.93 },
     ];
 
     useEffect(() => {
@@ -64,16 +67,16 @@ const Altimeter = ({ scrollProgress }) => {
         return unsubscribe;
     }, [scrollProgress]);
 
-    const scrollToSection = (yPercent) => {
+    const scrollToSection = (target) => {
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo({ top: totalHeight * yPercent, behavior: 'smooth' });
+        lenis?.scrollTo(totalHeight * target, { duration: 1.4 });
     };
 
     const goToPrev = () => {
-        if (currentSectionIdx > 0) scrollToSection(SECTIONS[currentSectionIdx - 1].y);
+        if (currentSectionIdx > 0) scrollToSection(SECTIONS[currentSectionIdx - 1].target);
     };
     const goToNext = () => {
-        if (currentSectionIdx < SECTIONS.length - 1) scrollToSection(SECTIONS[currentSectionIdx + 1].y);
+        if (currentSectionIdx < SECTIONS.length - 1) scrollToSection(SECTIONS[currentSectionIdx + 1].target);
     };
 
     return (
@@ -86,7 +89,7 @@ const Altimeter = ({ scrollProgress }) => {
             />
 
             {/* Axis with section labels */}
-            <div className="relative flex items-start h-[calc(100vh-220px)] md:h-[min(calc(100vh-90px),920px)]">
+            <div className="relative flex items-start h-[calc(100vh-220px)] md:h-[min(calc(100vh-300px),780px)]">
 
                 {/* Section labels column */}
                 <div className="relative mr-2 h-full" style={{ width: 68 }}>
@@ -95,7 +98,7 @@ const Altimeter = ({ scrollProgress }) => {
                         return (
                             <motion.button
                                 key={i}
-                                onClick={() => scrollToSection(sec.y)}
+                                onClick={() => scrollToSection(sec.target)}
                                 className="absolute right-0 flex items-center justify-end pointer-events-auto cursor-pointer group"
                                 style={{ top: `${sec.y * 100}%`, transform: 'translateY(-50%)' }}
                                 aria-label={sec.label}
@@ -133,7 +136,7 @@ const Altimeter = ({ scrollProgress }) => {
                         return (
                             <motion.div
                                 key={i}
-                                onClick={() => scrollToSection(sec.y)}
+                                onClick={() => scrollToSection(sec.target)}
                                 className="absolute left-0 pointer-events-auto cursor-pointer"
                                 style={{ top: `${sec.y * 100}%`, transform: 'translateY(-50%)' }}
                             >

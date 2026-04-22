@@ -135,15 +135,15 @@ const Projects = ({ scrollProgress }) => {
                         </p>
                     </div>
 
-                    {/* Desktop: all 9 projects */}
+                    {/* Desktop: first 6 projects */}
                     <div className="hidden md:grid grid-cols-3 gap-3">
-                        {PROJECTS.map((project) => (
+                        {PROJECTS.slice(0, 6).map((project) => (
                             <button
                                 key={project.id}
                                 onClick={() => setSelected(project)}
-                                className="group text-left rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 hover:border-gold-500/40 transition-all duration-300 relative"
+                                className="group text-left rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 hover:border-gold-500/40 transition-all duration-300 relative flex flex-col"
                             >
-                                <div className="w-full aspect-video overflow-hidden">
+                                <div className="w-full aspect-[16/9] overflow-hidden shrink-0">
                                     <img
                                         src={project.image}
                                         alt={project.title}
@@ -151,24 +151,32 @@ const Projects = ({ scrollProgress }) => {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                                 </div>
-                                <div className="p-3 md:p-4 relative">
-                                    <h3 className="font-serif text-sm md:text-base text-white leading-tight mb-0.5 group-hover:text-gold-400 transition-colors">{project.title}</h3>
-                                    <p className="font-sans text-xs text-slate-400 uppercase tracking-wider font-medium line-clamp-1">{project.subtitle}</p>
-                                </div>
-                                <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <ArrowRight className="w-3 h-3 text-white" />
+                                <div className="flex items-center justify-between gap-2 p-3 md:p-4 relative flex-1">
+                                    <div className="min-w-0">
+                                        <h3 className="font-serif text-sm md:text-base text-white leading-tight mb-0.5 group-hover:text-gold-400 transition-colors">{project.title}</h3>
+                                        <p className="font-sans text-xs text-slate-400 uppercase tracking-wider font-medium line-clamp-1">{project.subtitle}</p>
+                                    </div>
+                                    {project.logo ? (
+                                        <div className="shrink-0 w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden">
+                                            <img src={project.logo} alt="" className="w-full h-full object-contain p-1" />
+                                        </div>
+                                    ) : (
+                                        <div className="shrink-0 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <ArrowRight className="w-3 h-3 text-white" />
+                                        </div>
+                                    )}
                                 </div>
                             </button>
                         ))}
                     </div>
 
-                    {/* Desktop: show all button */}
+                    {/* Desktop: show more button */}
                     <div className="hidden md:flex justify-center mt-4">
                         <button
                             onClick={() => setShowAllProjects(true)}
                             className="flex items-center gap-2 px-6 py-3 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
                         >
-                            Zobrazit všechny projekty <ArrowRight className="w-3.5 h-3.5" />
+                            Zobrazit více projektů <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                     </div>
 

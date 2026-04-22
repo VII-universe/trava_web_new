@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ArrowRight, X, Star } from 'lucide-react';
+import { ArrowRight, X, Star, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
 import ClimbersImg from '../assets/climbers_bg.jpg';
@@ -12,6 +12,16 @@ import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091
 const About = ({ scrollProgress }) => {
     const [isStoryOpen, setIsStoryOpen] = useState(false);
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
+    const [lightboxIdx, setLightboxIdx] = useState(null);
+
+    const STORY_PHOTOS = [
+        { src: StoryImg1, alt: 'Honza na žebříku', position: 'object-left' },
+        { src: StoryImg2, alt: 'Honza jako dítě', position: 'object-center' },
+        { src: StoryImg3, alt: 'Nepal Valley', position: 'object-center' },
+    ];
+
+    const lightboxPrev = (e) => { e.stopPropagation(); setLightboxIdx(i => (i - 1 + STORY_PHOTOS.length) % STORY_PHOTOS.length); };
+    const lightboxNext = (e) => { e.stopPropagation(); setLightboxIdx(i => (i + 1) % STORY_PHOTOS.length); };
 
     useScrollLock(isStoryOpen || isOsvetaOpen);
 
@@ -209,21 +219,89 @@ const About = ({ scrollProgress }) => {
                         </div>
 
                         {/* Right: Photo Grid */}
-                        <div 
+                        <div
                             className="w-full md:w-1/2 bg-slate-900 p-2 md:p-4 grid grid-cols-2 grid-rows-2 gap-2 md:gap-4 overflow-y-auto overscroll-contain"
                             data-lenis-prevent
                         >
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={StoryImg1} alt="Mountain Landscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group row-span-2">
-                                <img src={StoryImg2} alt="Climbing" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={StoryImg3} alt="Nepal Valley" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            </div>
+                            {[
+                                { src: StoryImg1, alt: 'Honza na žebříku', pos: 'object-left', span: '' },
+                                { src: StoryImg2, alt: 'Honza jako dítě',  pos: 'object-center', span: 'row-span-2' },
+                                { src: StoryImg3, alt: 'Nepal Valley',     pos: 'object-center', span: '' },
+                            ].map((photo, i) => (
+                                <div
+                                    key={i}
+                                    className={`relative rounded-2xl overflow-hidden group cursor-zoom-in ${photo.span}`}
+                                    onClick={() => setLightboxIdx(i)}
+                                >
+                                    <img src={photo.src} alt={photo.alt} className={`w-full h-full object-cover ${photo.pos} group-hover:scale-105 transition-transform duration-700`} />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                        <ZoomIn className="w-7 h-7 text-white opacity-0 group-hover:opacity-90 transition-opacity duration-300 drop-shadow-lg" />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── Lightbox ── */}
+        <AnimatePresence>
+            {lightboxIdx !== null && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/95 backdrop-blur-sm pointer-events-auto"
+                    onClick={() => setLightboxIdx(null)}
+                >
+                    {/* Close */}
+                    <button
+                        onClick={() => setLightboxIdx(null)}
+                        className="absolute top-5 right-5 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+
+                    {/* Prev */}
+                    <button
+                        onClick={lightboxPrev}
+                        className="absolute left-4 md:left-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+                    >
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
+
+                    {/* Image */}
+                    <motion.img
+                        key={lightboxIdx}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        src={STORY_PHOTOS[lightboxIdx].src}
+                        alt={STORY_PHOTOS[lightboxIdx].alt}
+                        onClick={(e) => e.stopPropagation()}
+                        className="max-w-[85vw] max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+                    />
+
+                    {/* Next */}
+                    <button
+                        onClick={lightboxNext}
+                        className="absolute right-4 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+                    >
+                        <ChevronRight className="w-6 h-6" />
+                    </button>
+
+                    {/* Dots */}
+                    <div className="absolute bottom-6 flex gap-2">
+                        {STORY_PHOTOS.map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={(e) => { e.stopPropagation(); setLightboxIdx(i); }}
+                                className={`w-2 h-2 rounded-full transition-all duration-200 ${i === lightboxIdx ? 'bg-gold-400 w-5' : 'bg-white/40 hover:bg-white/70'}`}
+                            />
+                        ))}
+                    </div>
                 </motion.div>
             )}
         </AnimatePresence>

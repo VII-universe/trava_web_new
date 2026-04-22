@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useTransform } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 import { Menu, X } from 'lucide-react';
 import LogoWhite from '../assets/svg/honza_trava_logo_negativni_V1.svg';
 import LogoBlack from '../assets/svg/honza_trava_logo_V1.svg';
 
 const navItems = [
     { label: 'Úvod',               progress: 0.00 },
-    { label: 'O Honzovi',          progress: 0.08 },
-    { label: 'Partneři',           progress: 0.18 },
-    { label: 'Expedice & 14 Summits', progress: 0.27 },
-    { label: 'Nepál — Pub & Hotel', progress: 0.38 },
-    { label: 'E-shop',             progress: 0.49 },
-    { label: 'Přednášky',          progress: 0.59 },
-    { label: 'Projekty',           progress: 0.68 },
-    { label: 'Média & Obsah',      progress: 0.77 },
-    { label: 'Kontakt',            progress: 0.87 },
+    { label: 'O Honzovi',          progress: 0.14 },
+    { label: 'Partneři',           progress: 0.25 },
+    { label: 'Expedice & 14 Summits', progress: 0.34 },
+    { label: 'Nepál — Pub & Hotel', progress: 0.45 },
+    { label: 'E-shop',             progress: 0.56 },
+    { label: 'Přednášky',          progress: 0.65 },
+    { label: 'Projekty',           progress: 0.74 },
+    { label: 'Média & Obsah',      progress: 0.83 },
+    { label: 'Kontakt',            progress: 0.93 },
 ];
 
 const Nav = ({ scrollProgress }) => {
@@ -54,16 +55,12 @@ const Nav = ({ scrollProgress }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const lenis = useLenis();
+
     const handleNavClick = (progress) => {
         setIsOpen(false);
-        // Calculate the exact pixel height to scroll to based on total document height
-        const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const targetScroll = totalHeight * progress;
-        
-        window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-        });
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        lenis?.scrollTo(totalHeight * progress, { duration: 1.4 });
     };
 
     return (

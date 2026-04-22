@@ -261,10 +261,31 @@ const Media = ({ scrollProgress }) => {
 
                         {/* Left: Own content */}
                         <div>
-                            <h5 className="text-slate-400 font-sans text-[10px] uppercase tracking-[0.3em] font-bold mb-3">
-                                Vlastní obsah
-                            </h5>
-                            <div className="flex flex-col gap-2.5">
+                            {/* Featured photo card */}
+                            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-md group cursor-pointer"
+                                onClick={() => setActiveItem(MEDIA_DATA.video[0])}
+                            >
+                                <img src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                    <p className="text-gold-400 font-sans text-[10px] font-bold uppercase tracking-widest mb-1">Vlastní obsah</p>
+                                    <h5 className="font-serif text-white text-lg leading-tight">Přímý přenos z expedic</h5>
+                                    <p className="font-sans text-white/60 text-xs mt-0.5">Vlogy · Podcast · Blog</p>
+                                </div>
+                                <div className="absolute top-3 right-3 flex gap-1.5">
+                                    {[
+                                        { num: '9+', label: 'videí' },
+                                        { num: '9+', label: 'podcastů' },
+                                    ].map(({ num, label }) => (
+                                        <div key={label} className="bg-slate-900/70 backdrop-blur-sm px-2.5 py-1 rounded-full text-center">
+                                            <span className="font-serif text-white font-bold text-sm">{num}</span>
+                                            <span className="font-sans text-white/60 text-[9px] ml-1">{label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
                                 {[
                                     { data: MEDIA_DATA.video[0],   Icon: Play,     label: 'Vlogy & Expedice', sub: 'YouTube' },
                                     { data: MEDIA_DATA.podcast[0], Icon: Mic,      label: 'Podcast',          sub: 'Audio — 2027' },
@@ -273,10 +294,10 @@ const Media = ({ scrollProgress }) => {
                                     <button
                                         key={data.id}
                                         onClick={() => setActiveItem(data)}
-                                        className="group flex items-center gap-3.5 p-4 bg-white border border-slate-200 rounded-xl hover:border-gold-400 hover:bg-gold-50/40 transition-all text-left shadow-sm hover:shadow-md"
+                                        className="group flex items-center gap-3.5 p-3.5 bg-white border border-slate-200 rounded-xl hover:border-gold-400 hover:bg-gold-50/40 transition-all text-left shadow-sm hover:shadow-md"
                                     >
-                                        <div className="w-11 h-11 rounded-xl bg-slate-100 group-hover:bg-gold-500 flex items-center justify-center transition-colors shrink-0">
-                                            <Icon className="w-5 h-5 text-slate-600 group-hover:text-white transition-colors" fill={Icon === Play ? 'currentColor' : 'none'} />
+                                        <div className="w-10 h-10 rounded-xl bg-slate-100 group-hover:bg-gold-500 flex items-center justify-center transition-colors shrink-0">
+                                            <Icon className="w-4 h-4 text-slate-600 group-hover:text-white transition-colors" fill={Icon === Play ? 'currentColor' : 'none'} />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-sans font-bold text-slate-800 text-xs uppercase tracking-widest">{label}</p>
