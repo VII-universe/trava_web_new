@@ -39,14 +39,14 @@ const Altimeter = ({ scrollProgress }) => {
 
     const SECTIONS = [
         { label: 'Úvod',       y: 0.00, target: 0.00 },
-        { label: 'Příběh',     y: 0.09, target: 0.14 },
-        { label: 'Partneři',   y: 0.18, target: 0.25 },
-        { label: 'Expedice',   y: 0.27, target: 0.34 },
-        { label: 'Hotel',      y: 0.36, target: 0.42 },
-        { label: 'Czech Pub',  y: 0.45, target: 0.51 },
-        { label: 'E-shop',     y: 0.54, target: 0.60 },
-        { label: 'Přednášky',  y: 0.63, target: 0.69 },
-        { label: 'Projekty',   y: 0.72, target: 0.78 },
+        { label: 'Příběh',     y: 0.09, target: 0.13 },
+        { label: 'Partneři',   y: 0.18, target: 0.23 },
+        { label: 'Expedice',   y: 0.27, target: 0.33 },
+        { label: 'Hotel',      y: 0.36, target: 0.41 },
+        { label: 'Czech Pub',  y: 0.45, target: 0.50 },
+        { label: 'E-shop',     y: 0.54, target: 0.59 },
+        { label: 'Přednášky',  y: 0.63, target: 0.68 },
+        { label: 'Projekty',   y: 0.72, target: 0.77 },
         { label: 'Média',      y: 0.81, target: 0.87 },
         { label: 'Kontakt',    y: 0.90, target: 0.94 },
     ];

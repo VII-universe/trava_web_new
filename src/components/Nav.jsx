@@ -7,15 +7,15 @@ import LogoBlack from '../assets/svg/honza_trava_logo_V1.svg';
 
 const navItems = [
     { label: 'Úvod',               progress: 0.00 },
-    { label: 'O Honzovi',          progress: 0.14 },
-    { label: 'Partneři',           progress: 0.25 },
-    { label: 'Expedice & 14 Summits', progress: 0.34 },
-    { label: 'Hotel Káthmándú',     progress: 0.40 },
-    { label: 'Czech Pub Nepal',     progress: 0.49 },
-    { label: 'E-shop',             progress: 0.58 },
-    { label: 'Přednášky',          progress: 0.67 },
-    { label: 'Projekty',           progress: 0.76 },
-    { label: 'Média & Obsah',      progress: 0.85 },
+    { label: 'O Honzovi',          progress: 0.13 },
+    { label: 'Partneři',           progress: 0.23 },
+    { label: 'Expedice & 14 Summits', progress: 0.33 },
+    { label: 'Hotel Káthmándú',     progress: 0.41 },
+    { label: 'Czech Pub Nepal',     progress: 0.50 },
+    { label: 'E-shop',             progress: 0.59 },
+    { label: 'Přednášky',          progress: 0.68 },
+    { label: 'Projekty',           progress: 0.77 },
+    { label: 'Média & Obsah',      progress: 0.87 },
     { label: 'Kontakt',            progress: 0.94 },
 ];
 
