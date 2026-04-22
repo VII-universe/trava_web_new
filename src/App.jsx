@@ -46,7 +46,7 @@ function App() {
   return (
     <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
       <ScrollLockHandler />
-      <div ref={containerRef} className="relative h-[500vh] bg-ivory selection:bg-gold-400 selection:text-white">
+      <div ref={containerRef} className="relative h-[1400vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
         {/* Mobile scroll-snap anchors — 11 sections */}
         {[0.00, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.90].map((pct, i) => (

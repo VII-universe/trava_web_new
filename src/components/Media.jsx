@@ -115,9 +115,9 @@ const Media = ({ scrollProgress }) => {
 
     useScrollLock(activeItem || readingArticle || showAllPress);
 
-    // PHASE 10: 0.81 -> 0.93
-    const containerOpacity = useTransform(scrollProgress, [0.81, 0.84, 0.88, 0.91], [0, 1, 1, 0]);
-    const y = useTransform(scrollProgress, [0.81, 0.84, 0.88, 0.91], ["-120%", "0%", "0%", "100%"]);
+    // PHASE 10: 0.77 -> 0.90
+    const containerOpacity = useTransform(scrollProgress, [0.77, 0.80, 0.87, 0.90], [0, 1, 1, 0]);
+    const y = useTransform(scrollProgress, [0.77, 0.80, 0.87, 0.90], ["-120%", "0%", "0%", "100%"]);
 
     const filteredPress = useMemo(() => PRESS_ITEMS.filter(item => {
         const typeMatch = pressFilter === 'Vše' || item.type === pressFilter;

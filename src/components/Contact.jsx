@@ -6,9 +6,9 @@ import BaseCampImg from '../assets/base_camp_bg.jpg';
 const Contact = ({ scrollProgress }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
-    // PHASE 11: 0.90 -> 1.0 (End of the page)
-    const containerOpacity = useTransform(scrollProgress, [0.90, 0.93, 0.97, 1.0], [0, 1, 1, 1]);
-    const y = useTransform(scrollProgress, [0.90, 0.94, 1.0], ["-100%", "0%", "0%"]);
+    // PHASE 11: 0.87 -> 1.0 (End of the page)
+    const containerOpacity = useTransform(scrollProgress, [0.87, 0.90, 0.97, 1.0], [0, 1, 1, 1]);
+    const y = useTransform(scrollProgress, [0.87, 0.90, 1.0], ["-100%", "0%", "0%"]);
 
     // Generate random snow particles once
     const snowParticles = Array.from({ length: 70 }).map((_, i) => ({

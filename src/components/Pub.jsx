@@ -57,10 +57,10 @@ const Pub = ({ scrollProgress }) => {
     const handlePrev = (e) => { e.stopPropagation(); setSelectedImage(galleryImages[(si - 1 + galleryImages.length) % galleryImages.length]); };
 
     // PHASE 6: Pub  0.45 → 0.56
-    const containerOpacity = useTransform(scrollProgress, [0.45, 0.49, 0.53, 0.56], [0, 1, 1, 0]);
-    const containerY       = useTransform(scrollProgress, [0.45, 0.49, 0.53, 0.56], ['-120%', '0%', '0%', '130%']);
+    const containerOpacity = useTransform(scrollProgress, [0.41, 0.44, 0.53, 0.56], [0, 1, 1, 0]);
+    const containerY       = useTransform(scrollProgress, [0.41, 0.44, 0.53, 0.56], ['-120%', '0%', '0%', '130%']);
     const bgY              = useTransform(scrollProgress, [0.41, 0.59], ['-15%', '15%']);
-    const imageOpacity     = useTransform(scrollProgress, [0.45, 0.49], [0, 1]);
+    const imageOpacity     = useTransform(scrollProgress, [0.41, 0.44], [0, 1]);
 
     // Mobile carousel: 0→1 within visible window (0.49–0.53)
     const carouselProg = useTransform(scrollProgress, [0.495, 0.525], [0, 1]);

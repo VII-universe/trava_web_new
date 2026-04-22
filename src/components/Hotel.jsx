@@ -61,14 +61,14 @@ const Hotel = ({ scrollProgress }) => {
     const handlePrev = (e) => { e.stopPropagation(); setSelectedImage(galleryImages[(si - 1 + galleryImages.length) % galleryImages.length]); };
 
     // PHASE 5: Hotel  0.36 → 0.47
-    const containerOpacity = useTransform(scrollProgress, [0.36, 0.40, 0.44, 0.47], [0, 1, 1, 0]);
-    const containerY       = useTransform(scrollProgress, [0.36, 0.40, 0.44, 0.47], ['-120%', '0%', '0%', '130%']);
+    const containerOpacity = useTransform(scrollProgress, [0.34, 0.37, 0.41, 0.44], [0, 1, 1, 0]);
+    const containerY       = useTransform(scrollProgress, [0.34, 0.37, 0.41, 0.44], ['-120%', '0%', '0%', '130%']);
     const bgY              = useTransform(scrollProgress, [0.32, 0.50], ['-15%', '15%']);
-    const imageOpacity     = useTransform(scrollProgress, [0.36, 0.40], [0, 1]);
+    const imageOpacity     = useTransform(scrollProgress, [0.34, 0.37], [0, 1]);
 
     // Mobile carousel: 0→1 within the visible window (0.40–0.44)
     // card1 in first half, card2 in second half
-    const carouselProg = useTransform(scrollProgress, [0.405, 0.435], [0, 1]);
+    const carouselProg = useTransform(scrollProgress, [0.38, 0.41], [0, 1]);
 
     useEffect(() => {
         return carouselProg.on('change', (v) => {
@@ -155,9 +155,9 @@ const Hotel = ({ scrollProgress }) => {
                             const fastLeft  = info.velocity.x < -200;
                             const fastRight = info.velocity.x > 200;
                             if ((cur < -cardW * 0.3 || fastLeft)  && activeDot === 0) {
-                                lenis?.scrollTo(totalH * 0.435, { duration: 0.7 });
+                                lenis?.scrollTo(totalH * 0.41, { duration: 0.7 });
                             } else if ((cur > -cardW * 0.7 || fastRight) && activeDot === 1) {
-                                lenis?.scrollTo(totalH * 0.405, { duration: 0.7 });
+                                lenis?.scrollTo(totalH * 0.38, { duration: 0.7 });
                             } else {
                                 fmAnimate(trackX, activeDot === 1 ? -cardW : 0, { duration: 0.3, ease: [0.25, 1, 0.5, 1] });
                             }

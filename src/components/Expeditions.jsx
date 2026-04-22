@@ -253,9 +253,9 @@ const REGIONS = [
 ];
 
 const Expeditions = ({ scrollProgress }) => {
-    const containerOpacity = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], [0, 1, 1, 0]);
-    const backgroundY = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
-    const contentY = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], [0, 1, 1, 0]);
+    const backgroundY = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
+    const contentY = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
     const bgY = useTransform(scrollProgress, [0.24, 0.43], ["-15%", "15%"]);
 
     const [selectedExped, setSelectedExped] = useState(null);
