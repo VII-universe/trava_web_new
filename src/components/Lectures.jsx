@@ -77,14 +77,14 @@ const Lectures = ({ scrollProgress }) => {
     useScrollLock(open || selectedEvent || showLectureList);
 
     // PHASE 8: 0.63 -> 0.74 with hold
-    const containerOpacity = useTransform(scrollProgress, [0.63, 0.66, 0.71, 0.74], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.63, 0.66, 0.71, 0.74], ["-120%", "0%", "0%", "120%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.63, 0.66, 0.69, 0.72], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.63, 0.66, 0.69, 0.72], ["-120%", "0%", "0%", "120%"]);
 
     // Lightens the background as it exits
-    const lightenOpacity = useTransform(scrollProgress, [0.68, 0.74], [0, 1]);
+    const lightenOpacity = useTransform(scrollProgress, [0.68, 0.72], [0, 1]);
 
     const lectCarouselRef = useRef(null);
-    const lectCarouselProgress = useTransform(scrollProgress, [0.66, 0.71], [0, 1]);
+    const lectCarouselProgress = useTransform(scrollProgress, [0.66, 0.69], [0, 1]);
     useEffect(() => {
         return lectCarouselProgress.on("change", (latest) => {
             const el = lectCarouselRef.current;

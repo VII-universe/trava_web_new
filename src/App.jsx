@@ -39,14 +39,14 @@ function App() {
 
   // Snappier spring on mobile so sections track finger immediately
   const smoothProgress = useSpring(scrollYProgress, isMobile
-    ? { stiffness: 500, damping: 60, restDelta: 0.001 }
-    : { stiffness: 40, damping: 25, restDelta: 0.001 }
+    ? { stiffness: 600, damping: 55, restDelta: 0.001 }
+    : { stiffness: 120, damping: 28, restDelta: 0.001 }
   );
 
   return (
     <ReactLenis root options={{ smoothTouch: false, syncTouch: true }}>
       <ScrollLockHandler />
-      <div ref={containerRef} className="relative h-[1760vh] bg-ivory selection:bg-gold-400 selection:text-white">
+      <div ref={containerRef} className="relative h-[500vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
         {/* Mobile scroll-snap anchors — 11 sections */}
         {[0.00, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.90].map((pct, i) => (

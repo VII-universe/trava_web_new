@@ -253,9 +253,9 @@ const REGIONS = [
 ];
 
 const Expeditions = ({ scrollProgress }) => {
-    const containerOpacity = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], [0, 1, 1, 0]);
-    const backgroundY = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], ["-105%", "0%", "0%", "130%"]);
-    const contentY = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], ["-105%", "0%", "0%", "130%"]);
+    const containerOpacity = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], [0, 1, 1, 0]);
+    const backgroundY = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
+    const contentY = useTransform(scrollProgress, [0.27, 0.30, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
     const bgY = useTransform(scrollProgress, [0.24, 0.43], ["-15%", "15%"]);
 
     const [selectedExped, setSelectedExped] = useState(null);
@@ -312,7 +312,7 @@ const Expeditions = ({ scrollProgress }) => {
 
     const catScrollPrev = () => animate(catX, Math.min(catX.get() + 210, 0), { type: 'spring', stiffness: 350, damping: 30 });
     const catScrollNext = () => animate(catX, Math.max(catX.get() - 210, catDragLeft), { type: 'spring', stiffness: 350, damping: 30 });
-    const expedCarouselProgress = useTransform(scrollProgress, [0.30, 0.37], [0, 1]);
+    const expedCarouselProgress = useTransform(scrollProgress, [0.30, 0.34], [0, 1]);
     useEffect(() => {
         return expedCarouselProgress.on("change", (latest) => {
             const el = expedCarouselRef.current;
