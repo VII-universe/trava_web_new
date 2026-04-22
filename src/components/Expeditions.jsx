@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useTransform, useScroll, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ArrowLeft, ArrowRight, X, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, MapPin, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
 import SummitImage from '../assets/summit_bg.png';
 import HonzaProfile from '../assets/honza_profile.png';
@@ -90,6 +90,168 @@ const MORE_EXPEDITIONS = [
     },
 ];
 
+const CATEGORIES = [
+    {
+        id: 'jeep',
+        label: 'Výlet jeepem',
+        difficulty: 'Bez kondice',
+        badgeClass: 'bg-emerald-500/90 text-white',
+        image: MustangImg,
+        tagline: 'Nepál je váš sen? Nevadí, že netrekujete.',
+        desc: 'Horní Mustang, chrámové okruhy nebo horské průsmyky — dostaneme vás tam, kde autobusy nejezdí a průvodci nejsou. Ideální pro ty, kdo chtějí zažít Nepál naplno bez fyzické námahy.',
+        highlights: [
+            'Horní Mustang — zakázané království jeepem',
+            'Lo Manthang a tibetské kláštery',
+            'Pohodlné ubytování v teahouses',
+            'Vhodné pro všechny věkové kategorie',
+        ],
+    },
+    {
+        id: 'photo',
+        label: 'Fotografický zájezd',
+        difficulty: 'Snadné',
+        badgeClass: 'bg-sky-500/90 text-white',
+        image: KiliImg,
+        tagline: 'Zlatá hodina na střeše světa.',
+        desc: 'Workshopy v terénu, portréty místních, dramatická himálajská světla. Jedete s fotoaparátem — vracíte se s galeriemi, které se prodávají.',
+        highlights: [
+            'Workshop kompozice v horském terénu',
+            'Portréty šerpů a místních dětí',
+            'Sunrise na vyhlídkách (Poon Hill, EBC)',
+            'Malé skupiny — max 8 osob',
+        ],
+    },
+    {
+        id: 'yoga',
+        label: 'Jógový retreat',
+        difficulty: 'Snadné',
+        badgeClass: 'bg-sky-500/90 text-white',
+        image: YogaImg,
+        tagline: 'Tělo, mysl i čerstvý himálajský vzduch.',
+        desc: 'Ranní seance s výhledem na Annapurny, meditace u řeky, večeře v teahousu. Trek jako záminku, klid jako cíl. Jóga v nadmořské výšce chutná jinak.',
+        highlights: [
+            'Ranní jóga s panoramatem hor',
+            'Meditace v buddhistických klášterech',
+            'Vegetariánská strava, čaj, himálajský klid',
+            'Vhodné i pro začátečníky jógy',
+        ],
+    },
+    {
+        id: 'trek',
+        label: 'Trekking',
+        difficulty: 'Střední',
+        badgeClass: 'bg-blue-500/90 text-white',
+        image: MeraImg,
+        tagline: 'Nepál nohama — jeden krok za druhým.',
+        desc: 'Annapurna circuit, EBC, Manaslu loop — klasické i méně frekventované trasy. Chodíte, spíte v teahouses, mluvíte s místními. Takhle se Nepál poznává.',
+        highlights: [
+            'Everest Base Camp trek (5364 m)',
+            'Annapurna circuit — 200 km klasiky',
+            'Mera Peak jako bonusový výstup',
+            'Průvodce ze šerpů, malé skupiny',
+        ],
+    },
+    {
+        id: 'technical',
+        label: 'Technická výprava',
+        difficulty: 'Náročné',
+        badgeClass: 'bg-orange-500/90 text-white',
+        image: AconcaImg,
+        tagline: 'Lana, mačky, první výškové tábory.',
+        desc: 'Mera Peak, Island Peak, Aconcagua. Průvodce se zkušenostmi z 8000 m, fixní jistění na klíčových místech — první skutečná horolezecká expedice.',
+        highlights: [
+            'Mera Peak (6476 m) — nejdostupnější šestka',
+            'Island Peak (6189 m) s lanovým jistěním',
+            'Aconcagua (6961 m) — vrchol dvou kontinentů',
+            'Základní horolezecký kurz zahrnutý',
+        ],
+    },
+    {
+        id: '8000',
+        label: 'Osmitisícovka',
+        difficulty: 'Extrémní',
+        badgeClass: 'bg-red-600/90 text-white',
+        image: ManasluImg,
+        tagline: 'Do konce světa a zpátky.',
+        desc: 'Manáslu (8163 m). Jen pro nejpřipravenější. S námi nejste platící klient s číslem — jste platný člen expedičního týmu se vší zodpovědností i slávou.',
+        highlights: [
+            'Manáslu — 8. nejvyšší hora světa',
+            'Kompletní expedice: zásobování, šerpové, lana',
+            'Výběr účastníků — jen ověření horolezci',
+            'Plná logistika v Káthmándú i na hoře',
+        ],
+    },
+];
+
+const REGIONS = [
+    {
+        id: 'khumbu',
+        name: 'Khumbu & Everest',
+        subtitle: 'Ikona Himálaje',
+        image: K2Img,
+        altitude: 'do 8848 m',
+        bestSeason: 'Říjen–Listopad, Duben–Květen',
+        difficulty: 'Střední–Extrémní',
+        desc: 'Nejslavnější horský region světa. EBC, Island Peak, Ama Dablam — každý najde svoji horu. Namche Bazaar je základna, ledovec Khumbu magnet.',
+        highlights: ['Everest Base Camp (5364 m)', 'Island Peak (6189 m)', 'Ama Dablam (6812 m)', 'Klášter Tengboche', 'Namche Bazaar'],
+    },
+    {
+        id: 'annapurna',
+        name: 'Annapurna',
+        subtitle: 'Treky i retreaty',
+        image: YogaImg,
+        altitude: 'do 8091 m',
+        bestSeason: 'Říjen–Listopad, Duben–Květen',
+        difficulty: 'Snadné–Extrémní',
+        desc: 'Oblast pro každého — od jógových retreatů u Pokhary po technický výstup na Annapurnu I. Poon Hill je povinnost, Annapurna circuit legenda.',
+        highlights: ['Annapurna circuit (200 km)', 'Poon Hill sunrise (3210 m)', 'Jógové retreaty v Pokhaře', 'ABC (4130 m)', 'Dhaulagiri pohled'],
+    },
+    {
+        id: 'mustang',
+        name: 'Horní Mustang',
+        subtitle: 'Zakázané království',
+        image: MustangImg,
+        altitude: 'do 3840 m',
+        bestSeason: 'Červen–Září (i v monzun!)',
+        difficulty: 'Snadné (jeep) – Střední (trek)',
+        desc: 'Mustang je jiný svět. Dostupný jeepem — nemusíte být horolezec. Skalnaté kaňony, tibetská kultura, kláštery s tisíciletou historií. Minimum turistů.',
+        highlights: ['Lo Manthang — tibetské královské město', 'Jeskyně Chhoser', 'Chrám Thubchen Gompa', 'Jeepová trasa Upper Mustang', 'Tiji festival (jaro)'],
+    },
+    {
+        id: 'manaslu',
+        name: 'Manaslu & Tsum',
+        subtitle: 'Méně turistů, více divočiny',
+        image: ManasluImg,
+        altitude: 'do 8163 m',
+        bestSeason: 'Říjen–Listopad',
+        difficulty: 'Střední–Extrémní',
+        desc: 'Manaslu circuit — alternativa k Annapurně se třetinou turistů. Tsum Valley patří k posledním nedotčeným místům na Zemi. Manáslu (8163 m) je naše vlajková loď.',
+        highlights: ['Manaslu circuit (177 km)', 'Tsum Valley — zakázaná oblast', 'Larke La průsmyk (5106 m)', 'Expedice Manáslu (8163 m)'],
+    },
+    {
+        id: 'langtang',
+        name: 'Langtang & Gosaikunda',
+        subtitle: 'Nejblíže Káthmándú',
+        image: ElbrusImg,
+        altitude: 'do 5000 m',
+        bestSeason: 'Říjen–Listopad, Duben–Červen',
+        difficulty: 'Snadné–Střední',
+        desc: '2 hodiny autem z Káthmándú. Skvělé pro kratší výlety nebo první trek. Yak farmy, gletschery a jezerní okruh Gosaikunda. Méně navštěvovaný, stejně krásný.',
+        highlights: ['Langtang valley trek', 'Gosaikunda — posvátná jezera (4380 m)', 'Kyanjin Gompa & Langtang Lirung', 'Ideální na 10–14 dní'],
+    },
+    {
+        id: 'world',
+        name: 'Mimo Nepál',
+        subtitle: '7 Summits & svět',
+        image: AconcaImg,
+        altitude: 'do 6961 m',
+        bestSeason: 'Dle destinace',
+        difficulty: 'Střední–Extrémní',
+        desc: 'Nepál je naše domovina, ale jezdíme i jinam. Aconcagua, Kilimandžáro, Elbrus nebo ekvádorské sopky — vždy se stejným přístupem a péčí.',
+        highlights: ['Aconcagua (6961 m) — vrchol obou Amerik', 'Kilimandžáro (5895 m) — střecha Afriky', 'Elbrus (5642 m) — střecha Evropy', 'Sopky Ekvádoru — Cotopaxi & Chimborazo'],
+    },
+];
+
 const Expeditions = ({ scrollProgress }) => {
     const containerOpacity = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], [0, 1, 1, 0]);
     const backgroundY = useTransform(scrollProgress, [0.27, 0.30, 0.37, 0.41], ["-105%", "0%", "0%", "130%"]);
@@ -102,9 +264,21 @@ const Expeditions = ({ scrollProgress }) => {
     const [isOrdering, setIsOrdering] = useState(false);
     const [isMiriOpen, setIsMiriOpen] = useState(false);
     const [isSubinOpen, setIsSubinOpen] = useState(false);
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [isRegionsOpen, setIsRegionsOpen] = useState(false);
+    const [selectedRegion, setSelectedRegion] = useState(null);
+
+    const VIDEO_EMBED_URL = 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID';
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen);
+
+    useEffect(() => {
+        const handleEsc = (e) => { if (e.key === 'Escape') setIsVideoOpen(false); };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
 
     // Allow external components (About story modal) to open team modals
     useEffect(() => {
@@ -119,6 +293,25 @@ const Expeditions = ({ scrollProgress }) => {
     }, []);
 
     const expedCarouselRef = useRef(null);
+    const categoryDragRef = useRef(null);
+    const catX = useMotionValue(0);
+    const [catDragLeft, setCatDragLeft] = useState(-800);
+    const catDidDrag = useRef(false);
+
+    useEffect(() => {
+        const update = () => {
+            const container = categoryDragRef.current;
+            if (!container) return;
+            const inner = container.firstElementChild;
+            if (inner) setCatDragLeft(Math.min(0, container.clientWidth - inner.scrollWidth));
+        };
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
+
+    const catScrollPrev = () => animate(catX, Math.min(catX.get() + 210, 0), { type: 'spring', stiffness: 350, damping: 30 });
+    const catScrollNext = () => animate(catX, Math.max(catX.get() - 210, catDragLeft), { type: 'spring', stiffness: 350, damping: 30 });
     const expedCarouselProgress = useTransform(scrollProgress, [0.30, 0.37], [0, 1]);
     useEffect(() => {
         return expedCarouselProgress.on("change", (latest) => {
@@ -190,24 +383,75 @@ const Expeditions = ({ scrollProgress }) => {
                                     </a>
                                 </div>
                             </div>
-                            {/* Expedition cards */}
-                            {EXPEDITIONS.map((exped) => (
-                                <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[82vw] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.98] transition-transform">
-                                    <div className="w-full aspect-[3/2] overflow-hidden relative">
-                                        <img src={exped.image} className="w-full h-full object-cover" alt={exped.title} />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
-                                        <div className="absolute bottom-3 left-3 right-3">
-                                            <h4 className="font-serif text-base text-white leading-tight mb-1.5">{exped.title}</h4>
-                                            <div className="flex gap-2">
-                                                <span className="text-[9px] text-white/70 tracking-wider uppercase bg-white/10 px-2 py-0.5 rounded backdrop-blur-sm">{exped.duration}</span>
-                                                <span className="text-[9px] text-gold-400 tracking-wider uppercase bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm">{exped.difficulty}</span>
+                            {/* Category 2×3 grid */}
+                            <div className="shrink-0 snap-start w-[92vw]">
+                                <div className="flex justify-between items-center mb-3">
+                                    <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[10px] font-bold">Co pro vás máme</p>
+                                    <button onClick={() => setIsRegionsOpen(true)} className="flex items-center gap-1 text-slate-300 hover:text-gold-400 text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                        <MapPin className="w-3 h-3" /> Oblasti
+                                    </button>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2.5">
+                                    {CATEGORIES.map((cat, i) => (
+                                        <button
+                                            key={cat.id}
+                                            onClick={() => setSelectedCategory(cat)}
+                                            className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.12] active:scale-[0.96] transition-transform"
+                                        >
+                                            <img src={cat.image} className="absolute inset-0 w-full h-full object-cover brightness-[0.5]" alt={cat.label} />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                                            {/* Index */}
+                                            <span className="absolute top-2.5 left-3 font-mono text-[9px] text-gold-500/60 font-bold tracking-widest leading-none">
+                                                {String(i + 1).padStart(2, '0')}
+                                            </span>
+                                            {/* Difficulty badge */}
+                                            <span className={`absolute top-2 right-2 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full ${cat.badgeClass} leading-tight shadow-md`}>
+                                                {cat.difficulty}
+                                            </span>
+                                            {/* Label */}
+                                            <div className="absolute bottom-0 inset-x-0 p-3">
+                                                <h4 className="font-serif text-white text-sm leading-tight drop-shadow-md">{cat.label}</h4>
+                                                <p className="font-sans text-slate-300 text-[10px] leading-snug mt-0.5 line-clamp-1">{cat.tagline}</p>
                                             </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Video card */}
+                            <button
+                                onClick={() => setIsVideoOpen(true)}
+                                className="shrink-0 snap-start w-[72vw] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.98] transition-transform relative"
+                            >
+                                <img src={ManasluImg} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent" />
+                                <div className="relative flex flex-col items-center justify-center gap-3 h-full min-h-[200px] p-5">
+                                    <div className="relative">
+                                        <span className="absolute inset-0 rounded-full bg-gold-500/30 animate-ping" />
+                                        <div className="relative w-14 h-14 rounded-full bg-gold-500/20 border-2 border-gold-400 flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                                            <Play className="w-5 h-5 text-gold-300 fill-gold-300 ml-0.5" />
                                         </div>
                                     </div>
-                                    <div className="p-3 bg-slate-950/75 backdrop-blur-md">
-                                        <p className="font-sans text-slate-300 text-xs line-clamp-2 leading-relaxed">{exped.description}</p>
-                                        <div className="flex items-center gap-1.5 text-gold-400 text-[10px] font-bold uppercase tracking-wider mt-2">
-                                            Detail <ArrowRight className="w-3 h-3" />
+                                    <div className="text-center">
+                                        <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[9px] font-bold mb-1">Sleduj film</p>
+                                        <p className="font-serif text-white text-sm leading-snug">Honzův příběh na 8000 m</p>
+                                    </div>
+                                </div>
+                            </button>
+
+                            {/* Expedition cards */}
+                            {EXPEDITIONS.map((exped) => (
+                                <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[62vw] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.97] transition-transform relative">
+                                    <img src={exped.image} className="absolute inset-0 w-full h-full object-cover" alt={exped.title} />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
+                                    <div className="absolute top-3 right-3">
+                                        <span className="text-[9px] text-gold-400 tracking-wider uppercase bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm border border-gold-500/20">{exped.difficulty}</span>
+                                    </div>
+                                    <div className="absolute bottom-0 inset-x-0 p-4">
+                                        <h4 className="font-serif text-sm text-white leading-tight mb-2 drop-shadow-md">{exped.title}</h4>
+                                        <span className="text-[9px] text-white/60 tracking-wider uppercase bg-white/10 px-2 py-0.5 rounded backdrop-blur-sm">{exped.duration}</span>
+                                        <div className="flex items-center gap-1 text-gold-400 text-[9px] font-bold uppercase tracking-wider mt-2.5">
+                                            Detail <ArrowRight className="w-2.5 h-2.5" />
                                         </div>
                                     </div>
                                 </div>
@@ -235,6 +479,29 @@ const Expeditions = ({ scrollProgress }) => {
                         Vydej se se mnou na cesty
                     </h2>
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Dobří parťáci na cestě jsou to nejcennější.</p>
+                </div>
+
+                {/* Cinematic video strip */}
+                <div className="relative z-10 max-w-7xl w-full px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mb-4 md:mb-5">
+                    <button
+                        onClick={() => setIsVideoOpen(true)}
+                        className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto"
+                    >
+                        <img src={ManasluImg} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/85" />
+                        <div className="relative flex items-center justify-center gap-5 h-full">
+                            <div className="relative shrink-0">
+                                <span className="absolute inset-0 rounded-full bg-gold-500/25 animate-ping" />
+                                <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full bg-gold-500/15 border-2 border-gold-400/80 flex items-center justify-center group-hover:bg-gold-500/35 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                                    <Play className="w-4 h-4 md:w-5 md:h-5 text-gold-300 fill-gold-300 ml-0.5" />
+                                </div>
+                            </div>
+                            <div className="text-left">
+                                <p className="text-gold-400 font-sans uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-bold mb-1">Sleduj film</p>
+                                <h3 className="font-serif text-white text-lg md:text-xl lg:text-2xl leading-tight drop-shadow-md">Honzův příběh — od Prahy na Manáslu</h3>
+                            </div>
+                        </div>
+                    </button>
                 </div>
 
                 <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mt-0">
@@ -382,39 +649,103 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
 
-                        <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/70 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center overflow-hidden rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-sm md:text-[11px] font-bold mb-4 ml-2 drop-shadow-md">Vyberte si výpravu</h3>
-                            
-                            <div className="flex flex-col gap-2 md:gap-3">
-                                {EXPEDITIONS.map((exped) => (
-                                    <button
-                                        key={exped.id}
-                                        onClick={() => { setSelectedExped(exped); setIsOrdering(false); }}
-                                        className="group text-left p-3 md:p-4 rounded-xl border border-white/10 bg-black/60 hover:bg-black/80 hover:border-gold-500/50 transition-all duration-300 backdrop-blur-md flex items-center justify-between shadow-lg"
-                                    >
-                                        <div>
-                                            <h4 className="font-serif text-lg md:text-xl text-white drop-shadow-md group-hover:text-gold-400 transition-colors">{exped.title}</h4>
-                                            <div className="flex gap-4 mt-2">
-                                                <span className="font-sans text-sm text-slate-200 font-medium tracking-wider uppercase"><MapPin className="w-3 h-3 inline pb-0.5 mr-1"/>{exped.duration}</span>
-                                                <span className="font-sans text-sm text-slate-200 font-medium tracking-wider uppercase">• {exped.difficulty}</span>
-                                            </div>
-                                        </div>
-                                        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-gold-500 group-hover:border-gold-500 transition-colors">
-                                            <ArrowRight className="w-4 h-4 text-white" />
-                                        </div>
-                                    </button>
-                                ))}
+                        <div className="pointer-events-auto relative z-10 flex flex-col gap-3">
+                            {/* Header + arrow buttons */}
+                            <div className="bg-slate-950/80 backdrop-blur-md rounded-xl px-4 py-3 border border-white/[0.08]">
+                                <div className="flex items-center justify-between mb-1">
+                                    <h3 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[11px] font-bold">Co pro vás máme</h3>
+                                    <div className="flex gap-1.5">
+                                        <button
+                                            onClick={catScrollPrev}
+                                            className="w-7 h-7 rounded-full bg-slate-800 hover:bg-gold-500 border border-white/20 hover:border-gold-400 text-white flex items-center justify-center transition-all duration-200"
+                                            aria-label="Předchozí"
+                                        >
+                                            <ChevronLeft className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={catScrollNext}
+                                            className="w-7 h-7 rounded-full bg-slate-800 hover:bg-gold-500 border border-white/20 hover:border-gold-400 text-white flex items-center justify-center transition-all duration-200"
+                                            aria-label="Další"
+                                        >
+                                            <ChevronRight className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <p className="font-sans text-slate-300 text-xs leading-relaxed">
+                                    Od jeepového výletu až po osmitisícovku — Nepál je dostupný každému.
+                                </p>
                             </div>
 
-                            {/* Více expedicí Button */}
-                            <button 
-                                onClick={() => setShowAllExpeditions(true)}
-                                className="mt-6 w-full py-4 px-6 bg-gold-500 text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-gold-400 transition-all duration-300 flex items-center justify-center gap-3 group shadow-lg shadow-black/20"
-                            >
-                                <span className="drop-shadow-sm transition-colors">Více expedicí</span>
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-all" />
-                            </button>
-                        </motion.div>
+                            {/* Draggable category cards */}
+                            <div ref={categoryDragRef} className="overflow-hidden rounded-xl h-[260px] lg:h-[290px] cursor-grab active:cursor-grabbing">
+                                <motion.div
+                                    drag="x"
+                                    dragConstraints={{ left: catDragLeft, right: 0 }}
+                                    dragElastic={0.05}
+                                    dragMomentum={true}
+                                    dragTransition={{ power: 0.25, timeConstant: 200 }}
+                                    style={{ x: catX }}
+                                    onPointerDown={() => { catDidDrag.current = false; }}
+                                    onDrag={() => { catDidDrag.current = true; }}
+                                    className="flex gap-2.5 h-full select-none"
+                                >
+                                    {CATEGORIES.map((cat, i) => (
+                                        <button
+                                            key={cat.id}
+                                            onClick={() => { if (!catDidDrag.current) setSelectedCategory(cat); }}
+                                            className="group relative shrink-0 w-44 lg:w-48 h-full rounded-2xl overflow-hidden border border-white/[0.1] hover:border-gold-500/30 hover:-translate-y-1 transition-all duration-200 shadow-[0_16px_40px_rgba(0,0,0,0.55)] text-left"
+                                        >
+                                            {/* Full-bleed image */}
+                                            <img
+                                                src={cat.image}
+                                                alt={cat.label}
+                                                draggable={false}
+                                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.07]"
+                                            />
+                                            {/* Rich gradient */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/15 to-black/25" />
+                                            {/* Subtle gold shimmer on hover */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-gold-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+
+                                            {/* Top row: index + badge */}
+                                            <div className="absolute top-3 inset-x-3 flex items-start justify-between pointer-events-none">
+                                                <span className="font-mono text-[9px] text-gold-500/50 font-bold tracking-[0.2em] leading-none">
+                                                    {String(i + 1).padStart(2, '0')}
+                                                </span>
+                                                <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-md leading-tight ${cat.badgeClass}`}>
+                                                    {cat.difficulty}
+                                                </span>
+                                            </div>
+
+                                            {/* Bottom content */}
+                                            <div className="absolute inset-x-0 bottom-0 p-4 pointer-events-none">
+                                                <h4 className="font-serif text-white text-base lg:text-lg leading-tight mb-1.5 drop-shadow-md group-hover:text-gold-200 transition-colors duration-300">{cat.label}</h4>
+                                                <p className="font-sans text-slate-400 text-[10px] leading-snug line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{cat.tagline}</p>
+                                                <div className="flex items-center gap-1 text-gold-400 text-[9px] font-bold uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    Více <ArrowRight className="w-2.5 h-2.5" />
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </motion.div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex gap-2.5 mt-1">
+                                <button
+                                    onClick={() => setIsRegionsOpen(true)}
+                                    className="flex-1 py-3 px-4 bg-white/[0.08] border border-white/[0.12] text-white text-[10px] font-bold uppercase tracking-[0.12em] rounded-xl hover:bg-white/[0.15] hover:border-white/20 transition-all flex items-center justify-center gap-1.5"
+                                >
+                                    <MapPin className="w-3.5 h-3.5 shrink-0" /> Oblasti
+                                </button>
+                                <button
+                                    onClick={() => setShowAllExpeditions(true)}
+                                    className="flex-1 py-3 px-4 bg-gold-500 text-white text-[10px] font-bold uppercase tracking-[0.12em] rounded-xl hover:bg-gold-400 transition-all flex items-center justify-center gap-1.5 shadow-[0_0_16px_rgba(212,175,55,0.25)]"
+                                >
+                                    Výpravy <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -902,6 +1233,267 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </div>
                     </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        {/* ── CATEGORY DETAIL MODAL ── */}
+        <AnimatePresence>
+            {selectedCategory && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => setSelectedCategory(null)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
+                    >
+                        <button
+                            onClick={() => setSelectedCategory(null)}
+                            className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-2 md:p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
+                        >
+                            <X className="w-5 h-5 md:w-6 md:h-6" />
+                        </button>
+
+                        <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0">
+                            <img src={selectedCategory.image} alt={selectedCategory.label} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent" />
+                            <div className="absolute top-5 left-5">
+                                <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg ${selectedCategory.badgeClass}`}>
+                                    {selectedCategory.difficulty}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div
+                            className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"
+                            data-lenis-prevent
+                        >
+                            <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold mb-3">Typ výpravy</h4>
+                            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-3 leading-tight">{selectedCategory.label}</h2>
+                            <p className="font-serif italic text-slate-500 text-lg mb-6 leading-snug">{selectedCategory.tagline}</p>
+                            <p className="font-sans text-slate-700 leading-relaxed text-base mb-8">{selectedCategory.desc}</p>
+
+                            <div className="mb-8 p-6 bg-slate-100/50 rounded-2xl border border-slate-200">
+                                <h4 className="font-serif text-xl text-slate-900 mb-4">Co zahrnuje:</h4>
+                                <ul className="space-y-3">
+                                    {selectedCategory.highlights.map((h, i) => (
+                                        <li key={i} className="flex gap-3 text-slate-700 font-sans items-start">
+                                            <span className="text-gold-500 mt-0.5 shrink-0"><ArrowRight className="w-4 h-4" /></span>
+                                            <span className="leading-snug">{h}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <a
+                                href="https://14summitsexpedition.cz"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full py-4 px-6 bg-slate-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 group"
+                            >
+                                Mám zájem
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </a>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── REGIONS MODAL ── */}
+        <AnimatePresence>
+            {isRegionsOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 pointer-events-auto bg-slate-950/90 backdrop-blur-md"
+                    onClick={() => { setIsRegionsOpen(false); setSelectedRegion(null); }}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-[#0f1923] w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col relative"
+                    >
+                        <AnimatePresence mode="wait">
+                            {selectedRegion ? (
+                                /* ── Region detail ── */
+                                <motion.div
+                                    key="region-detail"
+                                    initial={{ opacity: 0, x: 30 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -30 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="flex flex-col md:flex-row h-full max-h-[90vh]"
+                                >
+                                    <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0">
+                                        <img src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0f1923] via-[#0f1923]/30 to-transparent" />
+                                        <div className="absolute bottom-5 left-5 flex flex-col gap-1.5">
+                                            <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-white border border-white/20 w-fit backdrop-blur-sm">{selectedRegion.difficulty}</span>
+                                            <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gold-500/20 text-gold-300 border border-gold-500/30 w-fit backdrop-blur-sm">{selectedRegion.bestSeason}</span>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="flex-1 flex flex-col min-h-0"
+                                    >
+                                        <div className="shrink-0 flex items-center justify-between px-6 pt-6 pb-2">
+                                            <button
+                                                onClick={() => setSelectedRegion(null)}
+                                                className="flex items-center gap-2 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors"
+                                            >
+                                                <ArrowLeft className="w-4 h-4" /> Zpět na oblasti
+                                            </button>
+                                            <button
+                                                onClick={() => { setIsRegionsOpen(false); setSelectedRegion(null); }}
+                                                className="p-2 rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-white transition-colors"
+                                            >
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                        </div>
+
+                                        <div className="flex-1 overflow-y-auto overscroll-contain min-h-0 px-6 pb-8 md:px-10 md:pb-10" data-lenis-prevent>
+                                            <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[10px] font-bold mb-2 mt-2">{selectedRegion.subtitle}</p>
+                                            <h2 className="font-serif text-3xl md:text-4xl text-white mb-2 leading-tight">{selectedRegion.name}</h2>
+                                            <p className="font-sans text-slate-400 text-sm mb-1">Nadm. výška: <span className="text-white font-semibold">{selectedRegion.altitude}</span></p>
+                                            <p className="font-sans text-slate-300 leading-relaxed text-sm md:text-base mt-4 mb-6">{selectedRegion.desc}</p>
+
+                                            <div className="p-5 bg-white/[0.04] rounded-2xl border border-white/[0.08] mb-6">
+                                                <h4 className="font-serif text-lg text-white mb-4">Co tato oblast nabízí:</h4>
+                                                <ul className="space-y-2.5">
+                                                    {selectedRegion.highlights.map((h, i) => (
+                                                        <li key={i} className="flex gap-3 text-slate-300 font-sans text-sm items-start">
+                                                            <ArrowRight className="w-3.5 h-3.5 text-gold-500 mt-0.5 shrink-0" />
+                                                            {h}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            <a
+                                                href="https://14summitsexpedition.cz"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-full py-4 px-6 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(212,175,55,0.25)]"
+                                            >
+                                                Mám zájem o {selectedRegion.name}
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                /* ── Regions grid ── */
+                                <motion.div
+                                    key="regions-grid"
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 30 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="flex flex-col h-full"
+                                >
+                                    <div className="shrink-0 flex justify-between items-end px-6 md:px-8 pt-7 pb-5 border-b border-white/[0.07]">
+                                        <div>
+                                            <p className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[10px] font-bold mb-2">Kde se s námi vydáte</p>
+                                            <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight">Oblasti & destinace</h2>
+                                        </div>
+                                        <button
+                                            onClick={() => setIsRegionsOpen(false)}
+                                            className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10"
+                                        >
+                                            <X className="w-5 h-5 md:w-6 md:h-6" />
+                                        </button>
+                                    </div>
+
+                                    <div
+                                        className="flex-1 overflow-y-auto overscroll-contain p-6 md:p-8"
+                                        data-lenis-prevent
+                                    >
+                                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {REGIONS.map((region) => (
+                                                <button
+                                                    key={region.id}
+                                                    onClick={() => setSelectedRegion(region)}
+                                                    className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/40 transition-all duration-300 text-left"
+                                                >
+                                                    <img
+                                                        src={region.image}
+                                                        alt={region.name}
+                                                        className="w-full h-full object-cover brightness-60 group-hover:brightness-75 group-hover:scale-105 transition-all duration-600"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent" />
+                                                    <div className="absolute inset-x-0 bottom-0 p-4">
+                                                        <p className="text-gold-400 font-sans uppercase tracking-wider text-[9px] font-bold mb-0.5">{region.subtitle}</p>
+                                                        <h3 className="font-serif text-white text-base md:text-lg leading-tight group-hover:text-gold-300 transition-colors">{region.name}</h3>
+                                                        <p className="font-sans text-slate-400 text-[10px] mt-1 flex items-center gap-1">
+                                                            <MapPin className="w-2.5 h-2.5 shrink-0" />{region.altitude}
+                                                        </p>
+                                                    </div>
+                                                    <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/[0.08] group-hover:bg-gold-500/20 border border-white/10 group-hover:border-gold-500/30 flex items-center justify-center transition-all">
+                                                        <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-gold-400 transition-colors" />
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── VIDEO LIGHTBOX MODAL ── */}
+        <AnimatePresence>
+            {isVideoOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-10 pointer-events-auto bg-black/97 backdrop-blur-xl"
+                    onClick={() => setIsVideoOpen(false)}
+                >
+                    <button
+                        onClick={() => setIsVideoOpen(false)}
+                        className="absolute top-5 right-5 md:top-8 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/15 z-10"
+                        aria-label="Zavřít video"
+                    >
+                        <X className="w-5 h-5 md:w-6 md:h-6" />
+                    </button>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.88, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.92, y: 20 }}
+                        transition={{ type: "spring", damping: 28, stiffness: 320 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.15)] border border-gold-500/20"
+                    >
+                        <iframe
+                            src={`${VIDEO_EMBED_URL}?autoplay=1&rel=0&modestbranding=1`}
+                            className="w-full h-full"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                            title="Honzův příběh"
+                        />
+                    </motion.div>
+
+                    <p className="absolute bottom-6 left-0 w-full text-center text-slate-600 font-mono text-[10px] tracking-widest uppercase select-none">
+                        Klikni mimo video nebo stiskni Esc pro zavření
+                    </p>
                 </motion.div>
             )}
         </AnimatePresence>

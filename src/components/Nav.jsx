@@ -72,13 +72,13 @@ const Nav = ({ scrollProgress }) => {
                         src={LogoWhite} 
                         alt="Honza Tráva Logo (White)" 
                         style={{ opacity: whiteOpacity }}
-                        className="h-16 md:h-24 lg:h-32 w-auto drop-shadow-md relative z-10" 
+                        className="h-24 md:h-36 lg:h-44 w-auto drop-shadow-md relative z-10"
                     />
-                    <motion.img 
-                        src={LogoBlack} 
-                        alt="Honza Tráva Logo (Black)" 
+                    <motion.img
+                        src={LogoBlack}
+                        alt="Honza Tráva Logo (Black)"
                         style={{ opacity: blackOpacity }}
-                        className="absolute top-0 left-0 h-16 md:h-24 lg:h-32 w-auto z-20" 
+                        className="absolute top-0 left-0 h-24 md:h-36 lg:h-44 w-auto z-20"
                     />
                 </div>
             </div>
