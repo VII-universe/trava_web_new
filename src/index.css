@@ -10,15 +10,15 @@
   }
 }
 
-/* Mobile scroll-snap: each swipe lands on a section */
+/* Mobile scroll-snap: stops swipes gently at section boundaries */
 @media (max-width: 767px) {
-  html {
-    scroll-snap-type: y mandatory;
+  .h-\[1600vh\] {
+    scroll-snap-type: y proximity;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scroll-snap-anchor-start {
     scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 }
 

@@ -44,9 +44,9 @@ function App() {
     offset: ["start start", "end end"]
   });
 
-  // On mobile: tight spring so sections animate quickly after snap
+  // Snappier spring on mobile so sections track finger immediately
   const smoothProgress = useSpring(scrollYProgress, isMobile
-    ? { stiffness: 400, damping: 60, restDelta: 0.0005 }
+    ? { stiffness: 160, damping: 32, restDelta: 0.001 }
     : { stiffness: 120, damping: 28, restDelta: 0.001 }
   );
 
@@ -62,16 +62,16 @@ function App() {
   );
 
   return (
-    <ReactLenis root options={{ smoothTouch: false, lerp: 0.08 }}>
+    <ReactLenis root options={{ smoothTouch: true, lerp: 0.08, touchMultiplier: 0.7 }}>
       <ScrollLockHandler />
       <div ref={containerRef} className="relative h-[1400vh] bg-ivory selection:bg-gold-400 selection:text-white">
 
-        {/* Mobile scroll-snap anchors — one per section, h-px so browser registers them */}
+        {/* Mobile scroll-snap anchors — 11 sections */}
         {[0.00, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.90].map((pct, i) => (
           <div
             key={i}
-            className="absolute w-full scroll-snap-anchor-start pointer-events-none"
-            style={{ top: `${pct * 100}%`, height: '1px' }}
+            className="absolute w-full h-0 scroll-snap-anchor-start"
+            style={{ top: `${pct * 100}%` }}
           />
         ))}
 
