@@ -3,6 +3,7 @@ import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { Calendar, X, Mail, CheckCircle2, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
+import EventCalendar from './EventCalendar';
 import BookingBg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
 import Tour50Img from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import CollabImg from '../assets/zmensene/portrety/prednasky/dsc04123.jpg';
@@ -79,8 +80,9 @@ const Lectures = ({ scrollProgress }) => {
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showLectureList, setShowLectureList] = useState(false);
+    const [calendarOpen, setCalendarOpen] = useState(false);
 
-    useScrollLock(open || selectedEvent || showLectureList);
+    useScrollLock(open || selectedEvent || showLectureList || calendarOpen);
 
     // PHASE 8: 0.63 -> 0.72 with hold
     const containerOpacity = useTransform(scrollProgress, [0.62, 0.65, 0.67, 0.69], [0, 1, 1, 0]);
@@ -205,7 +207,7 @@ const Lectures = ({ scrollProgress }) => {
                         </div>
 
                         {/* Mobile buttons row */}
-                        <div className="shrink-0 flex gap-3 justify-center">
+                        <div className="shrink-0 flex gap-3 justify-center flex-wrap">
                             <div className="relative group">
                                 <div className="absolute -inset-1 bg-gradient-to-r from-gold-600 to-gold-400 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000" />
                                 <button
@@ -220,6 +222,13 @@ const Lectures = ({ scrollProgress }) => {
                                 className="px-5 py-3.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
                             >
                                 Více přednášek
+                            </button>
+                            <button
+                                onClick={() => setCalendarOpen(true)}
+                                className="px-5 py-3.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all flex items-center gap-2"
+                            >
+                                <Calendar className="w-4 h-4" />
+                                Kalendář
                             </button>
                         </div>
                     </div>
@@ -276,7 +285,14 @@ const Lectures = ({ scrollProgress }) => {
                                         </motion.div>
                                     ))}
                                 </div>
-                                <div className="max-w-4xl mx-auto mt-8 flex items-center justify-center gap-4">
+                                <div className="max-w-4xl mx-auto mt-8 flex items-center justify-center gap-4 flex-wrap">
+                                    <button
+                                        onClick={() => setCalendarOpen(true)}
+                                        className="px-8 py-3.5 border border-white/20 text-white hover:text-white hover:border-white/50 hover:bg-white/10 rounded-xl font-sans tracking-[0.15em] uppercase text-xs font-bold transition-all flex items-center gap-2"
+                                    >
+                                        <Calendar className="w-4 h-4" />
+                                        Kalendář
+                                    </button>
                                     <button
                                         onClick={() => setShowLectureList(true)}
                                         className="px-8 py-3.5 border border-white/20 text-white hover:text-white hover:border-white/50 hover:bg-white/10 rounded-xl font-sans tracking-[0.15em] uppercase text-xs font-bold transition-all flex items-center gap-2"
@@ -534,6 +550,13 @@ const Lectures = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
                     </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Calendar Modal */}
+            <AnimatePresence>
+                {calendarOpen && (
+                    <EventCalendar onClose={() => setCalendarOpen(false)} />
                 )}
             </AnimatePresence>
 

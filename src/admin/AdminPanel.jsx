@@ -51,24 +51,24 @@ const DEF_PRODUCTS = [
 ];
 
 const DEF_LECTURES = [
-  { id:'osmitisicovky',     title:'8 osmitisícovek',          subtitle:'Přednáška & Cestopis',    duration:'60–90 min', audience:'Veřejné akce, festivaly, korporáty',       desc:'Ucelený příběh o cestě na osm nejvyšších hor světa. Fotky a videa z expedic, lidé, kteří to umožnili, a momenty, které nelze přepsat.', highlights:['Osmitisícovky v příbězích','Unikátní fotky z expedic','Q&A s Honzou'] },
-  { id:'hory-leci',         title:'Hory mě léčily',           subtitle:'Osobní příběh & Osvěta', duration:'45–60 min', audience:'Zdravotní konference, HR, média',           desc:'O rakovině, artritidě a o tom, jak hory pomohly najít nový směr. Přednáška, která je upřímná, vtipná i silná zároveň.', highlights:['Osobní příběh diagnózy','Cesta zpátky přes hory','Spolupráce s Revma Ligou a Fuck Cancer'] },
-  { id:'leadership',        title:'Leadership nad mraky',      subtitle:'Motivační přednáška',    duration:'60 min',    audience:'Firmy, management, teambuildingy',          desc:'Co nás osmitisícovky učí o vedení týmu, rozhodování pod tlakem a nalézání vlastní cesty.', highlights:['Vedení týmu v extrémech','Rozhodování pod tlakem','Osobní výkonnost a hranice'] },
-  { id:'expedice-nepal',    title:'Nepál — druhý domov',       subtitle:'Cestopis & Kultura',     duration:'60 min',    audience:'Geografické společnosti, cestovní agentury', desc:'Příběh o zemi, která se stala druhým domovem. Káthmándú, šerpové, kláštery a hory — Nepál očima člověka, který tam žije a pracuje.', highlights:['Kultura a tradice Nepálu','Šerpové a horské komunity','Praktické rady pro cestovatele'] },
-  { id:'k2-manaslu',        title:'K2 & Manáslu',              subtitle:'Expedice v detailu',     duration:'75–90 min', audience:'Horolezecké kluby, outdoor komunity',       desc:'Detailní pohled na dvě z nejnáročnějších expedic. Logistika, tým, rozhodnutí ve výšce a momenty, kdy záleží na každém metru.', highlights:['Logistika osmitisícovkové expedice','Kritické momenty a rozhodnutí','Vybavení a příprava'] },
-  { id:'jiz-jsme-neskoncili',title:'Ještě jsme neskončili',   subtitle:'S Jiřím Langmajerem',    duration:'90 min',    audience:'Veřejné akce, divadla, kulturní centra',   desc:'Speciální pořad s Jiřím Langmajerem — dvě silné osobnosti, jeden společný rozhovor o životě, odolnosti a tom, co nás drží nahoře.', highlights:['Rozhovor Honza Tráva & Jiří Langmajer','Témata odvolnosti a motivace','Interaktivní formát s publikem'] },
+  { id:'osmitisicovky',     title:'8 osmitisícovek',          subtitle:'Přednáška & Cestopis',    duration:'60–90 min', audience:'Veřejné akce, festivaly, korporáty',       desc:'Ucelený příběh o cestě na osm nejvyšších hor světa. Fotky a videa z expedic, lidé, kteří to umožnili, a momenty, které nelze přepsat.', highlights:['Osmitisícovky v příbězích','Unikátní fotky z expedic','Q&A s Honzou'], date:'2026-05-14', location:'Praha, Kongresové centrum' },
+  { id:'hory-leci',         title:'Hory mě léčily',           subtitle:'Osobní příběh & Osvěta', duration:'45–60 min', audience:'Zdravotní konference, HR, média',           desc:'O rakovině, artritidě a o tom, jak hory pomohly najít nový směr. Přednáška, která je upřímná, vtipná i silná zároveň.', highlights:['Osobní příběh diagnózy','Cesta zpátky přes hory','Spolupráce s Revma Ligou a Fuck Cancer'], date:'2026-06-03', location:'Brno, Janáčkovo divadlo' },
+  { id:'leadership',        title:'Leadership nad mraky',      subtitle:'Motivační přednáška',    duration:'60 min',    audience:'Firmy, management, teambuildingy',          desc:'Co nás osmitisícovky učí o vedení týmu, rozhodování pod tlakem a nalézání vlastní cesty.', highlights:['Vedení týmu v extrémech','Rozhodování pod tlakem','Osobní výkonnost a hranice'], date:'2026-09-18', location:'Praha, Forum Karlín' },
+  { id:'expedice-nepal',    title:'Nepál — druhý domov',       subtitle:'Cestopis & Kultura',     duration:'60 min',    audience:'Geografické společnosti, cestovní agentury', desc:'Příběh o zemi, která se stala druhým domovem. Káthmándú, šerpové, kláštery a hory — Nepál očima člověka, který tam žije a pracuje.', highlights:['Kultura a tradice Nepálu','Šerpové a horské komunity','Praktické rady pro cestovatele'], date:'2026-10-07', location:'Olomouc, Divadlo na cucky' },
+  { id:'k2-manaslu',        title:'K2 & Manáslu',              subtitle:'Expedice v detailu',     duration:'75–90 min', audience:'Horolezecké kluby, outdoor komunity',       desc:'Detailní pohled na dvě z nejnáročnějších expedic. Logistika, tým, rozhodnutí ve výšce a momenty, kdy záleží na každém metru.', highlights:['Logistika osmitisícovkové expedice','Kritické momenty a rozhodnutí','Vybavení a příprava'], date:'2026-11-12', location:'Plzeň, Měšťanská beseda' },
+  { id:'jiz-jsme-neskoncili',title:'Ještě jsme neskončili',   subtitle:'S Jiřím Langmajerem',    duration:'90 min',    audience:'Veřejné akce, divadla, kulturní centra',   desc:'Speciální pořad s Jiřím Langmajerem — dvě silné osobnosti, jeden společný rozhovor o životě, odvolnosti a tom, co nás drží nahoře.', highlights:['Rozhovor Honza Tráva & Jiří Langmajer','Témata odvolnosti a motivace','Interaktivní formát s publikem'], date:'2026-12-05', location:'Praha, Divadlo Na Fidlovačce' },
 ];
 
 const DEF_PROJECTS = [
-  { id:'pjj',            title:'Petr Jan Juračka',   subtitle:'Něha Himálaje — balón — Everest Marathon', description:'Spolupráce na dechberoucích projektech s fotografem a filmařem PJJ. Kniha a film Něha Himálaje, projekt létání balónem u Annapurny a Everest Marathon.', highlights:['Kniha a film Něha Himálaje','Projekt balón Annapurna','Everest Marathon'], link:'' },
-  { id:'horky',          title:'Petr Horký',          subtitle:'Filmy — projekty — společné akce',         description:'Dlouhodobá spolupráce s režisérem a polárníkem Petrem Horkým. Dokumentární filmy, přednáškové turné a nezapomenutelné projekty s přesahem.', highlights:['Dokumentární filmy','Společné projekty','Ice Adventure Production'], link:'' },
-  { id:'langos',         title:'Jirka Langmajer',     subtitle:'Přednášky, promo, Ještě jsme neskončili', description:'Netradiční spojení světa hor a divadla. Společné přednášky, promo videa a projekt Jestejsmeneskoncili ukazují, že po vrcholu to teprve začíná.', highlights:['Zábavné společné přednášky','Marketingová promo videa','Projekt Jestejsmeneskoncili'], link:'' },
-  { id:'audy',           title:'Marek Audy',          subtitle:'3D projekce — immersive zážitky',          description:'Unikátní 3D projekce z expedic, které divákům zprostředkovávají realistický pocit z vysokých hor. Spolupráce spojující technologii a dobrodružství.', highlights:['Vtahující 3D fotografie','Realistický vizuální zážitek','Moderní technologie v přednáškách'], link:'' },
-  { id:'forman',         title:'Petr Forman',         subtitle:'Divadlo — audiokniha — COPATUTOJE',        description:'Kreativní přesahy mimo klasické horolezectví. Divadlo, audiokniha a regionální projekt COPATUTOJE pro Plzeň.', highlights:['Netradiční divadelní fúze','Spolupráce na audioknize','Projekt COPATUTOJE'], link:'' },
-  { id:'jsmeneskoncili', title:'Ještě jsme neskončili',subtitle:'S Miri, Horkým, Langošem a J. Votavou',  description:'Silná sestava, silné poselství. Projekt pěti osobností, který ukazuje, že po dosažení vrcholu nebo překonání krize to teprve začíná.', highlights:['Synergie pěti osobností','Inspirace pro životní změny','Zcela nový formát spolupráce'], link:'' },
-  { id:'neha',           title:'Něha Himálaje',       subtitle:'Kniha / film / audio s PJJ',               description:'Multimediální projekt mapující lidskou i horolezeckou tvář himálajských expedic v podání Petra Jana Juračky a Honzy Trávy.', highlights:['Úspěšná knižní publikace','Emocionálně silný dokumentární film','Rozsáhlá osvětová činnost'], link:'' },
-  { id:'dalsi',          title:'Další aktivity',      subtitle:'Havlík, Kopka, 1000 mil, Peakfest...',     description:'Spolupráce s režisérem Rudou Havlíkem, cykloexpedice v Nepálu s Honzou Kopkou, Peakfest a další komunitní projekty.', highlights:['Filmová produkce Rudiho Havlíka','Extrémní cykloexpedice Nepál','Peakfest a komunitní akce'], link:'' },
-  { id:'tour2026',       title:'50 let tour',         subtitle:'Únor–březen 2026 — celá ČR',               description:'Velkolepá oslava 50. narozenin Honzy Trávy. Turné plné nejlepších příběhů, hostů a překvapení po celé republice.', highlights:['Republikové turné','Nejlepší historky z osmitisícovek','Prostor pro partnery projektu'], link:'' },
+  { id:'pjj',            title:'Petr Jan Juračka',   subtitle:'Něha Himálaje — balón — Everest Marathon', description:'Spolupráce na dechberoucích projektech s fotografem a filmařem PJJ. Kniha a film Něha Himálaje, projekt létání balónem u Annapurny a Everest Marathon.', highlights:['Kniha a film Něha Himálaje','Projekt balón Annapurna','Everest Marathon'], link:'', date:'', location:'' },
+  { id:'horky',          title:'Petr Horký',          subtitle:'Filmy — projekty — společné akce',         description:'Dlouhodobá spolupráce s režisérem a polárníkem Petrem Horkým. Dokumentární filmy, přednáškové turné a nezapomenutelné projekty s přesahem.', highlights:['Dokumentární filmy','Společné projekty','Ice Adventure Production'], link:'', date:'', location:'' },
+  { id:'langos',         title:'Jirka Langmajer',     subtitle:'Přednášky, promo, Ještě jsme neskončili', description:'Netradiční spojení světa hor a divadla. Společné přednášky, promo videa a projekt Jestejsmeneskoncili ukazují, že po vrcholu to teprve začíná.', highlights:['Zábavné společné přednášky','Marketingová promo videa','Projekt Jestejsmeneskoncili'], link:'', date:'', location:'' },
+  { id:'audy',           title:'Marek Audy',          subtitle:'3D projekce — immersive zážitky',          description:'Unikátní 3D projekce z expedic, které divákům zprostředkovávají realistický pocit z vysokých hor. Spolupráce spojující technologii a dobrodružství.', highlights:['Vtahující 3D fotografie','Realistický vizuální zážitek','Moderní technologie v přednáškách'], link:'', date:'', location:'' },
+  { id:'forman',         title:'Petr Forman',         subtitle:'Divadlo — audiokniha — COPATUTOJE',        description:'Kreativní přesahy mimo klasické horolezectví. Divadlo, audiokniha a regionální projekt COPATUTOJE pro Plzeň.', highlights:['Netradiční divadelní fúze','Spolupráce na audioknize','Projekt COPATUTOJE'], link:'', date:'', location:'' },
+  { id:'jsmeneskoncili', title:'Ještě jsme neskončili',subtitle:'S Miri, Horkým, Langošem a J. Votavou',  description:'Silná sestava, silné poselství. Projekt pěti osobností, který ukazuje, že po dosažení vrcholu nebo překonání krize to teprve začíná.', highlights:['Synergie pěti osobností','Inspirace pro životní změny','Zcela nový formát spolupráce'], link:'', date:'2026-07-22', location:'Praha, Meetfactory' },
+  { id:'neha',           title:'Něha Himálaje',       subtitle:'Kniha / film / audio s PJJ',               description:'Multimediální projekt mapující lidskou i horolezeckou tvář himálajských expedic v podání Petra Jana Juračky a Honzy Trávy.', highlights:['Úspěšná knižní publikace','Emocionálně silný dokumentární film','Rozsáhlá osvětová činnost'], link:'', date:'', location:'' },
+  { id:'dalsi',          title:'Další aktivity',      subtitle:'Havlík, Kopka, 1000 mil, Peakfest...',     description:'Spolupráce s režisérem Rudou Havlíkem, cykloexpedice v Nepálu s Honzou Kopkou, Peakfest a další komunitní projekty.', highlights:['Filmová produkce Rudiho Havlíka','Extrémní cykloexpedice Nepál','Peakfest a komunitní akce'], link:'', date:'2026-08-08', location:'Peakfest, Šumava' },
+  { id:'tour2026',       title:'50 let tour',         subtitle:'Únor–březen 2026 — celá ČR',               description:'Velkolepá oslava 50. narozenin Honzy Trávy. Turné plné nejlepších příběhů, hostů a překvapení po celé republice.', highlights:['Republikové turné','Nejlepší historky z osmitisícovek','Prostor pro partnery projektu'], link:'', date:'2026-02-12', location:'Praha, Kongresové centrum' },
 ];
 
 const DEF_MEDIA_VIDEO = [
@@ -641,7 +641,7 @@ function LecturesEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const nl = { id: genId(), title: 'Nová přednáška', subtitle: '', duration: '60 min', audience: '', desc: '', highlights: [], imageId: '', imageUrl: '' };
+    const nl = { id: genId(), title: 'Nová přednáška', subtitle: '', duration: '60 min', audience: '', desc: '', highlights: [], imageId: '', imageUrl: '', date: '', location: '' };
     onChange([...data, nl]);
     setSel(data.length);
   };
@@ -668,6 +668,10 @@ function LecturesEditor({ data, onChange, onReset }) {
               <Field label="Podtitulek" value={l.subtitle} onChange={v => upd('subtitle', v)} placeholder="Motivační přednáška" />
               <Field label="Délka" value={l.duration} onChange={v => upd('duration', v)} placeholder="60–90 min" />
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Datum" value={l.date} onChange={v => upd('date', v)} type="date" placeholder="RRRR-MM-DD" />
+              <Field label="Místo konání" value={l.location} onChange={v => upd('location', v)} placeholder="Praha, Kongresové centrum" icon={Globe} />
+            </div>
             <Field label="Cílová skupina" value={l.audience} onChange={v => upd('audience', v)} placeholder="Firmy, management, teambuildingy…" icon={Users} />
             <Field label="Popis" value={l.desc} onChange={v => upd('desc', v)} rows={4} icon={AlignLeft} />
             <ArrayEditor label="Co přednáška nabízí (highlights)" items={l.highlights} onChange={v => upd('highlights', v)} placeholder="Highlight přednášky…" />
@@ -686,7 +690,7 @@ function ProjectsEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const np = { id: genId(), title: 'Nový projekt', subtitle: '', description: '', highlights: [], link: '', imageId: '', imageUrl: '', images: [] };
+    const np = { id: genId(), title: 'Nový projekt', subtitle: '', description: '', highlights: [], link: '', imageId: '', imageUrl: '', images: [], date: '', location: '' };
     onChange([...data, np]);
     setSel(data.length);
   };
@@ -710,6 +714,10 @@ function ProjectsEditor({ data, onChange, onReset }) {
           <div className="flex flex-col gap-5 bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
             <Field label="Název projektu / osoby" value={pr.title} onChange={v => upd('title', v)} icon={Folder} />
             <Field label="Podtitulek" value={pr.subtitle} onChange={v => upd('subtitle', v)} placeholder="Filmy — projekty — společné akce" />
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Datum" value={pr.date} onChange={v => upd('date', v)} type="date" placeholder="RRRR-MM-DD" />
+              <Field label="Místo konání" value={pr.location} onChange={v => upd('location', v)} placeholder="Praha, Meetfactory" icon={Globe} />
+            </div>
             <Field label="Popis" value={pr.description} onChange={v => upd('description', v)} rows={4} icon={AlignLeft} />
             <Field label="URL odkazu" value={pr.link} onChange={v => upd('link', v)} placeholder="https://… (nepovinné)" type="url" icon={ExternalLink} />
             <ArrayEditor label="Highlights" items={pr.highlights} onChange={v => upd('highlights', v)} placeholder="Highlight projektu…" />

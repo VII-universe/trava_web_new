@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowRight, X, ExternalLink } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 import { resolveImageSrc } from '../data/imageStore';
+import EventCalendar from './EventCalendar';
 
 import PjjImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
 import HorkyImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.jpg';
@@ -138,7 +139,8 @@ const Projects = ({ scrollProgress }) => {
         : PROJECTS;
     const [selected, setSelected] = useState(null);
     const [showAllProjects, setShowAllProjects] = useState(false);
-    useScrollLock(!!selected || showAllProjects);
+    const [calendarOpen, setCalendarOpen] = useState(false);
+    useScrollLock(!!selected || showAllProjects || calendarOpen);
 
     // PHASE 9: 0.72 -> 0.83
     const containerOpacity = useTransform(scrollProgress, [0.71, 0.74, 0.77, 0.80], [0, 1, 1, 0]);
@@ -209,7 +211,14 @@ const Projects = ({ scrollProgress }) => {
                     </div>
 
                     {/* Desktop: show more button */}
-                    <div className="hidden md:flex justify-center mt-4">
+                    <div className="hidden md:flex justify-center mt-4 gap-3">
+                        <button
+                            onClick={() => setCalendarOpen(true)}
+                            className="flex items-center gap-2 px-6 py-3 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
+                        >
+                            <Calendar className="w-4 h-4" />
+                            Kalendář
+                        </button>
                         <button
                             onClick={() => setShowAllProjects(true)}
                             className="flex items-center gap-2 px-6 py-3 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
@@ -242,11 +251,18 @@ const Projects = ({ scrollProgress }) => {
                         ))}
                     </div>
 
-                    {/* Mobile: show all button */}
-                    <div className="flex justify-center mt-2 md:hidden">
+                    {/* Mobile: show all + calendar buttons */}
+                    <div className="flex justify-center mt-2 md:hidden gap-2 flex-wrap">
+                        <button
+                            onClick={() => setCalendarOpen(true)}
+                            className="flex items-center gap-2 px-4 py-2.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
+                        >
+                            <Calendar className="w-3.5 h-3.5" />
+                            Kalendář
+                        </button>
                         <button
                             onClick={() => setShowAllProjects(true)}
-                            className="flex items-center gap-2 px-5 py-2.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
+                            className="flex items-center gap-2 px-4 py-2.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
                         >
                             Zobrazit všech {projects.length} projektů <ArrowRight className="w-3 h-3" />
                         </button>
@@ -365,6 +381,13 @@ const Projects = ({ scrollProgress }) => {
                         </div>
                     </motion.div>
                 </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* Calendar Modal */}
+        <AnimatePresence>
+            {calendarOpen && (
+                <EventCalendar onClose={() => setCalendarOpen(false)} />
             )}
         </AnimatePresence>
         </>
