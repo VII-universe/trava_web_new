@@ -156,9 +156,9 @@ const Eshop = ({ scrollProgress }) => {
                 </div>
 
                 {/* Horizontal scroll strip — no overflow-y, no scroll trap */}
-                <div className="shrink-0 -mx-4 px-4">
+                <div className="shrink-0 -mx-4 px-4" data-lenis-prevent>
                     <div ref={eshopCarouselRef} className="flex gap-3 overflow-x-auto pb-2"
-                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x' }}>
 
                         {/* Featured hero card — Manukový med */}
                         <button

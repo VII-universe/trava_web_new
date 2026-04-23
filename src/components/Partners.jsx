@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import IcefallImage from '../assets/icefall_bg.jpg';
+import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
 
 const Partners = ({ scrollProgress }) => {
     // PHASE 3: 0.20 -> 0.30
@@ -11,9 +12,10 @@ const Partners = ({ scrollProgress }) => {
     const ropeRotate = useTransform(scrollProgress, [0.20, 0.30], [-2, 2]);
 
     const partners = [
-        { name: "Mammut", text: "Moje druhá kůže. Ta, co nepromokne." },
-        { name: "Red Bull", text: "Křídla, když nohy už nemůžou." },
-        { name: "Prazdroj", text: "Nejlepší ionťák na světě." }
+        { name: "Mammut", text: "Moje druhá kůže. Ta, co nepromokne.", color: 'bg-blue-500/80' },
+        { name: "Red Bull", text: "Křídla, když nohy už nemůžou.", color: 'bg-red-500/80' },
+        { name: "Prazdroj", text: "Nejlepší ionťák na světě.", color: 'bg-yellow-500/80' },
+        { name: "Singing Rock", text: "Bezpečí na laně i na hraně.", color: 'bg-slate-700/80', logo: SingingRockLogo },
     ];
 
     return (
@@ -48,7 +50,7 @@ const Partners = ({ scrollProgress }) => {
                     {/* The Rope */}
                     <div className="absolute w-[120%] h-1 bg-slate-800/20 shadow-sm top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -rotate-1" />
 
-                    <div className="flex gap-12 md:gap-24 relative z-10">
+                    <div className="flex gap-8 md:gap-24 relative z-10 flex-wrap justify-center">
                         {partners.map((partner, i) => (
                             <motion.div
                                 key={partner.name}
@@ -56,13 +58,14 @@ const Partners = ({ scrollProgress }) => {
                                 whileHover={{ scale: 1.1, rotate: 5 }}
                             >
                                 {/* Tibetan Flag Aesthetic */}
-                                <div className={`w-20 h-24 md:w-32 md:h-40 flex items-center justify-center border-t-2 border-slate-800/40 shadow-lg cursor-help transition-all duration-500
-                                    ${i === 0 ? 'bg-blue-500/80' : i === 1 ? 'bg-red-500/80' : 'bg-yellow-500/80'}
-                                    clip-path-flag
-                                `}>
-                                    <span className="font-serif text-white font-bold tracking-widest text-lg md:text-xl transform -rotate-12">
-                                        {partner.name}
-                                    </span>
+                                <div className={`w-20 h-24 md:w-32 md:h-40 flex items-center justify-center border-t-2 border-slate-800/40 shadow-lg cursor-help transition-all duration-500 ${partner.color} clip-path-flag`}>
+                                    {partner.logo ? (
+                                        <img src={partner.logo} alt={partner.name} className="w-12 md:w-20 h-auto object-contain brightness-0 invert -rotate-12" draggable={false} />
+                                    ) : (
+                                        <span className="font-serif text-white font-bold tracking-widest text-lg md:text-xl transform -rotate-12">
+                                            {partner.name}
+                                        </span>
+                                    )}
                                 </div>
 
                                 {/* Hover Reveal */}

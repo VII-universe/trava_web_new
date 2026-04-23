@@ -17,6 +17,7 @@ import SnowOverlay from './components/SnowOverlay';
 import CloudLayer from './components/CloudLayer';
 import Media from './components/Media';
 import Nav from './components/Nav';
+import CookieConsent from './components/CookieConsent';
 import { ReactLenis } from 'lenis/react';
 import { ScrollLockHandler } from './hooks/useScrollLock';
 import 'lenis/dist/lenis.css';
@@ -124,6 +125,7 @@ function App() {
       </div>
 
     </div>
+      <CookieConsent />
     </ReactLenis>
   );
 }
