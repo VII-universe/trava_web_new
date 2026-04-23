@@ -374,7 +374,7 @@ const Lectures = ({ scrollProgress }) => {
                                 <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
                                     <div className="flex items-center gap-3 text-sm text-slate-300">
                                         <Mail className="w-4 h-4 text-gold-500" />
-                                        <span>booking@honzatrava.cz</span>
+                                        <span>info@14summitsexpedition.cz</span>
                                     </div>
                                 </div>
                             </div>
