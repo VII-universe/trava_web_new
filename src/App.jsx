@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 // Force redeploy to 69a0781 state
-import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
+import { useScroll, motion, useTransform, useSpring, animate } from 'framer-motion';
 import { fetchAllFromSupabase } from './data/adminStore';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -27,19 +27,34 @@ function App() {
   const containerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   const [contentReady, setContentReady] = useState(false);
+  // scrollReset gates ReactLenis: we reset native scroll BEFORE Lenis mounts so it
+  // never sees the browser-restored position. ReactLenis only renders once this is true.
+  const [scrollReset, setScrollReset] = useState(false);
 
-  // Reset scroll synchronously before every paint where contentReady changes.
-  // The browser restores scroll position asynchronously during the loading spinner phase,
-  // so we must reset again right before ReactLenis mounts (when contentReady flips to true).
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, [contentReady]);
+    if (contentReady && !scrollReset) {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      // Jump the spring to 0 immediately — prevents it from slowly animating from
+      // whatever value scrollYProgress was at when the spring was created.
+      animate(smoothProgress, 0, { duration: 0 });
+      setScrollReset(true);
+    }
+  }, [contentReady, scrollReset]);
 
   useEffect(() => {
     fetchAllFromSupabase().finally(() => setContentReady(true));
   }, []);
+
+  // After ReactLenis mounts (scrollReset = true), force the spring to 0.
+  // Lenis reads native scroll on mount — if it still reads non-zero for any reason,
+  // this ensures smoothProgress (which drives all section visibility) stays at Hero.
+  useEffect(() => {
+    if (!scrollReset) return;
+    window.scrollTo(0, 0);
+    animate(smoothProgress, 0, { duration: 0 });
+  }, [scrollReset]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -64,7 +79,7 @@ function App() {
   // Dark bridge covering Media + Contact transition
   const mediaContactBridge = useTransform(smoothProgress, [0.85, 0.87, 1.0, 1.0], [0, 1, 1, 1]);
 
-  if (!contentReady) return (
+  if (!contentReady || !scrollReset) return (
     <div className="fixed inset-0 bg-slate-950 flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
     </div>
