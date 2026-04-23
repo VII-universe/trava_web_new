@@ -28,14 +28,14 @@ const Nav = ({ scrollProgress }) => {
     // Dark:  Expeditions/Hotel/Pub (0.27-0.57), Lectures/Projects (0.63-0.83), Contact (0.90-1.0)
     const whiteOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
-        [0,  0,   1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
+        [0, 0.08, 0.12, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
+        [0,  0,    0,    0,    1,    1,    0,    0,    1,    1,    0,    0,    1,    1  ]
     ) : 1;
 
     const blackOpacity = scrollProgress ? useTransform(
         scrollProgress,
-        [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
-        [1,  1,   0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
+        [0, 0.08, 0.12, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0],
+        [0,  0,    1,    1,    0,    0,    1,    1,    0,    0,    1,    1,    0,    0  ]
     ) : 0;
 
     // Close menu on escape key

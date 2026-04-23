@@ -56,10 +56,10 @@ const Hero = ({ scrollProgress }) => {
                 className="relative z-70 text-center flex flex-col items-center w-full px-4"
             >
                 <motion.div className="flex justify-center w-full mb-6">
-                    <img 
-                        src={LogoMain} 
-                        alt="Honza Tráva Logo" 
-                        className="w-full max-w-[95vw] md:max-w-[90vw] lg:max-w-[85vw] xl:max-w-[1200px] max-h-[55vh] md:max-h-[65vh] lg:max-h-[70vh] h-auto object-contain drop-shadow-2xl" 
+                    <img
+                        src={LogoMain}
+                        alt="Honza Tráva Logo"
+                        className="w-full max-w-[72vw] md:max-w-[62vw] lg:max-w-[56vw] xl:max-w-[860px] max-h-[42vh] md:max-h-[52vh] lg:max-h-[58vh] h-auto object-contain drop-shadow-lg"
                     />
                 </motion.div>
                 

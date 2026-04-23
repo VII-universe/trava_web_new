@@ -78,7 +78,7 @@ const Eshop = ({ scrollProgress }) => {
     useScrollLock(!!detailOpen || showAllProducts);
 
     const eshopCarouselRef = useRef(null);
-    const eshopCarouselProgress = useTransform(scrollProgress, [0.56, 0.59], [0, 1]);
+    const eshopCarouselProgress = useTransform(scrollProgress, [0.56, 0.62], [0, 1]);
     useEffect(() => {
         return eshopCarouselProgress.on("change", (latest) => {
             const el = eshopCarouselRef.current;
@@ -88,10 +88,10 @@ const Eshop = ({ scrollProgress }) => {
         });
     }, [eshopCarouselProgress]);
 
-    // PHASE 7 (Eshop): 0.54 -> 0.65
-    const containerOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], [0, 1, 1, 0]);
-    const containerY = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], ['-120%', '0%', '0%', '130%']);
-    const bgOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], [0, 1, 1, 0]);
+    // PHASE 7 (Eshop): 0.53 -> 0.65
+    const containerOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], [0, 1, 1, 0]);
+    const containerY = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], ['-120%', '0%', '0%', '130%']);
+    const bgOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], [0, 1, 1, 0]);
     const bgY = useTransform(scrollProgress, [0.50, 0.68], ['-10%', '10%']);
 
     return (
