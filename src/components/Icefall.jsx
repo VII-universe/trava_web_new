@@ -481,14 +481,44 @@ const Flag = ({ flag, index, onSelect }) => {
 };
 
 /* ─── Main component ────────────────────────────────────── */
-// Merge admin text overrides onto hardcoded data (logos/visuals stay from hardcoded)
+function computeLeft(i, total) {
+    if (total <= 1) return '50%';
+    return `${7 + i * (85 / (total - 1))}%`;
+}
+
 function applyAdminOverrides(base, adminArr) {
     if (!adminArr) return base;
-    return base.map(item => {
+
+    // Re-order base items according to admin array order
+    const ordered = [...base].sort((a, b) => {
+        const ai = adminArr.findIndex(x => x.id === a.id);
+        const bi = adminArr.findIndex(x => x.id === b.id);
+        return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+    });
+
+    return ordered.map((item, i) => {
         const ov = adminArr.find(a => a.id === item.id);
-        if (!ov) return item;
-        // Preserve JSX fields that can't be stored in JSON
-        return { ...item, ...ov, logo: item.logo, stripes: item.stripes, clipPath: item.clipPath, left: item.left };
+        const total = ordered.length;
+        const left = computeLeft(i, total);
+
+        if (!ov) return { ...item, left };
+
+        // Build logo: use uploaded logoUrl + flagColor if available, else keep hardcoded JSX logo
+        const logo = ov.logoUrl
+            ? (
+                <div className="w-full h-full flex items-center justify-center p-3"
+                    style={{ background: ov.flagColor || item.stripes?.[0] || '#1a3a5c' }}>
+                    <img src={ov.logoUrl} alt={ov.name} className="w-full h-full object-contain"
+                        style={{ filter: 'brightness(0) invert(1)' }} />
+                </div>
+            )
+            : item.logo;
+
+        const stripes = ov.flagColor
+            ? [ov.flagColor, '#f0f0f0', ov.flagColor]
+            : item.stripes;
+
+        return { ...item, ...ov, logo, stripes, clipPath: item.clipPath, left };
     });
 }
 

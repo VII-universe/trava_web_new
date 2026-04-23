@@ -325,26 +325,44 @@ function PartnersEditor({ data, onChange, onReset }) {
   const p = data[sel] || {};
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
+  const move = (i, dir) => {
+    const a = [...data]; const j = i + dir;
+    if (j < 0 || j >= a.length) return;
+    [a[i], a[j]] = [a[j], a[i]]; onChange(a);
+    setSel(j);
+  };
   const add = () => {
-    const newP = { id: genId(), name: 'Nový partner', partnership: '', discount: '', websiteUrl: '', website: '', quote: '', description: '', collaboration: [], imageId: '', imageUrl: '' };
+    const newP = { id: genId(), name: 'Nový partner', partnership: '', discount: '', websiteUrl: '', website: '', quote: '', description: '', collaboration: [], imageId: '', imageUrl: '', logoUrl: '', flagColor: '#1a3a5c' };
     onChange([...data, newP]);
     setSel(data.length);
   };
 
   return (
     <div>
-      <SectionHeader title="Partneři & Sponzoři" subtitle="Hlavní i vedlejší partneři, slevové kódy a spolupráce" onReset={onReset} />
+      <SectionHeader title="Partneři & Sponzoři" subtitle="Hlavní i vedlejší partneři, slevové kódy, vlajky a pořadí" onReset={onReset} />
       <div className="grid grid-cols-[280px_1fr] gap-6">
         <div className="flex flex-col gap-2">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-1 mb-1">{data.length} partnerů</p>
-          <ItemList items={data} selected={sel} onSelect={setSel} onDelete={del} onAdd={add} labelKey="name"
-            getLabel={p => (
-              <span className="flex items-center gap-2">
-                <span>{p.name}</span>
-                {p.discount && <span className="text-[10px] bg-gold-500/20 text-gold-400 px-1.5 rounded font-mono">{p.discount}</span>}
-              </span>
-            )}
-          />
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-1 mb-1">{data.length} partnerů · pořadí = pořadí vlajek</p>
+          <div className="flex flex-col gap-1">
+            {data.map((item, i) => (
+              <div key={item.id || i} className={`flex items-center gap-1 px-3 py-2.5 rounded-xl text-sm transition-all border cursor-pointer ${
+                sel === i ? 'bg-gold-500/15 border-gold-500/40 text-gold-300' : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-600'
+              }`} onClick={() => setSel(i)}>
+                {item.flagColor && (
+                  <span className="w-3 h-3 rounded-full shrink-0 border border-white/20" style={{ background: item.flagColor }} />
+                )}
+                <span className="flex-1 font-medium truncate">{item.name || `Partner ${i + 1}`}</span>
+                <div className="flex items-center gap-0.5 shrink-0" onClick={e => e.stopPropagation()}>
+                  <button onClick={() => move(i, -1)} disabled={i === 0} className="p-1 text-slate-600 hover:text-white disabled:opacity-20 transition-colors"><MoveUp className="w-3 h-3" /></button>
+                  <button onClick={() => move(i, 1)} disabled={i === data.length - 1} className="p-1 text-slate-600 hover:text-white disabled:opacity-20 transition-colors"><MoveDown className="w-3 h-3" /></button>
+                  <button onClick={() => del(i)} className="p-1 text-slate-600 hover:text-red-400 transition-colors"><Trash2 className="w-3 h-3" /></button>
+                </div>
+              </div>
+            ))}
+            <button onClick={add} className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-500 border border-dashed border-slate-700 hover:border-gold-500/50 hover:text-gold-400 transition-all mt-1">
+              <Plus className="w-3.5 h-3.5" /> Přidat partnera
+            </button>
+          </div>
         </div>
         {data[sel] && (
           <div className="flex flex-col gap-5 bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
@@ -357,6 +375,45 @@ function PartnersEditor({ data, onChange, onReset }) {
               <Field label="Web" value={p.website} onChange={v => upd('website', v)} placeholder="partner.cz" icon={Globe} />
             </div>
             <Field label="URL webu" value={p.websiteUrl} onChange={v => upd('websiteUrl', v)} placeholder="https://www.partner.cz" type="url" icon={Link2} />
+
+            {/* Flag settings */}
+            <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+              <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Vlajka na webu</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Barva vlajky (hex)</label>
+                  <div className="flex gap-2 items-center">
+                    <input
+                      type="color"
+                      value={p.flagColor || '#1a3a5c'}
+                      onChange={e => upd('flagColor', e.target.value)}
+                      className="w-10 h-10 rounded-lg border border-slate-600 cursor-pointer bg-transparent p-0.5"
+                    />
+                    <input
+                      type="text"
+                      value={p.flagColor || '#1a3a5c'}
+                      onChange={e => upd('flagColor', e.target.value)}
+                      placeholder="#1a3a5c"
+                      className="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white font-mono placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Náhled vlajky</label>
+                  <div className="h-10 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden" style={{ background: p.flagColor || '#1a3a5c' }}>
+                    {p.logoUrl
+                      ? <img src={p.logoUrl} alt="" className="h-full w-full object-contain p-1" style={{ filter: 'brightness(0) invert(1)' }} />
+                      : <span className="text-white/60 text-xs font-bold">{p.name || 'Partner'}</span>
+                    }
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Logo na vlajce (nahrát soubor)</label>
+                <ImagePicker imageUrl={p.logoUrl} onChangeImageUrl={v => upd('logoUrl', v)} />
+              </div>
+            </div>
+
             <Field label="Citace" value={p.quote} onChange={v => upd('quote', v)} placeholder="Krátký slogan partnera…" />
             <Field label="Popis" value={p.description} onChange={v => upd('description', v)} rows={4} placeholder="Detailní popis spolupráce…" icon={AlignLeft} />
             <ArrayEditor label="Spolupráce (body)" items={p.collaboration} onChange={v => upd('collaboration', v)} placeholder="Popis bodu spolupráce…" />
