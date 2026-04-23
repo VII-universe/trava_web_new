@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Calendar, MapPin, ExternalLink, ArrowLeft, Clock, Users, Star } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 
 const DAYS = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
@@ -14,9 +14,123 @@ function getFirstDayOffset(year, month) {
     const day = new Date(year, month, 1).getDay();
     return day === 0 ? 6 : day - 1;
 }
+function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    return `${d.getDate()}. ${MONTHS_GEN[d.getMonth()]} ${d.getFullYear()}`;
+}
 
 const DEF_LECTURES = [];
 const DEF_PROJECTS = [];
+
+function EventDetail({ ev, onBack }) {
+    const isLecture = ev.type === 'lecture';
+    const accent = isLecture ? 'text-gold-400' : 'text-blue-400';
+    const accentBg = isLecture ? 'bg-gold-500/15 border-gold-500/30' : 'bg-blue-500/15 border-blue-500/30';
+
+    return (
+        <motion.div
+            key="detail"
+            initial={{ opacity: 0, x: 32 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 32 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col h-full"
+        >
+            {/* Back header */}
+            <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/8 flex-shrink-0">
+                <button
+                    onClick={onBack}
+                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-semibold"
+                >
+                    <ArrowLeft className="w-4 h-4" /> Zpět na kalendář
+                </button>
+                <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border ${accentBg} ${accent}`}>
+                    {isLecture ? 'Přednáška' : 'Projekt'}
+                </span>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-5" data-lenis-prevent>
+
+                {/* Date + location */}
+                <div className="flex flex-wrap gap-3 mb-5">
+                    <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                        <Calendar className={`w-3.5 h-3.5 ${accent}`} />
+                        {formatDate(ev.date)}
+                    </div>
+                    {ev.location && (
+                        <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                            <MapPin className={`w-3.5 h-3.5 ${accent}`} />
+                            {ev.location}
+                        </div>
+                    )}
+                    {ev.duration && (
+                        <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                            <Clock className="w-3.5 h-3.5 text-slate-500" />
+                            {ev.duration}
+                        </div>
+                    )}
+                    {ev.audience && (
+                        <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                            <Users className="w-3.5 h-3.5 text-slate-500" />
+                            {ev.audience}
+                        </div>
+                    )}
+                </div>
+
+                {/* Title */}
+                <h2 className="font-serif text-2xl text-white leading-tight mb-1">{ev.title}</h2>
+                {ev.subtitle && (
+                    <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${accent}`}>{ev.subtitle}</p>
+                )}
+
+                {/* Description */}
+                {ev.description && (
+                    <p className="text-slate-300 text-sm leading-relaxed mb-5">{ev.description}</p>
+                )}
+
+                {/* Highlights */}
+                {ev.highlights?.length > 0 && (
+                    <div className="bg-white/4 border border-white/8 rounded-2xl p-4 mb-5">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">Co nabízí</p>
+                        <ul className="flex flex-col gap-2">
+                            {ev.highlights.map((h, i) => (
+                                <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                                    <Star className={`w-3.5 h-3.5 mt-0.5 shrink-0 ${accent}`} />
+                                    {h}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* CTA buttons */}
+                <div className="flex flex-col gap-2">
+                    {ev.link && (
+                        <a
+                            href={ev.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl text-sm font-bold transition-all ${
+                                isLecture
+                                    ? 'bg-gold-500 hover:bg-gold-400 text-slate-900'
+                                    : 'bg-blue-600 hover:bg-blue-500 text-white'
+                            }`}
+                        >
+                            Plné informace & vstupenky <ExternalLink className="w-4 h-4" />
+                        </a>
+                    )}
+                    <a
+                        href="mailto:booking@honzatrava.cz"
+                        className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl text-sm font-bold bg-white/8 hover:bg-white/14 text-slate-300 hover:text-white border border-white/10 transition-all"
+                    >
+                        Napsat na booking@honzatrava.cz
+                    </a>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
 
 export default function EventCalendar({ onClose }) {
     const now = new Date();
@@ -27,10 +141,10 @@ export default function EventCalendar({ onClose }) {
     const allEvents = useMemo(() => {
         const lectureEvs = (lectures || [])
             .filter(l => l.date)
-            .map(l => ({ id: l.id, title: l.title, subtitle: l.subtitle || '', date: l.date, type: 'lecture', location: l.location || '', description: l.desc || '', link: l.link || '' }));
+            .map(l => ({ id: l.id, title: l.title, subtitle: l.subtitle || '', date: l.date, type: 'lecture', location: l.location || '', description: l.desc || '', link: l.link || '', duration: l.duration || '', audience: l.audience || '', highlights: l.highlights || [] }));
         const projectEvs = (projects || [])
             .filter(p => p.date)
-            .map(p => ({ id: p.id, title: p.title, subtitle: p.subtitle || '', date: p.date, type: 'project', location: p.location || '', description: p.description || '', link: p.link || '' }));
+            .map(p => ({ id: p.id, title: p.title, subtitle: p.subtitle || '', date: p.date, type: 'project', location: p.location || '', description: p.description || '', link: p.link || '', highlights: p.highlights || [] }));
         return [...lectureEvs, ...projectEvs].sort((a, b) => a.date.localeCompare(b.date));
     }, [lectures, projects]);
 
@@ -50,6 +164,7 @@ export default function EventCalendar({ onClose }) {
     const [filter, setFilter] = useState('all');
     const [hoveredDay, setHoveredDay] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
+    const [eventDetail, setEventDetail] = useState(null);
 
     const filtered = filter === 'all' ? allEvents : allEvents.filter(e => e.type === filter);
 
@@ -103,226 +218,236 @@ export default function EventCalendar({ onClose }) {
                 onClick={e => e.stopPropagation()}
                 className="bg-slate-900/95 border border-white/10 rounded-3xl shadow-[0_32px_80px_rgba(0,0,0,0.6)] w-full max-w-lg max-h-[94vh] overflow-hidden flex flex-col"
             >
-                {/* Header */}
-                <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/8 flex-shrink-0">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gold-500/12 border border-gold-500/25 rounded-2xl flex items-center justify-center">
-                            <Calendar className="w-5 h-5 text-gold-400" />
-                        </div>
-                        <div>
-                            <h2 className="text-white font-bold text-base leading-none">Kalendář akcí</h2>
-                            <p className="text-slate-500 text-xs mt-0.5">{allEvents.length} naplánovaných akcí</p>
-                        </div>
-                    </div>
-                    <button onClick={onClose}
-                        className="p-2 text-slate-500 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
-                        <X className="w-5 h-5" />
-                    </button>
-                </div>
-
-                <div className="overflow-y-auto flex-1" data-lenis-prevent>
-                    <div className="px-5 py-5">
-
-                        {/* Filter chips */}
-                        <div className="flex gap-2 mb-5">
-                            {FILTERS.map(f => (
-                                <button key={f.key} onClick={() => { setFilter(f.key); setSelectedDay(null); }}
-                                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${filter === f.key ? f.active : f.idle}`}>
-                                    {f.dot && <span className={`w-1.5 h-1.5 rounded-full ${f.dot}`} />}
-                                    {f.label}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Month nav */}
-                        <div className="flex items-center justify-between mb-4">
-                            <button onClick={prevMonth}
-                                className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
-                                <ChevronLeft className="w-5 h-5" />
-                            </button>
-                            <h3 className="text-white font-bold text-lg tracking-tight">
-                                {MONTHS[month]} {year}
-                            </h3>
-                            <button onClick={nextMonth}
-                                className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
-                                <ChevronRight className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        {/* Day labels */}
-                        <div className="grid grid-cols-7 mb-1">
-                            {DAYS.map(d => (
-                                <div key={d} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-wider py-1">
-                                    {d}
+                <AnimatePresence mode="wait">
+                    {eventDetail ? (
+                        <EventDetail key="detail" ev={eventDetail} onBack={() => setEventDetail(null)} />
+                    ) : (
+                        <motion.div
+                            key="calendar"
+                            initial={{ opacity: 0, x: -32 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -32 }}
+                            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                            className="flex flex-col h-full"
+                        >
+                            {/* Header */}
+                            <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/8 flex-shrink-0">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-gold-500/12 border border-gold-500/25 rounded-2xl flex items-center justify-center">
+                                        <Calendar className="w-5 h-5 text-gold-400" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-white font-bold text-base leading-none">Kalendář akcí</h2>
+                                        <p className="text-slate-500 text-xs mt-0.5">{allEvents.length} naplánovaných akcí</p>
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
+                                <button onClick={onClose}
+                                    className="p-2 text-slate-500 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
 
-                        {/* Calendar grid */}
-                        <div className="grid grid-cols-7 gap-px">
-                            {cells.map((day, i) => {
-                                if (!day) return <div key={i} className="aspect-square" />;
-                                const ds = dateStr(day);
-                                const evs = byDate[ds] || [];
-                                const hasL = evs.some(e => e.type === 'lecture');
-                                const hasP = evs.some(e => e.type === 'project');
-                                const isSel = selectedDay === day;
-                                const isCur = isToday(day);
+                            <div className="overflow-y-auto flex-1" data-lenis-prevent>
+                                <div className="px-5 py-5">
 
-                                return (
-                                    <div key={i} className="relative">
-                                        <button
-                                            onClick={() => { setSelectedDay(isSel ? null : (evs.length ? day : null)); }}
-                                            onMouseEnter={() => evs.length && setHoveredDay(day)}
-                                            onMouseLeave={() => setHoveredDay(null)}
-                                            className={`relative w-full aspect-square flex flex-col items-center justify-center rounded-xl transition-all duration-150
-                                                ${evs.length ? 'cursor-pointer hover:bg-white/8' : 'cursor-default'}
-                                                ${isSel ? 'bg-white/12 ring-1 ring-white/25' : ''}
-                                                ${isCur && !isSel ? 'ring-1 ring-gold-500/50' : ''}`}
-                                        >
-                                            <span className={`text-sm font-semibold leading-none ${isCur ? 'text-gold-400' : evs.length ? 'text-white' : 'text-slate-600'}`}>
-                                                {day}
-                                            </span>
-                                            {evs.length > 0 && (
-                                                <div className="flex gap-0.5 mt-1">
-                                                    {hasL && <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />}
-                                                    {hasP && <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />}
-                                                </div>
-                                            )}
+                                    {/* Filter chips */}
+                                    <div className="flex gap-2 mb-5">
+                                        {FILTERS.map(f => (
+                                            <button key={f.key} onClick={() => { setFilter(f.key); setSelectedDay(null); }}
+                                                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${filter === f.key ? f.active : f.idle}`}>
+                                                {f.dot && <span className={`w-1.5 h-1.5 rounded-full ${f.dot}`} />}
+                                                {f.label}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* Month nav */}
+                                    <div className="flex items-center justify-between mb-4">
+                                        <button onClick={prevMonth}
+                                            className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
+                                            <ChevronLeft className="w-5 h-5" />
                                         </button>
+                                        <h3 className="text-white font-bold text-lg tracking-tight">
+                                            {MONTHS[month]} {year}
+                                        </h3>
+                                        <button onClick={nextMonth}
+                                            className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
+                                            <ChevronRight className="w-5 h-5" />
+                                        </button>
+                                    </div>
 
-                                        {/* Hover tooltip — desktop only */}
-                                        <AnimatePresence>
-                                            {hoveredDay === day && evs.length > 0 && !isSel && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: 6, scale: 0.94 }}
-                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                    exit={{ opacity: 0, y: 4, scale: 0.94 }}
-                                                    transition={{ duration: 0.14 }}
-                                                    className="absolute z-50 bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none hidden md:block"
-                                                    style={{ width: 210 }}
-                                                >
-                                                    <div className="bg-slate-800 border border-white/12 rounded-2xl p-3.5 shadow-2xl">
-                                                        <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-slate-800 border-r border-b border-white/12 rotate-45" />
-                                                        {evs.map((ev, idx) => (
-                                                            <div key={ev.id} className={idx > 0 ? 'mt-2.5 pt-2.5 border-t border-white/8' : ''}>
-                                                                <div className="flex items-center gap-1.5 mb-1">
-                                                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
-                                                                    <span className={`text-[10px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
-                                                                        {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
-                                                                    </span>
+                                    {/* Day labels */}
+                                    <div className="grid grid-cols-7 mb-1">
+                                        {DAYS.map(d => (
+                                            <div key={d} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-wider py-1">
+                                                {d}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Calendar grid */}
+                                    <div className="grid grid-cols-7 gap-px">
+                                        {cells.map((day, i) => {
+                                            if (!day) return <div key={i} className="aspect-square" />;
+                                            const ds = dateStr(day);
+                                            const evs = byDate[ds] || [];
+                                            const hasL = evs.some(e => e.type === 'lecture');
+                                            const hasP = evs.some(e => e.type === 'project');
+                                            const isSel = selectedDay === day;
+                                            const isCur = isToday(day);
+
+                                            return (
+                                                <div key={i} className="relative">
+                                                    <button
+                                                        onClick={() => { setSelectedDay(isSel ? null : (evs.length ? day : null)); }}
+                                                        onMouseEnter={() => evs.length && setHoveredDay(day)}
+                                                        onMouseLeave={() => setHoveredDay(null)}
+                                                        className={`relative w-full aspect-square flex flex-col items-center justify-center rounded-xl transition-all duration-150
+                                                            ${evs.length ? 'cursor-pointer hover:bg-white/8' : 'cursor-default'}
+                                                            ${isSel ? 'bg-white/12 ring-1 ring-white/25' : ''}
+                                                            ${isCur && !isSel ? 'ring-1 ring-gold-500/50' : ''}`}
+                                                    >
+                                                        <span className={`text-sm font-semibold leading-none ${isCur ? 'text-gold-400' : evs.length ? 'text-white' : 'text-slate-600'}`}>
+                                                            {day}
+                                                        </span>
+                                                        {evs.length > 0 && (
+                                                            <div className="flex gap-0.5 mt-1">
+                                                                {hasL && <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />}
+                                                                {hasP && <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />}
+                                                            </div>
+                                                        )}
+                                                    </button>
+
+                                                    {/* Hover tooltip — desktop only */}
+                                                    <AnimatePresence>
+                                                        {hoveredDay === day && evs.length > 0 && !isSel && (
+                                                            <motion.div
+                                                                initial={{ opacity: 0, y: 6, scale: 0.94 }}
+                                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                                exit={{ opacity: 0, y: 4, scale: 0.94 }}
+                                                                transition={{ duration: 0.14 }}
+                                                                className="absolute z-50 bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none hidden md:block"
+                                                                style={{ width: 210 }}
+                                                            >
+                                                                <div className="bg-slate-800 border border-white/12 rounded-2xl p-3.5 shadow-2xl">
+                                                                    <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-slate-800 border-r border-b border-white/12 rotate-45" />
+                                                                    {evs.map((ev, idx) => (
+                                                                        <div key={ev.id} className={idx > 0 ? 'mt-2.5 pt-2.5 border-t border-white/8' : ''}>
+                                                                            <div className="flex items-center gap-1.5 mb-1">
+                                                                                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
+                                                                                <span className={`text-[10px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
+                                                                                    {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
+                                                                                </span>
+                                                                            </div>
+                                                                            <p className="text-white text-xs font-semibold leading-snug">{ev.title}</p>
+                                                                            {ev.location && (
+                                                                                <p className="text-slate-500 text-[10px] flex items-center gap-1 mt-0.5">
+                                                                                    <MapPin className="w-2.5 h-2.5" />{ev.location}
+                                                                                </p>
+                                                                            )}
+                                                                        </div>
+                                                                    ))}
                                                                 </div>
-                                                                <p className="text-white text-xs font-semibold leading-snug">{ev.title}</p>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    {/* Selected day detail */}
+                                    <AnimatePresence>
+                                        {selectedDay && (() => {
+                                            const evs = byDate[dateStr(selectedDay)] || [];
+                                            if (!evs.length) return null;
+                                            return (
+                                                <motion.div
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/8">
+                                                        {evs.map(ev => (
+                                                            <button
+                                                                key={ev.id}
+                                                                onClick={() => setEventDetail(ev)}
+                                                                className="w-full flex items-start gap-3 p-4 hover:bg-white/6 transition-colors text-left group"
+                                                            >
+                                                                <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
+                                                                <div className="flex-1 min-w-0">
+                                                                    <p className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
+                                                                        {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
+                                                                    </p>
+                                                                    <h4 className="text-white font-semibold text-sm leading-snug group-hover:text-gold-300 transition-colors">{ev.title}</h4>
+                                                                    {ev.subtitle && <p className="text-slate-400 text-xs mt-0.5">{ev.subtitle}</p>}
+                                                                    {ev.location && (
+                                                                        <p className="text-slate-500 text-xs flex items-center gap-1 mt-1">
+                                                                            <MapPin className="w-3 h-3" />{ev.location}
+                                                                        </p>
+                                                                    )}
+                                                                </div>
+                                                                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-gold-400 transition-colors shrink-0 mt-1" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            );
+                                        })()}
+                                    </AnimatePresence>
+
+                                    {/* Month event list */}
+                                    {monthEvents.length > 0 && (
+                                        <div className="mt-6">
+                                            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-3">
+                                                Akce v {MONTHS_GEN[month]}
+                                            </p>
+                                            <div className="flex flex-col gap-1.5">
+                                                {monthEvents.map(ev => {
+                                                    const d = new Date(ev.date + 'T00:00:00');
+                                                    return (
+                                                        <button
+                                                            key={ev.id}
+                                                            onClick={() => setEventDetail(ev)}
+                                                            className="flex items-center gap-3 px-4 py-3 bg-white/4 hover:bg-white/8 border border-white/6 hover:border-white/12 rounded-2xl transition-all group text-left cursor-pointer"
+                                                        >
+                                                            <div className={`text-center shrink-0 w-9 ${ev.type === 'lecture' ? 'text-gold-400' : 'text-blue-400'}`}>
+                                                                <p className="text-base font-black leading-none">{String(d.getDate()).padStart(2, '0')}</p>
+                                                                <p className="text-[9px] uppercase font-bold opacity-60 mt-0.5">{MONTHS[d.getMonth()].slice(0, 3)}</p>
+                                                            </div>
+                                                            <span className={`w-px h-8 rounded-full ${ev.type === 'lecture' ? 'bg-gold-500/40' : 'bg-blue-500/40'}`} />
+                                                            <div className="flex-1 min-w-0">
+                                                                <span className={`text-[9px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
+                                                                    {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
+                                                                </span>
+                                                                <h4 className="text-white text-xs font-semibold leading-snug group-hover:text-gold-300 transition-colors truncate">{ev.title}</h4>
                                                                 {ev.location && (
-                                                                    <p className="text-slate-500 text-[10px] flex items-center gap-1 mt-0.5">
+                                                                    <p className="text-slate-600 text-[10px] flex items-center gap-1 mt-0.5">
                                                                         <MapPin className="w-2.5 h-2.5" />{ev.location}
                                                                     </p>
                                                                 )}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                        {/* Selected day detail — mobile + desktop click */}
-                        <AnimatePresence>
-                            {selectedDay && (() => {
-                                const evs = byDate[dateStr(selectedDay)] || [];
-                                if (!evs.length) return null;
-                                return (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/8">
-                                            {evs.map(ev => (
-                                                <div key={ev.id} className="flex items-start gap-3 p-4">
-                                                    <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
-                                                            {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
-                                                        </p>
-                                                        <h4 className="text-white font-semibold text-sm leading-snug">{ev.title}</h4>
-                                                        {ev.subtitle && <p className="text-slate-400 text-xs mt-0.5">{ev.subtitle}</p>}
-                                                        {ev.location && (
-                                                            <p className="text-slate-500 text-xs flex items-center gap-1 mt-1">
-                                                                <MapPin className="w-3 h-3" />{ev.location}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                    {ev.link && (
-                                                        <a href={ev.link} target="_blank" rel="noopener noreferrer"
-                                                            className="shrink-0 p-1.5 text-slate-500 hover:text-gold-400 transition-colors">
-                                                            <ExternalLink className="w-3.5 h-3.5" />
-                                                        </a>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </motion.div>
-                                );
-                            })()}
-                        </AnimatePresence>
-
-                        {/* Month event list */}
-                        {monthEvents.length > 0 && (
-                            <div className="mt-6">
-                                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-3">
-                                    Akce v {MONTHS_GEN[month]}
-                                </p>
-                                <div className="flex flex-col gap-1.5">
-                                    {monthEvents.map(ev => {
-                                        const d = new Date(ev.date + 'T00:00:00');
-                                        return (
-                                            <div key={ev.id}
-                                                className="flex items-center gap-3 px-4 py-3 bg-white/4 hover:bg-white/8 border border-white/6 hover:border-white/12 rounded-2xl transition-all group cursor-default">
-                                                <div className={`text-center shrink-0 w-9 ${ev.type === 'lecture' ? 'text-gold-400' : 'text-blue-400'}`}>
-                                                    <p className="text-base font-black leading-none">{String(d.getDate()).padStart(2, '0')}</p>
-                                                    <p className="text-[9px] uppercase font-bold opacity-60 mt-0.5">{MONTHS[d.getMonth()].slice(0, 3)}</p>
-                                                </div>
-                                                <span className={`w-px h-8 rounded-full ${ev.type === 'lecture' ? 'bg-gold-500/40' : 'bg-blue-500/40'}`} />
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-1.5">
-                                                        <span className={`text-[9px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
-                                                            {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
-                                                        </span>
-                                                    </div>
-                                                    <h4 className="text-white text-xs font-semibold leading-snug group-hover:text-gold-300 transition-colors truncate">{ev.title}</h4>
-                                                    {ev.location && (
-                                                        <p className="text-slate-600 text-[10px] flex items-center gap-1 mt-0.5">
-                                                            <MapPin className="w-2.5 h-2.5" />{ev.location}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                                {ev.link && (
-                                                    <a href={ev.link} target="_blank" rel="noopener noreferrer"
-                                                        className="shrink-0 p-1.5 text-slate-600 hover:text-gold-400 transition-colors opacity-0 group-hover:opacity-100">
-                                                        <ExternalLink className="w-3.5 h-3.5" />
-                                                    </a>
-                                                )}
+                                                            <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-gold-400 transition-colors shrink-0" />
+                                                        </button>
+                                                    );
+                                                })}
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                    )}
+
+                                    {monthEvents.length === 0 && (
+                                        <div className="mt-6 text-center py-10">
+                                            <Calendar className="w-10 h-10 mx-auto mb-3 text-slate-700" />
+                                            <p className="text-slate-600 text-sm">Žádné akce v tomto měsíci</p>
+                                            <p className="text-slate-700 text-xs mt-1">Zkus jiný měsíc nebo přidej akce v adminu</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                        )}
-
-                        {monthEvents.length === 0 && (
-                            <div className="mt-6 text-center py-10">
-                                <Calendar className="w-10 h-10 mx-auto mb-3 text-slate-700" />
-                                <p className="text-slate-600 text-sm">Žádné akce v tomto měsíci</p>
-                                <p className="text-slate-700 text-xs mt-1">Zkus jiný měsíc nebo přidej akce v adminu</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
         </motion.div>
     );

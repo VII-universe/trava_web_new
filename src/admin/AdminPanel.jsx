@@ -51,12 +51,12 @@ const DEF_PRODUCTS = [
 ];
 
 const DEF_LECTURES = [
-  { id:'osmitisicovky',     title:'8 osmitisícovek',          subtitle:'Přednáška & Cestopis',    duration:'60–90 min', audience:'Veřejné akce, festivaly, korporáty',       desc:'Ucelený příběh o cestě na osm nejvyšších hor světa. Fotky a videa z expedic, lidé, kteří to umožnili, a momenty, které nelze přepsat.', highlights:['Osmitisícovky v příbězích','Unikátní fotky z expedic','Q&A s Honzou'], date:'2026-05-14', location:'Praha, Kongresové centrum' },
-  { id:'hory-leci',         title:'Hory mě léčily',           subtitle:'Osobní příběh & Osvěta', duration:'45–60 min', audience:'Zdravotní konference, HR, média',           desc:'O rakovině, artritidě a o tom, jak hory pomohly najít nový směr. Přednáška, která je upřímná, vtipná i silná zároveň.', highlights:['Osobní příběh diagnózy','Cesta zpátky přes hory','Spolupráce s Revma Ligou a Fuck Cancer'], date:'2026-06-03', location:'Brno, Janáčkovo divadlo' },
-  { id:'leadership',        title:'Leadership nad mraky',      subtitle:'Motivační přednáška',    duration:'60 min',    audience:'Firmy, management, teambuildingy',          desc:'Co nás osmitisícovky učí o vedení týmu, rozhodování pod tlakem a nalézání vlastní cesty.', highlights:['Vedení týmu v extrémech','Rozhodování pod tlakem','Osobní výkonnost a hranice'], date:'2026-09-18', location:'Praha, Forum Karlín' },
-  { id:'expedice-nepal',    title:'Nepál — druhý domov',       subtitle:'Cestopis & Kultura',     duration:'60 min',    audience:'Geografické společnosti, cestovní agentury', desc:'Příběh o zemi, která se stala druhým domovem. Káthmándú, šerpové, kláštery a hory — Nepál očima člověka, který tam žije a pracuje.', highlights:['Kultura a tradice Nepálu','Šerpové a horské komunity','Praktické rady pro cestovatele'], date:'2026-10-07', location:'Olomouc, Divadlo na cucky' },
-  { id:'k2-manaslu',        title:'K2 & Manáslu',              subtitle:'Expedice v detailu',     duration:'75–90 min', audience:'Horolezecké kluby, outdoor komunity',       desc:'Detailní pohled na dvě z nejnáročnějších expedic. Logistika, tým, rozhodnutí ve výšce a momenty, kdy záleží na každém metru.', highlights:['Logistika osmitisícovkové expedice','Kritické momenty a rozhodnutí','Vybavení a příprava'], date:'2026-11-12', location:'Plzeň, Měšťanská beseda' },
-  { id:'jiz-jsme-neskoncili',title:'Ještě jsme neskončili',   subtitle:'S Jiřím Langmajerem',    duration:'90 min',    audience:'Veřejné akce, divadla, kulturní centra',   desc:'Speciální pořad s Jiřím Langmajerem — dvě silné osobnosti, jeden společný rozhovor o životě, odvolnosti a tom, co nás drží nahoře.', highlights:['Rozhovor Honza Tráva & Jiří Langmajer','Témata odvolnosti a motivace','Interaktivní formát s publikem'], date:'2026-12-05', location:'Praha, Divadlo Na Fidlovačce' },
+  { id:'osmitisicovky',     title:'8 osmitisícovek',          subtitle:'Přednáška & Cestopis',    duration:'60–90 min', audience:'Veřejné akce, festivaly, korporáty',       desc:'Ucelený příběh o cestě na osm nejvyšších hor světa. Fotky a videa z expedic, lidé, kteří to umožnili, a momenty, které nelze přepsat.', highlights:['Osmitisícovky v příbězích','Unikátní fotky z expedic','Q&A s Honzou'], date:'2026-05-14', location:'Praha, Kongresové centrum', link:'' },
+  { id:'hory-leci',         title:'Hory mě léčily',           subtitle:'Osobní příběh & Osvěta', duration:'45–60 min', audience:'Zdravotní konference, HR, média',           desc:'O rakovině, artritidě a o tom, jak hory pomohly najít nový směr. Přednáška, která je upřímná, vtipná i silná zároveň.', highlights:['Osobní příběh diagnózy','Cesta zpátky přes hory','Spolupráce s Revma Ligou a Fuck Cancer'], date:'2026-06-03', location:'Brno, Janáčkovo divadlo', link:'' },
+  { id:'leadership',        title:'Leadership nad mraky',      subtitle:'Motivační přednáška',    duration:'60 min',    audience:'Firmy, management, teambuildingy',          desc:'Co nás osmitisícovky učí o vedení týmu, rozhodování pod tlakem a nalézání vlastní cesty.', highlights:['Vedení týmu v extrémech','Rozhodování pod tlakem','Osobní výkonnost a hranice'], date:'2026-09-18', location:'Praha, Forum Karlín', link:'' },
+  { id:'expedice-nepal',    title:'Nepál — druhý domov',       subtitle:'Cestopis & Kultura',     duration:'60 min',    audience:'Geografické společnosti, cestovní agentury', desc:'Příběh o zemi, která se stala druhým domovem. Káthmándú, šerpové, kláštery a hory — Nepál očima člověka, který tam žije a pracuje.', highlights:['Kultura a tradice Nepálu','Šerpové a horské komunity','Praktické rady pro cestovatele'], date:'2026-10-07', location:'Olomouc, Divadlo na cucky', link:'' },
+  { id:'k2-manaslu',        title:'K2 & Manáslu',              subtitle:'Expedice v detailu',     duration:'75–90 min', audience:'Horolezecké kluby, outdoor komunity',       desc:'Detailní pohled na dvě z nejnáročnějších expedic. Logistika, tým, rozhodnutí ve výšce a momenty, kdy záleží na každém metru.', highlights:['Logistika osmitisícovkové expedice','Kritické momenty a rozhodnutí','Vybavení a příprava'], date:'2026-11-12', location:'Plzeň, Měšťanská beseda', link:'' },
+  { id:'jiz-jsme-neskoncili',title:'Ještě jsme neskončili',   subtitle:'S Jiřím Langmajerem',    duration:'90 min',    audience:'Veřejné akce, divadla, kulturní centra',   desc:'Speciální pořad s Jiřím Langmajerem — dvě silné osobnosti, jeden společný rozhovor o životě, odvolnosti a tom, co nás drží nahoře.', highlights:['Rozhovor Honza Tráva & Jiří Langmajer','Témata odvolnosti a motivace','Interaktivní formát s publikem'], date:'2026-12-05', location:'Praha, Divadlo Na Fidlovačce', link:'' },
 ];
 
 const DEF_PROJECTS = [
@@ -201,6 +201,21 @@ const DEF_OSVETA = {
   quote: '"Hory jsou jen skály. Opravdový boj se odehrává v nás a v našem těle."',
   imageUrl: '',
 };
+
+const DEF_PROMO = [
+  { id:'promopack2024',   name:'Promopack fotek Honza Tráva a Miri 2024',          type:'ZIP', url:'' },
+  { id:'peakfest',        name:'Info k festivalu na Jizerce PEAK fest ZHORDOHOR',  type:'PDF', url:'' },
+  { id:'plakat-cz',       name:'Promoplakát s životopisem Honza Tráva — česky',    type:'PDF', url:'' },
+  { id:'plakat-en',       name:'Promoplakát s životopisem Honza Tráva — anglicky', type:'PDF', url:'' },
+  { id:'promopack-honza', name:'Promopack fotek Honza Tráva',                      type:'ZIP', url:'' },
+  { id:'promopack-miri',  name:'Promopack fotek Miri',                             type:'ZIP', url:'' },
+  { id:'plakat-cz-tisk',  name:'Promoplakát s životopisem Honza Tráva — česky TISKOVÁ VERZE',    type:'PDF', url:'' },
+  { id:'plakat-en-tisk',  name:'Promoplakát s životopisem Honza Tráva — anglicky TISKOVÁ VERZE', type:'PDF', url:'' },
+  { id:'sponzor-cz',      name:'Nabídka pro sponzory (česky)',                     type:'PDF', url:'' },
+  { id:'sponzor-en',      name:'Nabídka pro sponzory (anglicky)',                  type:'PDF', url:'' },
+  { id:'prednasky-nabidka',name:'Nabídka projekcí a přednášek',                   type:'PDF', url:'' },
+  { id:'broadpeak-k2',    name:'Nabídka na spolupráci na Expedici Broad Peak a K2',type:'PDF', url:'' },
+];
 
 /* ─── Helpers ───────────────────────────────────────────────── */
 function genId() { return Math.random().toString(36).slice(2, 9); }
@@ -735,7 +750,7 @@ function LecturesEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const nl = { id: genId(), title: 'Nová přednáška', subtitle: '', duration: '60 min', audience: '', desc: '', highlights: [], imageId: '', imageUrl: '', date: '', location: '' };
+    const nl = { id: genId(), title: 'Nová přednáška', subtitle: '', duration: '60 min', audience: '', desc: '', highlights: [], imageId: '', imageUrl: '', date: '', location: '', link: '' };
     onChange([...data, nl]);
     setSel(data.length);
   };
@@ -768,6 +783,7 @@ function LecturesEditor({ data, onChange, onReset }) {
             </div>
             <Field label="Cílová skupina" value={l.audience} onChange={v => upd('audience', v)} placeholder="Firmy, management, teambuildingy…" icon={Users} />
             <Field label="Popis" value={l.desc} onChange={v => upd('desc', v)} rows={4} icon={AlignLeft} />
+            <Field label="Odkaz (vstupenky / web akce)" value={l.link || ''} onChange={v => upd('link', v)} placeholder="https://goout.net/…" icon={Link2} />
             <ArrayEditor label="Co přednáška nabízí (highlights)" items={l.highlights} onChange={v => upd('highlights', v)} placeholder="Highlight přednášky…" />
             <ImagePicker imageUrl={l.imageUrl} onChangeImageUrl={v => upd('imageUrl', v)} />
           </div>
@@ -1179,6 +1195,38 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
   );
 }
 
+/* ─── Contact & Promo Editor ────────────────────────────────── */
+function ContactEditor({ promo, onPromo, onReset }) {
+  const upd = (i, field, val) => { const a = [...promo]; a[i] = { ...a[i], [field]: val }; onPromo(a); };
+  return (
+    <div>
+      <SectionHeader title="Kontakt & Promo materiály" subtitle="URL adresy ke stažení promo souborů" onReset={onReset} />
+      <div className="flex flex-col gap-3 max-w-2xl">
+        <p className="text-xs text-slate-500 bg-slate-800/60 rounded-xl px-4 py-3 border border-slate-700">
+          Vlož URL odkaz pro každý soubor. Prázdné položky se v modalu nezobrazí jako tlačítko ke stažení.
+        </p>
+        {promo.map((item, i) => (
+          <div key={item.id} className="flex items-center gap-3 bg-slate-800/40 rounded-xl px-4 py-3 border border-slate-700">
+            <span className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${item.type === 'ZIP' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'}`}>
+              {item.type}
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="text-slate-300 text-xs font-medium mb-1.5 truncate">{item.name}</p>
+              <input
+                type="url"
+                value={item.url}
+                onChange={e => upd(i, 'url', e.target.value)}
+                placeholder="https://drive.google.com/…"
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main AdminPanel ───────────────────────────────────────── */
 const NAV = [
   { key:'partners',    label:'Partneři',   icon: Users,      color: 'text-blue-400' },
@@ -1188,6 +1236,7 @@ const NAV = [
   { key:'projects',    label:'Projekty',   icon: Folder,     color: 'text-amber-400' },
   { key:'media',       label:'Média',      icon: Tv,         color: 'text-red-400' },
   { key:'honza',       label:'O Honzovi',  icon: Type,       color: 'text-pink-400' },
+  { key:'contact',     label:'Kontakt',    icon: Mail,       color: 'text-teal-400' },
 ];
 
 export default function AdminPanel() {
@@ -1211,6 +1260,7 @@ export default function AdminPanel() {
   const [texts,       setTexts]       = useState(() => loadContent('texts',        DEF_TEXTS));
   const [story,       setStory]       = useState(() => loadContent('story',        DEF_STORY));
   const [osveta,      setOsveta]      = useState(() => loadContent('osveta',       DEF_OSVETA));
+  const [promo,       setPromo]       = useState(() => loadContent('promo',        DEF_PROMO));
 
   const markDirty = useCallback((setter) => (...args) => { setter(...args); setDirty(true); }, []);
 
@@ -1229,6 +1279,7 @@ export default function AdminPanel() {
       saveContent('texts',         texts),
       saveContent('story',         story),
       saveContent('osveta',        osveta),
+      saveContent('promo',         promo),
     ]);
     setDirty(false);
     setSaveMsg('Uloženo');
@@ -1237,7 +1288,7 @@ export default function AdminPanel() {
 
   const handlePreview = () => {
     const PFX = 'trava_admin_';
-    const data = { partners, expeditions, products, lectures, projects, media_video: mediaVideo, media_podcast: mediaPodcast, media_blog: mediaBlog, press, texts, story, osveta };
+    const data = { partners, expeditions, products, lectures, projects, media_video: mediaVideo, media_podcast: mediaPodcast, media_blog: mediaBlog, press, texts, story, osveta, promo };
     Object.entries(data).forEach(([k, v]) => {
       try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch {}
     });
@@ -1440,6 +1491,13 @@ export default function AdminPanel() {
               onResetTexts={() => handleReset('texts', DEF_TEXTS, setTexts)}
               onResetStory={() => handleReset('story', DEF_STORY, setStory)}
               onResetOsveta={() => handleReset('osveta', DEF_OSVETA, setOsveta)}
+            />
+          )}
+          {section === 'contact' && (
+            <ContactEditor
+              promo={promo}
+              onPromo={markDirty(setPromo)}
+              onReset={() => handleReset('promo', DEF_PROMO, setPromo)}
             />
           )}
         </main>
