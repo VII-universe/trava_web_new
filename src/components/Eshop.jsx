@@ -78,15 +78,19 @@ const Eshop = ({ scrollProgress }) => {
     useScrollLock(!!detailOpen || showAllProducts);
 
     const eshopCarouselRef = useRef(null);
-    const eshopCarouselProgress = useTransform(scrollProgress, [0.56, 0.62], [0, 1]);
+    const [carouselMax, setCarouselMax] = useState(0);
+
     useEffect(() => {
-        return eshopCarouselProgress.on("change", (latest) => {
-            const el = eshopCarouselRef.current;
-            if (!el) return;
-            const maxScroll = el.scrollWidth - el.clientWidth;
-            el.scrollLeft = Math.max(0, Math.min(1, latest) * maxScroll);
-        });
-    }, [eshopCarouselProgress]);
+        const el = eshopCarouselRef.current;
+        if (!el) return;
+        const measure = () => setCarouselMax(el.scrollWidth - el.clientWidth);
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, []);
+
+    const carouselX = useTransform(scrollProgress, [0.56, 0.62], [0, -carouselMax]);
 
     // PHASE 7 (Eshop): 0.53 -> 0.65
     const containerOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], [0, 1, 1, 0]);
@@ -155,10 +159,10 @@ const Eshop = ({ scrollProgress }) => {
                     </div>
                 </div>
 
-                {/* Horizontal scroll strip — no overflow-y, no scroll trap */}
-                <div className="shrink-0 -mx-4 px-4" data-lenis-prevent>
-                    <div ref={eshopCarouselRef} className="flex gap-3 overflow-x-auto pb-2"
-                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x' }}>
+                {/* Horizontal carousel — driven by page scroll via translateX, no overflow-x scroll */}
+                <div className="shrink-0 -mx-4 overflow-hidden">
+                    <div ref={eshopCarouselRef} className="pl-4 pb-2">
+                    <motion.div className="flex gap-3" style={{ x: carouselX }}>
 
                         {/* Featured hero card — Manukový med */}
                         <button
@@ -214,6 +218,7 @@ const Eshop = ({ scrollProgress }) => {
                                 </div>
                             </button>
                         ))}
+                    </motion.div>
                     </div>
                 </div>
 

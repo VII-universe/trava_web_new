@@ -65,8 +65,8 @@ const Pub = ({ scrollProgress }) => {
     const bgY              = useTransform(scrollProgress, [0.41, 0.59], ['-8%', '8%']);
     const bgScale          = useTransform(scrollProgress, [0.41, 0.56], [1.25, 1.40]);
 
-    // Mobile carousel: 0→1 within visible window (0.49–0.53)
-    const carouselProg = useTransform(scrollProgress, [0.495, 0.525], [0, 1]);
+    // Mobile carousel: 0→1 well before clouds at 0.515
+    const carouselProg = useTransform(scrollProgress, [0.455, 0.488], [0, 1]);
 
     useEffect(() => {
         return carouselProg.on('change', (v) => {
@@ -152,9 +152,9 @@ const Pub = ({ scrollProgress }) => {
                             const fastLeft  = info.velocity.x < -300;
                             const fastRight = info.velocity.x > 300;
                             if ((cur < -cardW * 0.35 || fastLeft) && activeDot === 0) {
-                                lenis?.scrollTo(totalH * 0.525, { duration: 0.6 });
+                                lenis?.scrollTo(totalH * 0.488, { duration: 0.6 });
                             } else if ((cur > -cardW * 0.65 || fastRight) && activeDot === 1) {
-                                lenis?.scrollTo(totalH * 0.495, { duration: 0.6 });
+                                lenis?.scrollTo(totalH * 0.455, { duration: 0.6 });
                             } else {
                                 fmAnimate(trackX, activeDot === 1 ? -cardW : 0, { duration: 0.35, ease: [0.25, 1, 0.5, 1] });
                             }
