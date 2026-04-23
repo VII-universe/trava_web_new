@@ -40,10 +40,39 @@ const GALLERY_PHOTOS = [
 ];
 
 const DEF_ABOUT = { tagline: 'Honza Tráva — profesionální dobrodruh', title: 'Horolezec. Cestovatel. Podnikatel.', description: 'Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.' };
+const DEF_STORY_LOCAL = {
+    zacatky:  { sectionLabel:'Začátky', title:'Jak to všechno začalo.', p1:'Honza Tráva žije tak, jak si většina lidí život jen představuje. Cesta na vrchol ale nezačíná na základním táboře — začíná rozhodnutím nevzdávat se, i když tělo říká stop.', p2:'Prošel si rakovinou a psoriatickou artritidou v době, kdy rozbíhal první velké projekty. Právě to ho definovalo: hory jako škola mentální odolnosti, ne jen fyzický výkon. Dnes stojí za 14 Summits Expedition, hotelem a českým pubem v srdci Káthmándú a přednáškovým turné, které prošlo stovkami sálů po celé republice.', images:[] },
+    hory:     { sectionLabel:'Hory & Osmitisícovky', title:'Šest osmitisícovek a přírůstky.', stat1val:'6+', stat1label:'osmitisícovek', stat2val:'8163 m', stat2label:'Manáslu — nejvyšší', stat3val:'14+', stat3label:'himalájských expedic', text:'Na kontě výstupy na Manáslu (8163 m), Meru Peak, Aconcaguu, Kilimandžáro, Elbrus a desítky treků v Himálaji. Jako průvodce a organizátor expedic ví, co znamená nést zodpovědnost za tým tam, kde chyba nemá druhou šanci. Pod hlavičkou 14 Summits Expedition organizuje komerční i soukromé expedice a treky pro všechny úrovně.', videoUrl:'', images:[] },
+    nepal:    { sectionLabel:'Nepál', title:'Hotel & Pub v srdci Káthmándú.', text:'V Káthmándú provozuje vlastní hotel a legendární Czech Pub Highlander — základnu pro všechny expedice a místo setkání cestovatelů z celého světa. Nepál není jen destinace. Je to druhý domov.', images:[] },
+    zdravi:   { sectionLabel:'Zdraví & Osvěta', title:'Diagnóza není konec cesty.', text:'Rakovina a psoriatická artritida — Honza prošel obojím a dnes o tom mluví otevřeně. Spolupracuje s Revma Ligou, podporuje Fuck Cancer a ukazuje, že diagnóza není tečka. Je to nové zaměření.', quote:'„Hory jsou jen skály. Opravdový boj se odehrává v nás."', imageUrl:'' },
+    prednasky:{ sectionLabel:'Přednášky', title:'Příběhy, které motivují.', text:'Stovky přednášek po celé republice — pro firmy, školy, festivaly. Témata: leadership pod tlakem, mentální odolnost, expedice do Himálaje, zdraví a druhý dech. Honza mluví ze zkušenosti, ne z knih.', imageUrl:'' },
+    tym:      { sectionLabel:'Tým', title:'Se kterými to tvoříme.' },
+    kdedal:   { sectionLabel:'Kde mě najdeš', title:'Prozkoumej celý web.', quote:'„Život není jen o samotných vrcholech, ale i o nádherné cestě k nim."' },
+};
+const DEF_OSVETA_LOCAL = {
+    heading:'Pomáháme a sdílíme', title:'Zdravotní osvěta',
+    intro:'Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.',
+    section1Title:'Revma Liga a psoriatická artritida', section1Text:'Aktivně spolupracujeme s Revma Ligou. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci — ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování.',
+    section2Title:'Fuck Cancer', section2Text:'Podporuji iniciativu Fuck Cancer, která sdružuje mladé pacienty onkologických onemocnění, survivors a všechny, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.',
+    expertBoxTitle:'Odborná spolupráce', expertBoxText:'Mé kroky v osvětě nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny:\n\nDoc. MUDr. Monika Arenbergerová, MUDr. Liliana Šedová, MUDr. Tomáš Brisuda, PhDr. Helena Vomáčková, MUDr. Martin Pospíchal a dalším odborníkům, kteří mě udržují v chodu a pomáhají naší osvětové cestě odbornou erudicí.',
+    quote:'"Hory jsou jen skály. Opravdový boj se odehrává v nás a v našem těle."',
+    imageUrl:'',
+};
+
+function mergeStory(def, admin) {
+    if (!admin) return def;
+    const result = {};
+    Object.keys(def).forEach(k => { result[k] = { ...def[k], ...(admin[k] || {}) }; });
+    return result;
+}
 
 const About = ({ scrollProgress }) => {
     const adminTexts = loadContent('texts', null);
+    const adminStory = loadContent('story', null);
+    const adminOsveta = loadContent('osveta', null);
     const about = { ...DEF_ABOUT, ...(adminTexts?.about || {}) };
+    const story = mergeStory(DEF_STORY_LOCAL, adminStory);
+    const osveta = { ...DEF_OSVETA_LOCAL, ...(adminOsveta || {}) };
 
     const [isStoryOpen, setIsStoryOpen] = useState(false);
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
@@ -243,27 +272,20 @@ const About = ({ scrollProgress }) => {
                             <div className="px-6 md:px-10 py-8 md:py-10">
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                    <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">Začátky</span>
+                                    <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.zacatky.sectionLabel}</span>
                                 </div>
-                                <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">
-                                    Jak to všechno začalo.
-                                </h3>
+                                <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">{story.zacatky.title}</h3>
                                 <div className="flex flex-col md:flex-row gap-6 items-start">
                                     <div className="w-full md:w-2/5 shrink-0 grid grid-cols-2 gap-2 h-44 md:h-52">
-                                        <div className="relative rounded-2xl overflow-hidden">
-                                            <img src={StoryImg2} alt="Honza jako dítě" className="w-full h-full object-cover object-center" />
-                                        </div>
-                                        <div className="relative rounded-2xl overflow-hidden">
-                                            <img src={StoryImg1} alt="Honza na žebříku" className="w-full h-full object-cover object-left" />
-                                        </div>
+                                        {(story.zacatky.images?.length >= 1 ? story.zacatky.images : [StoryImg2, StoryImg1]).slice(0,2).map((src, i) => (
+                                            <div key={i} className="relative rounded-2xl overflow-hidden">
+                                                <img src={src} alt="" className="w-full h-full object-cover object-center" />
+                                            </div>
+                                        ))}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="font-sans text-slate-800 leading-relaxed font-medium mb-3 text-sm md:text-base">
-                                            Honza Tráva žije tak, jak si většina lidí život jen představuje. Cesta na vrchol ale nezačíná na základním táboře — začíná rozhodnutím nevzdávat se, i když tělo říká stop.
-                                        </p>
-                                        <p className="font-sans text-slate-600 leading-relaxed text-sm">
-                                            Prošel si rakovinou a psoriatickou artritidou v době, kdy rozbíhal první velké projekty. Právě to ho definovalo: hory jako škola mentální odolnosti, ne jen fyzický výkon. Dnes stojí za 14 Summits Expedition, hotelem a českým pubem v srdci Káthmándú a přednáškovým turné, které prošlo stovkami sálů po celé republice.
-                                        </p>
+                                        <p className="font-sans text-slate-800 leading-relaxed font-medium mb-3 text-sm md:text-base">{story.zacatky.p1}</p>
+                                        <p className="font-sans text-slate-600 leading-relaxed text-sm">{story.zacatky.p2}</p>
                                     </div>
                                 </div>
                             </div>
@@ -272,64 +294,44 @@ const About = ({ scrollProgress }) => {
                             <div className="bg-slate-900 px-6 md:px-10 py-8 md:py-10">
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                    <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.3em]">Hory & Osmitisícovky</span>
+                                    <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.3em]">{story.hory.sectionLabel}</span>
                                 </div>
-                                <h3 className="font-serif text-2xl md:text-3xl text-white mb-5 leading-tight">
-                                    Šest osmitisícovek <span className="italic text-slate-400">a přírůstky.</span>
-                                </h3>
+                                <h3 className="font-serif text-2xl md:text-3xl text-white mb-5 leading-tight">{story.hory.title}</h3>
 
-                                <div className="grid grid-cols-3 gap-2 mb-6 h-28 md:h-36">
-                                    {[
-                                        { src: ManasluSummitImg, label: 'Manáslu 8163 m', pos: 'object-top' },
-                                        { src: SummitSelfieImg,  label: 'Na vrcholu',     pos: 'object-top' },
-                                        { src: StoryImg3,        label: 'Himálaj',        pos: 'object-center' },
-                                    ].map((p) => (
-                                        <div key={p.label} className="relative rounded-xl overflow-hidden">
-                                            <img src={p.src} alt={p.label} className={`w-full h-full object-cover ${p.pos}`} />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                                            <span className="absolute bottom-2 left-2 text-white text-[9px] font-mono tracking-wider">{p.label}</span>
+                                {story.hory.videoUrl ? (
+                                    <div className="mb-6 rounded-xl overflow-hidden aspect-video">
+                                        <iframe src={story.hory.videoUrl} className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Video" />
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-3 gap-2 mb-6 h-28 md:h-36">
+                                        {(story.hory.images?.length >= 1 ? story.hory.images : [ManasluSummitImg, SummitSelfieImg, StoryImg3]).slice(0,3).map((src, i) => (
+                                            <div key={i} className="relative rounded-xl overflow-hidden">
+                                                <img src={src} alt="" className="w-full h-full object-cover object-top" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <div className="grid grid-cols-3 gap-4 py-5 border-y border-white/10 mb-5">
+                                    {[['stat1val','stat1label'],['stat2val','stat2label'],['stat3val','stat3label']].map(([v,l], i) => (
+                                        <div key={i} className={`text-center ${i===1?'border-x border-white/10':''}`}>
+                                            <div className="font-serif text-3xl text-gold-400 font-bold leading-none">{story.hory[v]}</div>
+                                            <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">{story.hory[l]}</div>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="grid grid-cols-3 gap-4 py-5 border-y border-white/10 mb-5">
-                                    <div className="text-center">
-                                        <div className="font-serif text-3xl text-gold-400 font-bold leading-none">6+</div>
-                                        <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">osmitisícovek</div>
-                                    </div>
-                                    <div className="text-center border-x border-white/10">
-                                        <div className="font-serif text-3xl text-gold-400 font-bold leading-none">8163 m</div>
-                                        <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">Manáslu — nejvyšší</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="font-serif text-3xl text-gold-400 font-bold leading-none">14+</div>
-                                        <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">himalájských expedic</div>
-                                    </div>
-                                </div>
-
-                                <p className="font-sans text-slate-300 text-sm leading-relaxed mb-6">
-                                    Na kontě výstupy na Manáslu (8163 m), Meru Peak, Aconcaguu, Kilimandžáro, Elbrus a desítky treků v Himálaji. Jako průvodce a organizátor expedic ví, co znamená nést zodpovědnost za tým tam, kde chyba nemá druhou šanci. Pod hlavičkou <strong className="text-white">14 Summits Expedition</strong> organizuje komerční i soukromé expedice a treky pro všechny úrovně.
-                                </p>
+                                <p className="font-sans text-slate-300 text-sm leading-relaxed mb-6">{story.hory.text}</p>
 
                                 <div className="flex flex-wrap gap-2">
-                                    <button
-                                        onClick={() => navigateToSection(0.34)}
-                                        className="inline-flex items-center gap-2 px-5 py-3 bg-gold-500 hover:bg-gold-400 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200"
-                                    >
+                                    <button onClick={() => navigateToSection(0.34)} className="inline-flex items-center gap-2 px-5 py-3 bg-gold-500 hover:bg-gold-400 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200">
                                         Expedice & 14 Summits <ArrowRight className="w-3.5 h-3.5" />
                                     </button>
-                                    <a
-                                        href="https://14summitsexpedition.cz"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200"
-                                    >
+                                    <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200">
                                         14summitsexpedition.cz <ExternalLink className="w-3 h-3" />
                                     </a>
-                                    <button
-                                        onClick={() => setGalleryOpen(true)}
-                                        className="inline-flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200"
-                                    >
+                                    <button onClick={() => setGalleryOpen(true)} className="inline-flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200">
                                         <Images className="w-3.5 h-3.5" /> Galerie fotek
                                     </button>
                                 </div>
@@ -341,28 +343,20 @@ const About = ({ scrollProgress }) => {
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">Nepál</span>
+                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.nepal.sectionLabel}</span>
                                         </div>
-                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">
-                                            Hotel & Pub<br /><span className="italic text-slate-500">v srdci Káthmándú.</span>
-                                        </h3>
-                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-5">
-                                            V Káthmándú provozuje vlastní hotel a legendární <strong className="text-slate-900">Czech Pub Highlander</strong> — základnu pro všechny expedice a místo setkání cestovatelů z celého světa. Nepál není jen destinace. Je to druhý domov.
-                                        </p>
-                                        <button
-                                            onClick={() => navigateToSection(0.45)}
-                                            className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200"
-                                        >
+                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">{story.nepal.title}</h3>
+                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-5">{story.nepal.text}</p>
+                                        <button onClick={() => navigateToSection(0.45)} className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200">
                                             Sekce Nepál <ArrowRight className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
                                     <div className="w-full md:w-2/5 shrink-0 grid grid-cols-2 gap-2 h-44">
-                                        <div className="relative rounded-2xl overflow-hidden">
-                                            <img src={KtmPubImg} alt="Czech Pub Highlander" className="w-full h-full object-cover" />
-                                        </div>
-                                        <div className="relative rounded-2xl overflow-hidden">
-                                            <img src={KtmPub2Img} alt="Káthmándú" className="w-full h-full object-cover" />
-                                        </div>
+                                        {(story.nepal.images?.length >= 1 ? story.nepal.images : [KtmPubImg, KtmPub2Img]).slice(0,2).map((src, i) => (
+                                            <div key={i} className="relative rounded-2xl overflow-hidden">
+                                                <img src={src} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -373,38 +367,27 @@ const About = ({ scrollProgress }) => {
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">Zdraví & Osvěta</span>
+                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.zdravi.sectionLabel}</span>
                                         </div>
-                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">
-                                            Diagnóza není <span className="italic text-slate-500">konec cesty.</span>
-                                        </h3>
-                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-4">
-                                            Rakovina a psoriatická artritida — Honza prošel obojím a dnes o tom mluví otevřeně. Spolupracuje s Revma Ligou, podporuje Fuck Cancer a ukazuje, že diagnóza není tečka. Je to nové zaměření.
-                                        </p>
+                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">{story.zdravi.title}</h3>
+                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-4">{story.zdravi.text}</p>
                                         <div className="flex flex-wrap gap-2 mb-3">
-                                            <a href="https://www.revmaliga.cz" target="_blank" rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm"
-                                            >
+                                            <a href="https://www.revmaliga.cz" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm">
                                                 Revma Liga <ExternalLink className="w-3 h-3" />
                                             </a>
-                                            <a href="https://www.fuckcancer.cz" target="_blank" rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm"
-                                            >
+                                            <a href="https://www.fuckcancer.cz" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm">
                                                 Fuck Cancer <ExternalLink className="w-3 h-3" />
                                             </a>
-                                            <button
-                                                onClick={() => setIsStoryOpen(false) || setTimeout(() => setIsOsvetaOpen(true), 50)}
-                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm"
-                                            >
+                                            <button onClick={() => setIsStoryOpen(false) || setTimeout(() => setIsOsvetaOpen(true), 50)} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm">
                                                 Osvěta & Zdraví <ArrowRight className="w-3 h-3" />
                                             </button>
                                         </div>
                                     </div>
                                     <div className="w-full md:w-1/3 shrink-0 relative rounded-2xl overflow-hidden h-44 md:h-52">
-                                        <img src={ClimbersImg} alt="" className="w-full h-full object-cover" />
+                                        <img src={story.zdravi.imageUrl || ClimbersImg} alt="" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                                         <blockquote className="absolute bottom-4 left-4 right-4 font-serif italic text-white text-sm leading-snug drop-shadow-lg">
-                                            „Hory jsou jen skály. Opravdový boj se odehrává v nás."
+                                            {story.zdravi.quote}
                                         </blockquote>
                                     </div>
                                 </div>
@@ -414,24 +397,17 @@ const About = ({ scrollProgress }) => {
                             <div className="px-6 md:px-10 py-8 md:py-10 border-b border-slate-200">
                                 <div className="flex flex-col md:flex-row gap-6 items-center">
                                     <div className="w-full md:w-2/5 shrink-0 relative rounded-2xl overflow-hidden h-44">
-                                        <img src={LectureImg} alt="Přednáška" className="w-full h-full object-cover" />
+                                        <img src={story.prednasky.imageUrl || LectureImg} alt="Přednáška" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">Přednášky</span>
+                                            <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.prednasky.sectionLabel}</span>
                                         </div>
-                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">
-                                            Příběhy, které <span className="italic text-slate-500">motivují.</span>
-                                        </h3>
-                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-5">
-                                            Stovky přednášek po celé republice — pro firmy, školy, festivaly. Témata: leadership pod tlakem, mentální odolnost, expedice do Himálaje, zdraví a druhý dech. Honza mluví ze zkušenosti, ne z knih.
-                                        </p>
-                                        <button
-                                            onClick={() => navigateToSection(0.65)}
-                                            className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200"
-                                        >
+                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 leading-tight">{story.prednasky.title}</h3>
+                                        <p className="font-sans text-slate-700 text-sm leading-relaxed mb-5">{story.prednasky.text}</p>
+                                        <button onClick={() => navigateToSection(0.65)} className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-200">
                                             Přednášky <ArrowRight className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
@@ -442,11 +418,9 @@ const About = ({ scrollProgress }) => {
                             <div className="px-6 md:px-10 py-8 md:py-10 border-b border-slate-200">
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                    <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">Tým</span>
+                                    <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.tym.sectionLabel}</span>
                                 </div>
-                                <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">
-                                    Se kterými to tvoříme.
-                                </h3>
+                                <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">{story.tym.title}</h3>
                                 <div className="grid grid-cols-2 gap-3 md:gap-4">
                                     <button
                                         onClick={() => openTeamModal('openMiriModal')}
@@ -483,10 +457,10 @@ const About = ({ scrollProgress }) => {
                             <div className="bg-slate-900 px-6 md:px-10 py-8 md:py-10">
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="w-5 h-px bg-gold-400 shrink-0" />
-                                    <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.3em]">Kde mě najdeš</span>
+                                    <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.3em]">{story.kdedal.sectionLabel}</span>
                                 </div>
                                 <h3 className="font-serif text-2xl text-white mb-5 leading-tight">
-                                    Prozkoumej celý web.
+                                    {story.kdedal.title}
                                 </h3>
                                 <div className="grid grid-cols-2 gap-3">
                                     {[
@@ -514,7 +488,7 @@ const About = ({ scrollProgress }) => {
                                 </div>
 
                                 <blockquote className="mt-8 pt-6 border-t border-white/10 font-serif text-xl md:text-2xl text-slate-400 italic leading-snug text-center">
-                                    „Život není jen o samotných vrcholech,<br className="hidden md:block" /> ale i o nádherné cestě k nim."
+                                    {story.kdedal.quote}
                                 </blockquote>
                             </div>
 
@@ -553,39 +527,38 @@ const About = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
-                                Pomáháme a sdílíme
+                                {osveta.heading}
                             </h4>
                             <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                                Zdravotní osvěta
+                                {osveta.title}
                             </h2>
 
                             <div className="prose prose-slate prose-lg max-w-none">
                                 <p className="font-sans text-slate-800 leading-relaxed font-medium mb-6">
-                                    Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.
+                                    {osveta.intro}
                                 </p>
 
-                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Revma Liga a psoriatická artritida</h3>
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">{osveta.section1Title}</h3>
                                 <p className="font-sans text-slate-700 leading-relaxed mb-6">
-                                    Aktivně spolupracujeme s <strong>Revma Ligou</strong>. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci — ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování.
+                                    {osveta.section1Text}
                                 </p>
 
-                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">Fuck Cancer</h3>
+                                <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">{osveta.section2Title}</h3>
                                 <p className="font-sans text-slate-700 leading-relaxed mb-6">
-                                    Podporuji iniciativu <strong>Fuck Cancer</strong>, která sdružuje mladé pacienty onkologických onemocnění, survivors a všechny, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.
+                                    {osveta.section2Text}
                                 </p>
 
                                 <div className="mt-10 p-6 bg-slate-100 rounded-2xl border border-slate-200">
-                                    <h4 className="font-serif text-xl text-slate-900 mb-3">Odborná spolupráce</h4>
-                                    <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">
-                                        Mé kroky v osvětě nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny:<br /><br />
-                                        <strong>Doc. MUDr. Monika Arenbergerová</strong>, <strong>MUDr. Liliana Šedová</strong>, <strong>MUDr. Tomáš Brisuda</strong>, <strong>PhDr. Helena Vomáčková</strong>, <strong>MUDr. Martin Pospíchal</strong> a dalším odborníkům, kteří mě udržují v chodu a pomáhají naší osvětové cestě odbornou erudicí.
+                                    <h4 className="font-serif text-xl text-slate-900 mb-3">{osveta.expertBoxTitle}</h4>
+                                    <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                                        {osveta.expertBoxText}
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
-                            <img src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+                            <img src={osveta.imageUrl || ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                             <div className="absolute bottom-8 left-8 right-8 z-10">
                                 <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
@@ -595,7 +568,7 @@ const About = ({ scrollProgress }) => {
                                         <Star className="w-5 h-5 text-gold-400 fill-gold-400" />
                                     </div>
                                     <p className="font-serif italic text-xl md:text-2xl text-white leading-snug font-medium drop-shadow-md">
-                                        "Hory jsou jen skály. Opravdový boj se odehrává v nás a v našem těle."
+                                        {osveta.quote}
                                     </p>
                                 </div>
                             </div>

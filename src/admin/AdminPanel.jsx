@@ -124,6 +124,7 @@ const DEF_TEXTS = {
     stat1val: '12+', stat1label: 'Expedic',
     stat2val: '6476m', stat2label: 'Max Altitude',
     stat3val: '100%', stat3label: 'Dedikace',
+    images: [],
   },
   subin: {
     name: 'Subin Tamang',
@@ -135,7 +136,70 @@ const DEF_TEXTS = {
     stat1val: '15+', stat1label: 'Let v terénu',
     stat2val: 'Nepal', stat2label: 'Rodná zem',
     stat3val: '8000m', stat3label: 'Zkušenosti',
+    images: [],
   },
+};
+
+const DEF_STORY = {
+  zacatky: {
+    sectionLabel: 'Začátky',
+    title: 'Jak to všechno začalo.',
+    p1: 'Honza Tráva žije tak, jak si většina lidí život jen představuje. Cesta na vrchol ale nezačíná na základním táboře — začíná rozhodnutím nevzdávat se, i když tělo říká stop.',
+    p2: 'Prošel si rakovinou a psoriatickou artritidou v době, kdy rozbíhal první velké projekty. Právě to ho definovalo: hory jako škola mentální odolnosti, ne jen fyzický výkon. Dnes stojí za 14 Summits Expedition, hotelem a českým pubem v srdci Káthmándú a přednáškovým turné, které prošlo stovkami sálů po celé republice.',
+    images: [],
+  },
+  hory: {
+    sectionLabel: 'Hory & Osmitisícovky',
+    title: 'Šest osmitisícovek a přírůstky.',
+    stat1val: '6+',    stat1label: 'osmitisícovek',
+    stat2val: '8163 m', stat2label: 'Manáslu — nejvyšší',
+    stat3val: '14+',   stat3label: 'himalájských expedic',
+    text: 'Na kontě výstupy na Manáslu (8163 m), Meru Peak, Aconcaguu, Kilimandžáro, Elbrus a desítky treků v Himálaji. Jako průvodce a organizátor expedic ví, co znamená nést zodpovědnost za tým tam, kde chyba nemá druhou šanci. Pod hlavičkou 14 Summits Expedition organizuje komerční i soukromé expedice a treky pro všechny úrovně.',
+    videoUrl: '',
+    images: [],
+  },
+  nepal: {
+    sectionLabel: 'Nepál',
+    title: 'Hotel & Pub v srdci Káthmándú.',
+    text: 'V Káthmándú provozuje vlastní hotel a legendární Czech Pub Highlander — základnu pro všechny expedice a místo setkání cestovatelů z celého světa. Nepál není jen destinace. Je to druhý domov.',
+    images: [],
+  },
+  zdravi: {
+    sectionLabel: 'Zdraví & Osvěta',
+    title: 'Diagnóza není konec cesty.',
+    text: 'Rakovina a psoriatická artritida — Honza prošel obojím a dnes o tom mluví otevřeně. Spolupracuje s Revma Ligou, podporuje Fuck Cancer a ukazuje, že diagnóza není tečka. Je to nové zaměření.',
+    quote: '„Hory jsou jen skály. Opravdový boj se odehrává v nás."',
+    imageUrl: '',
+  },
+  prednasky: {
+    sectionLabel: 'Přednášky',
+    title: 'Příběhy, které motivují.',
+    text: 'Stovky přednášek po celé republice — pro firmy, školy, festivaly. Témata: leadership pod tlakem, mentální odolnost, expedice do Himálaje, zdraví a druhý dech. Honza mluví ze zkušenosti, ne z knih.',
+    imageUrl: '',
+  },
+  tym: {
+    sectionLabel: 'Tým',
+    title: 'Se kterými to tvoříme.',
+  },
+  kdedal: {
+    sectionLabel: 'Kde mě najdeš',
+    title: 'Prozkoumej celý web.',
+    quote: '„Život není jen o samotných vrcholech, ale i o nádherné cestě k nim."',
+  },
+};
+
+const DEF_OSVETA = {
+  heading: 'Pomáháme a sdílíme',
+  title: 'Zdravotní osvěta',
+  intro: 'Hory pro mě znamenají hodně, ale zdraví je to nejdůležitější. Protože sám vím, jaké to je stát se "kašpárkem s nemocí", věnuji spoustu energie zdravotní osvětě a pacientským organizacím.',
+  section1Title: 'Revma Liga a psoriatická artritida',
+  section1Text: 'Aktivně spolupracujeme s Revma Ligou. Chceme ukázat, že i s diagnózou, jako je psoriatická artritida, život nekončí a dají se dělat úžasné věci — ať už to znamená vylézt na osmitisícovku, nebo prostě jen najít sílu na běžný denní fungování.',
+  section2Title: 'Fuck Cancer',
+  section2Text: 'Podporuji iniciativu Fuck Cancer, která sdružuje mladé pacienty onkologických onemocnění, survivors a všechny, kteří jim v jejich cestě pomáhají. Otevíráme těžká témata a šíříme povědomí o prevenci.',
+  expertBoxTitle: 'Odborná spolupráce',
+  expertBoxText: 'Mé kroky v osvětě nejsou náhodné. Velké díky patří mým andělům strážným z oboru medicíny:\n\nDoc. MUDr. Monika Arenbergerová, MUDr. Liliana Šedová, MUDr. Tomáš Brisuda, PhDr. Helena Vomáčková, MUDr. Martin Pospíchal a dalším odborníkům, kteří mě udržují v chodu a pomáhají naší osvětové cestě odbornou erudicí.',
+  quote: '"Hory jsou jen skály. Opravdový boj se odehrává v nás a v našem těle."',
+  imageUrl: '',
 };
 
 /* ─── Helpers ───────────────────────────────────────────────── */
@@ -876,88 +940,240 @@ function MediaEditor({ video, podcast, blog, press, onChange, onReset }) {
   );
 }
 
-/* ─── Texts Editor ─────────────────────────────────────────── */
-function TextsEditor({ data, onChange, onReset }) {
-  const [tab, setTab] = useState('about');
-  const upd = (section, field, val) => onChange({ ...data, [section]: { ...data[section], [field]: val } });
+/* ─── Honza Editor ──────────────────────────────────────────── */
+const HONZA_SECTIONS = [
+  { key: 'uvod',      group: 'Úvod',    label: 'Úvodní sekce na webu' },
+  { key: 'zacatky',  group: 'Příběh',  label: 'Začátky' },
+  { key: 'hory',     group: 'Příběh',  label: 'Hory & Osmitisícovky' },
+  { key: 'nepal',    group: 'Příběh',  label: 'Nepál' },
+  { key: 'zdravi',   group: 'Příběh',  label: 'Zdraví & Osvěta' },
+  { key: 'prednasky',group: 'Příběh',  label: 'Přednášky' },
+  { key: 'tym',      group: 'Příběh',  label: 'Tým (nadpis)' },
+  { key: 'kdedal',   group: 'Příběh',  label: 'Závěr & citát' },
+  { key: 'osveta',   group: 'Modál',   label: 'Osvěta modal' },
+  { key: 'miri',     group: 'Tým',     label: 'Miri Jirková' },
+  { key: 'subin',    group: 'Tým',     label: 'Subin Tamang' },
+];
 
-  const tabs = [
-    { key: 'about', label: 'O Honzovi', icon: Mountain },
-    { key: 'miri',  label: 'Miri Jirková', icon: Users },
-    { key: 'subin', label: 'Subin Tamang', icon: Users },
-  ];
+function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onResetTexts, onResetStory, onResetOsveta }) {
+  const [sel, setSel] = useState('uvod');
 
-  const s = data[tab] || {};
+  const updTexts = (section, field, val) => onTexts({ ...texts, [section]: { ...texts[section], [field]: val } });
+  const updStory = (block, field, val) => onStory({ ...story, [block]: { ...story[block], [field]: val } });
+  const updOsveta = (field, val) => onOsveta({ ...osveta, [field]: val });
+
+  const groups = [...new Set(HONZA_SECTIONS.map(s => s.group))];
+
+  const handleReset = () => {
+    const s = HONZA_SECTIONS.find(s => s.key === sel);
+    if (!s) return;
+    if (s.group === 'Úvod') onResetTexts();
+    else if (s.group === 'Příběh') onResetStory();
+    else if (s.key === 'osveta') onResetOsveta();
+    else onResetTexts();
+  };
+
+  const renderForm = () => {
+    /* ── Úvod ── */
+    if (sel === 'uvod') {
+      const a = texts.about || {};
+      return (
+        <>
+          <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3 mb-5">Úvodní text zobrazený v sekci „O Honzovi"</p>
+          <Field label="Štítek (zlatý text nad nadpisem)" value={a.tagline} onChange={v => updTexts('about','tagline',v)} icon={Tag} placeholder="Honza Tráva — profesionální dobrodruh" />
+          <Field label="Hlavní nadpis" value={a.title} onChange={v => updTexts('about','title',v)} icon={Type} placeholder="Horolezec. Cestovatel. Podnikatel." />
+          <Field label="Perex — úvodní odstavec" value={a.description} onChange={v => updTexts('about','description',v)} rows={4} icon={AlignLeft} placeholder="Výstupy na osmitisícovky…" />
+        </>
+      );
+    }
+    /* ── Story blocks ── */
+    if (['zacatky','hory','nepal','zdravi','prednasky','tym','kdedal'].includes(sel)) {
+      const b = story[sel] || {};
+      const upd = (f,v) => updStory(sel,f,v);
+      return (
+        <>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Štítek sekce (malé zlaté písmo)" value={b.sectionLabel} onChange={v=>upd('sectionLabel',v)} icon={Tag} />
+            <Field label="Nadpis bloku" value={b.title} onChange={v=>upd('title',v)} icon={Type} />
+          </div>
+
+          {sel === 'zacatky' && (
+            <>
+              <Field label="Odstavec 1" value={b.p1} onChange={v=>upd('p1',v)} rows={4} icon={AlignLeft} />
+              <Field label="Odstavec 2" value={b.p2} onChange={v=>upd('p2',v)} rows={4} icon={AlignLeft} />
+              <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku (2 ks doporučeno)" />
+            </>
+          )}
+
+          {sel === 'hory' && (
+            <>
+              <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+                <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">3 statistiky (čísla uprostřed)</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {[1,2,3].map(n => (
+                    <div key={n} className="flex flex-col gap-2">
+                      <Field label={`Hodnota ${n}`} value={b[`stat${n}val`]} onChange={v=>upd(`stat${n}val`,v)} placeholder="6+" />
+                      <Field label={`Popisek ${n}`} value={b[`stat${n}label`]} onChange={v=>upd(`stat${n}label`,v)} placeholder="osmitisícovek" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Field label="Text pod statistikami" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
+              <div className="flex flex-col gap-1.5">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <Video className="w-3 h-3" /> YouTube video URL (embed)
+                </label>
+                <input
+                  type="url"
+                  value={b.videoUrl||''}
+                  onChange={e=>upd('videoUrl',e.target.value)}
+                  placeholder="https://www.youtube.com/embed/VIDEO_ID"
+                  className="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"
+                />
+                <p className="text-[11px] text-slate-500">Formát: youtube.com/embed/ID — pokud je vyplněno, zobrazí se nad galerií fotek</p>
+              </div>
+              <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku (3 ks doporučeno)" />
+            </>
+          )}
+
+          {sel === 'nepal' && (
+            <>
+              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
+              <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku (2 ks doporučeno)" />
+            </>
+          )}
+
+          {sel === 'zdravi' && (
+            <>
+              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
+              <Field label="Citát (na fotce)" value={b.quote} onChange={v=>upd('quote',v)} rows={2} icon={AlignLeft} placeholder={'„Hory jsou jen skály…"'} />
+              <ImagePicker imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} />
+            </>
+          )}
+
+          {sel === 'prednasky' && (
+            <>
+              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
+              <ImagePicker imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} />
+            </>
+          )}
+
+          {sel === 'tym' && (
+            <p className="text-sm text-slate-400 bg-slate-900/60 rounded-xl p-4 border border-slate-700">
+              Kartičky Miri a Subina se nastavují v sekcích <strong className="text-slate-200">Miri Jirková</strong> a <strong className="text-slate-200">Subin Tamang</strong> níže.
+            </p>
+          )}
+
+          {sel === 'kdedal' && (
+            <Field label="Závěrečný citát" value={b.quote} onChange={v=>upd('quote',v)} rows={3} icon={AlignLeft} placeholder={'„Život není jen o samotných vrcholech…"'} />
+          )}
+        </>
+      );
+    }
+    /* ── Osvěta modal ── */
+    if (sel === 'osveta') {
+      const o = osveta || {};
+      return (
+        <>
+          <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3 mb-5">Obsah modálu „Osvěta & Zdraví"</p>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Štítek (zlatý, nad nadpisem)" value={o.heading} onChange={v=>updOsveta('heading',v)} icon={Tag} />
+            <Field label="Hlavní nadpis" value={o.title} onChange={v=>updOsveta('title',v)} icon={Type} />
+          </div>
+          <Field label="Úvodní odstavec" value={o.intro} onChange={v=>updOsveta('intro',v)} rows={4} icon={AlignLeft} />
+          <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Sekce 1</p>
+            <Field label="Nadpis sekce 1" value={o.section1Title} onChange={v=>updOsveta('section1Title',v)} />
+            <Field label="Text sekce 1" value={o.section1Text} onChange={v=>updOsveta('section1Text',v)} rows={4} icon={AlignLeft} />
+          </div>
+          <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Sekce 2</p>
+            <Field label="Nadpis sekce 2" value={o.section2Title} onChange={v=>updOsveta('section2Title',v)} />
+            <Field label="Text sekce 2" value={o.section2Text} onChange={v=>updOsveta('section2Text',v)} rows={4} icon={AlignLeft} />
+          </div>
+          <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Box — odborná spolupráce</p>
+            <Field label="Nadpis boxu" value={o.expertBoxTitle} onChange={v=>updOsveta('expertBoxTitle',v)} />
+            <Field label="Text boxu" value={o.expertBoxText} onChange={v=>updOsveta('expertBoxText',v)} rows={6} icon={AlignLeft} />
+          </div>
+          <Field label="Citát (na fotce vpravo)" value={o.quote} onChange={v=>updOsveta('quote',v)} rows={2} icon={AlignLeft} />
+          <ImagePicker imageUrl={o.imageUrl||''} onChangeImageUrl={v=>updOsveta('imageUrl',v)} />
+        </>
+      );
+    }
+    /* ── Miri / Subin ── */
+    if (sel === 'miri' || sel === 'subin') {
+      const s = texts[sel] || {};
+      const upd = (f,v) => updTexts(sel,f,v);
+      const label = sel === 'miri' ? 'Miri Jirková' : 'Subin Tamang';
+      return (
+        <>
+          <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3 mb-5">Profil {label} — zobrazený v modálu a kartičkách na webu</p>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Celé jméno" value={s.name} onChange={v=>upd('name',v)} icon={Users} />
+            <Field label="Role (pod jménem v kartičce)" value={s.role} onChange={v=>upd('role',v)} placeholder="Trek & Logistika" />
+          </div>
+          <Field label="Pozice (zlatý štítek v modálu)" value={s.tagline} onChange={v=>upd('tagline',v)} icon={Tag} />
+          <Field label="Bio — odstavec 1 (tučný úvod)" value={s.bio1} onChange={v=>upd('bio1',v)} rows={4} icon={AlignLeft} />
+          <Field label="Bio — odstavec 2" value={s.bio2} onChange={v=>upd('bio2',v)} rows={4} icon={AlignLeft} />
+          <Field label="Bio — odstavec 3" value={s.bio3} onChange={v=>upd('bio3',v)} rows={4} icon={AlignLeft} />
+          <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Statistiky (3 čísla ve spodní části modálu)</p>
+            <div className="grid grid-cols-3 gap-3">
+              {[1,2,3].map(n => (
+                <div key={n} className="flex flex-col gap-2">
+                  <Field label={`Hodnota ${n}`} value={s[`stat${n}val`]} onChange={v=>upd(`stat${n}val`,v)} />
+                  <Field label={`Popisek ${n}`} value={s[`stat${n}label`]} onChange={v=>upd(`stat${n}label`,v)} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <ImageGallery images={s.images||[]} onChange={v=>upd('images',v)} label="Fotogalerie v modálu (1. foto = hlavní, 2.–3. = mřížka)" />
+        </>
+      );
+    }
+    return null;
+  };
 
   return (
     <div>
-      <SectionHeader
-        title="Texty na webu"
-        subtitle="Biografie, popisky a texty o členech týmu zobrazené na webu"
-        onReset={onReset}
-      />
-      {/* Tabs */}
-      <div className="flex gap-2 mb-6 border-b border-slate-800 pb-3">
-        {tabs.map(t => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-              tab === t.key
-                ? 'bg-gold-500/15 border border-gold-500/40 text-gold-300'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <t.icon className="w-3.5 h-3.5" />
-            {t.label}
-          </button>
-        ))}
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-white">O Honzovi</h2>
+          <p className="text-slate-400 text-sm mt-0.5">Úvodní texty, celý příběh (modal), osvěta a profily týmu</p>
+        </div>
+        <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-white text-xs font-semibold rounded-lg transition-all">
+          <RefreshCw className="w-3 h-3" /> Obnovit tuto sekci
+        </button>
       </div>
 
-      <div className="flex flex-col gap-5 bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-        {tab === 'about' && (
-          <>
-            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3">
-              Sekce „O Honzovi" — úvodní text na webu
-            </p>
-            <Field label="Štítek (malý text nad názvem)" value={s.tagline} onChange={v => upd('about', 'tagline', v)} icon={Tag} placeholder="Honza Tráva — profesionální dobrodruh" />
-            <Field label="Hlavní nadpis" value={s.title} onChange={v => upd('about', 'title', v)} icon={Type} placeholder="Horolezec. Cestovatel. Podnikatel." />
-            <Field label="Popis (úvodní věty)" value={s.description} onChange={v => upd('about', 'description', v)} rows={4} icon={AlignLeft} placeholder="Výstupy na osmitisícovky…" />
-          </>
-        )}
+      <div className="grid grid-cols-[220px_1fr] gap-6">
+        {/* Sidebar */}
+        <div className="flex flex-col gap-1">
+          {groups.map(group => (
+            <div key={group} className="mb-2">
+              <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-2 mb-1">{group}</p>
+              {HONZA_SECTIONS.filter(s => s.group === group).map(s => (
+                <button
+                  key={s.key}
+                  onClick={() => setSel(s.key)}
+                  className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-left transition-all ${
+                    sel === s.key
+                      ? 'bg-gold-500/15 border border-gold-500/40 text-gold-300'
+                      : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                  }`}
+                >
+                  <span className="truncate">{s.label}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
 
-        {(tab === 'miri' || tab === 'subin') && (
-          <>
-            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3">
-              {tab === 'miri' ? 'Profil Miri Jirkové — zobrazený v modálu na webu' : 'Profil Subina Tamanga — zobrazený v modálu na webu'}
-            </p>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Jméno" value={s.name} onChange={v => upd(tab, 'name', v)} icon={Users} />
-              <Field label="Role (pod jménem v kartičce)" value={s.role} onChange={v => upd(tab, 'role', v)} placeholder="Trek & Logistika" />
-            </div>
-            <Field label="Pozice (zlatý štítek v modálu)" value={s.tagline} onChange={v => upd(tab, 'tagline', v)} icon={Tag} placeholder="Logistika & Trekking Manager" />
-            <Field label="Bio — odstavec 1 (tučný úvod)" value={s.bio1} onChange={v => upd(tab, 'bio1', v)} rows={3} icon={AlignLeft} />
-            <Field label="Bio — odstavec 2" value={s.bio2} onChange={v => upd(tab, 'bio2', v)} rows={3} icon={AlignLeft} />
-            <Field label="Bio — odstavec 3" value={s.bio3} onChange={v => upd(tab, 'bio3', v)} rows={3} icon={AlignLeft} />
-            <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
-              <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Statistiky (3 čísla v patičce modálu)</p>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="flex flex-col gap-2">
-                  <Field label="Hodnota 1" value={s.stat1val} onChange={v => upd(tab, 'stat1val', v)} placeholder="12+" />
-                  <Field label="Popisek 1" value={s.stat1label} onChange={v => upd(tab, 'stat1label', v)} placeholder="Expedic" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Field label="Hodnota 2" value={s.stat2val} onChange={v => upd(tab, 'stat2val', v)} placeholder="6476m" />
-                  <Field label="Popisek 2" value={s.stat2label} onChange={v => upd(tab, 'stat2label', v)} placeholder="Max Altitude" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Field label="Hodnota 3" value={s.stat3val} onChange={v => upd(tab, 'stat3val', v)} placeholder="100%" />
-                  <Field label="Popisek 3" value={s.stat3label} onChange={v => upd(tab, 'stat3label', v)} placeholder="Dedikace" />
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+        {/* Form */}
+        <div className="flex flex-col gap-5 bg-slate-800/50 rounded-2xl p-6 border border-slate-700 min-h-[400px]">
+          {renderForm()}
+        </div>
       </div>
     </div>
   );
@@ -971,7 +1187,7 @@ const NAV = [
   { key:'lectures',    label:'Přednášky',  icon: Mic2,       color: 'text-violet-400' },
   { key:'projects',    label:'Projekty',   icon: Folder,     color: 'text-amber-400' },
   { key:'media',       label:'Média',      icon: Tv,         color: 'text-red-400' },
-  { key:'texts',       label:'Texty',      icon: Type,       color: 'text-pink-400' },
+  { key:'honza',       label:'O Honzovi',  icon: Type,       color: 'text-pink-400' },
 ];
 
 export default function AdminPanel() {
@@ -993,6 +1209,8 @@ export default function AdminPanel() {
   const [mediaBlog,   setMediaBlog]   = useState(() => loadContent('media_blog',   DEF_MEDIA_BLOG));
   const [press,       setPress]       = useState(() => loadContent('press',        DEF_PRESS));
   const [texts,       setTexts]       = useState(() => loadContent('texts',        DEF_TEXTS));
+  const [story,       setStory]       = useState(() => loadContent('story',        DEF_STORY));
+  const [osveta,      setOsveta]      = useState(() => loadContent('osveta',       DEF_OSVETA));
 
   const markDirty = useCallback((setter) => (...args) => { setter(...args); setDirty(true); }, []);
 
@@ -1009,6 +1227,8 @@ export default function AdminPanel() {
       saveContent('media_blog',    mediaBlog),
       saveContent('press',         press),
       saveContent('texts',         texts),
+      saveContent('story',         story),
+      saveContent('osveta',        osveta),
     ]);
     setDirty(false);
     setSaveMsg('Uloženo');
@@ -1194,11 +1414,17 @@ export default function AdminPanel() {
               }}
             />
           )}
-          {section === 'texts' && (
-            <TextsEditor
-              data={texts}
-              onChange={markDirty(setTexts)}
-              onReset={() => handleReset('texts', DEF_TEXTS, setTexts)}
+          {section === 'honza' && (
+            <HonzaEditor
+              texts={texts}
+              story={story}
+              osveta={osveta}
+              onTexts={markDirty(setTexts)}
+              onStory={markDirty(setStory)}
+              onOsveta={markDirty(setOsveta)}
+              onResetTexts={() => handleReset('texts', DEF_TEXTS, setTexts)}
+              onResetStory={() => handleReset('story', DEF_STORY, setStory)}
+              onResetOsveta={() => handleReset('osveta', DEF_OSVETA, setOsveta)}
             />
           )}
         </main>
