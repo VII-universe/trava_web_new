@@ -503,13 +503,22 @@ function applyAdminOverrides(base, adminArr) {
 
         if (!ov) return { ...item, left };
 
-        // Build logo: use uploaded logoUrl + flagColor if available, else keep hardcoded JSX logo
-        const logo = ov.logoUrl
+        // If admin set flagColor or logoUrl — rebuild logo entirely so color actually shows.
+        // The hardcoded logo JSX has bg colors baked in and can't be overridden otherwise.
+        const bgColor = ov.flagColor || item.stripes?.[0] || '#1a3a5c';
+        const logo = (ov.flagColor || ov.logoUrl)
             ? (
                 <div className="w-full h-full flex items-center justify-center p-3"
-                    style={{ background: ov.flagColor || item.stripes?.[0] || '#1a3a5c' }}>
-                    <img src={ov.logoUrl} alt={ov.name} className="w-full h-full object-contain"
-                        style={{ filter: 'brightness(0) invert(1)' }} />
+                    style={{ background: bgColor }}>
+                    {ov.logoUrl
+                        ? <img src={ov.logoUrl} alt={ov.name}
+                            className="w-full h-full object-contain max-h-full" />
+                        : <span style={{ color: 'white', fontSize: '11px', fontWeight: 900,
+                            textAlign: 'center', letterSpacing: '1px', textTransform: 'uppercase',
+                            lineHeight: 1.3 }}>
+                            {ov.name}
+                          </span>
+                    }
                 </div>
             )
             : item.logo;
