@@ -61,8 +61,9 @@ const Pub = ({ scrollProgress }) => {
     // PHASE 6: Pub  0.45 → 0.56
     const containerOpacity = useTransform(scrollProgress, [0.41, 0.44, 0.53, 0.56], [0, 1, 1, 0]);
     const containerY       = useTransform(scrollProgress, [0.41, 0.44, 0.53, 0.56], ['-120%', '0%', '0%', '130%']);
-    const bgY              = useTransform(scrollProgress, [0.41, 0.59], ['-15%', '15%']);
-    const imageOpacity     = useTransform(scrollProgress, [0.41, 0.44], [0, 1]);
+    const bgOpacity        = useTransform(scrollProgress, [0.41, 0.44, 0.53, 0.56], [0, 1, 1, 0]);
+    const bgY              = useTransform(scrollProgress, [0.41, 0.59], ['-8%', '8%']);
+    const bgScale          = useTransform(scrollProgress, [0.41, 0.56], [1.25, 1.40]);
 
     // Mobile carousel: 0→1 within visible window (0.49–0.53)
     const carouselProg = useTransform(scrollProgress, [0.495, 0.525], [0, 1]);
@@ -120,10 +121,10 @@ const Pub = ({ scrollProgress }) => {
 
     return (
         <>
-        {/* BACKGROUND */}
-        <motion.div style={{ opacity: containerOpacity, y: containerY, zIndex: 0 }} className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* BACKGROUND – fades in/out in place, no slide */}
+        <motion.div style={{ opacity: bgOpacity, zIndex: 0 }} className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
-                <motion.img style={{ y: bgY, opacity: imageOpacity }} src={PubBg} alt="" className="absolute inset-0 w-full h-full object-cover scale-125 origin-center" />
+                <motion.img style={{ y: bgY, scale: bgScale }} src={PubBg} alt="" className="absolute inset-0 w-full h-full object-cover origin-center" />
                 <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-amber-950/20 to-slate-900/70" />
             </div>
         </motion.div>

@@ -31,7 +31,7 @@ const SRC = { ca: CloudA, cb: CloudB, c3: Cloud3 };
 // Row tops: ~5%, ~30%, ~55%, ~78% — close enough to overlap, wide enough to span full height.
 const BANDS = [
     // ── Hero → About ──────────────────────────────────────────────────────
-    { sIn: 0.065, sFull: 0.082, sHold: 0.095, sOut: 0.115, cls: [
+    { sIn: 0.065, sFull: 0.082, sHold: 0.092, sOut: 0.128, cls: [
         { s: 'ca', l: -38, t:  4, w: 220, fx: -188, fy: -5, op: 1.0  }, // row1 L — giant
         { s: 'cb', l:  30, t:  7, w: 215, fx:  185, fy: -7, op: 1.0  }, // row1 R — giant
         { s: 'cb', l: -32, t: 30, w: 195, fx: -165, fy:  4, op: 1.0  }, // row2 L
@@ -43,7 +43,7 @@ const BANDS = [
     ]},
 
     // ── About → Icefall ───────────────────────────────────────────────────
-    { sIn: 0.155, sFull: 0.172, sHold: 0.185, sOut: 0.210, cls: [
+    { sIn: 0.178, sFull: 0.191, sHold: 0.215, sOut: 0.238, cls: [
         { s: 'cb', l: -36, t:  6, w: 218, fx: -186, fy: -6, op: 1.0  },
         { s: 'ca', l:  32, t:  9, w: 212, fx:  182, fy: -8, op: 1.0  },
         { s: 'ca', l: -30, t: 32, w: 200, fx: -170, fy:  3, op: 1.0  },
@@ -55,7 +55,7 @@ const BANDS = [
     ]},
 
     // ── Icefall → Expeditions ─────────────────────────────────────────────
-    { sIn: 0.255, sFull: 0.270, sHold: 0.283, sOut: 0.308, cls: [
+    { sIn: 0.255, sFull: 0.270, sHold: 0.276, sOut: 0.293, cls: [
         { s: 'ca', l: -40, t:  3, w: 222, fx: -190, fy: -5, op: 1.0  },
         { s: 'cb', l:  31, t:  6, w: 216, fx:  184, fy: -7, op: 1.0  },
         { s: 'cb', l: -33, t: 28, w: 198, fx: -168, fy:  4, op: 1.0  },

@@ -65,8 +65,9 @@ const Hotel = ({ scrollProgress }) => {
     // PHASE 5: Hotel  0.36 → 0.47
     const containerOpacity = useTransform(scrollProgress, [0.34, 0.37, 0.41, 0.44], [0, 1, 1, 0]);
     const containerY       = useTransform(scrollProgress, [0.34, 0.37, 0.41, 0.44], ['-120%', '0%', '0%', '130%']);
-    const bgY              = useTransform(scrollProgress, [0.32, 0.50], ['-15%', '15%']);
-    const imageOpacity     = useTransform(scrollProgress, [0.34, 0.37], [0, 1]);
+    const bgOpacity        = useTransform(scrollProgress, [0.34, 0.37, 0.41, 0.44], [0, 1, 1, 0]);
+    const bgY              = useTransform(scrollProgress, [0.32, 0.50], ['-8%', '8%']);
+    const bgScale          = useTransform(scrollProgress, [0.34, 0.44], [1.25, 1.40]);
 
     // Mobile carousel: 0→1 within the visible window (0.40–0.44)
     // card1 in first half, card2 in second half
@@ -125,10 +126,10 @@ const Hotel = ({ scrollProgress }) => {
 
     return (
         <>
-        {/* BACKGROUND */}
-        <motion.div style={{ opacity: containerOpacity, y: containerY, zIndex: 0 }} className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* BACKGROUND – fades in/out in place, no slide */}
+        <motion.div style={{ opacity: bgOpacity, zIndex: 0 }} className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
-                <motion.img style={{ y: bgY, opacity: imageOpacity }} src={HotelBg} alt="" className="absolute inset-0 w-full h-full object-cover scale-125 origin-center" />
+                <motion.img style={{ y: bgY, scale: bgScale }} src={HotelBg} alt="" className="absolute inset-0 w-full h-full object-cover origin-center" />
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-950/30 via-transparent to-slate-900/40" />
             </div>
         </motion.div>
