@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowRight, X, ExternalLink } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
+import { resolveImageSrc } from '../data/imageStore';
 
 import PjjImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
 import HorkyImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.jpg';
@@ -98,6 +100,11 @@ const PROJECTS = [
 ];
 
 const Projects = ({ scrollProgress }) => {
+    const adminProjects = loadContent('projects', null);
+    const projects = adminProjects
+        ? PROJECTS.map(p => ({ ...p, ...(adminProjects.find(a => a.id === p.id) || {}) }))
+              .concat(adminProjects.filter(a => !PROJECTS.find(p => p.id === a.id)))
+        : PROJECTS;
     const [selected, setSelected] = useState(null);
     const [showAllProjects, setShowAllProjects] = useState(false);
     useScrollLock(!!selected || showAllProjects);
@@ -137,7 +144,7 @@ const Projects = ({ scrollProgress }) => {
 
                     {/* Desktop: first 6 projects */}
                     <div className="hidden md:grid grid-cols-3 gap-3">
-                        {PROJECTS.slice(0, 6).map((project) => (
+                        {projects.slice(0, 6).map((project) => (
                             <button
                                 key={project.id}
                                 onClick={() => setSelected(project)}
@@ -145,7 +152,7 @@ const Projects = ({ scrollProgress }) => {
                             >
                                 <div className="w-full aspect-[16/9] overflow-hidden shrink-0">
                                     <img
-                                        src={project.image}
+                                        src={resolveImageSrc(project) || project.image}
                                         alt={project.title}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                                     />
@@ -182,7 +189,7 @@ const Projects = ({ scrollProgress }) => {
 
                     {/* Mobile: first 6 projects */}
                     <div className="grid grid-cols-2 gap-2 md:hidden">
-                        {PROJECTS.slice(0, 6).map((project) => (
+                        {projects.slice(0, 6).map((project) => (
                             <button
                                 key={project.id}
                                 onClick={() => setSelected(project)}
@@ -190,7 +197,7 @@ const Projects = ({ scrollProgress }) => {
                             >
                                 <div className="w-full aspect-video overflow-hidden">
                                     <img
-                                        src={project.image}
+                                        src={resolveImageSrc(project) || project.image}
                                         alt={project.title}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                                     />
@@ -210,7 +217,7 @@ const Projects = ({ scrollProgress }) => {
                             onClick={() => setShowAllProjects(true)}
                             className="flex items-center gap-2 px-5 py-2.5 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 rounded-xl font-sans text-xs uppercase tracking-widest font-bold transition-all"
                         >
-                            Zobrazit všech {PROJECTS.length} projektů <ArrowRight className="w-3 h-3" />
+                            Zobrazit všech {projects.length} projektů <ArrowRight className="w-3 h-3" />
                         </button>
                     </div>
                 </div>
@@ -237,14 +244,14 @@ const Projects = ({ scrollProgress }) => {
                         <div className="p-5 border-b border-white/10 flex items-center justify-between shrink-0">
                             <div>
                                 <h3 className="font-serif text-xl text-white">Všechny projekty</h3>
-                                <p className="text-slate-400 text-xs mt-0.5 font-mono">{PROJECTS.length} projektů</p>
+                                <p className="text-slate-400 text-xs mt-0.5 font-mono">{projects.length} projektů</p>
                             </div>
                             <button onClick={() => setShowAllProjects(false)} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition text-white">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
                         <div className="overflow-y-auto p-4 grid grid-cols-2 md:grid-cols-3 gap-3" data-lenis-prevent>
-                            {PROJECTS.map((project) => (
+                            {projects.map((project) => (
                                 <button
                                     key={project.id}
                                     onClick={() => { setShowAllProjects(false); setSelected(project); }}
@@ -252,7 +259,7 @@ const Projects = ({ scrollProgress }) => {
                                 >
                                     <div className="w-full aspect-video overflow-hidden">
                                         <img
-                                            src={project.image}
+                                            src={resolveImageSrc(project) || project.image}
                                             alt={project.title}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                                         />

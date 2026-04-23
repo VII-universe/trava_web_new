@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { loadContent } from '../data/adminStore';
+import { resolveImageSrc } from '../data/imageStore';
 import { motion, useTransform, useScroll, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowLeft, ArrowRight, X, MapPin, Play, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -252,7 +254,22 @@ const REGIONS = [
     },
 ];
 
+function mergeAdmin(base, adminArr) {
+    if (!adminArr) return base;
+    const merged = base.map(item => {
+        const ov = adminArr.find(a => a.id === item.id);
+        return ov ? { ...item, ...ov } : item;
+    });
+    const added = adminArr.filter(a => !base.find(b => b.id === a.id));
+    return [...merged, ...added];
+}
+
 const Expeditions = ({ scrollProgress }) => {
+    const adminExpeditions = loadContent('expeditions', null);
+    const EXPEDITIONS_DISPLAY     = mergeAdmin(EXPEDITIONS,      adminExpeditions);
+    const MORE_EXPEDITIONS_DISPLAY = mergeAdmin(MORE_EXPEDITIONS, adminExpeditions);
+    const CATEGORIES_DISPLAY      = mergeAdmin(CATEGORIES,       adminExpeditions);
+
     const containerOpacity = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], [0, 1, 1, 0]);
     const backgroundY = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
     const contentY = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
@@ -392,7 +409,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     </button>
                                 </div>
                                 <div className="grid grid-cols-2 gap-2.5">
-                                    {CATEGORIES.map((cat, i) => (
+                                    {CATEGORIES_DISPLAY.map((cat, i) => (
                                         <button
                                             key={cat.id}
                                             onClick={() => setSelectedCategory(cat)}
@@ -440,9 +457,9 @@ const Expeditions = ({ scrollProgress }) => {
                             </button>
 
                             {/* Expedition cards */}
-                            {EXPEDITIONS.map((exped) => (
+                            {EXPEDITIONS_DISPLAY.map((exped) => (
                                 <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[62vw] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.97] transition-transform relative">
-                                    <img src={exped.image} className="absolute inset-0 w-full h-full object-cover" alt={exped.title} />
+                                    <img src={resolveImageSrc(exped) || exped.image} className="absolute inset-0 w-full h-full object-cover" alt={exped.title} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
                                     <div className="absolute top-3 right-3">
                                         <span className="text-[9px] text-gold-400 tracking-wider uppercase bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm border border-gold-500/20">{exped.difficulty}</span>
@@ -689,7 +706,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     onDrag={() => { catDidDrag.current = true; }}
                                     className="flex gap-2.5 h-full select-none"
                                 >
-                                    {CATEGORIES.map((cat, i) => (
+                                    {CATEGORIES_DISPLAY.map((cat, i) => (
                                         <button
                                             key={cat.id}
                                             onClick={() => { if (!catDidDrag.current) setSelectedCategory(cat); }}
@@ -1029,14 +1046,14 @@ const Expeditions = ({ scrollProgress }) => {
                                     data-lenis-prevent
                                 >
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {MORE_EXPEDITIONS.map((exped) => (
+                                        {MORE_EXPEDITIONS_DISPLAY.map((exped) => (
                                             <div 
                                                 key={exped.id}
                                                 onClick={() => { setSelectedMoreExped(exped); setIsOrdering(false); }}
                                                 className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
                                             >
                                                 <img 
-                                                    src={exped.image} 
+                                                    src={resolveImageSrc(exped) || exped.image} 
                                                     alt={exped.alt} 
                                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                                 />

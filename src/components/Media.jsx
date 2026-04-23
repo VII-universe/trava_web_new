@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { loadContent } from '../data/adminStore';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import {
@@ -10,7 +11,7 @@ import HonzaImg from '../assets/honza_profile.png';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import SummitImg from '../assets/summit_bg.png';
 
-const MEDIA_DATA = {
+const MEDIA_DATA_DEF = {
     video: [
         { id: 'v1', type: 'video', title: 'Vlog #04: Cesta do BC', date: 'Březen 2026', duration: '12:45', image: ClimbersImg, desc: 'Cesta do základního tábora je plná úskalí. Sledujte, jak jsme se prali s ledopádem a nástrahami aklimatizace.' },
         { id: 'v2', type: 'video', title: 'Vlog #03: Přípravy', date: 'Únor 2026', duration: '08:20', image: BaseCampImg, desc: 'Co všechno obnáší příprava na extrémní expedici? Balení, trénink a logistika.' },
@@ -116,7 +117,22 @@ const PressRow = ({ item, compact = false, dark = false }) => {
     );
 };
 
+function mergeMediaAdmin(base, adminArr) {
+    if (!adminArr) return base;
+    const merged = base.map(item => {
+        const ov = adminArr.find(a => a.id === item.id);
+        return ov ? { ...item, ...ov } : item;
+    });
+    return [...merged, ...adminArr.filter(a => !base.find(b => b.id === a.id))];
+}
+
 const Media = ({ scrollProgress }) => {
+    const MEDIA_DATA = {
+        video:   mergeMediaAdmin(MEDIA_DATA_DEF.video,   loadContent('media_video',   null)),
+        podcast: mergeMediaAdmin(MEDIA_DATA_DEF.podcast, loadContent('media_podcast', null)),
+        blog:    mergeMediaAdmin(MEDIA_DATA_DEF.blog,    loadContent('media_blog',    null)),
+    };
+    const pressItems = mergeMediaAdmin(PRESS_ITEMS, loadContent('press', null));
     const [activeItem, setActiveItem] = useState(null);
     const [readingArticle, setReadingArticle] = useState(false);
     const [pressFilter, setPressFilter] = useState('Vše');
@@ -130,7 +146,7 @@ const Media = ({ scrollProgress }) => {
     const y = useTransform(scrollProgress, [0.77, 0.80, 0.87, 0.90], ["-120%", "0%", "0%", "100%"]);
     const bgParallax = useTransform(scrollProgress, [0.75, 0.92], ['-10%', '10%']);
 
-    const filteredPress = useMemo(() => PRESS_ITEMS.filter(item => {
+    const filteredPress = useMemo(() => pressItems.filter(item => {
         const typeMatch = pressFilter === 'Vše' || item.type === pressFilter;
         const yearMatch = pressYear === 'Vše' || item.year === pressYear;
         return typeMatch && yearMatch;

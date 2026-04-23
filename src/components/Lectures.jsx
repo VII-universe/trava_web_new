@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { Calendar, X, Mail, CheckCircle2, ArrowRight } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
 import BookingBg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
 import Tour50Img from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import CollabImg from '../assets/zmensene/portrety/prednasky/dsc04123.jpg';
@@ -70,6 +71,11 @@ const LECTURES_LIST = [
 ];
 
 const Lectures = ({ scrollProgress }) => {
+    const adminLectures = loadContent('lectures', null);
+    const lecturesList = adminLectures
+        ? LECTURES_LIST.map(l => ({ ...l, ...(adminLectures.find(a => a.id === l.id) || {}) }))
+              .concat(adminLectures.filter(a => !LECTURES_LIST.find(l => l.id === a.id)))
+        : LECTURES_LIST;
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showLectureList, setShowLectureList] = useState(false);
@@ -566,7 +572,7 @@ const Lectures = ({ scrollProgress }) => {
                             {/* Lecture grid */}
                             <div className="flex-1 overflow-y-auto p-6 md:p-8 overscroll-contain" data-lenis-prevent>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {LECTURES_LIST.map((lecture) => (
+                                    {lecturesList.map((lecture) => (
                                         <button
                                             key={lecture.id}
                                             onClick={() => {

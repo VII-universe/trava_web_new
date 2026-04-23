@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ShoppingBag, ExternalLink, X, ArrowRight, Mountain } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
+import { resolveImageSrc } from '../data/imageStore';
 import IcefallBg from '../assets/icefall_bg.jpg';
 import MedTubaImg from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
 import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.jpg';
@@ -73,6 +75,11 @@ const PRODUCTS = [
 ];
 
 const Eshop = ({ scrollProgress }) => {
+    const adminProducts = loadContent('products', null);
+    const products = adminProducts
+        ? PRODUCTS.map(p => ({ ...p, ...(adminProducts.find(a => a.id === p.id) || {}) }))
+              .concat(adminProducts.filter(a => !PRODUCTS.find(p => p.id === a.id)))
+        : PRODUCTS;
     const [detailOpen, setDetailOpen] = useState(null);
     const [showAllProducts, setShowAllProducts] = useState(false);
     useScrollLock(!!detailOpen || showAllProducts);
@@ -166,21 +173,21 @@ const Eshop = ({ scrollProgress }) => {
 
                         {/* Featured hero card — Manukový med */}
                         <button
-                            onClick={() => setDetailOpen(PRODUCTS[0])}
+                            onClick={() => setDetailOpen(products[0])}
                             className="group shrink-0 snap-start w-[75vw] text-left rounded-xl overflow-hidden shadow-lg active:scale-95 transition-all duration-300 relative bg-slate-900 aspect-[3/4]"
                         >
                             <div className="absolute inset-0">
-                                <img src={PRODUCTS[0].img} alt={PRODUCTS[0].name} className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" />
+                                <img src={resolveImageSrc(products[0]) || products[0].img} alt={products[0].name} className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
                             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-80" />
                             <div className="relative z-10 flex flex-col h-full p-4 justify-end">
-                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${PRODUCTS[0].tagColor} inline-block mb-2 self-start`}>
-                                    {PRODUCTS[0].tag}
+                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${products[0].tagColor} inline-block mb-2 self-start`}>
+                                    {products[0].tag}
                                 </span>
-                                <h3 className="font-serif text-xl text-white leading-tight mb-0.5 drop-shadow-md">{PRODUCTS[0].name}</h3>
-                                <p className="font-sans text-[10px] text-gold-400 uppercase tracking-wider font-bold mb-2">{PRODUCTS[0].subtitle}</p>
-                                <p className="font-sans text-xs text-white/65 leading-relaxed line-clamp-2 mb-3">{PRODUCTS[0].desc}</p>
+                                <h3 className="font-serif text-xl text-white leading-tight mb-0.5 drop-shadow-md">{products[0].name}</h3>
+                                <p className="font-sans text-[10px] text-gold-400 uppercase tracking-wider font-bold mb-2">{products[0].subtitle}</p>
+                                <p className="font-sans text-xs text-white/65 leading-relaxed line-clamp-2 mb-3">{products[0].desc}</p>
                                 <div className="flex items-center gap-1.5 text-white/50 group-hover:text-gold-400 transition-colors text-[10px] font-bold uppercase tracking-widest">
                                     Zobrazit detail <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                                 </div>
@@ -188,14 +195,14 @@ const Eshop = ({ scrollProgress }) => {
                         </button>
 
                         {/* Remaining products — premium light */}
-                        {PRODUCTS.slice(1).map((product, idx) => (
+                        {products.slice(1).map((product, idx) => (
                             <button
                                 key={product.id}
                                 onClick={() => setDetailOpen(product)}
                                 className="group shrink-0 snap-start w-[75vw] text-left rounded-xl overflow-hidden bg-white border border-slate-100 active:scale-95 transition-all duration-300 shadow-sm"
                             >
                                 <div className="relative w-full aspect-[4/3] overflow-hidden">
-                                    <img src={product.img} alt={product.name}
+                                    <img src={resolveImageSrc(product) || product.img} alt={product.name}
                                         className="w-full h-full object-cover transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                                     {!product.highlight && (
@@ -273,29 +280,29 @@ const Eshop = ({ scrollProgress }) => {
                     <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-3 lg:gap-4 mb-5">
                         {/* Featured product — dark hero card */}
                         <button
-                            onClick={() => setDetailOpen(PRODUCTS[0])}
+                            onClick={() => setDetailOpen(products[0])}
                             className="group relative text-left rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 row-span-2 bg-slate-900"
                             style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.12)' }}
                         >
                             <div className="absolute inset-0">
-                                <img src={PRODUCTS[0].img} alt={PRODUCTS[0].name}
+                                <img src={resolveImageSrc(products[0]) || products[0].img} alt={products[0].name}
                                     className="w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700" />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/50 to-slate-800/10" />
                             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
                             <div className="relative z-10 flex flex-col h-full p-5 lg:p-6 justify-end">
-                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2.5 py-1 rounded-full ${PRODUCTS[0].tagColor} inline-block mb-3 self-start shadow-sm`}>
-                                    {PRODUCTS[0].tag}
+                                <span className={`text-[9px] font-bold uppercase tracking-wider text-white px-2.5 py-1 rounded-full ${products[0].tagColor} inline-block mb-3 self-start shadow-sm`}>
+                                    {products[0].tag}
                                 </span>
                                 <h3 className="font-serif text-2xl lg:text-3xl text-white leading-tight mb-1.5 drop-shadow-md">
-                                    {PRODUCTS[0].name}
+                                    {products[0].name}
                                 </h3>
                                 <p className="font-sans text-[11px] text-gold-400 uppercase tracking-widest font-bold mb-3">
-                                    {PRODUCTS[0].subtitle}
+                                    {products[0].subtitle}
                                 </p>
                                 <p className="font-sans text-sm text-white/65 leading-relaxed line-clamp-2 mb-5">
-                                    {PRODUCTS[0].desc}
+                                    {products[0].desc}
                                 </p>
                                 <div className="flex items-center gap-2 bg-white/10 group-hover:bg-gold-500/20 border border-white/15 group-hover:border-gold-400/40 rounded-lg px-3 py-2 transition-all duration-300 self-start">
                                     <span className="text-white/70 group-hover:text-gold-300 text-[10px] font-bold uppercase tracking-widest transition-colors">Detail</span>
@@ -305,7 +312,7 @@ const Eshop = ({ scrollProgress }) => {
                         </button>
 
                         {/* 4 products — premium light cards */}
-                        {PRODUCTS.slice(1, 5).map((product, idx) => (
+                        {products.slice(1, 5).map((product, idx) => (
                             <button
                                 key={product.id}
                                 onClick={() => setDetailOpen(product)}
@@ -316,7 +323,7 @@ const Eshop = ({ scrollProgress }) => {
                             >
                                 {/* Image */}
                                 <div className="relative w-full aspect-video overflow-hidden">
-                                    <img src={product.img} alt={product.name}
+                                    <img src={resolveImageSrc(product) || product.img} alt={product.name}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                                     {/* Non-highlighted: small pill on image */}
@@ -363,7 +370,7 @@ const Eshop = ({ scrollProgress }) => {
                             onClick={() => setShowAllProducts(true)}
                             className="inline-flex items-center gap-2 px-5 py-3 border border-slate-300/80 bg-white/80 backdrop-blur-sm hover:border-gold-400 hover:bg-white text-slate-700 font-bold uppercase tracking-[0.2em] text-[11px] rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                         >
-                            Všechny produkty ({PRODUCTS.length})
+                            Všechny produkty ({products.length})
                         </button>
                         <a
                             href="https://honzatrava.myshoptet.com"
@@ -404,7 +411,7 @@ const Eshop = ({ scrollProgress }) => {
                         </button>
 
                         <div className="w-full aspect-video overflow-hidden">
-                            <img src={detailOpen.img} alt={detailOpen.name} className="w-full h-full object-cover" />
+                            <img src={resolveImageSrc(detailOpen) || detailOpen.img} alt={detailOpen.name} className="w-full h-full object-cover" />
                         </div>
 
                         <div className="p-6 md:p-8">
@@ -449,7 +456,7 @@ const Eshop = ({ scrollProgress }) => {
                         <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-slate-200 shrink-0">
                             <div>
                                 <h3 className="font-serif text-2xl text-slate-900">Všechny produkty</h3>
-                                <p className="font-sans text-slate-400 text-xs mt-0.5 uppercase tracking-widest">{PRODUCTS.length} položek</p>
+                                <p className="font-sans text-slate-400 text-xs mt-0.5 uppercase tracking-widest">{products.length} položek</p>
                             </div>
                             <button
                                 onClick={() => setShowAllProducts(false)}
@@ -462,7 +469,7 @@ const Eshop = ({ scrollProgress }) => {
                         {/* Products grid */}
                         <div className="flex-1 overflow-y-auto p-5 md:p-7 overscroll-contain" data-lenis-prevent>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                                {PRODUCTS.map((product) => (
+                                {products.map((product) => (
                                     <button
                                         key={product.id}
                                         onClick={() => { setShowAllProducts(false); setDetailOpen(product); }}
@@ -470,7 +477,7 @@ const Eshop = ({ scrollProgress }) => {
                                     >
                                         <div className="w-full aspect-[4/3] overflow-hidden">
                                             <img
-                                                src={product.img}
+                                                src={resolveImageSrc(product) || product.img}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                             />

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 // Force redeploy to 69a0781 state
 import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
+import { fetchAllFromSupabase } from './data/adminStore';
 import Hero from './components/Hero';
 import About from './components/About';
 import Icefall from './components/Icefall';
@@ -25,6 +26,11 @@ import 'lenis/dist/lenis.css';
 function App() {
   const containerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [contentReady, setContentReady] = useState(false);
+
+  useEffect(() => {
+    fetchAllFromSupabase().finally(() => setContentReady(true));
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -48,6 +54,12 @@ function App() {
   const projectsMediaBridge = useTransform(smoothProgress, [0.69, 0.72, 0.88, 0.90], [0, 1, 1, 0]);
   // Dark bridge covering Media + Contact transition
   const mediaContactBridge = useTransform(smoothProgress, [0.85, 0.87, 1.0, 1.0], [0, 1, 1, 1]);
+
+  if (!contentReady) return (
+    <div className="fixed inset-0 bg-slate-950 flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
 
   return (
     <ReactLenis root options={{ smoothTouch: true, lerp: 0.08, touchMultiplier: 0.7 }}>

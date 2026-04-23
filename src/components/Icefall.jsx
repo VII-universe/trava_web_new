@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { X, ExternalLink, ChevronLeft } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
 import IcefallImg from '../assets/icefall_bg.jpg';
 import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
@@ -480,7 +481,21 @@ const Flag = ({ flag, index, onSelect }) => {
 };
 
 /* ─── Main component ────────────────────────────────────── */
+// Merge admin text overrides onto hardcoded data (logos/visuals stay from hardcoded)
+function applyAdminOverrides(base, adminArr) {
+    if (!adminArr) return base;
+    return base.map(item => {
+        const ov = adminArr.find(a => a.id === item.id);
+        if (!ov) return item;
+        // Preserve JSX fields that can't be stored in JSON
+        return { ...item, ...ov, logo: item.logo, stripes: item.stripes, clipPath: item.clipPath, left: item.left };
+    });
+}
+
 const Icefall = ({ scrollProgress }) => {
+    const adminPartners = loadContent('partners', null);
+    const FLAGS_DISPLAY = applyAdminOverrides(FLAGS, adminPartners);
+    const SECONDARY_DISPLAY = applyAdminOverrides(SECONDARY_PARTNERS, adminPartners);
     const [selectedFlag, setSelectedFlag] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -567,7 +582,7 @@ const Icefall = ({ scrollProgress }) => {
                         </motion.div>
                         <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
                             <style>{flagStyles}</style>
-                            {FLAGS.map((flag, i) => (
+                            {FLAGS_DISPLAY.map((flag, i) => (
                                 <Flag key={flag.id} flag={flag} index={i} onSelect={setSelectedFlag} />
                             ))}
                         </div>
@@ -578,9 +593,9 @@ const Icefall = ({ scrollProgress }) => {
                         <style>{flagStyles}</style>
 
                         {[
-                            { flags: [FLAGS[0], FLAGS[1], FLAGS[2]], angle: -2 },
-                            { flags: [FLAGS[3], FLAGS[4]], angle: 1.5 },
-                            { flags: [FLAGS[5], FLAGS[6]], angle: -1 },
+                            { flags: [FLAGS_DISPLAY[0], FLAGS_DISPLAY[1], FLAGS_DISPLAY[2]], angle: -2 },
+                            { flags: [FLAGS_DISPLAY[3], FLAGS_DISPLAY[4]], angle: 1.5 },
+                            { flags: [FLAGS_DISPLAY[5], FLAGS_DISPLAY[6]], angle: -1 },
                         ].map((row, rowIdx) => (
                             <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 4 }}>
                                 <svg viewBox="0 0 400 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 24, display: 'block' }}>
@@ -633,7 +648,7 @@ const Icefall = ({ scrollProgress }) => {
                         <div className="md:hidden flex flex-col items-center gap-2 w-full">
                             <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-slate-600 opacity-80">Také spolupracuji s:</span>
                             <div className="flex flex-wrap gap-1.5 justify-center pointer-events-auto">
-                                {SECONDARY_PARTNERS.map((partner) => (
+                                {SECONDARY_DISPLAY.map((partner) => (
                                     <button
                                         key={partner.id}
                                         onClick={() => setSelectedFlag(partner)}
@@ -649,7 +664,7 @@ const Icefall = ({ scrollProgress }) => {
                         <div className="hidden md:flex flex-col items-center gap-3 w-full pointer-events-auto">
                             <span className="text-[10px] font-sans font-bold uppercase tracking-[0.25em] text-slate-500">Také spolupracuji s:</span>
                             <div className="flex gap-3 justify-center flex-wrap">
-                                {SECONDARY_PARTNERS.map((partner) => (
+                                {SECONDARY_DISPLAY.map((partner) => (
                                     <button
                                         key={partner.id}
                                         onClick={() => setSelectedFlag(partner)}
