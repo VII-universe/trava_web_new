@@ -68,7 +68,7 @@ function ModalSlider({ images, fallback, className = '', children }) {
 
 const EXPEDITIONS = [
     {
-        id: 'nepal',
+        id: 'manaslu',
         title: 'Manáslu (8163 m)',
         duration: '35 Dní',
         difficulty: 'Extrémní',
@@ -97,8 +97,8 @@ const EXPEDITIONS = [
 ];
 
 const MORE_EXPEDITIONS = [
-    { 
-        id: 'aconca', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: AconcaImg, description: 'Nejvyšší hora Jižní Ameriky (6961 m)',
+    {
+        id: 'aconcagua', title: 'Aconcagua', alt: 'Aconcagua 6961 m', image: AconcaImg, description: 'Nejvyšší hora Jižní Ameriky (6961 m)',
         duration: '22 Dní', difficulty: 'Těžké', highlights: ['Základní tábor Plaza de Mulas', 'Výstup na nejvyšší horu západní polokoule', 'Začátek cesty za 7 Summits']
     },
     { 
@@ -113,8 +113,8 @@ const MORE_EXPEDITIONS = [
         id: 'mustang', title: 'Mustang', alt: 'Trek Mustang', image: MustangImg, description: 'Trek do zakázaného království',
         duration: '18 Dní', difficulty: 'Lehké', highlights: ['Návštěva tajemného království Mustang', 'Objevování starobylých klášterů a jeskyní', 'Královské město Lo Manthang']
     },
-    { 
-        id: 'k2', title: 'K2 Base Camp', alt: 'K2 Trek', image: K2Img, description: 'Trek po ledovci Baltoro (Pákistán)',
+    {
+        id: 'k2bc', title: 'K2 Base Camp', alt: 'K2 Trek', image: K2Img, description: 'Trek po ledovci Baltoro (Pákistán)',
         duration: '24 Dní', difficulty: 'Velmi těžké', highlights: ['Trek legendárním údolím Baltoro', 'Pohled na nejkrásnější divoké asijské hory', 'Až pod samotnou divokou K2']
     },
     { 
@@ -287,19 +287,17 @@ const REGIONS = [
 
 function mergeAdmin(base, adminArr) {
     if (!adminArr) return base;
-    const merged = base.map(item => {
+    return base.map(item => {
         const ov = adminArr.find(a => a.id === item.id);
         return ov ? { ...item, ...ov } : item;
     });
-    const added = adminArr.filter(a => !base.find(b => b.id === a.id));
-    return [...merged, ...added];
 }
 
 const Expeditions = ({ scrollProgress }) => {
     const adminExpeditions = loadContent('expeditions', null);
     const EXPEDITIONS_DISPLAY     = mergeAdmin(EXPEDITIONS,      adminExpeditions);
     const MORE_EXPEDITIONS_DISPLAY = mergeAdmin(MORE_EXPEDITIONS, adminExpeditions);
-    const CATEGORIES_DISPLAY      = mergeAdmin(CATEGORIES,       adminExpeditions);
+    const CATEGORIES_DISPLAY      = CATEGORIES;
 
     const containerOpacity = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], [0, 1, 1, 0]);
     const backgroundY = useTransform(scrollProgress, [0.25, 0.28, 0.34, 0.38], ["-105%", "0%", "0%", "130%"]);
@@ -431,9 +429,9 @@ const Expeditions = ({ scrollProgress }) => {
                                     </a>
                                 </div>
                             </div>
-                            {/* Category 2×3 grid */}
+                            {/* Category 3×2 grid */}
                             <div className="shrink-0 snap-start w-[92vw]">
-                                <div className="flex justify-between items-center mb-3">
+                                <div className="flex justify-between items-center mb-2">
                                     <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[10px] font-bold">Co pro vás máme</p>
                                     <button onClick={() => setIsRegionsOpen(true)} className="flex items-center gap-1 text-slate-300 hover:text-gold-400 text-[10px] font-bold uppercase tracking-wider transition-colors">
                                         <MapPin className="w-3 h-3" /> Oblasti
@@ -958,7 +956,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     </button>
 
                                     <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
-                                        <img src={selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
+                                        <img src={resolveImageSrc(selectedMoreExped) || selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
                                         <div className="absolute bottom-6 left-6 flex flex-col gap-2">
                                             <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">

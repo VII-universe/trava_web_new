@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 // Force redeploy to 69a0781 state
 import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
 import { fetchAllFromSupabase } from './data/adminStore';
@@ -27,6 +27,13 @@ function App() {
   const containerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   const [contentReady, setContentReady] = useState(false);
+
+  // Reset scroll synchronously before first paint — prevents browser from restoring last position
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
 
   useEffect(() => {
     fetchAllFromSupabase().finally(() => setContentReady(true));
