@@ -1235,6 +1235,16 @@ export default function AdminPanel() {
     setTimeout(() => setSaveMsg(''), 2500);
   };
 
+  const handlePreview = () => {
+    const PFX = 'trava_admin_';
+    const data = { partners, expeditions, products, lectures, projects, media_video: mediaVideo, media_podcast: mediaPodcast, media_blog: mediaBlog, press, texts, story, osveta };
+    Object.entries(data).forEach(([k, v]) => {
+      try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch {}
+    });
+    localStorage.setItem('trava_preview_ts', Date.now().toString());
+    window.open('/', '_blank');
+  };
+
   const handleReset = async (key, def, setter) => {
     await clearContent(key);
     setter(def);
@@ -1349,6 +1359,10 @@ export default function AdminPanel() {
                 <Check className="w-4 h-4" /> {saveMsg}
               </span>
             )}
+            <button onClick={handlePreview}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-slate-700">
+              <Eye className="w-4 h-4" /> Náhled
+            </button>
             <button onClick={handleSave}
               className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${
                 dirty

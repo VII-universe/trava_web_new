@@ -23,7 +23,10 @@ export const clearContent = async (key) => {
 };
 
 // On app load: pull all rows from Supabase → populate localStorage cache
+// Skip if preview mode was activated recently (admin wrote fresh preview data)
 export const fetchAllFromSupabase = async () => {
+  const previewTs = localStorage.getItem('trava_preview_ts');
+  if (previewTs && Date.now() - parseInt(previewTs) < 30000) return;
   const { data, error } = await supabase.from('content').select('key, value');
   if (error || !data) return;
   for (const row of data) {
