@@ -35,6 +35,37 @@ import SubinLead from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_
 import SubinGallery1 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20241015_120407.jpg';
 import SubinGallery2 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240729_142531.jpg';
 
+function ModalSlider({ images, fallback, className = '', children }) {
+    const all = images?.length ? images : (fallback ? [fallback] : []);
+    const [idx, setIdx] = useState(0);
+    if (!all.length) return <div className={className}>{children}</div>;
+    const prev = () => setIdx(i => (i - 1 + all.length) % all.length);
+    const next = () => setIdx(i => (i + 1) % all.length);
+    return (
+        <div className={`relative overflow-hidden ${className}`}>
+            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            {children}
+            {all.length > 1 && <>
+                <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronRight className="w-4 h-4" />
+                </button>
+                <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                    {all.map((_, i) => (
+                        <button key={i} onClick={() => setIdx(i)}
+                            className={`w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}`} />
+                    ))}
+                </div>
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white text-[11px] px-2 py-0.5 rounded-full z-10">
+                    {idx + 1} / {all.length}
+                </div>
+            </>}
+        </div>
+    );
+}
+
 const EXPEDITIONS = [
     {
         id: 'nepal',
@@ -794,10 +825,13 @@ const Expeditions = ({ scrollProgress }) => {
                             <X className="w-5 h-5 md:w-6 md:h-6" />
                         </button>
 
-                        <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
-                            <img src={selectedExped.image} alt={selectedExped.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
-                            <div className="absolute bottom-6 left-6 flex flex-col gap-2">
+                        <ModalSlider
+                            images={selectedExped.images}
+                            fallback={resolveImageSrc(selectedExped) || selectedExped.image}
+                            className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100 pointer-events-none" />
+                            <div className="absolute bottom-6 left-6 flex flex-col gap-2 z-10">
                                 <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
                                     {selectedExped.duration}
                                 </div>
@@ -805,7 +839,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     {selectedExped.difficulty}
                                 </div>
                             </div>
-                        </div>
+                        </ModalSlider>
 
                         <div 
                             className="w-full md:w-7/12 p-6 md:p-12 overflow-y-auto custom-scrollbar flex flex-col justify-center overscroll-contain"

@@ -361,6 +361,7 @@ function PartnersEditor({ data, onChange, onReset }) {
             <Field label="Popis" value={p.description} onChange={v => upd('description', v)} rows={4} placeholder="Detailní popis spolupráce…" icon={AlignLeft} />
             <ArrayEditor label="Spolupráce (body)" items={p.collaboration} onChange={v => upd('collaboration', v)} placeholder="Popis bodu spolupráce…" />
             <ImagePicker imageUrl={p.imageUrl} onChangeImageUrl={v => upd('imageUrl', v)} />
+            <ImageGallery images={p.images || []} onChange={v => upd('images', v)} label="Fotogalerie partnera" />
           </div>
         )}
       </div>
@@ -375,7 +376,7 @@ function ExpeditionsEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const ne = { id: genId(), title: 'Nová expedice', duration: '14 dní', difficulty: 'Střední', imageId: '', imageUrl: '', description: '', highlights: [] };
+    const ne = { id: genId(), title: 'Nová expedice', duration: '14 dní', difficulty: 'Střední', imageId: '', imageUrl: '', images: [], description: '', highlights: [] };
     onChange([...data, ne]);
     setSel(data.length);
   };
@@ -411,6 +412,7 @@ function ExpeditionsEditor({ data, onChange, onReset }) {
               </div>
             </div>
             <ImagePicker imageUrl={e.imageUrl} onChangeImageUrl={v => upd('imageUrl', v)} />
+            <ImageGallery images={e.images || []} onChange={v => upd('images', v)} />
             <Field label="Popis" value={e.description} onChange={v => upd('description', v)} rows={4} icon={AlignLeft} />
             <ArrayEditor label="Highlights" items={e.highlights} onChange={v => upd('highlights', v)} placeholder="Popis highlightu…" />
           </div>
@@ -420,13 +422,103 @@ function ExpeditionsEditor({ data, onChange, onReset }) {
   );
 }
 
+/* ─── Image Gallery ─────────────────────────────────────────── */
+function ImageGallery({ images = [], onChange, label = 'Fotogalerie pro modal' }) {
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleFiles = async (files) => {
+    if (!files?.length) return;
+    setUploading(true); setError('');
+    try {
+      const urls = await Promise.all(Array.from(files).map(f => uploadImageToSupabase(f)));
+      onChange([...images, ...urls]);
+    } catch { setError('Chyba při nahrávání.'); }
+    finally { setUploading(false); }
+  };
+
+  const remove = (i) => {
+    deleteImageFromSupabase(images[i]);
+    onChange(images.filter((_, idx) => idx !== i));
+  };
+
+  const move = (i, dir) => {
+    const a = [...images]; const j = i + dir;
+    if (j < 0 || j >= a.length) return;
+    [a[i], a[j]] = [a[j], a[i]]; onChange(a);
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <Image className="w-3 h-3" /> {label} <span className="text-slate-600 font-normal normal-case tracking-normal">({images.length} fotek)</span>
+      </label>
+      <div className="grid grid-cols-3 gap-2">
+        {images.map((url, i) => (
+          <div key={i} className="relative group aspect-video rounded-xl overflow-hidden border border-slate-600 bg-slate-800">
+            <img src={url} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5">
+              <div className="flex gap-1">
+                <button onClick={() => move(i, -1)} disabled={i === 0}
+                  className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
+                  <MoveUp className="w-3 h-3" />
+                </button>
+                <button onClick={() => move(i, 1)} disabled={i === images.length - 1}
+                  className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
+                  <MoveDown className="w-3 h-3" />
+                </button>
+                <button onClick={() => remove(i)}
+                  className="p-1 bg-red-500/30 hover:bg-red-500/50 rounded text-red-300 transition-colors">
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+            <div className="absolute top-1.5 left-1.5 bg-black/70 text-white/80 text-[10px] px-1.5 py-0.5 rounded font-semibold">
+              {i === 0 ? 'Hlavní' : `#${i + 1}`}
+            </div>
+          </div>
+        ))}
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
+          onDragOver={e => e.preventDefault()}
+          className="aspect-video rounded-xl border-2 border-dashed border-slate-600 hover:border-gold-500/60 flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors group"
+        >
+          {uploading
+            ? <RefreshCw className="w-5 h-5 text-gold-400 animate-spin" />
+            : <>
+                <Upload className="w-5 h-5 text-slate-500 group-hover:text-gold-400 transition-colors" />
+                <span className="text-[11px] text-slate-500 group-hover:text-slate-300 text-center px-2">Přidat fotky</span>
+              </>
+          }
+        </div>
+      </div>
+      {error && <p className="text-xs text-red-400">{error}</p>}
+      <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden"
+        onChange={e => { handleFiles(e.target.files); e.target.value = ''; }} />
+    </div>
+  );
+}
+
 /* ─── Eshop Editor ──────────────────────────────────────────── */
 const TAG_COLORS = [
-  { label: 'Zlatá', value: 'bg-gold-500' },
-  { label: 'Zelená', value: 'bg-emerald-600' },
+  { label: 'Zlatá',     value: 'bg-gold-500' },
+  { label: 'Zelená',    value: 'bg-emerald-600' },
   { label: 'Jantarová', value: 'bg-amber-700' },
-  { label: 'Tmavá', value: 'bg-slate-600' },
-  { label: 'Černá', value: 'bg-slate-800' },
+  { label: 'Tmavá',     value: 'bg-slate-600' },
+  { label: 'Černá',     value: 'bg-slate-800' },
+  { label: 'Červená',   value: 'bg-red-600' },
+  { label: 'Oranžová',  value: 'bg-orange-500' },
+  { label: 'Fialová',   value: 'bg-violet-600' },
+  { label: 'Modrá',     value: 'bg-blue-600' },
+  { label: 'Azurová',   value: 'bg-cyan-600' },
+  { label: 'Růžová',    value: 'bg-pink-600' },
+  { label: 'Indigo',    value: 'bg-indigo-600' },
+  { label: 'Lososová',  value: 'bg-rose-500' },
+  { label: 'Limetková', value: 'bg-lime-600' },
+  { label: 'Tyrkysová', value: 'bg-teal-600' },
+  { label: 'Hnědá',     value: 'bg-stone-600' },
 ];
 
 function EshopEditor({ data, onChange, onReset }) {
@@ -435,7 +527,7 @@ function EshopEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const np = { id: genId(), name: 'Nový produkt', subtitle: '', desc: '', tag: 'Novinka', tagColor: 'bg-gold-500', imageId: '', imageUrl: '' };
+    const np = { id: genId(), name: 'Nový produkt', subtitle: '', desc: '', tag: 'Novinka', tagColor: 'bg-gold-500', imageId: '', imageUrl: '', images: [] };
     onChange([...data, np]);
     setSel(data.length);
   };
@@ -477,6 +569,7 @@ function EshopEditor({ data, onChange, onReset }) {
               </div>
             </div>
             <ImagePicker imageUrl={p.imageUrl} onChangeImageUrl={v => upd('imageUrl', v)} />
+            <ImageGallery images={p.images || []} onChange={v => upd('images', v)} />
           </div>
         )}
       </div>
@@ -536,7 +629,7 @@ function ProjectsEditor({ data, onChange, onReset }) {
   const upd = (field, val) => { const a = [...data]; a[sel] = { ...a[sel], [field]: val }; onChange(a); };
   const del = (i) => { const a = data.filter((_, idx) => idx !== i); onChange(a); setSel(Math.min(sel, a.length - 1)); };
   const add = () => {
-    const np = { id: genId(), title: 'Nový projekt', subtitle: '', description: '', highlights: [], link: '', imageId: '', imageUrl: '' };
+    const np = { id: genId(), title: 'Nový projekt', subtitle: '', description: '', highlights: [], link: '', imageId: '', imageUrl: '', images: [] };
     onChange([...data, np]);
     setSel(data.length);
   };
@@ -564,6 +657,7 @@ function ProjectsEditor({ data, onChange, onReset }) {
             <Field label="URL odkazu" value={pr.link} onChange={v => upd('link', v)} placeholder="https://… (nepovinné)" type="url" icon={ExternalLink} />
             <ArrayEditor label="Highlights" items={pr.highlights} onChange={v => upd('highlights', v)} placeholder="Highlight projektu…" />
             <ImagePicker imageUrl={pr.imageUrl} onChangeImageUrl={v => upd('imageUrl', v)} />
+            <ImageGallery images={pr.images || []} onChange={v => upd('images', v)} />
           </div>
         )}
       </div>

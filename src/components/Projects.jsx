@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowRight, X, ExternalLink } from 'lucide-react';
@@ -14,6 +15,36 @@ import TourMainImg from '../assets/zmensene/portrety/prednasky/1r2a2034.jpg';
 import JesteImg from '../assets/zmensene/projekty/jeste_jsme_neskoncili/20240806_151350.jpg';
 import NehaImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07645.jpg';
 import DalsiImg from '../assets/zmensene/skupinky/whatsapp_image_2025-06-15_at_18_53_30__2_.jpg';
+
+function ModalSlider({ images, fallback, className = '' }) {
+    const all = images?.length ? images : (fallback ? [fallback] : []);
+    const [idx, setIdx] = useState(0);
+    if (!all.length) return null;
+    const prev = () => setIdx(i => (i - 1 + all.length) % all.length);
+    const next = () => setIdx(i => (i + 1) % all.length);
+    return (
+        <div className={`relative overflow-hidden ${className}`}>
+            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            {all.length > 1 && <>
+                <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronRight className="w-4 h-4" />
+                </button>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                    {all.map((_, i) => (
+                        <button key={i} onClick={() => setIdx(i)}
+                            className={`w-1.5 h-1.5 rounded-full transition-all ${i === idx ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}`} />
+                    ))}
+                </div>
+                <div className="absolute top-2 right-2 bg-black/50 text-white text-[11px] px-2 py-0.5 rounded-full">
+                    {idx + 1} / {all.length}
+                </div>
+            </>}
+        </div>
+    );
+}
 
 const PROJECTS = [
     {
@@ -301,9 +332,11 @@ const Projects = ({ scrollProgress }) => {
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="w-full md:w-2/5 h-48 md:h-auto overflow-hidden shrink-0">
-                            <img src={selected.image} alt={selected.title} className="w-full h-full object-cover" />
-                        </div>
+                        <ModalSlider
+                            images={selected.images}
+                            fallback={resolveImageSrc(selected) || selected.image}
+                            className="w-full md:w-2/5 h-48 md:h-auto shrink-0"
+                        />
 
                         <div className="p-6 md:p-8 overflow-y-auto" data-lenis-prevent>
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-2">{selected.subtitle}</h4>

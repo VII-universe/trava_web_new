@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ShoppingBag, ExternalLink, X, ArrowRight, Mountain } from 'lucide-react';
+import { ShoppingBag, ExternalLink, X, ArrowRight, Mountain, ChevronLeft, ChevronRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 import { resolveImageSrc } from '../data/imageStore';
 import IcefallBg from '../assets/icefall_bg.jpg';
@@ -10,6 +10,36 @@ import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manasl
 import KnihaImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import TrickoImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
 import FotoImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
+
+function ModalSlider({ images, fallback, className = '' }) {
+    const all = images?.length ? images : (fallback ? [fallback] : []);
+    const [idx, setIdx] = useState(0);
+    if (!all.length) return null;
+    const prev = () => setIdx(i => (i - 1 + all.length) % all.length);
+    const next = () => setIdx(i => (i + 1) % all.length);
+    return (
+        <div className={`relative overflow-hidden ${className}`}>
+            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            {all.length > 1 && <>
+                <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
+                    <ChevronRight className="w-4 h-4" />
+                </button>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                    {all.map((_, i) => (
+                        <button key={i} onClick={() => setIdx(i)}
+                            className={`w-1.5 h-1.5 rounded-full transition-all ${i === idx ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}`} />
+                    ))}
+                </div>
+                <div className="absolute top-2 right-10 bg-black/50 text-white text-[11px] px-2 py-0.5 rounded-full">
+                    {idx + 1} / {all.length}
+                </div>
+            </>}
+        </div>
+    );
+}
 
 const PRODUCTS = [
     {
@@ -410,9 +440,11 @@ const Eshop = ({ scrollProgress }) => {
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="w-full aspect-video overflow-hidden">
-                            <img src={resolveImageSrc(detailOpen) || detailOpen.img} alt={detailOpen.name} className="w-full h-full object-cover" />
-                        </div>
+                        <ModalSlider
+                            images={detailOpen.images}
+                            fallback={resolveImageSrc(detailOpen) || detailOpen.img}
+                            className="w-full aspect-video"
+                        />
 
                         <div className="p-6 md:p-8">
                             <span className={`text-[10px] font-bold uppercase tracking-wider text-white px-2 py-1 rounded-full ${detailOpen.tagColor} mb-3 inline-block`}>
