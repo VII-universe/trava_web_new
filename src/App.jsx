@@ -43,6 +43,11 @@ function App() {
     : { stiffness: 120, damping: 28, restDelta: 0.001 }
   );
 
+  // Dark bridge covering Projects + Media transition so ivory never shows through
+  const projectsMediaBridge = useTransform(smoothProgress, [0.69, 0.72, 0.88, 0.90], [0, 1, 1, 0]);
+  // Dark bridge covering Media + Contact transition
+  const mediaContactBridge = useTransform(smoothProgress, [0.85, 0.87, 1.0, 1.0], [0, 1, 1, 1]);
+
   return (
     <ReactLenis root options={{ smoothTouch: true, lerp: 0.08, touchMultiplier: 0.7 }}>
       <ScrollLockHandler />
@@ -95,11 +100,23 @@ function App() {
           {/* Phase 8: Přednášky (0.63 - 0.74) */}
           <Lectures scrollProgress={smoothProgress} />
 
+          {/* Dark bridge: prevents ivory showing through Projects→Media transition */}
+          <motion.div
+            style={{ opacity: projectsMediaBridge, zIndex: 35 }}
+            className="absolute inset-0 bg-gradient-to-b from-[#1A202C] to-[#0F172A] pointer-events-none"
+          />
+
           {/* Phase 9: Projekty (0.72 - 0.83) */}
           <Projects scrollProgress={smoothProgress} />
 
           {/* Phase 10: Média & Obsah (0.81 - 0.93) */}
           <Media scrollProgress={smoothProgress} />
+
+          {/* Dark bridge: prevents ivory showing through Media→Contact transition */}
+          <motion.div
+            style={{ opacity: mediaContactBridge, zIndex: 35 }}
+            className="absolute inset-0 bg-slate-900 pointer-events-none"
+          />
 
           {/* Phase 11: Kontakt (0.90 - 1.0) */}
           <Contact scrollProgress={smoothProgress} />

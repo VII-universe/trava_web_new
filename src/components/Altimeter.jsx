@@ -45,8 +45,8 @@ const Altimeter = ({ scrollProgress }) => {
         { label: 'Hotel',      y: 0.36, target: 0.41 },
         { label: 'Czech Pub',  y: 0.45, target: 0.50 },
         { label: 'E-shop',     y: 0.54, target: 0.59 },
-        { label: 'Přednášky',  y: 0.63, target: 0.68 },
-        { label: 'Projekty',   y: 0.72, target: 0.77 },
+        { label: 'Přednášky',  y: 0.63, target: 0.67 },
+        { label: 'Projekty',   y: 0.72, target: 0.752 },
         { label: 'Média',      y: 0.81, target: 0.87 },
         { label: 'Kontakt',    y: 0.90, target: 0.94 },
     ];

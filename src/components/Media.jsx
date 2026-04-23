@@ -285,7 +285,6 @@ const Media = ({ scrollProgress }) => {
                             >
                                 <img src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-                                <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-4">
                                     <p className="text-gold-400 font-mono text-[9px] font-bold uppercase tracking-widest mb-1">Vlastní obsah</p>
                                     <h5 className="font-serif text-white text-lg leading-tight">Přímý přenos z expedic</h5>

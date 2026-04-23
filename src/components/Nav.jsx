@@ -13,8 +13,8 @@ const navItems = [
     { label: 'Hotel Káthmándú',     progress: 0.41 },
     { label: 'Czech Pub Nepal',     progress: 0.50 },
     { label: 'E-shop',             progress: 0.59 },
-    { label: 'Přednášky',          progress: 0.68 },
-    { label: 'Projekty',           progress: 0.77 },
+    { label: 'Přednášky',          progress: 0.67 },
+    { label: 'Projekty',           progress: 0.752 },
     { label: 'Média & Obsah',      progress: 0.87 },
     { label: 'Kontakt',            progress: 0.94 },
 ];

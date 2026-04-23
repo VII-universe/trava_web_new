@@ -11,7 +11,7 @@ const SRC = { ca: CloudA, cb: CloudB, c3: Cloud3 };
  * Nav/Altimeter targets (cloud-free):
  *   About       0.13   Icefall  0.23   Expeditions 0.33
  *   Hotel       0.41   Pub      0.50   Eshop        0.59
- *   Lectures    0.68   Projects 0.77   Media        0.87   Contact 0.94
+ *   Lectures    0.67   Projects 0.752  Media        0.87   Contact 0.94
  *
  * Each band sOut < next target, each sIn > prev target:
  *   Band 1  sOut 0.115  Band 2  sIn 0.155 → gap 0.040  (About target: 0.13)
@@ -20,9 +20,9 @@ const SRC = { ca: CloudA, cb: CloudB, c3: Cloud3 };
  *   Band 4  sOut 0.398  Band 5  sIn 0.415 → gap 0.017  (Hotel target: 0.41)
  *   Band 5  sOut 0.468  Band 6  sIn 0.515 → gap 0.047  (Pub target: 0.50)
  *   Band 6  sOut 0.572  Band 7  sIn 0.605 → gap 0.033  (Eshop target: 0.59)
- *   Band 7  sOut 0.660  Band 8  sIn 0.695 → gap 0.035  (Lectures target: 0.68)
- *   Band 8  sOut 0.752  Band 9  sIn 0.785 → gap 0.033  (Projects target: 0.77)
- *   Band 9  sOut 0.848  Band 10 sIn 0.875 → gap 0.027  (Media target: 0.87)
+ *   Band 7  sOut 0.660  Band 8  sIn 0.680 → gap 0.020  (Lectures target: 0.67)
+ *   Band 8  sOut 0.748  Band 9  sIn 0.755 → gap 0.007  (Projects target: 0.752)
+ *   Band 9  sOut 0.812  Band 10 sIn 0.875 → gap 0.063  (Media target: 0.87)
  *   Band 10 sOut 0.932                                  (Contact target: 0.94)
  */
 
@@ -115,7 +115,7 @@ const BANDS = [
     ]},
 
     // ── Lectures → Projects ───────────────────────────────────────────────
-    { sIn: 0.695, sFull: 0.710, sHold: 0.727, sOut: 0.752, cls: [
+    { sIn: 0.680, sFull: 0.693, sHold: 0.722, sOut: 0.748, cls: [
         { s: 'cb', l: -37, t:  5, w: 219, fx: -187, fy: -6, op: 1.0  },
         { s: 'ca', l:  32, t:  8, w: 213, fx:  182, fy: -8, op: 1.0  },
         { s: 'ca', l: -29, t: 32, w: 198, fx: -168, fy:  4, op: 1.0  },
@@ -127,27 +127,18 @@ const BANDS = [
     ]},
 
     // ── Projects → Media ──────────────────────────────────────────────────
-    { sIn: 0.785, sFull: 0.800, sHold: 0.818, sOut: 0.848, cls: [
-        { s: 'ca', l: -40, t:  3, w: 224, fx: -192, fy: -5, op: 1.0  },
-        { s: 'cb', l:  30, t:  6, w: 218, fx:  186, fy: -7, op: 1.0  },
-        { s: 'cb', l: -33, t: 29, w: 202, fx: -172, fy:  4, op: 1.0  },
-        { s: 'ca', l:  36, t: 32, w: 196, fx:  167, fy:  3, op: 1.0  },
-        { s: 'ca', l: -29, t: 54, w: 180, fx: -153, fy:  6, op: 0.97 },
-        { s: 'cb', l:  34, t: 57, w: 174, fx:  148, fy:  5, op: 0.97 },
-        { s: 'cb', l: -36, t: 77, w: 160, fx: -133, fy:  8, op: 0.93 },
-        { s: 'ca', l:  32, t: 79, w: 154, fx:  128, fy:  7, op: 0.93 },
+    { sIn: 0.755, sFull: 0.766, sHold: 0.778, sOut: 0.812, cls: [
+        { s: 'ca', l: -40, t: 10, w: 218, fx: -188, fy: -5, op: 1.0  },
+        { s: 'cb', l:  30, t: 13, w: 212, fx:  182, fy: -7, op: 1.0  },
+        { s: 'cb', l: -34, t: 52, w: 200, fx: -170, fy:  5, op: 0.95 },
     ]},
 
     // ── Media → Contact ───────────────────────────────────────────────────
     { sIn: 0.875, sFull: 0.890, sHold: 0.908, sOut: 0.932, cls: [
-        { s: 'cb', l: -37, t:  5, w: 220, fx: -188, fy: -6, op: 1.0  },
-        { s: 'ca', l:  31, t:  8, w: 214, fx:  183, fy: -8, op: 1.0  },
-        { s: 'ca', l: -31, t: 31, w: 198, fx: -168, fy:  4, op: 1.0  },
-        { s: 'cb', l:  36, t: 34, w: 192, fx:  163, fy:  3, op: 1.0  },
-        { s: 'cb', l: -27, t: 56, w: 176, fx: -149, fy:  5, op: 0.97 },
-        { s: 'ca', l:  33, t: 59, w: 170, fx:  145, fy:  6, op: 0.97 },
-        { s: 'ca', l: -34, t: 79, w: 156, fx: -130, fy:  7, op: 0.93 },
-        { s: 'cb', l:  30, t: 81, w: 150, fx:  125, fy:  8, op: 0.93 },
+        { s: 'cb', l: -37, t:  8, w: 220, fx: -188, fy: -6, op: 0.90 },
+        { s: 'ca', l:  31, t: 11, w: 214, fx:  183, fy: -8, op: 0.90 },
+        { s: 'ca', l: -30, t: 48, w: 198, fx: -168, fy:  4, op: 0.85 },
+        { s: 'cb', l:  32, t: 80, w: 190, fx:  163, fy:  7, op: 0.85 },
     ]},
 ];
 
