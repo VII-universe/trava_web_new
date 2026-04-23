@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { useScrollLock } from '../hooks/useScrollLock';
+import { loadContent } from '../data/adminStore';
 import { ArrowRight, X, Star, ExternalLink, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import HonzaProfile from '../assets/honza_profile.png';
@@ -38,7 +39,12 @@ const GALLERY_PHOTOS = [
     { src: SubinLeadImg,     label: 'Subin Tamang',          pos: 'object-center' },
 ];
 
+const DEF_ABOUT = { tagline: 'Honza Tráva — profesionální dobrodruh', title: 'Horolezec. Cestovatel. Podnikatel.', description: 'Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.' };
+
 const About = ({ scrollProgress }) => {
+    const adminTexts = loadContent('texts', null);
+    const about = { ...DEF_ABOUT, ...(adminTexts?.about || {}) };
+
     const [isStoryOpen, setIsStoryOpen] = useState(false);
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
     const [galleryOpen, setGalleryOpen] = useState(false);
@@ -157,12 +163,18 @@ const About = ({ scrollProgress }) => {
                     className="relative max-w-xl p-6 md:p-10 lg:p-14 rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-2xl shadow-slate-200/50 pointer-events-auto"
                 >
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-50" />
-                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">Honza Tráva — profesionální dobrodruh</h4>
+                    <h4 className="text-gold-600 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-4">{about.tagline}</h4>
                     <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-8 leading-tight">
-                        Horolezec. Cestovatel. <span className="italic text-slate-600">Podnikatel.</span>
+                        {(() => {
+                            const parts = about.title.split('. ');
+                            if (parts.length < 2) return about.title;
+                            const last = parts.at(-1).replace(/\.$/, '');
+                            const rest = parts.slice(0, -1).join('. ') + '.';
+                            return <>{rest} <span className="italic text-slate-600">{last}.</span></>;
+                        })()}
                     </h2>
                     <p className="font-sans text-slate-800 leading-relaxed mb-10 text-lg">
-                        Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.
+                        {about.description}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 mt-2">
                         <button
@@ -443,8 +455,8 @@ const About = ({ scrollProgress }) => {
                                         <img src={MiriLeadImg} alt="Miri Jirková" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
-                                            <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">Miri Jirková</p>
-                                            <p className="font-sans text-slate-300 text-[10px] uppercase tracking-wider">Trek & Logistika</p>
+                                            <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">{(adminTexts?.miri?.name) || 'Miri Jirková'}</p>
+                                            <p className="font-sans text-slate-300 text-[10px] uppercase tracking-wider">{(adminTexts?.miri?.role) || 'Trek & Logistika'}</p>
                                             <div className="flex items-center gap-1.5 text-gold-400 text-[10px] font-bold uppercase tracking-wider mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                                 Zobrazit profil <ArrowRight className="w-3 h-3" />
                                             </div>
@@ -457,8 +469,8 @@ const About = ({ scrollProgress }) => {
                                         <img src={SubinLeadImg} alt="Subin Tamang" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
-                                            <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">Subin Tamang</p>
-                                            <p className="font-sans text-slate-300 text-[10px] uppercase tracking-wider">Terénní expert — Nepál</p>
+                                            <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">{(adminTexts?.subin?.name) || 'Subin Tamang'}</p>
+                                            <p className="font-sans text-slate-300 text-[10px] uppercase tracking-wider">{(adminTexts?.subin?.role) || 'Terénní expert — Nepál'}</p>
                                             <div className="flex items-center gap-1.5 text-gold-400 text-[10px] font-bold uppercase tracking-wider mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                                 Zobrazit profil <ArrowRight className="w-3 h-3" />
                                             </div>

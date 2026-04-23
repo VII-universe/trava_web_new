@@ -293,8 +293,17 @@ function mergeAdmin(base, adminArr) {
     });
 }
 
+const DEF_TEXTS = {
+    about: { tagline: '', title: '', description: '' },
+    miri: { name: 'Miri Jirková', role: 'Trek & Logistika', tagline: 'Logistika & Trekking Manager', bio1: 'Mozek i srdce našich výprav. Miri není jen Honzovou partnerkou, ale především zkušenou horolezkyní a nepostradatelnou manažerkou, která stojí za každým detailem našich cest do Himálaje i And.', bio2: 'Vystoupala na desítky šestitisícovek po celém světě. V našem týmu má na starosti kompletní logistiku – od vyjednávání s místními šerpy v Káthmándú až po zajištění bezpečného zázemí v základních táborech.', bio3: 'Díky své empatii a organizačnímu talentu dokáže vytvořit pocit domova i v těch nejdrsnějších podmínkách. S Miri nejste na expedici jen s "vůdcem", ale s rodinou, která se o vás postará od prvního e-mailu až po závěrečnou oslavu v Thamelu.', stat1val: '12+', stat1label: 'Expedic', stat2val: '6476m', stat2label: 'Max Altitude', stat3val: '100%', stat3label: 'Dedikace' },
+    subin: { name: 'Subin Tamang', role: 'Terénní expert — Nepál', tagline: 'Terénní expert & Sherpa', bio1: 'Subin je náš nepostradatelný man on the ground. Nepálský terénní expert, který zná Himálaj jako svůj dvorek — od tras v Khumbu po přístupy na osmitisícovky, které nejsou v žádném průvodci.', bio2: 'Stará se o terénní logistiku přímo v Nepálu: koordinuje místní šerpy, zajišťuje vybavení a zásobování, naviguje skupiny v podmínkách, kdy GPS nestačí. S Subinem nikdy nejdete do neznáma — on tam byl dávno před vámi.', bio3: 'Jeho znalost místní kultury, jazyků a kontaktů v horských vesnicích dělá z každé naší expedice zážitek, který jiné cestovní kanceláře prostě nemohou nabídnout.', stat1val: '15+', stat1label: 'Let v terénu', stat2val: 'Nepal', stat2label: 'Rodná zem', stat3val: '8000m', stat3label: 'Zkušenosti' },
+};
+
 const Expeditions = ({ scrollProgress }) => {
     const adminExpeditions = loadContent('expeditions', null);
+    const adminTexts = loadContent('texts', DEF_TEXTS);
+    const miri = { ...DEF_TEXTS.miri, ...(adminTexts?.miri || {}) };
+    const subin = { ...DEF_TEXTS.subin, ...(adminTexts?.subin || {}) };
     const EXPEDITIONS_DISPLAY     = mergeAdmin(EXPEDITIONS,      adminExpeditions);
     const MORE_EXPEDITIONS_DISPLAY = mergeAdmin(MORE_EXPEDITIONS, adminExpeditions);
     const CATEGORIES_DISPLAY      = CATEGORIES;
@@ -421,8 +430,8 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                                 <div className="flex flex-col gap-2 mt-auto">
                                     <div className="flex gap-2">
-                                        <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O Miri</button>
-                                        <button onClick={() => setIsSubinOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O Subinovi</button>
+                                        <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {miri.name.split(' ')[0]}</button>
+                                        <button onClick={() => setIsSubinOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {subin.name.split(' ')[0]}</button>
                                     </div>
                                     <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-gradient-to-r from-gold-500 to-gold-600 text-white font-bold uppercase tracking-wider text-xs rounded-xl text-center flex items-center justify-center gap-2">
                                         Chci do Nepálu <ArrowRight className="w-3.5 h-3.5" />
@@ -469,7 +478,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 onClick={() => setIsVideoOpen(true)}
                                 className="shrink-0 snap-start w-[72vw] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.98] transition-transform relative"
                             >
-                                <img src={ManasluImg} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
+                                <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent" />
                                 <div className="relative flex flex-col items-center justify-center gap-3 h-full min-h-[200px] p-5">
                                     <div className="relative">
@@ -533,7 +542,7 @@ const Expeditions = ({ scrollProgress }) => {
                         onClick={() => setIsVideoOpen(true)}
                         className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto"
                     >
-                        <img src={ManasluImg} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
+                        <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
                         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/85" />
                         <div className="relative flex items-center justify-center gap-5 h-full">
                             <div className="relative shrink-0">
@@ -589,7 +598,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
                             </div>
                             <div className="absolute bottom-5 left-0 w-full text-center font-serif italic text-slate-600 text-sm font-medium tracking-wide">
-                                Miri
+                                {miri.name.split(' ')[0]}
                             </div>
                         </motion.div>
 
@@ -657,7 +666,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 Osmitisícovky i treky bez přetvářky
                             </h2>
                             <p className="font-sans text-slate-100 font-medium leading-relaxed text-sm md:text-base lg:text-lg mb-3 drop-shadow-sm">
-                                Honza Tráva má za sebou 6 osmitisícovek. Miri Jirková vystoupala na nespočet šestitisícovek...
+                                Honza Tráva má za sebou 6 osmitisícovek. {miri.name} vystoupala na nespočet šestitisícovek...
                             </p>
                             <p className="font-sans text-slate-200 leading-relaxed text-sm md:text-base drop-shadow-sm">
                                 Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
@@ -669,7 +678,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O Miri</span>
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O {miri.name.split(' ')[0]}</span>
                                     <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                                 </button>
 
@@ -678,7 +687,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O Subinovi</span>
+                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O {subin.name.split(' ')[0]}</span>
                                     <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                                 </button>
 
@@ -1143,38 +1152,32 @@ const Expeditions = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
-                                Terénní expert & Sherpa
+                                {subin.tagline}
                             </h4>
                             <h2 className="font-serif text-4xl md:text-6xl text-slate-900 mb-8 leading-tight">
-                                Subin <span className="italic text-slate-600">Tamang.</span>
+                                {subin.name.split(' ')[0]} <span className="italic text-slate-600">{subin.name.split(' ').slice(1).join(' ')}.</span>
                             </h2>
 
                             <div className="prose prose-slate prose-lg">
-                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
-                                    Subin je náš nepostradatelný man on the ground. Nepálský terénní expert, který zná Himálaj jako svůj dvorek — od tras v Khumbu po přístupy na osmitisícovky, které nejsou v žádném průvodci.
-                                </p>
-                                <p className="font-sans text-slate-700 leading-relaxed mb-4">
-                                    Stará se o terénní logistiku přímo v Nepálu: koordinuje místní šerpy, zajišťuje vybavení a zásobování, naviguje skupiny v podmínkách, kdy GPS nestačí. S Subinem nikdy nejdete do neznáma — on tam byl dávno před vámi.
-                                </p>
-                                <p className="font-sans text-slate-700 leading-relaxed">
-                                    Jeho znalost místní kultury, jazyků a kontaktů v horských vesnicích dělá z každé naší expedice zážitek, který jiné cestovní kanceláře prostě nemohou nabídnout.
-                                </p>
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">{subin.bio1}</p>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-4">{subin.bio2}</p>
+                                <p className="font-sans text-slate-700 leading-relaxed">{subin.bio3}</p>
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-slate-300 flex items-center gap-6">
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">15+</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Let v terénu</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{subin.stat1val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{subin.stat1label}</div>
                                 </div>
                                 <div className="w-px h-10 bg-slate-200" />
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">Nepal</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Rodná zem</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{subin.stat2val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{subin.stat2label}</div>
                                 </div>
                                 <div className="w-px h-10 bg-slate-200" />
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">8000m</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Zkušenosti</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{subin.stat3val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{subin.stat3label}</div>
                                 </div>
                             </div>
                         </div>
@@ -1230,38 +1233,32 @@ const Expeditions = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <h4 className="text-gold-600 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-4">
-                                Logistika & Trekking Manager
+                                {miri.tagline}
                             </h4>
                             <h2 className="font-serif text-4xl md:text-6xl text-slate-900 mb-8 leading-tight">
-                                Miri <span className="italic text-slate-600">Jirková.</span>
+                                {miri.name.split(' ')[0]} <span className="italic text-slate-600">{miri.name.split(' ').slice(1).join(' ')}.</span>
                             </h2>
-                            
+
                             <div className="prose prose-slate prose-lg">
-                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">
-                                    Mozek i srdce našich výprav. Miri není jen Honzovou partnerkou, ale především zkušenou horolezkyní a nepostradatelnou manažerkou, která stojí za každým detailem našich cest do Himálaje i And.
-                                </p>
-                                <p className="font-sans text-slate-700 leading-relaxed mb-4">
-                                    Vystoupala na desítky šestitisícovek po celém světě. V našem týmu má na starosti kompletní logistiku – od vyjednávání s místními šerpy v Káthmándú až po zajištění bezpečného zázemí v základních táborech.
-                                </p>
-                                <p className="font-sans text-slate-700 leading-relaxed">
-                                    Díky své empatii a organizačnímu talentu dokáže vytvořit pocit domova i v těch nejdrsnějších podmínkách. S Miri nejste na expedici jen s "vůdcem", ale s rodinou, která se o vás postará od prvního e-mailu až po závěrečnou oslavu v Thamelu.
-                                </p>
+                                <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4">{miri.bio1}</p>
+                                <p className="font-sans text-slate-700 leading-relaxed mb-4">{miri.bio2}</p>
+                                <p className="font-sans text-slate-700 leading-relaxed">{miri.bio3}</p>
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-slate-300 flex items-center gap-6">
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">12+</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Expedic</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{miri.stat1val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{miri.stat1label}</div>
                                 </div>
                                 <div className="w-px h-10 bg-slate-200" />
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">6476m</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Max Altitude</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{miri.stat2val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{miri.stat2label}</div>
                                 </div>
                                 <div className="w-px h-10 bg-slate-200" />
                                 <div className="text-center">
-                                    <div className="text-2xl font-serif text-gold-600 font-bold">100%</div>
-                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Dedikace</div>
+                                    <div className="text-2xl font-serif text-gold-600 font-bold">{miri.stat3val}</div>
+                                    <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{miri.stat3label}</div>
                                 </div>
                             </div>
                         </div>

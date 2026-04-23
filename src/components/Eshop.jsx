@@ -11,7 +11,7 @@ import KnihaImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jp
 import TrickoImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
 import FotoImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
 
-function ModalSlider({ images, fallback, className = '' }) {
+function ModalSlider({ images, fallback, imgPosition, className = '' }) {
     const all = images?.length ? images : (fallback ? [fallback] : []);
     const [idx, setIdx] = useState(0);
     if (!all.length) return null;
@@ -19,7 +19,7 @@ function ModalSlider({ images, fallback, className = '' }) {
     const next = () => setIdx(i => (i + 1) % all.length);
     return (
         <div className={`relative overflow-hidden ${className}`}>
-            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" style={{ objectPosition: imgPosition || 'center' }} />
             {all.length > 1 && <>
                 <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
                     <ChevronLeft className="w-4 h-4" />
@@ -50,6 +50,7 @@ const PRODUCTS = [
         tag: 'Bestseller',
         tagColor: 'bg-gold-500',
         img: MedTubaImg,
+        imgPosition: '72% center',
     },
     {
         id: 'tuba',
@@ -59,6 +60,7 @@ const PRODUCTS = [
         tag: 'Novinka',
         tagColor: 'bg-emerald-600',
         img: MedTubaImg,
+        imgPosition: '28% top',
         highlight: true,
         highlightBg: 'bg-emerald-600',
         highlightDot: 'bg-emerald-300',
@@ -207,7 +209,7 @@ const Eshop = ({ scrollProgress }) => {
                             className="group shrink-0 snap-start w-[75vw] text-left rounded-xl overflow-hidden shadow-lg active:scale-95 transition-all duration-300 relative bg-slate-900 aspect-[3/4]"
                         >
                             <div className="absolute inset-0">
-                                <img src={resolveImageSrc(products[0]) || products[0].img} alt={products[0].name} className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" />
+                                <img src={resolveImageSrc(products[0]) || products[0].img} alt={products[0].name} className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" style={{ objectPosition: products[0].imgPosition || 'center' }} />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
                             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-80" />
@@ -233,7 +235,8 @@ const Eshop = ({ scrollProgress }) => {
                             >
                                 <div className="relative w-full aspect-[4/3] overflow-hidden">
                                     <img src={resolveImageSrc(product) || product.img} alt={product.name}
-                                        className="w-full h-full object-cover transition-transform duration-500" />
+                                        className="w-full h-full object-cover transition-transform duration-500"
+                                        style={{ objectPosition: product.imgPosition || 'center' }} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                                     {!product.highlight && (
                                         <span className={`absolute top-2.5 left-2.5 text-[9px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full ${product.tagColor} shadow-sm`}>
@@ -316,7 +319,8 @@ const Eshop = ({ scrollProgress }) => {
                         >
                             <div className="absolute inset-0">
                                 <img src={resolveImageSrc(products[0]) || products[0].img} alt={products[0].name}
-                                    className="w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700" />
+                                    className="w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700"
+                                    style={{ objectPosition: products[0].imgPosition || 'center' }} />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/50 to-slate-800/10" />
                             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
@@ -354,7 +358,8 @@ const Eshop = ({ scrollProgress }) => {
                                 {/* Image */}
                                 <div className="relative w-full aspect-video overflow-hidden">
                                     <img src={resolveImageSrc(product) || product.img} alt={product.name}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        style={{ objectPosition: product.imgPosition || 'center' }} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                                     {/* Non-highlighted: small pill on image */}
                                     {!product.highlight && (
@@ -443,6 +448,7 @@ const Eshop = ({ scrollProgress }) => {
                         <ModalSlider
                             images={detailOpen.images}
                             fallback={resolveImageSrc(detailOpen) || detailOpen.img}
+                            imgPosition={detailOpen.imgPosition}
                             className="w-full aspect-video"
                         />
 
@@ -512,6 +518,7 @@ const Eshop = ({ scrollProgress }) => {
                                                 src={resolveImageSrc(product) || product.img}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                style={{ objectPosition: product.imgPosition || 'center' }}
                                             />
                                         </div>
                                         <div className="p-3">

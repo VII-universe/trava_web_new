@@ -112,19 +112,20 @@ const BANDS = [
     ]},
 
     // ── Lectures → Projects ───────────────────────────────────────────────
-    { sIn: 0.680, sFull: 0.693, sHold: 0.722, sOut: 0.748, cls: [
-        { s: 'cb', l: -14, t:  6, tm:  4, w:  72, wm:  80, fx:  -88, fy: -3, op: 0.55, om: 0.50, mh: -0.003, mx: -0.002 }, // tiny/far
-        { s: 'ca', l:  26, t:  2, tm:  1, w: 340, wm: 420, fx:  295, fy: -8, op: 1.0,  om: 1.0,  mh: +0.001, mx: +0.002 }, // GIANT foreground
-        { s: 'ca', l: -33, t: 34, tm: 27, w: 175, wm: 188, fx: -162, fy:  4, op: 0.95, om: 0.90, mh: -0.002, mx: -0.001 }, // medium
-        { s: 'cb', l:  40, t: 26, tm: 20, w:  92, wm:  98, fx:   82, fy:  2, op: 0.65, om: 0.60, mh: +0.001, mx: +0.002 }, // small
-        { s: 'cb', l: -28, t: 57, tm: 51, w: 255, wm: 285, fx: -218, fy:  6, op: 1.0,  om: 0.95, mh: -0.001, mx:  0      }, // large
-        { s: 'ca', l:  44, t: 14, tm: 11, w:  62, wm:  68, fx:   58, fy: -2, op: 0.50, om: 0.45, mh: +0.001, mx: +0.002 }, // tiny/very far
-        { s: 'ca', l: -37, t: 76, tm: 71, w: 142, wm: 152, fx: -128, fy:  7, op: 0.85, om: 0.80, mh:  0,      mx: +0.001 }, // medium-small
-        { s: 'cb', l:  24, t: 71, tm: 66, w: 225, wm: 248, fx:  192, fy:  8, op: 0.90, om: 0.85, mh: +0.001, mx: +0.002 }, // large bottom
+    // dh/dx = desktop stagger: tiny/small exit first, giant/large linger longest
+    { sIn: 0.680, sFull: 0.693, sHold: 0.722, sOut: 0.750, cls: [
+        { s: 'cb', l: -14, t:  6, tm:  4, w:  72, wm:  80, fx:  -88, fy: -3, op: 0.55, om: 0.50, mh: -0.003, mx: -0.002, dh: +0.002, dx: -0.012 }, // tiny/far   — exits first
+        { s: 'ca', l:  26, t:  2, tm:  1, w: 340, wm: 420, fx:  295, fy: -8, op: 1.0,  om: 1.0,  mh: +0.001, mx: +0.002, dh: +0.010, dx: +0.030 }, // GIANT      — exits last
+        { s: 'ca', l: -33, t: 34, tm: 27, w: 175, wm: 188, fx: -162, fy:  4, op: 0.95, om: 0.90, mh: -0.002, mx: -0.001, dh: +0.004, dx: +0.006 }, // medium     — mid
+        { s: 'cb', l:  40, t: 26, tm: 20, w:  92, wm:  98, fx:   82, fy:  2, op: 0.65, om: 0.60, mh: +0.001, mx: +0.002, dh: +0.001, dx: -0.006 }, // small      — early
+        { s: 'cb', l: -28, t: 57, tm: 51, w: 255, wm: 285, fx: -218, fy:  6, op: 1.0,  om: 0.95, mh: -0.001, mx:  0,     dh: +0.007, dx: +0.020 }, // large      — late
+        { s: 'ca', l:  44, t: 14, tm: 11, w:  62, wm:  68, fx:   58, fy: -2, op: 0.50, om: 0.45, mh: +0.001, mx: +0.002, dh:  0,     dx: -0.015 }, // tiny/v.far — exits first
+        { s: 'ca', l: -37, t: 76, tm: 71, w: 142, wm: 152, fx: -128, fy:  7, op: 0.85, om: 0.80, mh:  0,     mx: +0.001, dh: +0.005, dx: +0.012 }, // medium-sm  — mid-late
+        { s: 'cb', l:  24, t: 71, tm: 66, w: 225, wm: 248, fx:  192, fy:  8, op: 0.90, om: 0.85, mh: +0.001, mx: +0.002, dh: +0.008, dx: +0.025 }, // large bot  — very late
     ]},
 
     // ── Projects → Media ──────────────────────────────────────────────────
-    { sIn: 0.755, sFull: 0.766, sHold: 0.778, sOut: 0.812, cls: [
+    { sIn: 0.782, sFull: 0.793, sHold: 0.805, sOut: 0.832, cls: [
         { s: 'ca', l: -40, t: 10, tm:  3, w: 218, wm: 230, fx: -188, fy: -5, op: 1.0,  om: 1.0,  mh: -0.008, mx: -0.011 },
         { s: 'cb', l:  30, t: 13, tm:  9, w: 212, wm: 420, fx:  182, fy: -7, op: 1.0,  om: 0.95, mh: -0.003, mx: -0.005 }, // GIANT
         { s: 'cb', l: -34, t: 52, tm: 55, w: 200, wm: 190, fx: -170, fy:  5, op: 0.95, om: 0.85, mh: +0.008, mx: +0.015 },
@@ -142,11 +143,15 @@ const BANDS = [
 const CloudImg = ({ band, cl, scrollProgress, isMobile }) => {
     const effOp = isMobile && cl.om !== undefined ? cl.om : cl.op;
 
-    // Per-cloud mobile parallax timing — mh shifts when parting starts, mx when it ends
-    const mh = isMobile && cl.mh !== undefined ? cl.mh : 0;
-    const mx = isMobile && cl.mx !== undefined ? cl.mx : 0;
-    const effHold = isMobile ? Math.max(band.sFull + 0.003, band.sHold + mh) : band.sHold;
-    const effOut  = isMobile ? Math.max(effHold  + 0.006, band.sOut  + mx) : band.sOut;
+    // mh/mx = mobile offsets, dh/dx = desktop offsets for per-cloud staggered timing
+    const holdOffset = isMobile
+        ? (cl.mh !== undefined ? cl.mh : 0)
+        : (cl.dh !== undefined ? cl.dh : 0);
+    const outOffset  = isMobile
+        ? (cl.mx !== undefined ? cl.mx : 0)
+        : (cl.dx !== undefined ? cl.dx : 0);
+    const effHold = Math.max(band.sFull + 0.003, band.sHold + holdOffset);
+    const effOut  = Math.max(effHold    + 0.006, band.sOut  + outOffset);
 
     const opacity = useTransform(
         scrollProgress,

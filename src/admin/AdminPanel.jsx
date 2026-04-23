@@ -5,7 +5,7 @@ import {
   Tv, ChevronDown, ChevronRight, X, ExternalLink,
   Image, Tag, AlignLeft, Globe, Mail, Link2, AlertTriangle,
   GripVertical, MoveUp, MoveDown, Newspaper, BookOpen,
-  Video, Headphones, FileText, Percent, Upload, HardDrive
+  Video, Headphones, FileText, Percent, Upload, HardDrive, Type
 } from 'lucide-react';
 import { loadContent, saveContent, clearContent } from '../data/adminStore';
 import { uploadImageToSupabase, deleteImageFromSupabase, getImageStorageUsedMB } from '../data/imageStore';
@@ -107,6 +107,36 @@ const DEF_PRESS = [
   { id:'pr15', type:'Podcast', outlet:'Sazka Olympijský',  title:'Cesta k vrcholu s Honzou Trávou',                year:2025, date:'duben 2025',    href:'#' },
   { id:'pr16', type:'Podcast', outlet:'FullFight Cast',    title:'Mentální síla v extrémech',                      year:2024, date:'září 2024',     href:'#' },
 ];
+
+const DEF_TEXTS = {
+  about: {
+    tagline: 'Honza Tráva — profesionální dobrodruh',
+    title: 'Horolezec. Cestovatel. Podnikatel.',
+    description: 'Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.',
+  },
+  miri: {
+    name: 'Miri Jirková',
+    role: 'Trek & Logistika',
+    tagline: 'Logistika & Trekking Manager',
+    bio1: 'Mozek i srdce našich výprav. Miri není jen Honzovou partnerkou, ale především zkušenou horolezkyní a nepostradatelnou manažerkou, která stojí za každým detailem našich cest do Himálaje i And.',
+    bio2: 'Vystoupala na desítky šestitisícovek po celém světě. V našem týmu má na starosti kompletní logistiku – od vyjednávání s místními šerpy v Káthmándú až po zajištění bezpečného zázemí v základních táborech.',
+    bio3: 'Díky své empatii a organizačnímu talentu dokáže vytvořit pocit domova i v těch nejdrsnějších podmínkách. S Miri nejste na expedici jen s "vůdcem", ale s rodinou, která se o vás postará od prvního e-mailu až po závěrečnou oslavu v Thamelu.',
+    stat1val: '12+', stat1label: 'Expedic',
+    stat2val: '6476m', stat2label: 'Max Altitude',
+    stat3val: '100%', stat3label: 'Dedikace',
+  },
+  subin: {
+    name: 'Subin Tamang',
+    role: 'Terénní expert — Nepál',
+    tagline: 'Terénní expert & Sherpa',
+    bio1: 'Subin je náš nepostradatelný man on the ground. Nepálský terénní expert, který zná Himálaj jako svůj dvorek — od tras v Khumbu po přístupy na osmitisícovky, které nejsou v žádném průvodci.',
+    bio2: 'Stará se o terénní logistiku přímo v Nepálu: koordinuje místní šerpy, zajišťuje vybavení a zásobování, naviguje skupiny v podmínkách, kdy GPS nestačí. S Subinem nikdy nejdete do neznáma — on tam byl dávno před vámi.',
+    bio3: 'Jeho znalost místní kultury, jazyků a kontaktů v horských vesnicích dělá z každé naší expedice zážitek, který jiné cestovní kanceláře prostě nemohou nabídnout.',
+    stat1val: '15+', stat1label: 'Let v terénu',
+    stat2val: 'Nepal', stat2label: 'Rodná zem',
+    stat3val: '8000m', stat3label: 'Zkušenosti',
+  },
+};
 
 /* ─── Helpers ───────────────────────────────────────────────── */
 function genId() { return Math.random().toString(36).slice(2, 9); }
@@ -846,6 +876,93 @@ function MediaEditor({ video, podcast, blog, press, onChange, onReset }) {
   );
 }
 
+/* ─── Texts Editor ─────────────────────────────────────────── */
+function TextsEditor({ data, onChange, onReset }) {
+  const [tab, setTab] = useState('about');
+  const upd = (section, field, val) => onChange({ ...data, [section]: { ...data[section], [field]: val } });
+
+  const tabs = [
+    { key: 'about', label: 'O Honzovi', icon: Mountain },
+    { key: 'miri',  label: 'Miri Jirková', icon: Users },
+    { key: 'subin', label: 'Subin Tamang', icon: Users },
+  ];
+
+  const s = data[tab] || {};
+
+  return (
+    <div>
+      <SectionHeader
+        title="Texty na webu"
+        subtitle="Biografie, popisky a texty o členech týmu zobrazené na webu"
+        onReset={onReset}
+      />
+      {/* Tabs */}
+      <div className="flex gap-2 mb-6 border-b border-slate-800 pb-3">
+        {tabs.map(t => (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+              tab === t.key
+                ? 'bg-gold-500/15 border border-gold-500/40 text-gold-300'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+            }`}
+          >
+            <t.icon className="w-3.5 h-3.5" />
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-5 bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
+        {tab === 'about' && (
+          <>
+            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3">
+              Sekce „O Honzovi" — úvodní text na webu
+            </p>
+            <Field label="Štítek (malý text nad názvem)" value={s.tagline} onChange={v => upd('about', 'tagline', v)} icon={Tag} placeholder="Honza Tráva — profesionální dobrodruh" />
+            <Field label="Hlavní nadpis" value={s.title} onChange={v => upd('about', 'title', v)} icon={Type} placeholder="Horolezec. Cestovatel. Podnikatel." />
+            <Field label="Popis (úvodní věty)" value={s.description} onChange={v => upd('about', 'description', v)} rows={4} icon={AlignLeft} placeholder="Výstupy na osmitisícovky…" />
+          </>
+        )}
+
+        {(tab === 'miri' || tab === 'subin') && (
+          <>
+            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-700 pb-3">
+              {tab === 'miri' ? 'Profil Miri Jirkové — zobrazený v modálu na webu' : 'Profil Subina Tamanga — zobrazený v modálu na webu'}
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Jméno" value={s.name} onChange={v => upd(tab, 'name', v)} icon={Users} />
+              <Field label="Role (pod jménem v kartičce)" value={s.role} onChange={v => upd(tab, 'role', v)} placeholder="Trek & Logistika" />
+            </div>
+            <Field label="Pozice (zlatý štítek v modálu)" value={s.tagline} onChange={v => upd(tab, 'tagline', v)} icon={Tag} placeholder="Logistika & Trekking Manager" />
+            <Field label="Bio — odstavec 1 (tučný úvod)" value={s.bio1} onChange={v => upd(tab, 'bio1', v)} rows={3} icon={AlignLeft} />
+            <Field label="Bio — odstavec 2" value={s.bio2} onChange={v => upd(tab, 'bio2', v)} rows={3} icon={AlignLeft} />
+            <Field label="Bio — odstavec 3" value={s.bio3} onChange={v => upd(tab, 'bio3', v)} rows={3} icon={AlignLeft} />
+            <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+              <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Statistiky (3 čísla v patičce modálu)</p>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="flex flex-col gap-2">
+                  <Field label="Hodnota 1" value={s.stat1val} onChange={v => upd(tab, 'stat1val', v)} placeholder="12+" />
+                  <Field label="Popisek 1" value={s.stat1label} onChange={v => upd(tab, 'stat1label', v)} placeholder="Expedic" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Field label="Hodnota 2" value={s.stat2val} onChange={v => upd(tab, 'stat2val', v)} placeholder="6476m" />
+                  <Field label="Popisek 2" value={s.stat2label} onChange={v => upd(tab, 'stat2label', v)} placeholder="Max Altitude" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Field label="Hodnota 3" value={s.stat3val} onChange={v => upd(tab, 'stat3val', v)} placeholder="100%" />
+                  <Field label="Popisek 3" value={s.stat3label} onChange={v => upd(tab, 'stat3label', v)} placeholder="Dedikace" />
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main AdminPanel ───────────────────────────────────────── */
 const NAV = [
   { key:'partners',    label:'Partneři',   icon: Users,      color: 'text-blue-400' },
@@ -854,6 +971,7 @@ const NAV = [
   { key:'lectures',    label:'Přednášky',  icon: Mic2,       color: 'text-violet-400' },
   { key:'projects',    label:'Projekty',   icon: Folder,     color: 'text-amber-400' },
   { key:'media',       label:'Média',      icon: Tv,         color: 'text-red-400' },
+  { key:'texts',       label:'Texty',      icon: Type,       color: 'text-pink-400' },
 ];
 
 export default function AdminPanel() {
@@ -874,6 +992,7 @@ export default function AdminPanel() {
   const [mediaPodcast,setMediaPodcast]= useState(() => loadContent('media_podcast',DEF_MEDIA_PODCAST));
   const [mediaBlog,   setMediaBlog]   = useState(() => loadContent('media_blog',   DEF_MEDIA_BLOG));
   const [press,       setPress]       = useState(() => loadContent('press',        DEF_PRESS));
+  const [texts,       setTexts]       = useState(() => loadContent('texts',        DEF_TEXTS));
 
   const markDirty = useCallback((setter) => (...args) => { setter(...args); setDirty(true); }, []);
 
@@ -889,6 +1008,7 @@ export default function AdminPanel() {
       saveContent('media_podcast', mediaPodcast),
       saveContent('media_blog',    mediaBlog),
       saveContent('press',         press),
+      saveContent('texts',         texts),
     ]);
     setDirty(false);
     setSaveMsg('Uloženo');
@@ -1072,6 +1192,13 @@ export default function AdminPanel() {
                 handleReset('media_blog',    DEF_MEDIA_BLOG,    setMediaBlog);
                 handleReset('press',         DEF_PRESS,         setPress);
               }}
+            />
+          )}
+          {section === 'texts' && (
+            <TextsEditor
+              data={texts}
+              onChange={markDirty(setTexts)}
+              onReset={() => handleReset('texts', DEF_TEXTS, setTexts)}
             />
           )}
         </main>
