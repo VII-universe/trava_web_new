@@ -20,11 +20,6 @@ const DEF_PROJECTS = [];
 
 export default function EventCalendar({ onClose }) {
     const now = new Date();
-    const [year, setYear] = useState(now.getFullYear());
-    const [month, setMonth] = useState(now.getMonth());
-    const [filter, setFilter] = useState('all');
-    const [hoveredDay, setHoveredDay] = useState(null);
-    const [selectedDay, setSelectedDay] = useState(null);
 
     const lectures = loadContent('lectures', DEF_LECTURES);
     const projects = loadContent('projects', DEF_PROJECTS);
@@ -37,7 +32,24 @@ export default function EventCalendar({ onClose }) {
             .filter(p => p.date)
             .map(p => ({ id: p.id, title: p.title, subtitle: p.subtitle || '', date: p.date, type: 'project', location: p.location || '', description: p.description || '', link: p.link || '' }));
         return [...lectureEvs, ...projectEvs].sort((a, b) => a.date.localeCompare(b.date));
-    }, []);
+    }, [lectures, projects]);
+
+    // Open on the month of the first upcoming event, fall back to current month
+    const initialMonth = useMemo(() => {
+        const todayStr = now.toISOString().slice(0, 10);
+        const next = allEvents.find(e => e.date >= todayStr);
+        if (next) {
+            const d = new Date(next.date + 'T00:00:00');
+            return { year: d.getFullYear(), month: d.getMonth() };
+        }
+        return { year: now.getFullYear(), month: now.getMonth() };
+    }, [allEvents]);
+
+    const [year, setYear] = useState(initialMonth.year);
+    const [month, setMonth] = useState(initialMonth.month);
+    const [filter, setFilter] = useState('all');
+    const [hoveredDay, setHoveredDay] = useState(null);
+    const [selectedDay, setSelectedDay] = useState(null);
 
     const filtered = filter === 'all' ? allEvents : allEvents.filter(e => e.type === filter);
 
