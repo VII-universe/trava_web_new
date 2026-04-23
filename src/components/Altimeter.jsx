@@ -10,11 +10,9 @@ const Altimeter = ({ scrollProgress }) => {
         [0, 500, 5364, 6400, 6800, 7000, 7100, 7400, 7700, 8100, 8450, 8848]
     );
 
-    const rangePoints = [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 0.81, 0.84, 0.90, 0.93, 1.0];
+    const rangePoints = [0, 0.27, 0.30, 0.54, 0.57, 0.63, 0.66, 1.0];
 
     const axisColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.25)", "rgba(15, 23, 42, 0.25)",
-        "rgba(255,255,255,0.4)",  "rgba(255,255,255,0.4)",
         "rgba(15, 23, 42, 0.25)", "rgba(15, 23, 42, 0.25)",
         "rgba(255,255,255,0.4)",  "rgba(255,255,255,0.4)",
         "rgba(15, 23, 42, 0.25)", "rgba(15, 23, 42, 0.25)",
@@ -22,8 +20,6 @@ const Altimeter = ({ scrollProgress }) => {
     ]);
 
     const labelColor = useTransform(scrollProgress, rangePoints, [
-        "rgba(15, 23, 42, 0.45)", "rgba(15, 23, 42, 0.45)",
-        "rgba(255,255,255,0.55)", "rgba(255,255,255,0.55)",
         "rgba(15, 23, 42, 0.45)", "rgba(15, 23, 42, 0.45)",
         "rgba(255,255,255,0.55)", "rgba(255,255,255,0.55)",
         "rgba(15, 23, 42, 0.45)", "rgba(15, 23, 42, 0.45)",

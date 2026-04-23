@@ -91,13 +91,14 @@ const Eshop = ({ scrollProgress }) => {
     // PHASE 7 (Eshop): 0.54 -> 0.65
     const containerOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], [0, 1, 1, 0]);
     const containerY = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], ['-120%', '0%', '0%', '130%']);
+    const bgOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.59, 0.62], [0, 1, 1, 0]);
     const bgY = useTransform(scrollProgress, [0.50, 0.68], ['-10%', '10%']);
 
     return (
         <>
         {/* BACKGROUND */}
         <motion.div
-            style={{ opacity: containerOpacity, y: containerY, zIndex: 0 }}
+            style={{ opacity: bgOpacity, zIndex: 0 }}
             className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
         >
             {/* Warm ivory base */}
