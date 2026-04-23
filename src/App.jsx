@@ -28,12 +28,14 @@ function App() {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   const [contentReady, setContentReady] = useState(false);
 
-  // Reset scroll synchronously before first paint — prevents browser from restoring last position
+  // Reset scroll synchronously before every paint where contentReady changes.
+  // The browser restores scroll position asynchronously during the loading spinner phase,
+  // so we must reset again right before ReactLenis mounts (when contentReady flips to true).
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-  }, []);
+  }, [contentReady]);
 
   useEffect(() => {
     fetchAllFromSupabase().finally(() => setContentReady(true));
