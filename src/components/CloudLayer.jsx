@@ -184,7 +184,6 @@ const CloudImg = ({ band, cl, scrollProgress, isMobile }) => {
                 width: isMobile && cl.wm !== undefined ? `${cl.wm}vw` : `${cl.w}vmax`,
                 pointerEvents: 'none',
                 userSelect:    'none',
-                willChange:    'transform, opacity',
             }}
             alt=""
             draggable={false}
@@ -226,7 +225,7 @@ const CloudLayer = ({ scrollProgress }) => {
     }, []);
 
     return (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 75, pointerEvents: 'none', overflow: 'hidden' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 75, pointerEvents: 'none', overflow: 'hidden', willChange: 'transform', transform: 'translateZ(0)' }}>
             {BANDS.map((band) =>
                 band.cls.map((cl, i) => (
                     <CloudImg key={`${band.sIn}-${i}`} band={band} cl={cl} scrollProgress={scrollProgress} isMobile={isMobile} />
