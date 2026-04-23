@@ -1242,6 +1242,7 @@ export default function AdminPanel() {
       try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch {}
     });
     localStorage.setItem('trava_preview_ts', Date.now().toString());
+    localStorage.setItem('trava_preview_active', '1');
     window.open('/', '_blank');
   };
 

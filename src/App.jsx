@@ -19,6 +19,7 @@ import CloudLayer from './components/CloudLayer';
 import Media from './components/Media';
 import Nav from './components/Nav';
 import CookieConsent from './components/CookieConsent';
+import PreviewBanner from './components/PreviewBanner';
 import { ReactLenis } from 'lenis/react';
 import { ScrollLockHandler } from './hooks/useScrollLock';
 import 'lenis/dist/lenis.css';
@@ -158,6 +159,7 @@ useEffect(() => {
       </div>
 
     </div>
+      <PreviewBanner />
       <CookieConsent />
     </ReactLenis>
   );
