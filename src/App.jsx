@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 // Force redeploy to 69a0781 state
-import { useScroll, motion, useTransform, useSpring, animate } from 'framer-motion';
+import { useScroll, motion, useTransform, useSpring } from 'framer-motion';
 import { fetchAllFromSupabase } from './data/adminStore';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -36,9 +36,7 @@ function App() {
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-      // Jump the spring to 0 immediately — prevents it from slowly animating from
-      // whatever value scrollYProgress was at when the spring was created.
-      animate(smoothProgress, 0, { duration: 0 });
+      smoothProgress.jump(0);
       setScrollReset(true);
     }
   }, [contentReady, scrollReset]);
@@ -47,16 +45,15 @@ function App() {
     fetchAllFromSupabase().finally(() => setContentReady(true));
   }, []);
 
-  // After ReactLenis mounts (scrollReset = true), force the spring to 0.
-  // Lenis reads native scroll on mount — if it still reads non-zero for any reason,
-  // this ensures smoothProgress (which drives all section visibility) stays at Hero.
+  // After ReactLenis mounts (its useEffect runs before this one, child-before-parent),
+  // the spring may have been pulled to a non-zero target by attachFollow.
+  // jump(0) bypasses the spring completely without triggering scroll listeners.
   useEffect(() => {
     if (!scrollReset) return;
-    window.scrollTo(0, 0);
-    animate(smoothProgress, 0, { duration: 0 });
+    smoothProgress.jump(0);
   }, [scrollReset]);
 
-  useEffect(() => {
+useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
