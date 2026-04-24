@@ -126,48 +126,45 @@ const Nav = ({ scrollProgress }) => {
                         animate={{ opacity: 1, clipPath: 'circle(150% at calc(100% - 3.5rem) 3.5rem)' }}
                         exit={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 3.5rem) 3.5rem)' }}
                         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-xl flex items-center justify-center isolate"
+                        className="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-xl overflow-y-auto isolate"
                     >
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.05)_0%,transparent_50%)]" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.05)_0%,transparent_50%)] pointer-events-none" />
 
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="absolute top-4 right-4 md:top-10 md:right-10 p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                            className="fixed top-4 right-4 md:top-10 md:right-10 z-10 p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
                             aria-label="Close menu"
                         >
                             <X className="w-6 h-6" />
                         </button>
 
-                        <nav className="flex flex-col gap-6 md:gap-8 text-center relative z-10 w-full max-w-2xl px-6">
-                            <h4 className="text-gold-500 font-sans uppercase tracking-[0.4em] text-xs font-bold mb-4 md:mb-8">
-                                Navigace Výpravou
-                            </h4>
-                            {navItems.map((item, index) => (
-                                <motion.button
-                                    key={item.label}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2 + index * 0.05, duration: 0.4 }}
-                                    onClick={() => handleNavClick(item.progress)}
-                                    className="group relative inline-flex items-center justify-center font-serif text-3xl md:text-5xl text-slate-400 hover:text-white transition-colors duration-300"
-                                >
-                                    <span className="relative z-10">{item.label}</span>
-                                    <span className="absolute -bottom-2 md:-bottom-4 left-1/2 -translate-x-1/2 w-0 h-px bg-gold-500 group-hover:w-1/2 transition-all duration-300" />
-                                    <span className="absolute -left-12 opacity-0 group-hover:opacity-20 text-gold-500 font-sans text-sm tracking-widest transition-opacity duration-300">
-                                        0{index + 1}
-                                    </span>
-                                </motion.button>
-                            ))}
-                        </nav>
+                        <div className="min-h-full flex flex-col items-center justify-center py-20 px-6">
+                            <nav className="flex flex-col gap-2 sm:gap-3 md:gap-4 [@media(min-height:780px)]:gap-6 [@media(min-height:960px)]:gap-8 text-center w-full max-w-2xl">
+                                <h4 className="text-gold-500 font-sans uppercase tracking-[0.4em] text-xs font-bold mb-2 md:mb-4">
+                                    Navigace Výpravou
+                                </h4>
+                                {navItems.map((item, index) => (
+                                    <motion.button
+                                        key={item.label}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.2 + index * 0.05, duration: 0.4 }}
+                                        onClick={() => handleNavClick(item.progress)}
+                                        className="group relative inline-flex items-center justify-center font-serif text-2xl sm:text-3xl [@media(min-height:780px)]:md:text-4xl [@media(min-height:960px)]:md:text-5xl text-slate-400 hover:text-white transition-colors duration-300 py-0.5"
+                                    >
+                                        <span className="relative z-10">{item.label}</span>
+                                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-gold-500 group-hover:w-1/2 transition-all duration-300" />
+                                        <span className="absolute -left-12 opacity-0 group-hover:opacity-20 text-gold-500 font-sans text-sm tracking-widest transition-opacity duration-300">
+                                            0{index + 1}
+                                        </span>
+                                    </motion.button>
+                                ))}
+                            </nav>
 
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                            className="absolute bottom-10 left-0 w-full text-center text-slate-600 font-mono text-xs tracking-widest uppercase"
-                        >
-                            8848 M N.M. — Cesta na vrchol
-                        </motion.div>
+                            <p className="mt-10 text-slate-600 font-mono text-xs tracking-widest uppercase">
+                                8848 M N.M. — Cesta na vrchol
+                            </p>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
