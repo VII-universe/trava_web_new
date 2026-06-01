@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight, X, Download, Youtube, MessageSquare, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight, X, Download, Youtube, Globe, Video, FileText } from 'lucide-react';
 import BaseCampImg from '../assets/base_camp_bg.jpg';
 import { loadContent } from '../data/adminStore';
 import { useScrollLock } from '../hooks/useScrollLock';
@@ -72,22 +72,23 @@ function ContactModal({ onClose }) {
                                 <Phone className="w-4 h-4 text-gold-400 shrink-0" />
                                 <span className="text-sm text-white group-hover:text-gold-300 transition-colors">+420 776 359 536</span>
                             </a>
-                            <div className="flex items-center gap-3 px-4 py-3 bg-white/5 border border-white/8 rounded-2xl">
-                                <MessageSquare className="w-4 h-4 text-gold-400 shrink-0" />
+                            <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer"
+                                className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-emerald-500/15 border border-white/8 hover:border-emerald-500/30 rounded-2xl transition-all group">
+                                <Video className="w-4 h-4 text-emerald-400 shrink-0" />
                                 <div>
-                                    <span className="text-xs text-slate-400 block">Skype</span>
-                                    <span className="text-sm text-white">honzatrava</span>
+                                    <span className="text-xs text-slate-400 block">Video hovor</span>
+                                    <span className="text-sm text-white group-hover:text-emerald-300 transition-colors">Google Meet</span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
-                            <a href="https://www.youtube.com/@JanTravnicek" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-red-500/15 border border-white/8 hover:border-red-500/30 rounded-2xl transition-all group">
                                 <Youtube className="w-4 h-4 text-red-400 shrink-0" />
                                 <div className="min-w-0">
                                     <span className="text-xs text-slate-400 block">YouTube</span>
-                                    <span className="text-sm text-white truncate">Jan Trávníček</span>
+                                    <span className="text-sm text-white truncate">@honzatrava</span>
                                 </div>
                             </a>
                             <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer"
@@ -173,28 +174,28 @@ function ContactModal({ onClose }) {
 
                     {/* ── Promo materiály ── */}
                     <div className="px-6 md:px-8 py-6">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Promo materiály ke stažení</p>
-                        {hasPromo ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                {promo.filter(p => p.url).map(item => (
-                                    <a
-                                        key={item.id}
-                                        href={item.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/20 rounded-2xl transition-all group"
-                                    >
-                                        <span className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${item.type === 'ZIP' ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'}`}>
-                                            {item.type}
-                                        </span>
-                                        <span className="text-sm text-slate-300 group-hover:text-white transition-colors flex-1 leading-snug">{item.name}</span>
-                                        <Download className="w-3.5 h-3.5 text-slate-600 group-hover:text-gold-400 transition-colors shrink-0" />
-                                    </a>
-                                ))}
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Promo materiály</p>
+                        <div className="space-y-2">
+                            {/* Drive link — hlavní přístup */}
+                            <a href="mailto:honzatravatravnicek@gmail.com?subject=Promo materiály"
+                                className="flex items-center gap-3 px-4 py-3.5 bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/25 hover:border-gold-500/45 rounded-2xl transition-all group">
+                                <FileText className="w-4 h-4 text-gold-400 shrink-0" />
+                                <div className="flex-1">
+                                    <p className="text-sm text-white font-medium">Fotky, plakáty, životopis, sponzorské materiály</p>
+                                    <p className="text-xs text-gold-400/70 mt-0.5">Napište nám — pošleme odkaz na aktuální materiály</p>
+                                </div>
+                                <ArrowRight className="w-3.5 h-3.5 text-gold-500/50 group-hover:text-gold-400 group-hover:translate-x-0.5 transition-all shrink-0" />
+                            </a>
+                            {/* Výčet co je k dispozici */}
+                            <div className="px-4 py-3 bg-white/[0.04] border border-white/8 rounded-2xl">
+                                <p className="text-xs text-slate-500 mb-2">K dispozici:</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['Promopack fotek', 'Plakát CZ/EN', 'Životopis', 'Nabídka přednášek', 'Nabídka pro sponzory', 'Materiály Miri'].map(t => (
+                                        <span key={t} className="text-[10px] text-slate-400 bg-white/5 border border-white/8 rounded-full px-2.5 py-1">{t}</span>
+                                    ))}
+                                </div>
                             </div>
-                        ) : (
-                            <p className="text-slate-600 text-sm py-4">Promo materiály budou dostupné brzy. Pro přímý přístup napište na <a href="mailto:booking@honzatrava.cz" className="text-gold-400 hover:underline">booking@honzatrava.cz</a>.</p>
-                        )}
+                        </div>
                     </div>
                 </div>
             </motion.div>
@@ -307,12 +308,15 @@ const Contact = ({ scrollProgress }) => {
 
                         <div className="mt-8 lg:mt-0 pt-6 border-t border-white/10 space-y-4">
                             <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-4 md:mb-6">Sledujte cestu</h5>
-                            <div className="flex gap-4">
-                                <a href="https://www.instagram.com/honzatravatravnicek" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110">
+                            <div className="flex gap-3">
+                                <a href="https://www.instagram.com/honzatravatravnicek" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Instagram">
                                     <Instagram className="w-5 h-5" />
                                 </a>
-                                <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110">
+                                <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Facebook">
                                     <Facebook className="w-5 h-5" />
+                                </a>
+                                <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300 hover:scale-110" title="YouTube">
+                                    <Youtube className="w-5 h-5" />
                                 </a>
                             </div>
                             <button
@@ -399,9 +403,13 @@ const Contact = ({ scrollProgress }) => {
                 </div>
 
                 {/* Footer text */}
-                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs md:text-xs font-mono uppercase tracking-widest">
-                    <p>© {new Date().getFullYear()} Honza Trávníček. Všechna práva vyhrazena.</p>
-                    <p>Designed for the summit.</p>
+                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-slate-600 text-[10px] md:text-xs font-mono uppercase tracking-widest">
+                    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
+                        <p>© {new Date().getFullYear()} Jan Trávníček. Všechna práva vyhrazena.</p>
+                        <span className="hidden md:inline text-slate-700">·</span>
+                        <p className="text-slate-700">IČO: 68234581 · Plzeň, Česká republika</p>
+                    </div>
+                    <p className="text-slate-700">Designed for the summit.</p>
                 </div>
             </div>
         </motion.div>
