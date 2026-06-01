@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ShoppingBag, ExternalLink, X, ArrowRight, BookOpen, Camera, Shirt } from 'lucide-react';
-import IcefallBg  from '../assets/icefall_bg.jpg';
+import { ShoppingBag, ExternalLink, X, ArrowRight, BookOpen, Camera, Shirt, Gem, Heart } from 'lucide-react';
+import IcefallBg   from '../assets/icefall_bg.jpg';
 import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.jpg';
 import KnihaImg    from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
 import TrickoImg   from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
-import FotoImg     from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
+import NaramekImg  from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
+import MedImg      from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
 
 const CATEGORIES = [
     {
@@ -60,6 +61,37 @@ const CATEGORIES = [
             { name: 'Nepálská kolekce', detail: 's buddhistickýma očima' },
             { name: 'Ama Dablam — funkční trička', detail: 'Crazy' },
             { name: 'Fuck Cancer tričko', detail: 'projekt & osvěta' },
+        ],
+    },
+    {
+        id: 'naramky',
+        icon: <Gem className="w-4 h-4" />,
+        name: 'Nepálské náramky',
+        subtitle: 'Přímo od lidí z hor',
+        tag: 'Handmade',
+        color: 'from-teal-950/90',
+        accent: 'border-teal-300/60 text-teal-200',
+        img: NaramekImg,
+        desc: 'Jednoduché náramky dovezené přímo od lidí z hor. Nehraje si to na luxusní suvenýr — spíš malý kus Nepálu, který pomáhá dál podporovat místní lidi a prostředí, kam se sami pořád vracíme.',
+        note: null,
+        items: [
+            { name: 'Nepálské náramky', detail: 'od místních řemeslníků z hor' },
+        ],
+    },
+    {
+        id: 'sladke',
+        icon: <Heart className="w-4 h-4" />,
+        name: 'Něco sladkého na cesty',
+        subtitle: 'Věci, které s námi jezdí do hor',
+        tag: 'Partneři',
+        color: 'from-amber-950/90',
+        accent: 'border-amber-300/60 text-amber-200',
+        img: MedImg,
+        desc: 'Věci, které s námi jezdí do hor už dlouho — a které sami pravidelně používáme.',
+        note: null,
+        items: [
+            { name: 'Medové tuby HoneyBean', detail: 'energie na cesty' },
+            { name: 'Manukový med More Than Honey', detail: 'UMF certifikovaný' },
         ],
     },
 ];
@@ -176,7 +208,7 @@ const Eshop = ({ scrollProgress }) => {
                         {CATEGORIES.map((cat, i) => (
                             <button key={cat.id} onClick={() => setActive(cat)}
                                 className="group relative text-left rounded-2xl overflow-hidden transition-all duration-400 hover:-translate-y-0.5"
-                                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.10)', height: '108px' }}
+                                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.10)', height: '86px' }}
                                 onMouseEnter={e => e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.18)'}
                                 onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.10)'}
                             >
