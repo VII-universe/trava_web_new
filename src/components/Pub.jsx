@@ -165,10 +165,10 @@ const Pub = ({ scrollProgress }) => {
                         <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl flex flex-col bg-slate-900/85 backdrop-blur-2xl border border-white/15 pointer-events-auto"
                              style={{ width: '82vw', height: '76vh' }}>
                             <div className="relative" style={{ flex: '0 0 58%' }}>
-                                <img src={PubHero} className="w-full h-full object-cover" alt="" />
+                                <img loading="lazy" src={PubHero} className="w-full h-full object-cover" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
-                                    <img src={PubLogoNeg} alt="" className="h-40 w-auto object-contain object-left -ml-2 mb-1 pointer-events-none" />
+                                    <img loading="lazy" src={PubLogoNeg} alt="" className="h-40 w-auto object-contain object-left -ml-2 mb-1 pointer-events-none" />
                                     <div className="inline-flex items-center gap-1 text-gold-400 mb-1 bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded-full">
                                         <MapPin className="w-3 h-3 flex-shrink-0" />
                                         <span className="text-[9px] uppercase tracking-widest font-bold">Thamel, Káthmándú</span>
@@ -218,7 +218,7 @@ const Pub = ({ scrollProgress }) => {
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])}
                                             className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-white/20 active:scale-[0.97] hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -250,7 +250,7 @@ const Pub = ({ scrollProgress }) => {
                     <motion.div className="max-w-5xl w-full bg-slate-900/80 backdrop-blur-2xl border border-white/15 shadow-2xl rounded-[2rem] overflow-hidden pointer-events-auto flex" whileHover={{ y: -3 }}>
                         {/* Left image */}
                         <div className="w-[42%] relative flex-shrink-0">
-                            <img src={PubHero} className="w-full h-full object-cover" alt="" />
+                            <img loading="lazy" src={PubHero} className="w-full h-full object-cover" alt="" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
                                 <div className="inline-flex items-center gap-1.5 text-gold-400 mb-2 bg-slate-900/60 backdrop-blur-sm px-2.5 py-1 rounded-full">
@@ -262,7 +262,7 @@ const Pub = ({ scrollProgress }) => {
                         </div>
                         {/* Right content – no overflow-y, no lenis-prevent → page scroll works freely */}
                         <div className="w-[58%] flex flex-col p-7">
-                            <img src={PubLogoNeg} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none" />
+                            <img loading="lazy" src={PubLogoNeg} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none" />
                             <h2 className="font-serif text-2xl lg:text-3xl text-white mt-4 mb-2 leading-snug">Místo, kde se<br/>potkávají dobrodruzi</h2>
                             <p className="text-white/80 text-sm md:text-base leading-relaxed mb-2">
                                 Středobod českého vesmíru v Nepálu. Po návratu z treku nebo expedice tu sdílíš příběhy s lidmi, kteří mají hory pod kůží. Pivko v ruce, smažák na stole — přesně tak, jak to má být.
@@ -296,7 +296,7 @@ const Pub = ({ scrollProgress }) => {
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-white/20 shadow-sm hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -352,7 +352,7 @@ const Pub = ({ scrollProgress }) => {
                                     onClick={() => { setGalleryOpen(false); setSelectedImage(src); }}
                                     className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900"
                                 >
-                                    <img src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
+                                    <img loading="lazy" src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
                                         <ZoomIn className="w-7 h-7 text-white drop-shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>

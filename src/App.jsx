@@ -27,60 +27,50 @@ import 'lenis/dist/lenis.css';
 function App() {
   const containerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
-  const [contentReady, setContentReady] = useState(false);
-  // scrollReset gates ReactLenis: we reset native scroll BEFORE Lenis mounts so it
-  // never sees the browser-restored position. ReactLenis only renders once this is true.
+  // scrollReset gates ReactLenis: reset native scroll BEFORE Lenis mounts.
   const [scrollReset, setScrollReset] = useState(false);
 
+  // Reset scroll on mount immediately — never wait for Supabase.
   useLayoutEffect(() => {
-    if (contentReady && !scrollReset) {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      smoothProgress.jump(0);
-      setScrollReset(true);
-    }
-  }, [contentReady, scrollReset]);
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    smoothProgress.jump(0);
+    setScrollReset(true);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Supabase loads in background — never blocks initial render.
   useEffect(() => {
-    fetchAllFromSupabase().finally(() => setContentReady(true));
+    fetchAllFromSupabase().catch(() => {});
   }, []);
 
-  // After ReactLenis mounts (its useEffect runs before this one, child-before-parent),
-  // the spring may have been pulled to a non-zero target by attachFollow.
-  // jump(0) bypasses the spring completely without triggering scroll listeners.
   useEffect(() => {
     if (!scrollReset) return;
     smoothProgress.jump(0);
-  }, [scrollReset]);
+  }, [scrollReset]); // eslint-disable-line react-hooks/exhaustive-deps
 
-useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Track scroll over extended height for 11 sections
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Snappier spring on mobile so sections track finger immediately
   const smoothProgress = useSpring(scrollYProgress, isMobile
     ? { stiffness: 160, damping: 32, restDelta: 0.001 }
     : { stiffness: 120, damping: 28, restDelta: 0.001 }
   );
 
-  // Dark bridge covering Projects + Media transition so ivory never shows through
   const projectsMediaBridge = useTransform(smoothProgress, [0.69, 0.72, 0.88, 0.90], [0, 1, 1, 0]);
-  // Dark bridge covering Media + Contact transition
-  const mediaContactBridge = useTransform(smoothProgress, [0.85, 0.87, 1.0, 1.0], [0, 1, 1, 1]);
+  const mediaContactBridge  = useTransform(smoothProgress, [0.85, 0.87, 1.0, 1.0], [0, 1, 1, 1]);
 
-  if (!contentReady || !scrollReset) return (
-    <div className="fixed inset-0 bg-slate-950 flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
-    </div>
+  // Show minimal shell until scroll position is locked (one layout frame).
+  if (!scrollReset) return (
+    <div className="fixed inset-0 bg-slate-950" />
   );
 
   return (

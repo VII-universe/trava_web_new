@@ -1059,7 +1059,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 rel="noopener noreferrer"
                                 className="shrink-0 snap-start w-[72vw] rounded-2xl overflow-hidden border border-white/10 active:scale-[0.98] transition-transform relative"
                             >
-                                <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
+                                <img loading="lazy" fetchPriority="low" src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent" />
                                 <div className="relative flex flex-col items-center justify-center gap-3 h-full min-h-[200px] p-5">
                                     <div className="relative">
@@ -1125,7 +1125,7 @@ const Expeditions = ({ scrollProgress }) => {
                         rel="noopener noreferrer"
                         className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto flex"
                     >
-                        <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
+                        <img loading="lazy" fetchPriority="low" src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
                         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/85" />
                         <div className="relative flex items-center justify-center gap-5 h-full w-full">
                             <div className="relative shrink-0">

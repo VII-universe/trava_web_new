@@ -160,7 +160,7 @@ const Media = ({ scrollProgress }) => {
             className="absolute inset-0 pointer-events-none overflow-hidden"
         >
             <motion.div style={{ y: bgParallax }} className="absolute inset-0 scale-110 origin-center">
-                <img src={ClimbersImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <img loading="lazy" src={ClimbersImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
             </motion.div>
             {/* Main dark overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/88" />
@@ -180,7 +180,7 @@ const Media = ({ scrollProgress }) => {
 
                 {/* Photo header */}
                 <div className="shrink-0 relative overflow-hidden" style={{ height: '38%' }}>
-                    <img src={BaseCampImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                    <img loading="lazy" src={BaseCampImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/55 to-slate-950/80" />
                     <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 pb-4 gap-3">
                         <div className="text-center">
@@ -299,7 +299,7 @@ const Media = ({ scrollProgress }) => {
                             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-2xl group cursor-pointer border border-white/10"
                                 onClick={() => setActiveItem(MEDIA_DATA.video[0])}
                             >
-                                <img src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
+                                <img loading="lazy" src={ClimbersImg} alt="Honza v terénu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-4">
                                     <p className="text-gold-400 font-mono text-[9px] font-bold uppercase tracking-widest mb-1">Vlastní obsah</p>
@@ -428,7 +428,7 @@ const Media = ({ scrollProgress }) => {
                                     <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
                                         <div className="flex flex-col md:flex-row gap-7 lg:gap-10 mb-10">
                                             <div className={`w-full ${activeItem.type === 'video' ? 'md:w-3/5' : 'md:w-1/2'} aspect-video bg-slate-900 rounded-2xl overflow-hidden relative shadow-2xl group`}>
-                                                <img src={activeItem.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500" alt={activeItem.title} />
+                                                <img loading="lazy" src={activeItem.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500" alt={activeItem.title} />
                                                 <div className="absolute inset-0 flex items-center justify-center">
                                                     <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/25 flex items-center justify-center hover:bg-white/20 hover:scale-105 transition-all cursor-pointer shadow-2xl">
                                                         {activeItem.type === 'video'   && <Play     className="w-8 h-8 text-white fill-white ml-1 drop-shadow-lg" />}
@@ -465,7 +465,7 @@ const Media = ({ scrollProgress }) => {
                                                         className={`group cursor-pointer bg-white rounded-xl overflow-hidden border ${item.id === activeItem.id ? 'border-gold-400 ring-2 ring-gold-400' : 'border-slate-200'} shadow hover:shadow-xl transition-all hover:-translate-y-1`}
                                                     >
                                                         <div className="w-full aspect-[16/10] bg-slate-200 relative overflow-hidden">
-                                                            <img src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={item.title} />
+                                                            <img loading="lazy" src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={item.title} />
                                                             <div className="absolute top-3 right-3 bg-slate-900/80 text-white text-[9px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest">
                                                                 {item.duration || item.readTime}
                                                             </div>
@@ -487,7 +487,7 @@ const Media = ({ scrollProgress }) => {
                                             ← Zpět na přehled
                                         </button>
                                         <div className="w-full h-56 md:h-96 rounded-3xl overflow-hidden mb-9 shadow-2xl relative">
-                                            <img src={activeItem.image} className="w-full h-full object-cover" alt={activeItem.title} />
+                                            <img loading="lazy" src={activeItem.image} className="w-full h-full object-cover" alt={activeItem.title} />
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-7 md:p-11">
                                                 <div>
                                                     <span className="text-gold-400 font-sans font-bold uppercase tracking-widest text-[10px] mb-2 block">Příběhy z expedice</span>

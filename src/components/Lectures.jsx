@@ -331,7 +331,7 @@ const Lectures = ({ scrollProgress }) => {
                     >
                         {/* Left Info Area */}
                         <div className="md:w-[40%] relative bg-slate-900 flex flex-col justify-between hidden md:flex">
-                            <img src={BookingBg} className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" alt="Booking Background" />
+                            <img loading="lazy" src={BookingBg} className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" alt="Booking Background" />
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/90" />
                             
                             <div className="relative z-10 p-10 flex flex-col h-full text-left">
@@ -498,7 +498,7 @@ const Lectures = ({ scrollProgress }) => {
 
                             {/* Image Side */}
                             <div className="md:w-1/2 relative min-h-[250px] md:min-h-0">
-                                <img src={selectedEvent.image} className="absolute inset-0 w-full h-full object-cover" alt={selectedEvent.title || selectedEvent.city} />
+                                <img loading="lazy" src={selectedEvent.image} className="absolute inset-0 w-full h-full object-cover" alt={selectedEvent.title || selectedEvent.city} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden" />
                                 {selectedEvent.duration && (
                                     <div className="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">

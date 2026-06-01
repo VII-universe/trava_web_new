@@ -25,7 +25,7 @@ function ModalSlider({ images, fallback, className = '' }) {
     const next = () => setIdx(i => (i + 1) % all.length);
     return (
         <div className={`relative overflow-hidden ${className}`}>
-            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            <img loading="lazy" src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
             {all.length > 1 && <>
                 <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
                     <ChevronLeft className="w-4 h-4" />
@@ -198,7 +198,7 @@ const Projects = ({ scrollProgress }) => {
                                     </div>
                                     {project.logo ? (
                                         <div className="shrink-0 w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden">
-                                            <img src={project.logo} alt="" className="w-full h-full object-contain p-1" />
+                                            <img loading="lazy" src={project.logo} alt="" className="w-full h-full object-contain p-1" />
                                         </div>
                                     ) : (
                                         <div className="shrink-0 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
