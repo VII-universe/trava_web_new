@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee, Images, ZoomIn } from 'lucide-react';
+import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee, Images, ZoomIn, ArrowRight } from 'lucide-react';
 
 import HotelBg        from '../assets/zmensene/hotel/czech-pub-highlander-006-hires.jpg';
 import HotelHero      from '../assets/zmensene/hotel/czech-pub-highlander-004-hires.jpg';
@@ -40,6 +40,7 @@ const Hotel = ({ scrollProgress }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeDot, setActiveDot]         = useState(0);
     const [galleryOpen, setGalleryOpen]     = useState(false);
+    const [detailOpen, setDetailOpen]       = useState(false);
     const lenis      = useLenis();
     const trackRef   = useRef(null);
     const trackX     = useMotionValue(0);
@@ -56,7 +57,7 @@ const Hotel = ({ scrollProgress }) => {
     const dskRun       = useRef(null);
     const dskDragging  = useRef(false);
 
-    useScrollLock(!!selectedImage || galleryOpen);
+    useScrollLock(!!selectedImage || galleryOpen || detailOpen);
 
     const si = galleryImages.indexOf(selectedImage);
     const handleNext = (e) => { e.stopPropagation(); setSelectedImage(galleryImages[(si + 1) % galleryImages.length]); };
@@ -266,15 +267,15 @@ const Hotel = ({ scrollProgress }) => {
                                 <h3 className="text-white font-serif text-3xl leading-tight">Hotel<br/>Kathmandu<br/>Base Camp</h3>
                             </div>
                         </div>
-                        {/* Right content – no overflow-y, no lenis-prevent → page scroll works freely */}
+                        {/* Right content */}
                         <div className="w-[58%] flex flex-col p-7">
                             <img loading="lazy" src={HotelLogo} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none drop-shadow-sm" />
-                            <h2 className="font-serif text-2xl lg:text-3xl text-slate-900 mt-4 mb-2 leading-snug">Květinová oáza klidu<br/>uprostřed Thamelu</h2>
+                            <h2 className="font-serif text-2xl lg:text-3xl text-slate-900 mt-4 mb-1 leading-snug">Klidné zázemí<br/>v srdci Thamelu</h2>
                             <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-2">
-                                Jsme na dosah dění, a přesto tu vládne ticho. Snídaně plná čerstvého ovoce, pečiva a vajec tě připraví na výpravu nebo vrátí do pořádku po návratu z hor. Zahrada plná květin — útočiště od káthmándúského ruchu.
+                                Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací — před cestou do hor i po návratu z nich.
                             </p>
                             <p className="text-slate-500 text-sm leading-relaxed mb-3">
-                                Čisté pokoje, rychlá Wi-Fi a vždy někdo, s kým se domluvíš česky.
+                                Ráno čeká poctivá kontinentální snídaně, večer terasa plná květin. Čisté pokoje, rychlá Wi-Fi a vždy někdo, kdo Nepál dobře zná — a s kým se domluvíš i česky.
                             </p>
                             <div className="grid grid-cols-2 gap-2 mb-3">
                                 {FEATURES.map(({ icon, label }, i) => (
@@ -308,15 +309,20 @@ const Hotel = ({ scrollProgress }) => {
                                 </motion.div>
                             </div>
                             <div className="mt-auto flex flex-col gap-2">
-                                <button onClick={() => setGalleryOpen(true)}
-                                    className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 hover:text-slate-900 text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all">
-                                    <Images className="w-4 h-4 text-gold-500" />
-                                    Celá galerie ({galleryImages.length} fotek)
+                                <button onClick={() => setDetailOpen(true)}
+                                    className="group flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-slate-900/20">
+                                    O hotelu více <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                                 </button>
-                                <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-slate-900/20">
-                                    Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
-                                </a>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setGalleryOpen(true)}
+                                        className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
+                                        <Images className="w-3.5 h-3.5 text-gold-500" /> Galerie
+                                    </button>
+                                    <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
+                                        className="flex-1 flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
+                                        Booking <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -324,6 +330,110 @@ const Hotel = ({ scrollProgress }) => {
 
             </div>
         </motion.div>
+
+        {/* ── HOTEL DETAIL MODAL ── */}
+        <AnimatePresence>
+            {detailOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-[108] flex items-center justify-center p-0 md:p-6 lg:p-10 bg-slate-950/88 backdrop-blur-md pointer-events-auto"
+                    onClick={() => setDetailOpen(false)}
+                >
+                    <motion.div
+                        initial={{ scale: 0.96, y: 20, opacity: 0 }}
+                        animate={{ scale: 1, y: 0, opacity: 1 }}
+                        exit={{ scale: 0.96, y: 16, opacity: 0 }}
+                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                        onClick={e => e.stopPropagation()}
+                        className="bg-[#faf8f4] w-full max-w-5xl max-h-[96vh] rounded-none md:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
+                    >
+                        {/* Levá strana — fotky */}
+                        <div className="md:w-[46%] shrink-0 flex flex-col gap-0.5 bg-slate-900 min-h-[40vh] md:min-h-0">
+                            {/* Hero */}
+                            <div className="relative flex-1 min-h-[200px]">
+                                <img src={HotelHero} alt="Hotel Kathmandu Base Camp" className="absolute inset-0 w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                                <div className="absolute bottom-4 left-4 right-4">
+                                    <span className="inline-flex items-center gap-1.5 text-gold-400 bg-slate-950/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2">
+                                        <MapPin className="w-3 h-3" /> Thamel, Káthmándú
+                                    </span>
+                                </div>
+                            </div>
+                            {/* Foto grid */}
+                            <div className="grid grid-cols-3 gap-0.5 shrink-0" style={{ height: 120 }}>
+                                {[H1, H2, H3, H4, H5, H6].slice(0,6).map((src, i) => (
+                                    <button key={i} onClick={() => { setDetailOpen(false); setSelectedImage(src); }}
+                                        className="relative overflow-hidden group">
+                                        <img loading="lazy" src={src} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-400" />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                                            <ZoomIn className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Pravá strana — obsah */}
+                        <div className="flex-1 flex flex-col overflow-y-auto overscroll-contain" data-lenis-prevent>
+                            {/* Horní lišta */}
+                            <div className="flex items-center justify-between px-6 md:px-8 pt-6 pb-4 shrink-0 border-b border-slate-100">
+                                <img src={HotelLogo} alt="Hotel KBC" className="h-10 w-auto object-contain" />
+                                <button onClick={() => setDetailOpen(false)}
+                                    className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
+
+                            {/* Text */}
+                            <div className="px-6 md:px-8 py-6 space-y-4 flex-1">
+                                <div>
+                                    <p className="text-gold-600 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-2">Hotel Kathmandu Base Camp</p>
+                                    <h2 className="font-serif text-2xl md:text-3xl text-slate-900 leading-tight mb-4">
+                                        Klidné zázemí<br/>v srdci <span className="italic text-slate-500">Thamelu.</span>
+                                    </h2>
+                                </div>
+
+                                <p className="font-sans text-slate-800 text-sm md:text-base leading-relaxed font-medium">
+                                    Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací před cestou do hor i po návratu z nich. Kathmandu Base Camp je kombinací pohodového zázemí, cestovatelské atmosféry a klidného prostoru jen pár kroků od všeho důležitého.
+                                </p>
+                                <p className="font-sans text-slate-700 text-sm leading-relaxed">
+                                    Ráno vás čeká poctivá kontinentální snídaně, večer terasa plná květin — a během dne místo, kde si odpočinete od ruchu Thamelu, dáte si čaj nebo jen chvíli zpomalíte před další cestou.
+                                </p>
+                                <p className="font-sans text-slate-600 text-sm leading-relaxed">
+                                    Najdete u nás čisté pokoje, rychlou Wi-Fi i lidi, kteří Nepál dobře znají a rádi pomohou. A vždy někdo, s kým se domluvíte i česky.
+                                </p>
+
+                                {/* Features */}
+                                <div className="grid grid-cols-2 gap-2 pt-2">
+                                    {FEATURES.map(({ icon, label }, i) => (
+                                        <div key={i} className="flex items-center gap-2.5 bg-amber-50/80 border border-amber-100 rounded-xl px-3 py-2.5">
+                                            <div className="p-1.5 bg-white rounded-lg shadow-sm shrink-0">{icon}</div>
+                                            <span className="text-xs font-semibold text-slate-700 leading-tight">{label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <div className="px-6 md:px-8 py-5 shrink-0 border-t border-slate-100 flex flex-col gap-2.5 bg-white/60">
+                                <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html"
+                                    target="_blank" rel="noopener noreferrer"
+                                    className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg group">
+                                    Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
+                                </a>
+                                <button onClick={() => { setDetailOpen(false); setGalleryOpen(true); }}
+                                    className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl transition-all">
+                                    <Images className="w-3.5 h-3.5 text-gold-500" /> Celá galerie ({galleryImages.length} fotek)
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
 
         {/* GALLERY MODAL */}
         <AnimatePresence>
