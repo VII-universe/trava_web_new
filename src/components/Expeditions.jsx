@@ -602,6 +602,177 @@ function NepalMap({ regions, onRegionClick }) {
     );
 }
 
+/* ─── Map Modal — full-screen split: mapa vlevo, region detail vpravo ─── */
+function MapModal({ regions, onClose, onOpenRegion }) {
+    const [selected, setSelected] = useState(null);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[200] pointer-events-auto flex flex-col bg-[#06090f]"
+        >
+            {/* ── Header ── */}
+            <div className="shrink-0 flex items-center justify-between px-5 md:px-8 py-3.5 border-b border-white/[0.06] bg-[#0a0f1a]/80 backdrop-blur-md">
+                <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-full bg-gold-500/15 border border-gold-500/30 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-gold-400" />
+                    </div>
+                    <div>
+                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.45em] font-bold leading-none mb-0.5">14 Summits Expedition</p>
+                        <h2 className="font-serif text-white text-lg md:text-xl leading-none">Kde v Nepálu chceš být?</h2>
+                    </div>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="p-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-white transition-colors border border-white/[0.08]"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* ── Body: mapa + detail ── */}
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+
+                {/* Mapa */}
+                <div className="flex-1 md:w-[58%] flex flex-col gap-0 p-3 md:p-5 min-h-0 h-[48vh] md:h-auto">
+                    <p className="text-slate-500 text-[10px] font-mono uppercase tracking-widest mb-2 shrink-0">
+                        Najeď na oblast → klikni pro detail
+                    </p>
+                    <div className="flex-1 min-h-0">
+                        <NepalMap
+                            regions={regions}
+                            onRegionClick={(reg) => setSelected(reg)}
+                        />
+                    </div>
+                </div>
+
+                {/* Divider */}
+                <div className="hidden md:block w-px bg-white/[0.06] shrink-0" />
+
+                {/* Region detail */}
+                <div className="md:w-[42%] flex flex-col overflow-hidden border-t md:border-t-0 border-white/[0.06]">
+                    <AnimatePresence mode="wait">
+                        {selected ? (
+                            /* ── Region detail ── */
+                            <motion.div
+                                key={selected.id}
+                                initial={{ opacity: 0, x: 18 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -12 }}
+                                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                                className="flex flex-col h-full"
+                            >
+                                {/* Hero */}
+                                <div className="relative h-40 md:h-52 shrink-0 overflow-hidden">
+                                    <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#06090f] via-[#06090f]/55 to-transparent" />
+                                    {/* Back button */}
+                                    <button
+                                        onClick={() => setSelected(null)}
+                                        className="absolute top-4 left-4 flex items-center gap-1.5 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors"
+                                    >
+                                        <ChevronLeft className="w-3.5 h-3.5" /> zpět
+                                    </button>
+                                    <div className="absolute bottom-4 left-5 right-5">
+                                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] mb-1 font-bold">{selected.subtitle}</p>
+                                        <h3 className="font-serif text-white text-2xl md:text-3xl leading-tight">{selected.name}</h3>
+                                    </div>
+                                </div>
+
+                                {/* Scrollable content */}
+                                <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar px-5 py-4 space-y-5" data-lenis-prevent>
+                                    {/* Badges */}
+                                    <div className="flex flex-wrap gap-2">
+                                        <span className="px-3 py-1.5 rounded-full text-[10px] font-mono font-bold text-gold-300 bg-gold-500/10 border border-gold-500/20">{selected.altitude}</span>
+                                        <span className="px-3 py-1.5 rounded-full text-[10px] font-sans text-slate-300 bg-white/[0.05] border border-white/[0.1]">{selected.difficulty}</span>
+                                        <span className="px-3 py-1.5 rounded-full text-[10px] font-sans text-slate-400 bg-white/[0.04] border border-white/[0.08]">{selected.bestSeason}</span>
+                                    </div>
+
+                                    {/* Popis */}
+                                    <p className="font-sans text-slate-300 text-sm leading-relaxed">{selected.desc}</p>
+
+                                    {/* Aktivity / highlights */}
+                                    <div>
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-slate-500 mb-3">Co tam najdeš</p>
+                                        <ul className="space-y-2.5">
+                                            {selected.highlights.map((h, i) => (
+                                                <li key={i} className="flex items-start gap-2.5 group/item">
+                                                    <div className="w-5 h-5 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center shrink-0 mt-0.5 group-hover/item:bg-gold-500/20 transition-colors">
+                                                        <ArrowRight className="w-2.5 h-2.5 text-gold-400" />
+                                                    </div>
+                                                    <span className="text-slate-300 text-sm leading-snug">{h}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* CTA */}
+                                    <div className="flex flex-col gap-2 pt-1 pb-4">
+                                        <a
+                                            href="https://14summitsexpedition.cz"
+                                            target="_blank" rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-white font-bold uppercase tracking-widest text-xs rounded-xl transition-all shadow-[0_0_20px_rgba(212,175,55,0.25)]"
+                                        >
+                                            Chci do Nepálu <ArrowRight className="w-4 h-4" />
+                                        </a>
+                                        <button
+                                            onClick={() => { onClose(); onOpenRegion(selected); }}
+                                            className="flex items-center justify-center gap-2 py-3 bg-white/[0.05] hover:bg-white/[0.09] text-slate-300 border border-white/[0.1] font-bold uppercase tracking-widest text-xs rounded-xl transition-all"
+                                        >
+                                            <ExternalLink className="w-3.5 h-3.5" /> Celý detail oblasti
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ) : (
+                            /* ── Empty state ── */
+                            <motion.div
+                                key="empty"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.18 }}
+                                className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-5"
+                            >
+                                {/* Animated compass icon */}
+                                <div className="relative">
+                                    <div className="w-20 h-20 rounded-full bg-gold-500/8 border border-gold-500/15 flex items-center justify-center">
+                                        <MapPin className="w-8 h-8 text-gold-400/40" />
+                                    </div>
+                                    <span className="absolute inset-0 rounded-full border border-gold-500/15 animate-ping" style={{ animationDuration: '2.5s' }} />
+                                </div>
+
+                                <div>
+                                    <p className="font-serif text-white text-xl mb-2">Vyber oblast</p>
+                                    <p className="text-slate-500 text-sm max-w-[220px] leading-relaxed mx-auto">
+                                        Klikni na libovolnou oblast mapy a zjistíš, co tam děláme a proč jet.
+                                    </p>
+                                </div>
+
+                                {/* Quick-access region pills */}
+                                <div className="flex flex-wrap gap-2 justify-center max-w-[300px]">
+                                    {regions.filter(r => r.id !== 'world').map(r => (
+                                        <button
+                                            key={r.id}
+                                            onClick={() => setSelected(r)}
+                                            className="px-3 py-1.5 bg-white/[0.04] hover:bg-white/[0.09] border border-white/[0.07] hover:border-gold-500/30 text-slate-400 hover:text-white text-[11px] font-sans rounded-full transition-all duration-200"
+                                        >
+                                            {r.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
 const Expeditions = ({ scrollProgress }) => {
     const adminExpeditions = loadContent('expeditions', null);
     const adminTexts = loadContent('texts', DEF_TEXTS);
@@ -625,6 +796,7 @@ const Expeditions = ({ scrollProgress }) => {
     const [miriSource, setMiriSource] = useState(null);
     const [subinSource, setSubinSource] = useState(null);
     const [is14Open, setIs14Open] = useState(false);
+    const [isMapModalOpen, setIsMapModalOpen] = useState(false);
     const [isVideoOpen, setIsVideoOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isRegionsOpen, setIsRegionsOpen] = useState(false);
@@ -633,7 +805,7 @@ const Expeditions = ({ scrollProgress }) => {
     const VIDEO_EMBED_URL = 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID';
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen || is14Open);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen || is14Open || isMapModalOpen);
 
     useEffect(() => {
         const handleEsc = (e) => { if (e.key === 'Escape') setIsVideoOpen(false); };
@@ -737,6 +909,9 @@ const Expeditions = ({ scrollProgress }) => {
                                 <div className="flex flex-col gap-2 mt-auto">
                                     <button onClick={() => setIs14Open(true)} className="w-full py-2.5 px-3 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2">
                                         O 14 Summits <ArrowRight className="w-3 h-3" />
+                                    </button>
+                                    <button onClick={() => setIsMapModalOpen(true)} className="w-full py-2.5 px-3 bg-transparent border border-white/[0.12] text-slate-300 text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2">
+                                        <MapPin className="w-3 h-3 text-gold-400/70" /> Regiony Nepálu
                                     </button>
                                     <div className="flex gap-2">
                                         <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {miri.name.split(' ')[0]}</button>
@@ -993,6 +1168,14 @@ const Expeditions = ({ scrollProgress }) => {
                                     <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
                                     <span className="relative z-10 drop-shadow-md">O 14 Summits Expedition</span>
                                     <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                </button>
+                                <button
+                                    onClick={() => setIsMapModalOpen(true)}
+                                    className="group w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 bg-transparent hover:bg-white/[0.07] text-slate-300 hover:text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-300 border border-white/[0.12] hover:border-gold-500/40"
+                                >
+                                    <MapPin className="w-3.5 h-3.5 text-gold-400/70 group-hover:text-gold-400 transition-colors" />
+                                    Prozkoumej regiony Nepálu
+                                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
                                 </button>
                                 <div className="flex gap-2.5">
                                     <button
@@ -1371,6 +1554,20 @@ const Expeditions = ({ scrollProgress }) => {
                         )}
                     </motion.div>
                 </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── MAP MODAL ── */}
+        <AnimatePresence>
+            {isMapModalOpen && (
+                <MapModal
+                    regions={REGIONS}
+                    onClose={() => setIsMapModalOpen(false)}
+                    onOpenRegion={(region) => {
+                        setSelectedRegion(region);
+                        setIsRegionsOpen(true);
+                    }}
+                />
             )}
         </AnimatePresence>
 
