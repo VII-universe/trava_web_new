@@ -339,19 +339,38 @@ const NEPAL_REGION_PATHS = [
 
 // GPS: x=(lon-80)*102.5, y=(30.4-lat)*72.5 — summit position
 // tip = apex SVG y (above summit), baseY = base of triangle
+// GPS: x=(lon-80)*102.5, y=(30.4-lat)*72.5
 const NEPAL_PEAKS = [
     { x: 358, tip: 108, baseY: 132, w: 20, name: 'Dhaulagiri', alt: '8 167 m', anchor: 'end',    lx: -6 },
     { x: 392, tip: 112, baseY: 140, w: 18, name: 'Annapurna',  alt: '8 091 m', anchor: 'start',  lx:  6 },
     { x: 468, tip: 116, baseY: 144, w: 22, name: 'Manáslu',    alt: '8 163 m', anchor: 'middle', lx:  0 },
-    { x: 710, tip: 158, baseY: 182, w: 26, name: 'Everest',    alt: '8 848 m', anchor: 'end',    lx: -6 },
+    { x: 683, tip: 163, baseY: 174, w: 16, name: 'Cho Oyu',    alt: '8 188 m', anchor: 'start',  lx:  6 },
+    { x: 710, tip: 156, baseY: 178, w: 26, name: 'Everest',    alt: '8 848 m', anchor: 'end',    lx: -6 },
 ];
 
 const NEPAL_CITIES = [
-    { x: 545, y: 192, name: 'Káthmándú', type: 'capital', labelBelow: true,  labelDx: 0   },
-    { x: 409, y: 162, name: 'Pokhara',   type: 'city',    labelBelow: false, labelDx: 0   },
-    { x: 689, y: 194, name: 'Lukla',     type: 'town',    labelBelow: false, labelDx: 10  },
-    { x: 382, y: 126, name: 'Jomsom',    type: 'town',    labelBelow: true,  labelDx: 0   },
-    { x: 407, y: 56,  name: 'Lo Manthang', type: 'town',  labelBelow: true,  labelDx: 12  },
+    { x: 545, y: 192, name: 'Káthmándú',   type: 'capital', labelBelow: true,  labelDx: 0   },
+    { x: 409, y: 162, name: 'Pokhara',      type: 'city',    labelBelow: false, labelDx: 0   },
+    { x: 689, y: 194, name: 'Lukla',        type: 'town',    labelBelow: false, labelDx: 10  },
+    { x: 688, y: 186, name: 'Namche Bazar', type: 'town',    labelBelow: false, labelDx: 10  },
+    { x: 382, y: 126, name: 'Jomsom',       type: 'town',    labelBelow: true,  labelDx: 0   },
+    { x: 407, y: 56,  name: 'Lo Manthang',  type: 'town',    labelBelow: true,  labelDx: 12  },
+];
+
+// Trekingové trasy — GPS polylines
+const TREK_ROUTES = [
+    {
+        id: 'ebc', name: 'EBC Trek',
+        path: 'M 689,194 C 688,191 688,189 688,186 C 692,184 696,182 699,180 C 698,178 697,177 702,174',
+    },
+    {
+        id: 'annapurna', name: 'Annapurna Circuit',
+        path: 'M 449,157 C 434,143 420,129 412,124 C 405,118 397,114 382,117 C 384,128 391,143 409,162 C 428,159 440,157 449,157',
+    },
+    {
+        id: 'langtang', name: 'Langtang Trek',
+        path: 'M 490,174 C 490,166 490,157 490,148 C 491,145 492,143 492,141',
+    },
 ];
 
 function NepalMap({ regions, onRegionClick }) {
@@ -373,31 +392,31 @@ function NepalMap({ regions, onRegionClick }) {
                         <path d={NEPAL_OUTLINE} />
                     </clipPath>
 
-                    {/* Himalajská sněhová zóna — bledá nahoře */}
+                    {/* Himalajský sněh a ledovce */}
                     <linearGradient id="snowZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#e8e4dc" stopOpacity="0.95" />
-                        <stop offset="55%"  stopColor="#d0c4a8" stopOpacity="0.55" />
-                        <stop offset="100%" stopColor="#c0b090" stopOpacity="0"    />
+                        <stop offset="0%"   stopColor="#f0ece6" stopOpacity="0.98" />
+                        <stop offset="45%"  stopColor="#d8ceba" stopOpacity="0.7"  />
+                        <stop offset="100%" stopColor="#c4b898" stopOpacity="0"    />
                     </linearGradient>
-                    {/* Alpská skalní zóna */}
+                    {/* Alpská skalní zóna — teplejší hnědá */}
                     <linearGradient id="alpineZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#a89870" stopOpacity="0.9" />
-                        <stop offset="60%"  stopColor="#b09860" stopOpacity="0.35" />
-                        <stop offset="100%" stopColor="#b8a850" stopOpacity="0"    />
+                        <stop offset="0%"   stopColor="#a89268" stopOpacity="0.92" />
+                        <stop offset="55%"  stopColor="#b09a60" stopOpacity="0.4"  />
+                        <stop offset="100%" stopColor="#b8a855" stopOpacity="0"    />
                     </linearGradient>
-                    {/* Zelená střední zóna (kopce/lesy) */}
+                    {/* Lesní a střední kopce — sytější zelená */}
                     <linearGradient id="hillZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#88a850" stopOpacity="0" />
-                        <stop offset="30%"  stopColor="#90b050" stopOpacity="0.55" />
-                        <stop offset="70%"  stopColor="#98b848" stopOpacity="0.65" />
-                        <stop offset="100%" stopColor="#a0c050" stopOpacity="0.5"  />
+                        <stop offset="0%"   stopColor="#6a9845" stopOpacity="0"    />
+                        <stop offset="28%"  stopColor="#78a848" stopOpacity="0.6"  />
+                        <stop offset="65%"  stopColor="#88b448" stopOpacity="0.7"  />
+                        <stop offset="100%" stopColor="#98c050" stopOpacity="0.55" />
                     </linearGradient>
-                    {/* Hill shading — světlo z SZ (typická kartografie) */}
+                    {/* Hill shading SZ → JV */}
                     <linearGradient id="hillShade" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%"   stopColor="white" stopOpacity="0.13" />
-                        <stop offset="45%"  stopColor="white" stopOpacity="0"    />
-                        <stop offset="55%"  stopColor="black" stopOpacity="0"    />
-                        <stop offset="100%" stopColor="black" stopOpacity="0.1"  />
+                        <stop offset="0%"   stopColor="white" stopOpacity="0.16" />
+                        <stop offset="42%"  stopColor="white" stopOpacity="0"    />
+                        <stop offset="58%"  stopColor="black" stopOpacity="0"    />
+                        <stop offset="100%" stopColor="black" stopOpacity="0.12" />
                     </linearGradient>
 
                     {/* Region hover */}
@@ -498,6 +517,43 @@ function NepalMap({ regions, onRegionClick }) {
                         fill="none" stroke="#4878a0" strokeWidth="1.8" strokeLinecap="round" opacity="0.6" />
                     <path d="M 82,115 C 78,140 74,166 70,194"
                         fill="none" stroke="#4878a0" strokeWidth="0.7" strokeLinecap="round" opacity="0.6" />
+                </g>
+
+                {/* ── Národní parky — dotted boundary ── */}
+                <g fill="none" style={{ pointerEvents: 'none' }}>
+                    {/* Sagarmatha National Park (Khumbu) */}
+                    <ellipse cx="718" cy="196" rx="52" ry="28"
+                        stroke="#4a7a3a" strokeWidth="0.9" strokeDasharray="3 2.5" opacity="0.55" />
+                    <text x="718" y="230" textAnchor="middle" fill="#4a7a3a" fontSize="9"
+                        fontFamily="sans-serif" fontStyle="italic" opacity="0.7"
+                        filter="url(#thalo)">Sagarmatha NP</text>
+                    {/* Annapurna Conservation Area */}
+                    <ellipse cx="390" cy="140" rx="58" ry="36"
+                        stroke="#4a7a3a" strokeWidth="0.9" strokeDasharray="3 2.5" opacity="0.5" />
+                    <text x="385" y="182" textAnchor="middle" fill="#4a7a3a" fontSize="8.5"
+                        fontFamily="sans-serif" fontStyle="italic" opacity="0.65"
+                        filter="url(#thalo)">Annapurna CA</text>
+                </g>
+
+                {/* ── Trekingové trasy ── */}
+                <g style={{ pointerEvents: 'none' }}>
+                    {TREK_ROUTES.map(r => (
+                        <g key={r.id}>
+                            {/* Stínová vrstva */}
+                            <path d={r.path} fill="none" stroke="rgba(255,255,255,0.4)"
+                                strokeWidth="2.8" strokeLinecap="round" strokeDasharray="5 3.5" />
+                            {/* Hlavní linie */}
+                            <path d={r.path} fill="none" stroke="#b05c10"
+                                strokeWidth="1.6" strokeLinecap="round" strokeDasharray="5 3.5" opacity="0.85" />
+                        </g>
+                    ))}
+                    {/* Popisky tras */}
+                    <text x="700" y="202" fill="#7a3e08" fontSize="8" fontFamily="sans-serif"
+                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">EBC Trek</text>
+                    <text x="430" y="153" fill="#7a3e08" fontSize="7.5" fontFamily="sans-serif"
+                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">Annapurna Circuit</text>
+                    <text x="500" y="166" fill="#7a3e08" fontSize="7.5" fontFamily="sans-serif"
+                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">Langtang</text>
                 </g>
 
                 {/* Fotky regionů — jen při hoveru */}
@@ -617,6 +673,22 @@ function NepalMap({ regions, onRegionClick }) {
                     <polygon points="-12,0 0,-4.5 0,4.5"  fill="#3a2010" opacity="0.55" />
                     <polygon points=" 12,0 0,-4.5 0,4.5"  fill="#9a8070" opacity="0.55" />
                     <text x="0" y="-17" textAnchor="middle" fill="#3a2010" fontSize="12" fontFamily="sans-serif" fontWeight="700">S</text>
+                </g>
+
+                {/* ── Měřítko — 100 km = 105 SVG jednotek ── */}
+                <g style={{ pointerEvents:'none' }} transform="translate(645,272)">
+                    {/* Linie */}
+                    <line x1="0" y1="0" x2="105" y2="0" stroke="#3a2810" strokeWidth="1.2" />
+                    <line x1="0" y1="-4" x2="0" y2="4" stroke="#3a2810" strokeWidth="1.2" />
+                    <line x1="105" y1="-4" x2="105" y2="4" stroke="#3a2810" strokeWidth="1.2" />
+                    <line x1="52.5" y1="-3" x2="52.5" y2="3" stroke="#3a2810" strokeWidth="0.8" />
+                    {/* Černo-bílé proužky */}
+                    <rect x="0" y="-3" width="52.5" height="6" fill="#3a2810" opacity="0.7" rx="1" />
+                    <rect x="52.5" y="-3" width="52.5" height="6" fill="rgba(220,210,190,0.9)" rx="1" />
+                    {/* Texty */}
+                    <text x="0"   y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">0</text>
+                    <text x="52.5" y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">50</text>
+                    <text x="105" y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">100 km</text>
                 </g>
 
                 {/* Hover — název regionu na mapě */}
