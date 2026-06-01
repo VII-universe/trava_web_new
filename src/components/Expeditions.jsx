@@ -352,70 +352,144 @@ function NepalMap({ regions, onRegionClick }) {
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
 
-            {/* ── SVG map — ilustrativní kartografie ── */}
+            {/* ── SVG map — ilustrativní kartografie s výškovými zónami ── */}
+            {/* SEVER = NAHOŘE (Tibet/Čína nahoře, Indie dole) ✓ */}
             <svg viewBox="0 0 820 290" className="w-full h-full" style={{ display: 'block' }}>
                 <defs>
+                    {/* Clip paths pro regiony i pro Nepál jako celek */}
                     {NEPAL_REGION_PATHS.map(r => (
                         <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}><path d={r.path} /></clipPath>
                     ))}
-                    <linearGradient id="elevGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#9a8860" stopOpacity="0.6"  />
-                        <stop offset="30%"  stopColor="#b09858" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="#c8b870" stopOpacity="0"    />
+                    <clipPath id="nepalClip">
+                        <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" />
+                    </clipPath>
+
+                    {/* Himalajská sněhová zóna — bledá nahoře */}
+                    <linearGradient id="snowZone" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#e8e4dc" stopOpacity="0.95" />
+                        <stop offset="55%"  stopColor="#d0c4a8" stopOpacity="0.55" />
+                        <stop offset="100%" stopColor="#c0b090" stopOpacity="0"    />
                     </linearGradient>
+                    {/* Alpská skalní zóna */}
+                    <linearGradient id="alpineZone" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#a89870" stopOpacity="0.9" />
+                        <stop offset="60%"  stopColor="#b09860" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#b8a850" stopOpacity="0"    />
+                    </linearGradient>
+                    {/* Zelená střední zóna (kopce/lesy) */}
+                    <linearGradient id="hillZone" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#88a850" stopOpacity="0" />
+                        <stop offset="30%"  stopColor="#90b050" stopOpacity="0.55" />
+                        <stop offset="70%"  stopColor="#98b848" stopOpacity="0.65" />
+                        <stop offset="100%" stopColor="#a0c050" stopOpacity="0.5"  />
+                    </linearGradient>
+                    {/* Hill shading — světlo z SZ (typická kartografie) */}
+                    <linearGradient id="hillShade" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%"   stopColor="white" stopOpacity="0.13" />
+                        <stop offset="45%"  stopColor="white" stopOpacity="0"    />
+                        <stop offset="55%"  stopColor="black" stopOpacity="0"    />
+                        <stop offset="100%" stopColor="black" stopOpacity="0.1"  />
+                    </linearGradient>
+
+                    {/* Region hover */}
                     <filter id="hglow" x="-25%" y="-25%" width="150%" height="150%">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b" />
                         <feFlood floodColor="#9a6000" floodOpacity="0.5" result="c" />
                         <feComposite in="c" in2="b" operator="in" result="g" />
                         <feMerge><feMergeNode in="g" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
-                    {/* Bílé halo pro texty na světlé mapě */}
+                    {/* Text halo */}
                     <filter id="thalo" x="-10%" y="-30%" width="120%" height="160%">
                         <feMorphology operator="dilate" radius="2" in="SourceAlpha" result="d" />
                         <feFlood floodColor="#e8dcc4" floodOpacity="0.95" result="c" />
                         <feComposite in="c" in2="d" operator="in" result="halo" />
                         <feMerge><feMergeNode in="halo" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
+                    {/* Horský stín */}
                     <filter id="mshadow" x="-30%" y="-30%" width="160%" height="160%">
                         <feDropShadow dx="2" dy="3" stdDeviation="2.5" floodColor="#2a1408" floodOpacity="0.3" />
                     </filter>
+
+                    {/* Animace řek */}
+                    <style>{`
+                        @keyframes riverFlow {
+                            from { stroke-dashoffset: 32; }
+                            to   { stroke-dashoffset: 0; }
+                        }
+                        .river-anim {
+                            stroke-dasharray: 8 4;
+                            animation: riverFlow 3.5s linear infinite;
+                        }
+                        .river-anim-slow {
+                            stroke-dasharray: 6 4;
+                            animation: riverFlow 5s linear infinite;
+                        }
+                    `}</style>
                 </defs>
 
-                {/* Okolní území — jemný papírový vzor */}
-                <rect width="820" height="290" fill="#aec2cc" />
-                {[0,12,24,36,48,60,72,84,96,108,120,132,144,156,168,180,192,204,216,228,240,252,264,276,288].map(y => (
-                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.4" />
+                {/* Okolní území */}
+                <rect width="820" height="290" fill="#a8bcc8" />
+                {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
+                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
-                <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.45)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
-                <text x="410" y="14"  textAnchor="middle" fill="rgba(50,80,100,0.4)"  fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
-                <text x="11"  y="196" fill="rgba(50,80,100,0.35)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
+                <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
+                <text x="410" y="14"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
+                <text x="11"  y="196" fill="rgba(50,80,100,0.32)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
 
-                {/* Nepál — základní plocha + výškový gradient */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="#dcd0b0" />
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="url(#elevGrad)" />
-                {/* Jemné vrstevnicové linie */}
-                {[105,135,165,195,225,255].map(y => (
-                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(130,100,50,0.065)" strokeWidth="0.5" />
+                {/* ── VÝŠKOVÉ ZÓNY NEPÁLU ── */}
+                {/* Základní barva — teplé zeleno-hnědé středohorské kopce */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z"
+                    fill="#b4a868" />
+
+                {/* Zelená zóna — lesy a střední kopce (clipped) */}
+                <rect x="0" y="80" width="820" height="200" fill="url(#hillZone)" clipPath="url(#nepalClip)" />
+
+                {/* Alpská skalní zóna — hnědošedá (clipped) */}
+                <rect x="0" y="0" width="820" height="120" fill="url(#alpineZone)" clipPath="url(#nepalClip)" />
+
+                {/* Himalajský sněhový pokryv — světle krémová nahoře (clipped) */}
+                <rect x="0" y="0" width="820" height="90" fill="url(#snowZone)" clipPath="url(#nepalClip)" />
+
+                {/* Hill shading — světlo ze SZ, stín na JV */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z"
+                    fill="url(#hillShade)" />
+
+                {/* Vrstevnicové linie — subtilní */}
+                {[95,118,142,165,190,215,242].map(y => (
+                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(100,75,40,0.055)" strokeWidth="0.5" />
                 ))}
 
-                {/* Himalajský sněhový pás — dvouvrstvý efekt */}
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62" fill="none" stroke="rgba(248,245,240,0.9)" strokeWidth="20" strokeLinecap="round" />
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="7" strokeLinecap="round" />
+                {/* Himalajský sněhový pás — vrstvený */}
+                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
+                    fill="none" stroke="rgba(245,242,236,0.92)" strokeWidth="22" strokeLinecap="round" />
+                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
+                    fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="8" strokeLinecap="round" />
+                {/* Sněhová hrana — tmavší spodní lem */}
+                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
+                    fill="none" stroke="rgba(160,140,110,0.3)" strokeWidth="2" strokeLinecap="round" />
 
-                {/* Řeky — tapering (silnější dole) */}
+                {/* ── ŘEKY — animované ── */}
                 <g style={{ pointerEvents:'none' }}>
-                    {/* Kali Gandaki */}
-                    <path d="M 382,58 C 380,82 376,108 372,138 C 368,168 365,198 362,228 L 360,262" fill="none" stroke="#5888a8" strokeWidth="2.2" strokeLinecap="round" opacity="0.65" />
-                    <path d="M 382,58 C 380,82 376,108 372,138" fill="none" stroke="#5888a8" strokeWidth="0.9" strokeLinecap="round" opacity="0.65" />
+                    {/* Kali Gandaki — silnější dole (tapering) */}
+                    <path className="river-anim" d="M 382,58 C 380,82 376,108 372,138 C 368,168 365,198 362,228 L 360,262"
+                        fill="none" stroke="#4878a0" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+                    <path d="M 382,58 C 380,82 376,108 372,138"
+                        fill="none" stroke="#4878a0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
                     {/* Trishuli */}
-                    <path d="M 462,108 C 460,132 458,155 462,182 C 465,205 470,232 468,262" fill="none" stroke="#5888a8" strokeWidth="2.2" strokeLinecap="round" opacity="0.65" />
-                    <path d="M 462,108 C 460,132 458,155 462,182" fill="none" stroke="#5888a8" strokeWidth="0.9" strokeLinecap="round" opacity="0.65" />
+                    <path className="river-anim" d="M 462,108 C 460,132 458,155 462,182 C 465,205 470,232 468,262"
+                        fill="none" stroke="#4878a0" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+                    <path d="M 462,108 C 460,132 458,155 462,182"
+                        fill="none" stroke="#4878a0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
                     {/* Koshi */}
-                    <path d="M 660,108 C 655,135 652,160 655,185 C 658,212 648,238 650,262" fill="none" stroke="#5888a8" strokeWidth="2.2" strokeLinecap="round" opacity="0.65" />
-                    <path d="M 660,108 C 655,135 652,160 655,185" fill="none" stroke="#5888a8" strokeWidth="0.9" strokeLinecap="round" opacity="0.65" />
+                    <path className="river-anim" d="M 660,108 C 655,135 652,160 655,185 C 658,212 648,238 650,262"
+                        fill="none" stroke="#4878a0" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+                    <path d="M 660,108 C 655,135 652,160 655,185"
+                        fill="none" stroke="#4878a0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
                     {/* Karnali */}
-                    <path d="M 82,115 C 78,140 74,166 70,194 C 66,218 60,240 58,262" fill="none" stroke="#5888a8" strokeWidth="1.6" strokeLinecap="round" opacity="0.55" />
-                    <path d="M 82,115 C 78,140 74,166 70,194" fill="none" stroke="#5888a8" strokeWidth="0.7" strokeLinecap="round" opacity="0.55" />
+                    <path className="river-anim-slow" d="M 82,115 C 78,140 74,166 70,194 C 66,218 60,240 58,262"
+                        fill="none" stroke="#4878a0" strokeWidth="1.8" strokeLinecap="round" opacity="0.6" />
+                    <path d="M 82,115 C 78,140 74,166 70,194"
+                        fill="none" stroke="#4878a0" strokeWidth="0.7" strokeLinecap="round" opacity="0.6" />
                 </g>
 
                 {/* Fotky regionů — jen při hoveru */}
@@ -451,7 +525,7 @@ function NepalMap({ regions, onRegionClick }) {
                 {/* Nepál — border */}
                 <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="none" stroke="#3a2810" strokeWidth="1.6" />
 
-                {/* ── Ilustrativní hory — světlá/stínová strana + sněžná čepice ── */}
+                {/* ── Ilustrativní hory — elevation halos + světlá/stínová strana ── */}
                 {NEPAL_PEAKS.map((p, i) => {
                     const ht  = p.baseY - p.tip;
                     const sl  = p.tip + ht * 0.36;
@@ -460,19 +534,32 @@ function NepalMap({ regions, onRegionClick }) {
                     const lay = p.baseY + 40;
                     return (
                         <g key={i} style={{ pointerEvents: 'none' }}>
-                            {/* Základní eliptický stín pod horou */}
-                            <ellipse cx={p.x + 3} cy={p.baseY + 2} rx={p.w * 0.72} ry={3.5} fill="rgba(50,25,10,0.22)" />
-                            {/* Osvětlená strana (západ/vlevo) */}
+                            {/* Elevation halos — vrstevnicové prstence kolem vrcholu */}
+                            {[1.8, 1.45, 1.15].map((scale, hi) => (
+                                <ellipse key={hi}
+                                    cx={p.x} cy={p.baseY - (ht * 0.15 * (3-hi))}
+                                    rx={p.w * scale * 0.85} ry={p.w * scale * 0.28}
+                                    fill="none"
+                                    stroke={`rgba(100,75,40,${0.06 + hi*0.04})`}
+                                    strokeWidth="0.6" />
+                            ))}
+                            {/* Stín pod horou */}
+                            <ellipse cx={p.x + 3} cy={p.baseY + 2.5} rx={p.w * 0.75} ry={4} fill="rgba(50,25,10,0.2)" />
+                            {/* Osvětlená strana (SZ světlo) */}
                             <polygon points={`${p.x},${p.tip} ${p.x-p.w},${p.baseY} ${p.x},${p.baseY}`} fill="#8a6038" filter="url(#mshadow)" />
-                            {/* Stínová strana (východ/vpravo) */}
+                            {/* Stínová strana (JV) */}
                             <polygon points={`${p.x},${p.tip} ${p.x},${p.baseY} ${p.x+p.w},${p.baseY}`} fill="#4a2c12" />
+                            {/* Mezivrstvy — přechod barvy */}
+                            <polygon points={`${p.x},${sl} ${p.x-sw*0.8},${p.baseY-ht*0.15} ${p.x},${p.baseY-ht*0.15}`} fill="rgba(120,90,45,0.3)" />
                             {/* Sněhová čepice — osvětlená */}
-                            <polygon points={`${p.x},${p.tip} ${p.x-sw},${sl} ${p.x},${sl}`} fill="#f0ece4" opacity="0.96" />
+                            <polygon points={`${p.x},${p.tip} ${p.x-sw},${sl} ${p.x},${sl}`} fill="#f0ece6" opacity="0.96" />
                             {/* Sněhová čepice — stínová */}
-                            <polygon points={`${p.x},${p.tip} ${p.x},${sl} ${p.x+sw},${sl}`} fill="#ddd8d0" opacity="0.9" />
+                            <polygon points={`${p.x},${p.tip} ${p.x},${sl} ${p.x+sw},${sl}`} fill="#ddd9d2" opacity="0.9" />
+                            {/* Sněhová hrana */}
+                            <line x1={p.x-sw} y1={sl} x2={p.x+sw} y2={sl} stroke="rgba(180,165,145,0.5)" strokeWidth="0.6" />
                             {/* Hřebenová čára */}
-                            <line x1={p.x-p.w} y1={p.baseY} x2={p.x+p.w} y2={p.baseY} stroke="#3a2010" strokeWidth="0.8" opacity="0.45" />
-                            {/* Název vrcholu — čitelný serif */}
+                            <line x1={p.x-p.w} y1={p.baseY} x2={p.x+p.w} y2={p.baseY} stroke="#3a2010" strokeWidth="0.8" opacity="0.4" />
+                            {/* Název */}
                             <text x={p.x+p.lx} y={lny} textAnchor={p.anchor}
                                 fill="#1a0e04" fontSize="17"
                                 fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic" fontWeight="700"
