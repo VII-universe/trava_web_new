@@ -184,54 +184,83 @@ const Lectures = ({ scrollProgress }) => {
                             </div>
                         </div>
 
-                        {/* ── PRAVÁ: info + akce ── */}
+                        {/* ── PRAVÁ: velká event karta + info strip ── */}
                         <div className="flex flex-col gap-3 lg:gap-4">
 
-                            {/* Témata přednášek — compact grid */}
-                            <div className="bg-white/[0.07] backdrop-blur-xl border border-white/[0.1] rounded-[1.5rem] p-5 lg:p-6 flex-1">
-                                <div className="flex items-center justify-between mb-4">
-                                    <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Témata přednášek</p>
-                                    <a href="https://www.honzatravnicek.cz/prednaska/" target="_blank" rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 text-slate-400 hover:text-gold-400 text-[9px] font-bold uppercase tracking-widest transition-colors">
-                                        Anotace <ExternalLink className="w-2.5 h-2.5" />
-                                    </a>
-                                </div>
-                                <div className="space-y-1.5">
-                                    {TOPICS.map((t, i) => (
-                                        <button key={t.id} onClick={() => setShowTopics(true)}
-                                            className="group w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/[0.08] transition-all duration-200">
-                                            <span className="font-mono text-[10px] text-slate-600 font-black w-4 shrink-0">0{i+1}</span>
-                                            <span className="font-sans text-white/85 text-sm font-medium flex-1 group-hover:text-white transition-colors">{t.title}</span>
-                                            <span className="text-[9px] text-slate-500 font-medium shrink-0 hidden lg:block">{t.subtitle}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
+                            {/* Velká event karta — 50 let tour / projekty */}
+                            <button onClick={() => setSelectedEvent(EVENTS_DETAIL[0])}
+                                className="group relative rounded-[1.5rem] overflow-hidden flex-1 min-h-0 text-left"
+                                style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.55)' }}>
+                                {/* Background image */}
+                                <img src={CollabImg} alt="Společné projekty"
+                                    className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700" />
+                                {/* Gradient */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-800/10" />
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
 
-                            {/* Akce + kalendář */}
-                            <div className="bg-white/[0.07] backdrop-blur-xl border border-white/[0.1] rounded-[1.5rem] p-5 lg:p-6 shrink-0">
-                                <div className="flex items-center justify-between mb-3">
-                                    <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Akce & turné</p>
-                                    <button onClick={() => setCalendarOpen(true)}
-                                        className="inline-flex items-center gap-1.5 text-slate-400 hover:text-gold-400 text-[9px] font-bold uppercase tracking-widest transition-colors">
-                                        <Calendar className="w-3 h-3" /> Kalendář
-                                    </button>
+                                {/* Content */}
+                                <div className="absolute inset-0 flex flex-col justify-between p-5 lg:p-6">
+                                    {/* Top: label */}
+                                    <div className="flex items-start justify-between">
+                                        <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-gold-400 font-mono">Spolupráce & projekty</span>
+                                        <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-gold-400 group-hover:translate-x-0.5 transition-all" />
+                                    </div>
+
+                                    {/* Bottom: main content */}
+                                    <div>
+                                        <h3 className="font-serif text-xl lg:text-2xl text-white leading-tight mb-2">
+                                            50 let tour & společné<br/><span className="italic text-slate-300">projekty s přáteli.</span>
+                                        </h3>
+                                        {/* Names */}
+                                        <div className="flex flex-wrap gap-1.5 mb-3">
+                                            {['Petr Jan Juračka', 'Jiří Langmajer', 'Petr Horký', 'Marek Audy'].map(n => (
+                                                <span key={n} className="text-[9px] font-semibold text-white/60 bg-white/[0.08] border border-white/[0.1] rounded-full px-2.5 py-1">
+                                                    {n}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <span className="inline-flex items-center gap-1.5 text-gold-400 text-[10px] font-bold uppercase tracking-widest group-hover:gap-2.5 transition-all">
+                                            Detail projektu <ArrowRight className="w-3 h-3" />
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    {EVENTS_DETAIL.map(ev => (
-                                        <button key={ev.id} onClick={() => setSelectedEvent(ev)}
-                                            className="group flex items-center gap-3 bg-white/[0.05] hover:bg-white/[0.10] border border-white/[0.07] hover:border-gold-500/25 rounded-xl p-3 transition-all text-left">
-                                            <div className="w-12 h-10 rounded-lg overflow-hidden shrink-0">
-                                                <img loading="lazy" src={ev.image} alt={ev.city}
-                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-400" />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-white/90 text-[13px] font-semibold leading-tight truncate">{ev.city}</p>
-                                                <p className="text-slate-500 text-[10px] mt-0.5 truncate">{ev.venue.split('·')[0]}</p>
-                                            </div>
-                                            <ArrowRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-gold-400 shrink-0 transition-colors" />
+                            </button>
+
+                            {/* Spodní strip — témata + kalendář */}
+                            <div className="shrink-0 grid grid-cols-2 gap-3">
+                                {/* Témata */}
+                                <button onClick={() => setShowTopics(true)}
+                                    className="group relative rounded-2xl overflow-hidden text-left"
+                                    style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.4)', minHeight: '100px' }}>
+                                    <img src={Tour50Img} alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent" />
+                                    <div className="relative h-full flex flex-col justify-between p-4">
+                                        <span className="text-[8px] font-bold uppercase tracking-widest text-gold-400">{TOPICS.length} témat</span>
+                                        <div>
+                                            <p className="font-serif text-white text-[15px] leading-tight mb-1">Témata přednášek</p>
+                                            <span className="inline-flex items-center gap-1 text-[9px] text-slate-400 group-hover:text-gold-400 font-bold uppercase tracking-widest transition-colors">
+                                                Zobrazit <ArrowRight className="w-2.5 h-2.5" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                {/* Kalendář + web */}
+                                <div className="rounded-2xl bg-white/[0.06] border border-white/[0.1] flex flex-col justify-between p-4 gap-3">
+                                    <div>
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-gold-400 mb-2">Akce & termíny</p>
+                                        <p className="text-slate-400 text-xs leading-relaxed">Aktuální termíny přednášek průběžně v kalendáři.</p>
+                                    </div>
+                                    <div className="flex flex-col gap-1.5">
+                                        <button onClick={() => setCalendarOpen(true)}
+                                            className="flex items-center justify-center gap-1.5 bg-white/[0.08] hover:bg-white/[0.15] border border-white/[0.12] text-white text-[10px] font-bold uppercase tracking-widest py-2.5 rounded-xl transition-all">
+                                            <Calendar className="w-3 h-3" /> Kalendář
                                         </button>
-                                    ))}
+                                        <a href="https://www.honzatravnicek.cz/prednaska/" target="_blank" rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-1.5 text-slate-500 hover:text-gold-400 text-[10px] font-bold uppercase tracking-widest py-2 transition-colors">
+                                            Nabídka & anotace <ExternalLink className="w-2.5 h-2.5" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
