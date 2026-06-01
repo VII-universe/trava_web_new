@@ -445,10 +445,15 @@ function NepalMap({ regions, onRegionClick }) {
                     `}</style>
                 </defs>
 
-                {/* Okolní území — plná plocha */}
-                <rect width="820" height="290" fill="#a8bcc8" />
-                {/* Horní pás (Tibet/Čína) — překryje modrý okraj SVG plynulou barvou */}
-                <rect x="0" y="0" width="820" height="20" fill="#c8d4da" />
+                {/* Okolní území — gradient světlejší nahoře (Tibet/sníh) → modrošedá dole (Indie) */}
+                <defs>
+                    <linearGradient id="outerGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#dde6ea" />
+                        <stop offset="12%"  stopColor="#c0cdd5" />
+                        <stop offset="100%" stopColor="#a8bcc8" />
+                    </linearGradient>
+                </defs>
+                <rect width="820" height="290" fill="url(#outerGrad)" />
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
@@ -563,8 +568,8 @@ function NepalMap({ regions, onRegionClick }) {
                     );
                 })}
 
-                {/* Nepál — border */}
-                <path d={NEPAL_OUTLINE} fill="none" stroke="#3a2810" strokeWidth="1.6" />
+                {/* Nepál — border — světlejší na severu (Tibet), tmavší na jihu (Indie) */}
+                <path d={NEPAL_OUTLINE} fill="none" stroke="rgba(80,60,30,0.55)" strokeWidth="1.4" />
 
                 {/* ── Ilustrativní hory — elevation halos + světlá/stínová strana ── */}
                 {NEPAL_PEAKS.map((p, i) => {
