@@ -373,21 +373,27 @@ const TREK_ROUTES = [
     },
 ];
 
-function NepalMap({ regions, onRegionClick, isMobile = false }) {
+function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null }) {
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
+
+    // Zoom animace při focusu na region
+    const [zoom, setZoom] = useState({ x: 0, y: 0, scale: 1 });
+    useEffect(() => {
+        if (!focusRegionId) { setZoom({ x: 0, y: 0, scale: 1 }); return; }
+        const rp = NEPAL_REGION_PATHS.find(r => r.id === focusRegionId);
+        if (!rp) return;
+        const s = 2.2;
+        setZoom({ x: 410 - rp.cx * s, y: 145 - rp.cy * s, scale: s });
+    }, [focusRegionId]);
 
     // Touch: první tap = preview, druhý = navigace
     const handleRegionClick = (regionId) => {
         const reg = regions.find(x => x.id === regionId);
         if (!reg) return;
         if (isMobile) {
-            if (hovered === regionId) {
-                onRegionClick(reg);
-                setHovered(null);
-            } else {
-                setHovered(regionId);
-            }
+            if (hovered === regionId) { onRegionClick(reg); setHovered(null); }
+            else { setHovered(regionId); }
         } else {
             onRegionClick(reg);
         }
@@ -396,10 +402,17 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
 
-            {/* ── SVG map — ilustrativní kartografie s výškovými zónami ── */}
-            {/* SEVER = NAHOŘE (Tibet/Čína nahoře, Indie dole) ✓ */}
-            {/* Na mobilu: viewBox −80/+80 → poměr 820:450 (1.82:1) místo 820:290 (2.83:1) */}
-            <svg viewBox={isMobile ? "0 -80 820 450" : "0 0 820 290"} className="w-full h-full" style={{ display: 'block' }}>
+            {/* Zoom-out tlačítko — viditelné jen při focusu */}
+            {focusRegionId && (
+                <button onClick={() => onRegionClick && setHovered(null)}
+                    className="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-[#0a1422]/80 hover:bg-[#0a1422] text-white/70 hover:text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-sm transition-all">
+                    <ChevronLeft className="w-3 h-3" /> Celá mapa
+                </button>
+            )}
+
+            {/* ── SVG map — viewBox s trojrozměrným panoramatem ── */}
+            {/* Jednotný viewBox pro desktop i mobil — proporce 820×390 (2.1:1) */}
+            <svg viewBox="0 -50 820 390" className="w-full h-full" style={{ display: 'block', overflow: 'hidden' }}>
                 <defs>
                     {/* Clip paths pro regiony i pro Nepál jako celek */}
                     {NEPAL_REGION_PATHS.map(r => (
@@ -470,10 +483,20 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                         <stop offset="100%" stopColor="#a8bcc8" />
                     </linearGradient>
                 </defs>
+                {/* Fixní pozadí — nezoomuje */}
                 <rect width="820" height="290" fill="url(#outerGrad)" />
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
+
+                {/* ── ZOOMOVATELNÝ obsah — animuje při focusu na region ── */}
+                <motion.g
+                    animate={{ x: zoom.x, y: zoom.y, scale: zoom.scale }}
+                    initial={false}
+                    transition={{ type: 'spring', damping: 28, stiffness: 160 }}
+                    style={{ transformOrigin: '0px 0px' }}
+                >
+
                 {!isMobile && <>
                     <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
                     <text x="410" y="13"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
@@ -678,6 +701,10 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                         </text>
                     );
                 })()}
+
+                </motion.g>
+                {/* Konec zoomovatelného obsahu */}
+
             </svg>
 
             {/* ── Rich preview panel — vyjede ze spodu ── */}
@@ -744,6 +771,10 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
 /* ─── Map Modal — full-screen split: mapa vlevo, region detail vpravo ─── */
 function MapModal({ regions, onClose, onOpenRegion }) {
     const [selected, setSelected] = useState(null);
+    const [focusId, setFocusId]   = useState(null);
+
+    const handleSelect = (reg) => { setSelected(reg); setFocusId(reg.id); };
+    const handleBack   = ()    => { setSelected(null); setFocusId(null);  };
 
     return (
         <motion.div
@@ -755,35 +786,44 @@ function MapModal({ regions, onClose, onOpenRegion }) {
         >
             {/* ── Header ── */}
             <div className="shrink-0 flex items-center justify-between px-5 md:px-8 py-3.5 border-b border-white/[0.06] bg-[#0a0f1a]/80 backdrop-blur-md">
-                <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-full bg-gold-500/15 border border-gold-500/30 flex items-center justify-center">
+                <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 rounded-full bg-gold-500/15 border border-gold-500/30 flex items-center justify-center shrink-0">
                         <MapPin className="w-4 h-4 text-gold-400" />
                     </div>
                     <div>
-                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.45em] font-bold leading-none mb-0.5">14 Summits Expedition</p>
-                        <h2 className="font-serif text-white text-lg md:text-xl leading-none">Kde v Nepálu chceš být?</h2>
+                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold leading-none mb-0.5">14 Summits Expedition · Nepál</p>
+                        <h2 className="font-serif text-white text-base md:text-xl leading-none">
+                            {selected ? selected.name : 'Kde v Nepálu chceš být?'}
+                        </h2>
                     </div>
                 </div>
-                <button
-                    onClick={onClose}
-                    className="p-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-white transition-colors border border-white/[0.08]"
-                >
-                    <X className="w-5 h-5" />
-                </button>
+                <div className="flex items-center gap-2">
+                    {selected && (
+                        <button onClick={handleBack}
+                            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-white/[0.06] hover:bg-white/[0.12] text-slate-300 hover:text-white text-[10px] font-bold uppercase tracking-widest rounded-full border border-white/[0.08] transition-all">
+                            <ChevronLeft className="w-3.5 h-3.5" /> Celá mapa
+                        </button>
+                    )}
+                    <button onClick={onClose}
+                        className="p-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-white transition-colors border border-white/[0.08]">
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
             </div>
 
             {/* ── Body: mapa + detail ── */}
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
 
-                {/* Mapa */}
+                {/* Mapa — zoom se animuje při focusu */}
                 <div className="flex-1 md:w-[58%] flex flex-col gap-0 p-3 md:p-5 min-h-0 h-[48vh] md:h-auto">
                     <p className="text-slate-500 text-[10px] font-mono uppercase tracking-widest mb-2 shrink-0">
-                        Najeď na oblast → klikni pro detail
+                        {selected ? `Zooom na: ${selected.name} · klikni mimo pro celou mapu` : 'Klikni na oblast pro detail'}
                     </p>
                     <div className="flex-1 min-h-0">
                         <NepalMap
                             regions={regions}
-                            onRegionClick={(reg) => setSelected(reg)}
+                            onRegionClick={handleSelect}
+                            focusRegionId={focusId}
                         />
                     </div>
                 </div>
@@ -804,17 +844,32 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                                 className="flex flex-col h-full"
                             >
-                                {/* Hero */}
+                                {/* Hero + mini mapa */}
                                 <div className="relative h-40 md:h-52 shrink-0 overflow-hidden">
                                     <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#06090f] via-[#06090f]/55 to-transparent" />
-                                    {/* Back button */}
-                                    <button
-                                        onClick={() => setSelected(null)}
-                                        className="absolute top-4 left-4 flex items-center gap-1.5 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors"
-                                    >
+                                    {/* Mobile back button */}
+                                    <button onClick={handleBack}
+                                        className="md:hidden absolute top-4 left-4 flex items-center gap-1.5 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors">
                                         <ChevronLeft className="w-3.5 h-3.5" /> zpět
                                     </button>
+                                    {/* Mini přehledová mapa — ukazuje kde v Nepálu jsme */}
+                                    <div className="absolute top-3 right-3 w-20 h-10 rounded-lg overflow-hidden border border-white/20 shadow-xl"
+                                         style={{ background: '#a8bcc8' }}>
+                                        <svg viewBox="0 0 820 290" className="w-full h-full">
+                                            <rect width="820" height="290" fill="#a8bcc8" />
+                                            <path d={NEPAL_OUTLINE} fill="#dcd0b0" />
+                                            {NEPAL_REGION_PATHS.map(r => (
+                                                <path key={r.id} d={r.path}
+                                                    fill={r.id === selected.id ? 'rgba(212,175,55,0.7)' : 'rgba(50,30,10,0.08)'}
+                                                    stroke={r.id === selected.id ? '#d4af37' : 'transparent'}
+                                                    strokeWidth="2" />
+                                            ))}
+                                            <circle cx={NEPAL_REGION_PATHS.find(r=>r.id===selected.id)?.cx||0}
+                                                    cy={NEPAL_REGION_PATHS.find(r=>r.id===selected.id)?.cy||0}
+                                                    r="8" fill="none" stroke="#d4af37" strokeWidth="2" opacity="0.8" />
+                                        </svg>
+                                    </div>
                                     <div className="absolute bottom-4 left-5 right-5">
                                         <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] mb-1 font-bold">{selected.subtitle}</p>
                                         <h3 className="font-serif text-white text-2xl md:text-3xl leading-tight">{selected.name}</h3>
