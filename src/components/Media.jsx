@@ -82,7 +82,7 @@ const TYPE_CONFIG = {
 };
 
 const CONTENT_BUTTONS = [
-    { key: 'video',   Icon: Play,     label: 'Vlogy & Expedice', sub: 'YouTube',      iconBg: 'from-red-500 to-red-700',       glow: 'shadow-red-500/30'    },
+    { key: 'video',   Icon: Play,     label: 'Vlogy & Expedice', sub: 'YouTube · postupně plníme',      iconBg: 'from-red-500 to-red-700',       glow: 'shadow-red-500/30'    },
     { key: 'podcast', Icon: Mic,      label: 'Podcast',          sub: 'Audio — 2027', iconBg: 'from-violet-500 to-purple-700', glow: 'shadow-violet-500/30' },
     { key: 'blog',    Icon: FileText, label: 'Psané příběhy',    sub: 'Blog',         iconBg: 'from-gold-500 to-amber-600',    glow: 'shadow-gold-500/30'   },
 ];
@@ -232,7 +232,10 @@ const Media = ({ scrollProgress }) => {
                     <div className="flex-1 flex flex-col min-h-0">
                         <div className="flex items-center justify-between mb-1.5 shrink-0">
                             <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.25em] font-bold">V médiích</span>
-                            <span className="text-white/30 text-[9px] font-mono">{filteredPress.length} výstupů</span>
+                            <a href="https://www.honzatravnicek.cz/media/" target="_blank" rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-gold-400/60 hover:text-gold-400 text-[8px] font-bold uppercase tracking-widest transition-colors">
+                                Celý seznam <ExternalLink className="w-2 h-2" />
+                            </a>
                         </div>
                         <div className="flex flex-wrap gap-1 mb-2 shrink-0">
                             {TYPES.map(t => (
@@ -345,7 +348,10 @@ const Media = ({ scrollProgress }) => {
                                 <h5 className="text-white/40 font-mono text-[10px] uppercase tracking-[0.3em] font-bold">
                                     V médiích
                                 </h5>
-                                <span className="text-white/25 text-[10px] font-mono">{filteredPress.length} výstupů</span>
+                                <a href="https://www.honzatravnicek.cz/media/" target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-gold-400/70 hover:text-gold-400 text-[9px] font-bold uppercase tracking-widest transition-colors">
+                                    Celý seznam <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
                             </div>
 
                             {/* Filter bar */}
