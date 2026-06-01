@@ -163,7 +163,7 @@ const Projects = ({ scrollProgress }) => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
             <div className="w-full h-full flex items-center justify-center px-4 md:px-8 lg:px-12 pointer-events-none">
                 <div className="w-full max-w-6xl pointer-events-auto origin-center transition-transform duration-300
-                    [@media(max-width:767px)]:scale-[0.93]
+                    [@media(max-width:767px)]:scale-100
                     [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.88]
                     [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.78]
                     [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.68]">

@@ -224,7 +224,7 @@ const Hotel = ({ scrollProgress }) => {
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])}
-                                            className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 active:scale-[0.97] hover:scale-[2.5] hover:z-10 transition-all duration-300">
+                                            className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 active:scale-[0.97] md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
                                             <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
@@ -302,7 +302,7 @@ const Hotel = ({ scrollProgress }) => {
                                     onDragEnd={() => { dskDragging.current = false; dskRun.current?.(); }}
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
-                                        <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:scale-[2.5] hover:z-10 transition-all duration-300">
+                                        <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-slate-200 shadow-sm md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
                                             <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}

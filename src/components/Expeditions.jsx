@@ -1123,6 +1123,41 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </a>
 
+                            {/* Nepal Map card — opens MapModal */}
+                            <button
+                                onClick={() => setIsMapModalOpen(true)}
+                                className="shrink-0 snap-start w-[82vw] rounded-2xl overflow-hidden border border-[#7a9ab0]/50 active:scale-[0.98] transition-transform relative bg-[#b4c8d4]"
+                                style={{ minHeight: '200px' }}
+                            >
+                                {/* Static map preview */}
+                                <div className="absolute inset-0" style={{ pointerEvents: 'none' }}>
+                                    <svg viewBox="0 0 820 290" className="w-full h-full" style={{ display: 'block' }}>
+                                        <rect width="820" height="290" fill="#a8bcc8" />
+                                        <path d={NEPAL_OUTLINE} fill="#dcd0b0" />
+                                        <path d={NEPAL_OUTLINE} fill="url(#terrainGrad)" />
+                                        {NEPAL_PEAKS.map((p, i) => (
+                                            <g key={i}>
+                                                <polygon points={`${p.x},${p.tip-1} ${p.x-p.w},${p.baseY} ${p.x},${p.baseY}`} fill="#8a6038" />
+                                                <polygon points={`${p.x},${p.tip-1} ${p.x},${p.baseY} ${p.x+p.w},${p.baseY}`} fill="#4a2c12" />
+                                                <polygon points={`${p.x},${p.tip-1} ${p.x-p.w*0.4},${p.tip+(p.baseY-p.tip)*0.35} ${p.x+p.w*0.4},${p.tip+(p.baseY-p.tip)*0.35}`} fill="#f0ece6" />
+                                            </g>
+                                        ))}
+                                        {NEPAL_CITIES.filter(c => c.type === 'capital').map(c => (
+                                            <circle key={c.x} cx={c.x} cy={c.y} r="6" fill="#aa0000" />
+                                        ))}
+                                    </svg>
+                                </div>
+                                {/* Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent flex flex-col items-center justify-end pb-5 px-4">
+                                    <MapPin className="w-6 h-6 text-gold-400 mb-2" />
+                                    <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest mb-1">Interaktivní mapa</p>
+                                    <p className="text-white font-serif text-xl leading-tight mb-3">Regiony Nepálu</p>
+                                    <span className="flex items-center gap-1.5 bg-gold-500/20 border border-gold-500/40 rounded-full px-4 py-1.5 text-gold-300 text-[10px] font-bold uppercase tracking-widest">
+                                        Prozkoumat <ArrowRight className="w-3 h-3" />
+                                    </span>
+                                </div>
+                            </button>
+
                             {/* Expedition cards */}
                             {EXPEDITIONS_DISPLAY.map((exped) => (
                                 <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[62vw] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.97] transition-transform relative">
