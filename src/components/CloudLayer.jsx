@@ -196,26 +196,65 @@ const CloudImg = ({ band, cl, scrollProgress, isMobile }) => {
     );
 };
 
-const LOGOS = [
-    { src: LogoMain,  label: 'Honza Tráva' },
-    { src: Logo14,    label: '14 Summits'  },
-    { src: LogoHotel, label: 'Hotel KBC'   },
-    { src: LogoPub,   label: 'Czech Pub'   },
+const BRANDS = [
+    { src: LogoMain,  name: 'Honza Tráva',          tag: 'Horolezec · Průvodce · Přednášející' },
+    { src: Logo14,    name: '14 Summits Expedition', tag: 'Himalájské výpravy & treky'          },
+    { src: LogoHotel, name: 'Kathmandu Base Camp',   tag: 'Hotel · Thamel, Káthmándú'           },
+    { src: LogoPub,   name: 'Czech Pub Nepal',       tag: 'Bar & restaurace · Thamel'           },
 ];
 
 const LogoShowcase = ({ scrollProgress }) => {
-    const opacity = useTransform(scrollProgress, [0.693, 0.700, 0.712, 0.725], [0, 1, 1, 0]);
+    const opacity = useTransform(scrollProgress, [0.693, 0.702, 0.714, 0.726], [0, 1, 1, 0]);
+    const scale   = useTransform(scrollProgress, [0.693, 0.704], [0.94, 1]);
+    const y       = useTransform(scrollProgress, [0.693, 0.704, 0.714, 0.726], ['18px', '0px', '0px', '-12px']);
+
     return (
         <motion.div
-            style={{ opacity, position: 'fixed', inset: 0, zIndex: 80, pointerEvents: 'none' }}
-            className="flex items-center justify-center"
+            style={{ opacity, scale, y, position: 'fixed', inset: 0, zIndex: 80, pointerEvents: 'none' }}
+            className="flex items-center justify-center p-4 md:p-8"
         >
-            <div className="grid grid-cols-2 gap-5 px-10">
-                {LOGOS.map(({ src, label }) => (
-                    <div key={label} className="flex flex-col items-center justify-center gap-2 bg-white/70 backdrop-blur-md rounded-2xl p-4 shadow-lg">
-                        <img src={src} alt={label} className="h-14 w-auto object-contain" draggable={false} />
+            <div className="w-full max-w-[720px]">
+                {/* Header row */}
+                <div className="flex items-center gap-4 mb-5 md:mb-7">
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-500/50" />
+                    <div className="shrink-0 flex items-center gap-2">
+                        <div className="w-1 h-1 rounded-full bg-gold-500" />
+                        <p className="font-mono text-gold-600 text-[9px] md:text-[10px] uppercase tracking-[0.45em] font-bold whitespace-nowrap">
+                            Pod jednou střechou
+                        </p>
+                        <div className="w-1 h-1 rounded-full bg-gold-500" />
                     </div>
-                ))}
+                    <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gold-500/50" />
+                </div>
+
+                {/* 2×2 premium logo grid */}
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                    {BRANDS.map(({ src, name, tag }) => (
+                        <div key={name}
+                            className="relative group bg-white/82 backdrop-blur-2xl border border-white/65 rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center gap-3 md:gap-4 overflow-hidden"
+                            style={{ boxShadow: '0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07)' }}
+                        >
+                            {/* Gold top accent */}
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
+
+                            {/* Logo */}
+                            <div className="flex items-center justify-center w-full" style={{ height: 'clamp(48px, 8vw, 72px)' }}>
+                                <img src={src} alt={name}
+                                    className="max-h-full max-w-full object-contain drop-shadow-sm"
+                                    draggable={false} />
+                            </div>
+
+                            {/* Divider */}
+                            <div className="w-8 h-px bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
+
+                            {/* Text */}
+                            <div className="text-center">
+                                <p className="font-serif text-slate-800 text-sm md:text-base leading-tight font-medium">{name}</p>
+                                <p className="text-gold-600 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] mt-1">{tag}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </motion.div>
     );
