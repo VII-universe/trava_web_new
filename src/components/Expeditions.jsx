@@ -350,85 +350,77 @@ function NepalMap({ regions, onRegionClick }) {
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
     return (
-        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#080f1a] border border-white/[0.07] select-none">
+        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
 
-            {/* ── SVG map ── */}
+            {/* ── SVG map — kartografický styl ── */}
             <svg viewBox="0 0 820 290" className="w-full h-full" style={{ display: 'block' }}>
                 <defs>
-                    {/* Clip paths — každý region ořízne svůj obrázek */}
                     {NEPAL_REGION_PATHS.map(r => (
-                        <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}>
-                            <path d={r.path} />
-                        </clipPath>
+                        <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}><path d={r.path} /></clipPath>
                     ))}
-
-                    <radialGradient id="nglow" cx="50%" cy="0%" r="65%">
-                        <stop offset="0%" stopColor="#7eb8e8" stopOpacity="0.18" />
-                        <stop offset="100%" stopColor="#080f1a" stopOpacity="0" />
-                    </radialGradient>
-
-                    <filter id="rglow" x="-35%" y="-35%" width="170%" height="170%">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b" />
-                        <feFlood floodColor="#d4af37" floodOpacity="0.65" result="c" />
+                    <linearGradient id="elevGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#b8a888" stopOpacity="0.7" />
+                        <stop offset="30%"  stopColor="#c8b898" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#d8c8a8" stopOpacity="0" />
+                    </linearGradient>
+                    <filter id="hglow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="b" />
+                        <feFlood floodColor="#b06800" floodOpacity="0.45" result="c" />
                         <feComposite in="c" in2="b" operator="in" result="g" />
                         <feMerge><feMergeNode in="g" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
-
-                    <filter id="pglow" x="-120%" y="-120%" width="340%" height="340%">
-                        <feGaussianBlur stdDeviation="2.2" result="b" />
-                        <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    <filter id="pshadow">
+                        <feDropShadow dx="0.5" dy="1" stdDeviation="1.2" floodColor="#3a2010" floodOpacity="0.45" />
+                    </filter>
+                    <filter id="tshadow">
+                        <feDropShadow dx="0" dy="0.5" stdDeviation="1.5" floodColor="#e8dcc8" floodOpacity="0.9" />
                     </filter>
                 </defs>
 
-                {/* Outer */}
-                <rect width="820" height="290" fill="#04090f" />
+                {/* Okolní území */}
+                <rect width="820" height="290" fill="#b4c8d4" />
+                <text x="410" y="280" textAnchor="middle" fill="rgba(60,90,110,0.4)" fontSize="12" fontFamily="sans-serif" fontStyle="italic" letterSpacing="0.2em" style={{ pointerEvents:'none' }}>INDIE</text>
+                <text x="410" y="12"  textAnchor="middle" fill="rgba(60,90,110,0.35)" fontSize="11" fontFamily="sans-serif" fontStyle="italic" letterSpacing="0.18em" style={{ pointerEvents:'none' }}>ČÍNA  /  TIBET</text>
+                <text x="14"  y="200" fill="rgba(60,90,110,0.3)" fontSize="10" fontFamily="sans-serif" fontStyle="italic" transform="rotate(-90 14 200)" style={{ pointerEvents:'none' }}>INDIE</text>
 
-                {/* Nepal base */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="#13202e" />
+                {/* Nepál — základní plocha */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="#ddd0b4" />
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="url(#elevGrad)" />
 
-                {/* Atmosphere glow from north */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="url(#nglow)" />
+                {/* Himalajský sníh */}
+                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62" fill="none" stroke="rgba(255,252,248,0.8)" strokeWidth="16" strokeLinecap="round" />
 
-                {/* Snow band along Himalaya */}
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62" fill="none" stroke="rgba(190,218,255,0.13)" strokeWidth="20" strokeLinecap="round" />
+                {/* Řeky */}
+                <g fill="none" stroke="#7aaac0" strokeLinecap="round" style={{ pointerEvents:'none' }}>
+                    <path d="M 382,58 C 380,85 376,112 372,142 C 368,172 366,202 362,232 L 358,262" strokeWidth="1.2" opacity="0.7" />
+                    <path d="M 462,108 C 460,132 458,158 462,185 C 465,208 470,234 468,262" strokeWidth="1.2" opacity="0.7" />
+                    <path d="M 660,112 C 655,138 652,162 655,188 C 658,215 648,240 650,262" strokeWidth="1.2" opacity="0.7" />
+                    <path d="M 82,115 C 78,140 74,168 70,196 C 66,220 60,242 58,262" strokeWidth="1.0" opacity="0.55" />
+                </g>
 
-                {/* Topographic lines */}
-                {[95, 125, 155, 185, 215, 245].map(y => (
-                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.022)" strokeWidth="0.5" />
-                ))}
-
-                {/* ── Fotky regionů oříznuté do tvaru oblasti ── */}
+                {/* Fotky regionů — jen při hoveru */}
                 {NEPAL_REGION_PATHS.map(r => {
                     const reg = regions.find(x => x.id === r.id);
                     if (!reg?.image) return null;
-                    const isHov = hovered === r.id;
-                    const isDim = hovered && !isHov;
                     return (
-                        <image
-                            key={`img-${r.id}`}
-                            href={reg.image}
-                            x="0" y="0" width="820" height="290"
-                            preserveAspectRatio="xMidYMid slice"
-                            clipPath={`url(#cp-${r.id})`}
-                            opacity={isHov ? 0.52 : isDim ? 0.04 : 0.1}
-                            style={{ transition: 'opacity 0.32s ease', pointerEvents: 'none' }}
-                        />
+                        <image key={`img-${r.id}`} href={reg.image} x="0" y="0" width="820" height="290"
+                            preserveAspectRatio="xMidYMid slice" clipPath={`url(#cp-${r.id})`}
+                            opacity={hovered === r.id ? 0.38 : 0}
+                            style={{ transition: 'opacity 0.28s ease', pointerEvents: 'none' }} />
                     );
                 })}
 
-                {/* ── Región fills + border + interaktivita ── */}
+                {/* Interaktivní regiony */}
                 {NEPAL_REGION_PATHS.map(r => {
                     const isHov = hovered === r.id;
                     const isDim = hovered && !isHov;
                     return (
-                        <path
-                            key={r.id}
-                            d={r.path}
-                            fill={isHov ? 'rgba(212,175,55,0.14)' : isDim ? 'rgba(0,0,0,0.42)' : 'rgba(255,255,255,0.03)'}
-                            stroke={isHov ? 'rgba(212,175,55,0.8)' : isDim ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.1)'}
-                            strokeWidth={isHov ? 1.6 : 0.6}
-                            filter={isHov ? 'url(#rglow)' : undefined}
-                            style={{ cursor: 'pointer', transition: 'fill 0.25s, stroke 0.25s, stroke-width 0.2s' }}
+                        <path key={r.id} d={r.path}
+                            fill={isHov ? 'rgba(184,120,20,0.25)' : isDim ? 'rgba(100,80,50,0.1)' : 'transparent'}
+                            stroke={isHov ? '#8a5808' : 'rgba(100,70,20,0.3)'}
+                            strokeWidth={isHov ? 1.5 : 0.8}
+                            filter={isHov ? 'url(#hglow)' : undefined}
+                            style={{ cursor: 'pointer', transition: 'fill 0.2s, stroke 0.2s' }}
                             onMouseEnter={() => setHovered(r.id)}
                             onMouseLeave={() => setHovered(null)}
                             onClick={() => { const reg = regions.find(x => x.id === r.id); if (reg) onRegionClick(reg); }}
@@ -436,91 +428,62 @@ function NepalMap({ regions, onRegionClick }) {
                     );
                 })}
 
-                {/* ── NEPAL vodoznak ── */}
-                <text x="415" y="232" textAnchor="middle" fill="rgba(255,255,255,0.032)" fontSize="46" fontFamily="Georgia, serif" fontWeight="900" letterSpacing="0.3em" style={{ pointerEvents: 'none' }}>NEPAL</text>
+                {/* Nepál — vnější ohraničení */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="none" stroke="#3a2810" strokeWidth="1.5" />
 
-                {/* ── Horské vrcholy s popisy ── */}
+                {/* Vrcholy s čitelnými štítky */}
                 {NEPAL_PEAKS.map((p, i) => (
                     <g key={i} style={{ pointerEvents: 'none' }}>
-                        {/* Stín pod trojúhelníkem */}
-                        <polygon points={`${p.x},${p.y + 16} ${p.x - 9},${p.y + 16} ${p.x + 9},${p.y + 16}`} fill="rgba(0,0,0,0.4)" />
-                        {/* Trojúhelník */}
-                        <polygon points={`${p.x},${p.y - 1} ${p.x - 7},${p.y + 13} ${p.x + 7},${p.y + 13}`} fill="rgba(210,232,255,0.88)" filter="url(#pglow)" />
-                        {/* Sněhová čepice */}
-                        <polygon points={`${p.x},${p.y - 1} ${p.x - 3},${p.y + 5} ${p.x + 3},${p.y + 5}`} fill="white" opacity="0.96" />
-                        {/* Název vrcholu */}
-                        <text
-                            x={p.x + p.lx}
-                            y={p.y + p.ly}
-                            textAnchor={p.anchor}
-                            fill="rgba(235,245,255,0.92)"
-                            fontSize="6.8"
-                            fontFamily="sans-serif"
-                            fontWeight="700"
-                            letterSpacing="0.04em"
-                            style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))' }}
-                        >{p.name}</text>
-                        {/* Výška */}
-                        <text
-                            x={p.x + p.lx}
-                            y={p.y + p.ly + 8}
-                            textAnchor={p.anchor}
-                            fill="rgba(212,175,55,0.72)"
-                            fontSize="5.8"
-                            fontFamily="monospace"
-                            style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.9))' }}
-                        >{p.alt}</text>
+                        <polygon points={`${p.x},${p.y-1} ${p.x-8},${p.y+14} ${p.x+8},${p.y+14}`} fill="#5a3820" filter="url(#pshadow)" />
+                        <polygon points={`${p.x},${p.y-1} ${p.x-3.5},${p.y+5.5} ${p.x+3.5},${p.y+5.5}`} fill="#f8f4ee" />
+                        <text x={p.x+p.lx} y={p.y+p.ly} textAnchor={p.anchor}
+                            fill="#2a1408" fontSize="12" fontFamily="Georgia, serif" fontStyle="italic" fontWeight="700"
+                            filter="url(#tshadow)">{p.name}</text>
+                        <text x={p.x+p.lx} y={p.y+p.ly+13} textAnchor={p.anchor}
+                            fill="#6a4828" fontSize="10" fontFamily="monospace">{p.alt}</text>
                     </g>
                 ))}
 
-                {/* ── Města a vesnice ── */}
+                {/* Města */}
                 {NEPAL_CITIES.map((c, i) => {
                     const isCapital = c.type === 'capital';
-                    const isCity = c.type === 'city';
-                    const r = isCapital ? 4 : isCity ? 3 : 2.2;
-                    const labelY = c.labelBelow ? c.y + r + 9 : c.y - r - 5;
+                    const isCity    = c.type === 'city';
+                    const r = isCapital ? 5 : isCity ? 3.5 : 2.8;
+                    const dotColor  = isCapital ? '#aa0000' : '#2a1408';
+                    const labelY    = c.labelBelow ? c.y + r + 14 : c.y - r - 5;
+                    const labelSize = isCapital ? 14 : isCity ? 13 : 11;
                     return (
                         <g key={i} style={{ pointerEvents: 'none' }}>
-                            {/* Outer ring */}
-                            <circle cx={c.x} cy={c.y} r={r + (isCapital ? 4 : 2.5)} fill="none" stroke="#d4af37" strokeWidth={isCapital ? 0.9 : 0.6} opacity={isCapital ? 0.35 : 0.2} />
-                            {/* Dot */}
-                            <circle cx={c.x} cy={c.y} r={r} fill="#d4af37" opacity={isCapital ? 0.96 : isCity ? 0.78 : 0.65} />
-                            {/* Hvězdička pro hlavní město */}
-                            {isCapital && (
-                                <text x={c.x} y={c.y + 0.5} textAnchor="middle" dominantBaseline="middle" fill="rgba(8,15,26,0.9)" fontSize="4" fontWeight="900" style={{ pointerEvents: 'none' }}>★</text>
-                            )}
-                            {/* Název */}
-                            <text
-                                x={c.x + (c.labelDx || 0)}
-                                y={labelY}
+                            {isCapital && <circle cx={c.x} cy={c.y} r={r+3.5} fill="none" stroke="#aa0000" strokeWidth="0.9" opacity="0.4" />}
+                            <circle cx={c.x} cy={c.y} r={r} fill={dotColor} opacity={isCapital ? 1 : 0.85} />
+                            <text x={c.x+(c.labelDx||0)} y={labelY}
                                 textAnchor={c.labelDx > 0 ? 'start' : 'middle'}
-                                fill={isCapital ? 'rgba(212,175,55,0.92)' : 'rgba(200,165,40,0.72)'}
-                                fontSize={isCapital ? 8 : isCity ? 7 : 6}
-                                fontFamily="sans-serif"
-                                fontWeight={isCapital ? '700' : '500'}
-                                letterSpacing="0.05em"
-                                style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))' }}
-                            >{c.name}</text>
+                                fill={isCapital ? '#880000' : '#1a1008'}
+                                fontSize={labelSize} fontFamily="sans-serif"
+                                fontWeight={isCapital ? '700' : isCity ? '600' : '400'}
+                                filter="url(#tshadow)">{c.name}</text>
                         </g>
                     );
                 })}
 
-                {/* ── Kompas ── */}
-                <g style={{ pointerEvents: 'none' }} transform="translate(795,22)">
-                    <circle cx="0" cy="0" r="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.12)" strokeWidth="0.6" />
-                    <polygon points="0,-7 -2.5,0 2.5,0" fill="rgba(235,245,255,0.85)" />
-                    <polygon points="0,7 -2.5,0 2.5,0" fill="rgba(255,255,255,0.2)" />
-                    <text x="0" y="-10" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="6" fontFamily="sans-serif" fontWeight="700">N</text>
+                {/* Kompas */}
+                <g style={{ pointerEvents:'none' }} transform="translate(22,22)">
+                    <circle cx="0" cy="0" r="12" fill="rgba(225,215,195,0.9)" stroke="#5a3820" strokeWidth="0.9" />
+                    <polygon points="0,-8 -3,1 3,1" fill="#3a2010" />
+                    <polygon points="0,8 -3,1 3,1" fill="#9a8070" />
+                    <text x="0" y="-13" textAnchor="middle" fill="#3a2010" fontSize="9" fontFamily="sans-serif" fontWeight="700">S</text>
                 </g>
 
-                {/* ── Název hovered regionu přímo na mapě ── */}
+                {/* Název hovered regionu */}
                 {hoveredRegion && (() => {
                     const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
                     if (!rp) return null;
-                    const tx = Math.min(Math.max(rp.cx, 28), 792);
-                    const ty = rp.cy < 68 ? rp.cy + 16 : rp.cy - 8;
+                    const tx = Math.min(Math.max(rp.cx, 50), 770);
+                    const ty = rp.cy < 72 ? rp.cy + 22 : rp.cy - 8;
                     return (
-                        <text x={tx} y={ty} textAnchor="middle" fill="rgba(255,255,255,0.92)" fontSize="11" fontFamily="Georgia, serif" fontWeight="700" style={{ pointerEvents: 'none', filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.9))' }}>
+                        <text x={tx} y={ty} textAnchor="middle"
+                            fill="#2a1408" fontSize="14" fontFamily="Georgia, serif" fontWeight="700"
+                            filter="url(#tshadow)" style={{ pointerEvents:'none' }}>
                             {hoveredRegion.name}
                         </text>
                     );
@@ -542,7 +505,7 @@ function NepalMap({ regions, onRegionClick }) {
                         {/* Foto pozadí s gradient overlay */}
                         <div className="absolute inset-0 overflow-hidden">
                             <img src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition: 'center 40%' }} />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#04090f] via-[#04090f]/88 to-[#04090f]/60" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#1a1008] via-[#1a1008]/92 to-[#1a1008]/65" />
                         </div>
 
                         {/* Gold accent line na top */}
@@ -581,7 +544,7 @@ function NepalMap({ regions, onRegionClick }) {
             </AnimatePresence>
 
             {/* Hint — schová se při hoveru */}
-            <div className={`absolute bottom-2.5 right-3.5 text-[8px] text-white/18 uppercase tracking-widest font-mono pointer-events-none transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
+            <div className={`absolute bottom-2.5 right-3.5 text-[8px] text-[#5a3820]/40 uppercase tracking-widest font-mono pointer-events-none transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
                 najeď · klikni
             </div>
         </div>
