@@ -340,6 +340,7 @@ const Expeditions = ({ scrollProgress }) => {
     const [isSubinOpen, setIsSubinOpen] = useState(false);
     const [miriSource, setMiriSource] = useState(null);
     const [subinSource, setSubinSource] = useState(null);
+    const [is14Open, setIs14Open] = useState(false);
     const [isVideoOpen, setIsVideoOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isRegionsOpen, setIsRegionsOpen] = useState(false);
@@ -348,7 +349,7 @@ const Expeditions = ({ scrollProgress }) => {
     const VIDEO_EMBED_URL = 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID';
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen || is14Open);
 
     useEffect(() => {
         const handleEsc = (e) => { if (e.key === 'Escape') setIsVideoOpen(false); };
@@ -442,14 +443,17 @@ const Expeditions = ({ scrollProgress }) => {
                     </div>
                     <div className="shrink-0">
                         <div ref={expedCarouselRef} className="flex gap-3 overflow-x-auto px-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                            {/* S kým do hor card */}
+                            {/* 14 Summits card */}
                             <div className="shrink-0 snap-start w-[82vw] rounded-2xl bg-slate-950/75 backdrop-blur-xl border border-slate-700/50 p-5 flex flex-col gap-3">
                                 <div>
-                                    <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-2">S kým do hor</h3>
-                                    <h2 className="font-serif text-xl text-white leading-tight mb-2">Osmitisícovky i treky bez přetvářky</h2>
-                                    <p className="font-sans text-slate-300 text-xs leading-relaxed">Honza Tráva má za sebou 6 osmitisícovek. Nejsme sterilní cestovka — zakládáme si na osobním přístupu a vlastním týmu šerpů.</p>
+                                    <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-xs font-bold mb-2">14 Summits Expedition</h3>
+                                    <h2 className="font-serif text-xl text-white leading-tight mb-2">Čeští specialisté na Nepál</h2>
+                                    <p className="font-sans text-slate-300 text-xs leading-relaxed">Nejsme sterilní cestovka z letáku. Od pohodových treků po osmitisícovky — vždy s osobním přístupem, zkušeným nepálským týmem a vlastním zázemím v Káthmándú.</p>
                                 </div>
                                 <div className="flex flex-col gap-2 mt-auto">
+                                    <button onClick={() => setIs14Open(true)} className="w-full py-2.5 px-3 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2">
+                                        O 14 Summits <ArrowRight className="w-3 h-3" />
+                                    </button>
                                     <div className="flex gap-2">
                                         <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {miri.name.split(' ')[0]}</button>
                                         <button onClick={() => setIsSubinOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {subin.name.split(' ')[0]}</button>
@@ -686,46 +690,54 @@ const Expeditions = ({ scrollProgress }) => {
                         </motion.div>
 
                         <motion.div className="glass-card p-4 md:p-6 lg:p-8 text-left pointer-events-auto relative z-10 backdrop-blur-3xl bg-slate-950/75 border-slate-700/50 shadow-2xl h-full flex flex-col justify-center rounded-2xl">
-                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-sm md:text-[11px] font-bold mb-3 md:mb-4 drop-shadow-md">S kým do hor</h3>
-                            <h2 className="font-serif text-2xl md:text-3xl text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
-                                Osmitisícovky i treky bez přetvářky
+                            <h3 className="text-gold-500 font-sans uppercase tracking-[0.2em] text-sm md:text-[11px] font-bold mb-3 md:mb-4 drop-shadow-md">14 Summits Expedition · Nepál</h3>
+                            <h2 className="font-serif text-2xl md:text-3xl text-white mb-4 md:mb-5 leading-tight drop-shadow-lg">
+                                Čeští specialisté <span className="italic text-slate-300">na Nepál.</span>
                             </h2>
-                            <p className="font-sans text-slate-100 font-medium leading-relaxed text-sm md:text-base lg:text-lg mb-3 drop-shadow-sm">
-                                Honza Tráva má za sebou 6 osmitisícovek. {miri.name} vystoupala na nespočet šestitisícovek...
+                            <p className="font-sans text-slate-100 font-medium leading-relaxed text-sm md:text-base mb-3 drop-shadow-sm">
+                                Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa, kde dělají nejlepší dal bhat široko daleko.
                             </p>
-                            <p className="font-sans text-slate-200 leading-relaxed text-sm md:text-base drop-shadow-sm">
-                                Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Spojujeme syrové himálajské dobrodružství s českým zázemím. Zakládáme si na osobním přístupu, poctivé aklimatizaci a vlastním týmu šerpů.
+                            <p className="font-sans text-slate-300 leading-relaxed text-sm drop-shadow-sm">
+                                Treky, expedice i vlastní zázemí v Káthmándú — od pohodových cest po osmitisícové vrcholy, vždy s osobním přístupem, poctivou aklimatizací a zkušeným nepálským týmem.
                             </p>
-                            
-                            <div className="mt-8 md:mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 items-center sm:items-stretch">
+
+                            <div className="mt-6 md:mt-8 pt-5 border-t border-white/10 flex flex-col gap-2.5">
                                 <button
-                                    onClick={() => setIsMiriOpen(true)}
-                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
+                                    onClick={() => setIs14Open(true)}
+                                    className="group relative w-full inline-flex items-center justify-center gap-2 py-3 px-5 bg-white/15 hover:bg-white/25 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-300 border border-white/25 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O {miri.name.split(' ')[0]}</span>
+                                    <span className="relative z-10 drop-shadow-md">O 14 Summits Expedition</span>
                                     <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                                 </button>
-
-                                <button
-                                    onClick={() => setIsSubinOpen(true)}
-                                    className="group relative w-full flex-1 inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.15em] text-sm rounded-xl transition-all duration-300 backdrop-blur-md border border-white/20 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">O {subin.name.split(' ')[0]}</span>
-                                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-                                </button>
-
-                                <a
-                                    href="https://14summitsexpedition.cz"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group relative w-full flex-[1.4] inline-flex items-center justify-center gap-2 py-3 md:py-4 px-5 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] border border-gold-400/50 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                                    <span className="relative z-10 drop-shadow-md whitespace-nowrap">Chci do Nepálu</span>
-                                    <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-                                </a>
+                                <div className="flex gap-2.5">
+                                    <button
+                                        onClick={() => setIsMiriOpen(true)}
+                                        className="group relative flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.12em] text-xs rounded-xl transition-all duration-300 border border-white/20 overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                        <span className="relative z-10 whitespace-nowrap">O {miri.name.split(' ')[0]}</span>
+                                        <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                    </button>
+                                    <button
+                                        onClick={() => setIsSubinOpen(true)}
+                                        className="group relative flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.12em] text-xs rounded-xl transition-all duration-300 border border-white/20 overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                        <span className="relative z-10 whitespace-nowrap">O {subin.name.split(' ')[0]}</span>
+                                        <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                    </button>
+                                    <a
+                                        href="https://14summitsexpedition.cz"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group relative flex-[1.3] inline-flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-[0.12em] text-xs rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-[0_0_16px_rgba(212,175,55,0.3)] border border-gold-400/50 overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+                                        <span className="relative z-10 whitespace-nowrap">Chci do Nepálu</span>
+                                        <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                                    </a>
+                                </div>
                             </div>
                         </motion.div>
 
@@ -1141,6 +1153,126 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </>
                         )}
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* ── 14 SUMMITS EXPEDITION MODAL ── */}
+        <AnimatePresence>
+            {is14Open && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-3 md:p-8 pointer-events-auto bg-slate-950/92 backdrop-blur-md"
+                    onClick={() => setIs14Open(false)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.97, y: 24 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.97, y: -16 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-ivory w-full max-w-3xl max-h-[92vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+                    >
+                        {/* Hero */}
+                        <div className="relative h-36 md:h-48 shrink-0 overflow-hidden">
+                            <img src={SummitImage} alt="" className="w-full h-full object-cover object-[50%_30%] brightness-50" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/55 to-slate-950/95" />
+                            <button
+                                onClick={() => setIs14Open(false)}
+                                className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-sm border border-white/15"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                            <div className="absolute bottom-5 left-6 md:left-8">
+                                <span className="text-gold-400 font-mono text-[10px] uppercase tracking-[0.4em] font-bold block mb-1.5">14 Summits Expedition</span>
+                                <h2 className="font-serif text-2xl md:text-4xl text-white leading-none">
+                                    Čeští specialisté <span className="italic text-slate-300">na Nepál.</span>
+                                </h2>
+                            </div>
+                        </div>
+
+                        {/* Scrollable body */}
+                        <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar px-6 md:px-10 py-7 md:py-9" data-lenis-prevent>
+
+                            {/* Intro */}
+                            <p className="font-sans text-slate-800 leading-relaxed font-medium mb-4 text-sm md:text-base">
+                                Treky, expedice i vlastní zázemí v Káthmándú s Honzou Trávou, Miri Jirkovou a naším nepálským týmem.
+                            </p>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-4 text-sm">
+                                Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa, kde dělají nejlepší dal bhat široko daleko. Nepál je pro nás druhým domovem a společně se Subinem Thakurim a 14 Summits Expedition propojujeme zkušenosti z vysokých hor s českým zázemím a osobním přístupem.
+                            </p>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-4 text-sm">
+                                Pořádáme treky, expedice i cesty na klíč — od pohodových treků v podhůří Himálaje až po výstupy na osmitisícové vrcholy. Důležitá je pro nás bezpečnost, poctivá aklimatizace, malá skupina lidí a zkušený nepálský tým, na který je spoleh i vysoko v horách.
+                            </p>
+                            <p className="font-sans text-slate-500 leading-relaxed mb-8 text-sm italic">
+                                Nejde nám o sbírání vrcholů ani výkon za každou cenu. Hory nás naučily pokoře, nadhledu a tomu, že někdy je stejně důležitý jako cesta samotná i návrat domů.
+                            </p>
+
+                            {/* Co organizujeme */}
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-4 h-px bg-gold-400 shrink-0" />
+                                <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Co společně organizujeme</h3>
+                            </div>
+                            <ul className="space-y-2.5 mb-8">
+                                {[
+                                    'Treky v Nepálu s místními průvodci',
+                                    'Expedice na šestitisícové vrcholy i výš',
+                                    'Fotografické výpravy',
+                                    'Jógové treky',
+                                    'Cesty na klíč podle zkušeností a možností účastníků',
+                                    'Soukromé i skupinové výpravy',
+                                ].map((item) => (
+                                    <li key={item} className="flex items-start gap-3">
+                                        <ArrowRight className="w-3.5 h-3.5 text-gold-500 mt-0.5 shrink-0" />
+                                        <span className="font-sans text-slate-700 text-sm leading-snug">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Jak cestujeme */}
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-4 h-px bg-gold-400 shrink-0" />
+                                <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Jak cestujeme</h3>
+                            </div>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-4 text-sm">
+                                Cestujeme v menších skupinách a zakládáme si na osobním přístupu. Na trecích i expedicích spolupracujeme se zkušenými nepálskými průvodci, nosiči a lidmi, které osobně známe mnoho let.
+                            </p>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-8 text-sm">
+                                Pomůžeme s přípravou už v Česku — od vybavení a fyzické přípravy až po doporučení k aklimatizaci a fungování ve vysoké nadmořské výšce. A protože Nepál dobře známe i mimo hlavní turistické trasy, rádi vás vezmeme i na místa, kam se běžné cestovky často nedostanou.
+                            </p>
+
+                            {/* Zázemí */}
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-4 h-px bg-gold-400 shrink-0" />
+                                <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Zázemí v Káthmándú</h3>
+                            </div>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-8 text-sm">
+                                Naše cesty začínají i končí v centru Thamelu — v Czech Pub Nepal a Hotel Kathmandu Base Camp. Místo, kde si po treku člověk dá dobré jídlo, pivo, horkou sprchu a chvíli klidu před další cestou.
+                            </p>
+
+                            {/* CTA */}
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <a
+                                    href="https://14summitsexpedition.cz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-widest text-xs rounded-xl transition-all duration-300 group"
+                                >
+                                    <ExternalLink className="w-4 h-4" />
+                                    14summitsexpedition.cz
+                                </a>
+                                <button
+                                    onClick={() => setIs14Open(false)}
+                                    className="flex-1 flex items-center justify-center py-4 px-6 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold uppercase text-xs tracking-widest rounded-xl transition-all"
+                                >
+                                    Zavřít
+                                </button>
+                            </div>
+                        </div>
                     </motion.div>
                 </motion.div>
             )}
