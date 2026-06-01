@@ -845,16 +845,27 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                                 className="flex flex-col h-full"
                             >
-                                {/* Google Maps iframe */}
-                                <div className="relative shrink-0 overflow-hidden bg-slate-900" style={{ height: '45%', minHeight: 180 }}>
+                                {/* Google Maps iframe — stylizovaný */}
+                                <div className="relative shrink-0 overflow-hidden bg-[#0a1520]" style={{ height: '45%', minHeight: 180 }}>
                                     {selected.mapUrl ? (
-                                        <iframe
-                                            src={selected.mapUrl}
-                                            className="absolute inset-0 w-full h-full border-0"
-                                            loading="lazy"
-                                            referrerPolicy="no-referrer-when-downgrade"
-                                            title={`Mapa — ${selected.name}`}
-                                        />
+                                        <>
+                                            <iframe
+                                                src={selected.mapUrl}
+                                                className="absolute inset-0 w-full h-full border-0"
+                                                loading="lazy"
+                                                referrerPolicy="no-referrer-when-downgrade"
+                                                title={`Mapa — ${selected.name}`}
+                                                style={{
+                                                    filter: 'saturate(0.7) contrast(1.2) brightness(0.72) hue-rotate(195deg)',
+                                                }}
+                                            />
+                                            {/* Gold tint overlay */}
+                                            <div className="absolute inset-0 pointer-events-none"
+                                                 style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(10,21,32,0.15) 100%)', mixBlendMode: 'overlay' }} />
+                                            {/* Vignette */}
+                                            <div className="absolute inset-0 pointer-events-none"
+                                                 style={{ boxShadow: 'inset 0 0 60px rgba(6,9,15,0.55)' }} />
+                                        </>
                                     ) : (
                                         <img src={selected.image} alt={selected.name} className="w-full h-full object-cover opacity-60" />
                                     )}
@@ -2304,12 +2315,19 @@ const Expeditions = ({ scrollProgress }) => {
                                     transition={{ duration: 0.25 }}
                                     className="flex flex-col md:flex-row h-full max-h-[90vh]"
                                 >
-                                    <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0 bg-slate-900">
+                                    <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0 bg-[#0a1520]">
                                         {selectedRegion.mapUrl ? (
-                                            <iframe src={selectedRegion.mapUrl}
-                                                className="absolute inset-0 w-full h-full border-0"
-                                                loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                                                title={`Mapa — ${selectedRegion.name}`} />
+                                            <>
+                                                <iframe src={selectedRegion.mapUrl}
+                                                    className="absolute inset-0 w-full h-full border-0"
+                                                    loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                                                    title={`Mapa — ${selectedRegion.name}`}
+                                                    style={{ filter: 'saturate(0.7) contrast(1.2) brightness(0.72) hue-rotate(195deg)' }} />
+                                                <div className="absolute inset-0 pointer-events-none"
+                                                     style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(10,21,32,0.15) 100%)', mixBlendMode: 'overlay' }} />
+                                                <div className="absolute inset-0 pointer-events-none"
+                                                     style={{ boxShadow: 'inset 0 0 60px rgba(6,9,15,0.55)' }} />
+                                            </>
                                         ) : (
                                             <img src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
                                         )}
