@@ -315,7 +315,7 @@ function ItemList({ items, selected, onSelect, getLabel, onAdd, onDelete, labelK
   );
 }
 
-function ImagePicker({ imageUrl, onChangeImageUrl }) {
+function ImagePicker({ imageUrl, onChangeImageUrl, label }) {
   const fileInputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -343,7 +343,7 @@ function ImagePicker({ imageUrl, onChangeImageUrl }) {
   return (
     <div className="flex flex-col gap-3">
       <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-        <Image className="w-3 h-3" /> Obrázek
+        <Image className="w-3 h-3" /> {label || 'Obrázek'}
       </label>
 
       {displaySrc ? (
@@ -397,6 +397,86 @@ function ImagePicker({ imageUrl, onChangeImageUrl }) {
           className="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"
         />
       </div>
+    </div>
+  );
+}
+
+/* ─── FocalPicker ───────────────────────────────────────────── */
+function FocalPicker({ imageUrl, focalX = 50, focalY = 50, onChange, label = 'Ohnisko fotky (focuspoint)' }) {
+  const imgRef = useRef(null);
+  if (!imageUrl) return null;
+
+  const handleClick = (e) => {
+    const rect = imgRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, Math.round(((e.clientX - rect.left) / rect.width) * 100)));
+    const y = Math.max(0, Math.min(100, Math.round(((e.clientY - rect.top) / rect.height) * 100)));
+    onChange({ focalX: x, focalY: y });
+  };
+
+  const presets = [
+    { label: 'Střed',  x: 50, y: 50 },
+    { label: 'Nahoře', x: 50, y: 20 },
+    { label: 'Dole',   x: 50, y: 80 },
+    { label: 'Vlevo',  x: 20, y: 50 },
+    { label: 'Vpravo', x: 80, y: 50 },
+  ];
+
+  return (
+    <div className="mt-3 p-3 bg-slate-800/60 border border-slate-700 rounded-xl flex flex-col gap-2.5">
+      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+        <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
+        {label}
+      </p>
+      <div className="flex gap-3 items-start">
+        {/* Kliknutelný náhled */}
+        <div className="shrink-0 relative rounded-lg overflow-hidden border border-slate-600 cursor-crosshair"
+             style={{ width: 120, height: 80 }} onClick={handleClick}>
+          <img ref={imgRef} src={imageUrl} alt="" className="w-full h-full object-cover"
+               style={{ objectPosition: `${focalX}% ${focalY}%` }} draggable={false} />
+          {/* Focal indicator */}
+          <div className="absolute pointer-events-none"
+               style={{ left: `${focalX}%`, top: `${focalY}%`, transform: 'translate(-50%,-50%)' }}>
+            <div className="w-4 h-4 rounded-full border-2 border-white shadow-lg bg-red-500/75" />
+          </div>
+          <p className="absolute bottom-1 right-1 text-[9px] text-white/60 bg-black/50 px-1 rounded">klikni</p>
+        </div>
+        {/* Ovládání */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap gap-1 mb-2">
+            {presets.map(p => (
+              <button key={p.label} onClick={() => onChange({ focalX: p.x, focalY: p.y })}
+                className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border transition-all ${focalX === p.x && focalY === p.y ? 'bg-gold-500 text-slate-900 border-gold-500' : 'bg-slate-700 text-slate-400 border-slate-600 hover:border-slate-400'}`}>
+                {p.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-3">
+            <label className="flex-1">
+              <span className="text-[9px] text-slate-500 block mb-0.5">Horizontální {focalX}%</span>
+              <input type="range" min="0" max="100" value={focalX}
+                onChange={e => onChange({ focalX: Number(e.target.value), focalY })}
+                className="w-full h-1 accent-gold-500 cursor-pointer" />
+            </label>
+            <label className="flex-1">
+              <span className="text-[9px] text-slate-500 block mb-0.5">Vertikální {focalY}%</span>
+              <input type="range" min="0" max="100" value={focalY}
+                onChange={e => onChange({ focalX, focalY: Number(e.target.value) })}
+                className="w-full h-1 accent-gold-500 cursor-pointer" />
+            </label>
+          </div>
+          <p className="text-[9px] text-slate-600 mt-1.5">Platí pro desktop i mobil · {focalX}% {focalY}%</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── ImagePickerWithFocal ──────────────────────────────────── */
+function ImagePickerWithFocal({ imageUrl, onChangeImageUrl, focalX = 50, focalY = 50, onChangeFocal, label }) {
+  return (
+    <div className="flex flex-col gap-0">
+      <ImagePicker imageUrl={imageUrl} onChangeImageUrl={onChangeImageUrl} label={label} />
+      <FocalPicker imageUrl={imageUrl} focalX={focalX} focalY={focalY} onChange={onChangeFocal || (() => {})} />
     </div>
   );
 }
@@ -593,58 +673,89 @@ function ImageGallery({ images = [], onChange, label = 'Fotogalerie pro modal' }
   const fileInputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [expandedFocal, setExpandedFocal] = useState(null);
+
+  // Normalize: images can be strings or {url, focalX, focalY} objects
+  const normalized = images.map(img => typeof img === 'string' ? { url: img, focalX: 50, focalY: 50 } : img);
+  const getUrl = (img) => typeof img === 'string' ? img : (img?.url || '');
 
   const handleFiles = async (files) => {
     if (!files?.length) return;
     setUploading(true); setError('');
     try {
       const urls = await Promise.all(Array.from(files).map(f => uploadImageToSupabase(f)));
-      onChange([...images, ...urls]);
+      onChange([...normalized, ...urls.map(u => ({ url: u, focalX: 50, focalY: 50 }))]);
     } catch { setError('Chyba při nahrávání.'); }
     finally { setUploading(false); }
   };
 
   const remove = (i) => {
-    deleteImageFromSupabase(images[i]);
-    onChange(images.filter((_, idx) => idx !== i));
+    deleteImageFromSupabase(getUrl(normalized[i]));
+    onChange(normalized.filter((_, idx) => idx !== i));
   };
 
   const move = (i, dir) => {
-    const a = [...images]; const j = i + dir;
+    const a = [...normalized]; const j = i + dir;
     if (j < 0 || j >= a.length) return;
     [a[i], a[j]] = [a[j], a[i]]; onChange(a);
+  };
+
+  const updateFocal = (i, focalX, focalY) => {
+    const a = [...normalized];
+    a[i] = { ...a[i], focalX, focalY };
+    onChange(a);
   };
 
   return (
     <div className="flex flex-col gap-3">
       <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-        <Image className="w-3 h-3" /> {label} <span className="text-slate-600 font-normal normal-case tracking-normal">({images.length} fotek)</span>
+        <Image className="w-3 h-3" /> {label} <span className="text-slate-600 font-normal normal-case tracking-normal">({normalized.length} fotek)</span>
       </label>
       <div className="grid grid-cols-3 gap-2">
-        {images.map((url, i) => (
-          <div key={i} className="relative group aspect-video rounded-xl overflow-hidden border border-slate-600 bg-slate-800">
-            <img src={url} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5">
-              <div className="flex gap-1">
-                <button onClick={() => move(i, -1)} disabled={i === 0}
-                  className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
-                  <MoveUp className="w-3 h-3" />
-                </button>
-                <button onClick={() => move(i, 1)} disabled={i === images.length - 1}
-                  className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
-                  <MoveDown className="w-3 h-3" />
-                </button>
-                <button onClick={() => remove(i)}
-                  className="p-1 bg-red-500/30 hover:bg-red-500/50 rounded text-red-300 transition-colors">
-                  <Trash2 className="w-3 h-3" />
-                </button>
+        {normalized.map((img, i) => {
+          const url = getUrl(img);
+          return (
+            <div key={i} className="flex flex-col gap-1">
+              <div className="relative group aspect-video rounded-xl overflow-hidden border border-slate-600 bg-slate-800">
+                <img src={url} alt="" className="w-full h-full object-cover"
+                     style={{ objectPosition: `${img.focalX ?? 50}% ${img.focalY ?? 50}%` }} />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5">
+                  <div className="flex gap-1">
+                    <button onClick={() => move(i, -1)} disabled={i === 0}
+                      className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
+                      <MoveUp className="w-3 h-3" />
+                    </button>
+                    <button onClick={() => move(i, 1)} disabled={i === normalized.length - 1}
+                      className="p-1 bg-white/10 hover:bg-white/20 rounded text-white disabled:opacity-30 transition-colors">
+                      <MoveDown className="w-3 h-3" />
+                    </button>
+                    <button onClick={() => remove(i)}
+                      className="p-1 bg-red-500/30 hover:bg-red-500/50 rounded text-red-300 transition-colors">
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                  <button onClick={() => setExpandedFocal(expandedFocal === i ? null : i)}
+                    className="px-2 py-0.5 bg-gold-500/30 hover:bg-gold-500/50 rounded text-[10px] text-gold-300 font-bold transition-colors">
+                    Ohnisko
+                  </button>
+                </div>
+                <div className="absolute top-1.5 left-1.5 bg-black/70 text-white/80 text-[10px] px-1.5 py-0.5 rounded font-semibold">
+                  {i === 0 ? 'Hlavní' : `#${i + 1}`}
+                </div>
+                {/* Focal indicator dot */}
+                <div className="absolute pointer-events-none"
+                     style={{ left: `${img.focalX ?? 50}%`, top: `${img.focalY ?? 50}%`, transform: 'translate(-50%,-50%)' }}>
+                  <div className="w-2.5 h-2.5 rounded-full border border-white bg-red-500/70 shadow" />
+                </div>
               </div>
+              {expandedFocal === i && (
+                <FocalPicker imageUrl={url} focalX={img.focalX ?? 50} focalY={img.focalY ?? 50}
+                  onChange={({ focalX, focalY }) => updateFocal(i, focalX, focalY)}
+                  label={`Ohnisko #${i + 1}`} />
+              )}
             </div>
-            <div className="absolute top-1.5 left-1.5 bg-black/70 text-white/80 text-[10px] px-1.5 py-0.5 rounded font-semibold">
-              {i === 0 ? 'Hlavní' : `#${i + 1}`}
-            </div>
-          </div>
-        ))}
+          );
+        })}
         <div
           onClick={() => fileInputRef.current?.click()}
           onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
@@ -1196,6 +1307,74 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
 }
 
 /* ─── Contact & Promo Editor ────────────────────────────────── */
+/* ─── SiteTextsEditor ────────────────────────────────────── */
+function SiteTextsEditor({ data, onChange, onReset }) {
+  const upd = (section, field, val) => onChange({ ...data, [section]: { ...(data[section] || {}), [field]: val } });
+  const d = data || {};
+
+  return (
+    <div>
+      <SectionHeader title="Texty webu" subtitle="Editace textů jednotlivých sekcí (Hotel, Pub, Kontakt, Hero)" onReset={onReset} />
+      <div className="flex flex-col gap-8 max-w-2xl">
+
+        {/* Hotel */}
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+          <h3 className="font-semibold text-white flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Hotel Kathmandu Base Camp
+          </h3>
+          <Field label="Podnadpis sekce" value={d.hotel?.heading} onChange={v => upd('hotel','heading',v)} placeholder="Klidné zázemí v srdci Thamelu" />
+          <Field label="Odstavec 1" value={d.hotel?.p1} onChange={v => upd('hotel','p1',v)} rows={2} />
+          <Field label="Odstavec 2" value={d.hotel?.p2} onChange={v => upd('hotel','p2',v)} rows={2} />
+          <Field label="Odstavec 3" value={d.hotel?.p3} onChange={v => upd('hotel','p3',v)} rows={2} />
+          <Field label="Booking URL" value={d.hotel?.bookingUrl} onChange={v => upd('hotel','bookingUrl',v)} type="url" placeholder="https://www.booking.com/…" icon={Link2} />
+        </div>
+
+        {/* Pub */}
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+          <h3 className="font-semibold text-white flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold-400 inline-block" /> Czech Pub Nepal
+          </h3>
+          <Field label="Podnadpis sekce" value={d.pub?.heading} onChange={v => upd('pub','heading',v)} placeholder="Místo návratů…" />
+          <Field label="Odstavec 1" value={d.pub?.p1} onChange={v => upd('pub','p1',v)} rows={2} />
+          <Field label="Odstavec 2" value={d.pub?.p2} onChange={v => upd('pub','p2',v)} rows={2} />
+          <Field label="Odstavec 3 (kurzíva)" value={d.pub?.p3} onChange={v => upd('pub','p3',v)} rows={2} />
+          <Field label="Web URL" value={d.pub?.websiteUrl} onChange={v => upd('pub','websiteUrl',v)} type="url" placeholder="https://czechpubnepal.com/" icon={Globe} />
+        </div>
+
+        {/* Kontakt */}
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+          <h3 className="font-semibold text-white flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-teal-400 inline-block" /> Kontaktní údaje
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Hlavní e-mail" value={d.contact?.mainEmail} onChange={v => upd('contact','mainEmail',v)} type="email" icon={Mail} />
+            <Field label="14Summits e-mail" value={d.contact?.expeditionEmail} onChange={v => upd('contact','expeditionEmail',v)} type="email" icon={Mail} />
+            <Field label="Booking e-mail" value={d.contact?.bookingEmail} onChange={v => upd('contact','bookingEmail',v)} type="email" icon={Mail} />
+            <Field label="Telefon" value={d.contact?.phone} onChange={v => upd('contact','phone',v)} placeholder="+420 776 359 536" />
+            <Field label="IČO" value={d.contact?.ico} onChange={v => upd('contact','ico',v)} placeholder="68234581" />
+            <Field label="Adresa sídla" value={d.contact?.address} onChange={v => upd('contact','address',v)} placeholder="Plzeň, Česká republika" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-700">
+            <Field label="Instagram URL" value={d.contact?.instagram} onChange={v => upd('contact','instagram',v)} type="url" icon={Globe} />
+            <Field label="Facebook URL" value={d.contact?.facebook} onChange={v => upd('contact','facebook',v)} type="url" icon={Globe} />
+            <Field label="YouTube URL" value={d.contact?.youtube} onChange={v => upd('contact','youtube',v)} type="url" icon={Globe} />
+          </div>
+        </div>
+
+        {/* Hero */}
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+          <h3 className="font-semibold text-white flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-pink-400 inline-block" /> Hero sekce (úvodní stránka)
+          </h3>
+          <Field label="Tagline pod logem" value={d.hero?.tagline} onChange={v => upd('hero','tagline',v)} placeholder="Poutník mezi světy." />
+          <Field label="Scroll hint text" value={d.hero?.scrollHint} onChange={v => upd('hero','scrollHint',v)} placeholder="Začni výstup." />
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 function ContactEditor({ promo, onPromo, onReset }) {
   const upd = (i, field, val) => { const a = [...promo]; a[i] = { ...a[i], [field]: val }; onPromo(a); };
   return (
@@ -1228,6 +1407,39 @@ function ContactEditor({ promo, onPromo, onReset }) {
 }
 
 /* ─── Main AdminPanel ───────────────────────────────────────── */
+/* ─── Default site texts (hardcoded content) ─────────────── */
+const DEF_SITE_TEXTS = {
+  hotel: {
+    heading: 'Klidné zázemí v srdci Thamelu',
+    p1: 'Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací před cestou do hor i po návratu z nich.',
+    p2: 'Ráno vás čeká poctivá kontinentální snídaně, večer terasa plná květin — a během dne místo, kde si odpočinete od ruchu Thamelu.',
+    p3: 'Najdete u nás čisté pokoje, rychlou Wi-Fi i lidi, kteří Nepál dobře znají a rádi pomohou. A vždy někdo, s kým se domluvíte i česky.',
+    bookingUrl: 'https://www.booking.com/hotel/np/kathmandu-base-camp.html',
+  },
+  pub: {
+    heading: 'Místo návratů, setkávání a dlouhých večerů',
+    p1: 'Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci a místní přátelé.',
+    p2: 'Dobré pivo, nejlepší smažák v Nepálu, nepálské jídlo — a příběhy, které si sem lidé přinášejí z hor.',
+    p3: 'Někdo přijde na jedno pivo. Někdo tu zůstane celý večer. A někdo se sem vrací každý rok.',
+    websiteUrl: 'https://czechpubnepal.com/',
+  },
+  contact: {
+    mainEmail: 'honzatravatravnicek@gmail.com',
+    expeditionEmail: 'info@14summitsexpedition.cz',
+    phone: '+420 776 359 536',
+    bookingEmail: 'booking@honzatrava.cz',
+    instagram: 'https://www.instagram.com/honzatravatravnicek',
+    facebook: 'https://www.facebook.com/honzatrava',
+    youtube: 'https://www.youtube.com/@honzatrava',
+    address: 'Plzeň, Česká republika',
+    ico: '68234581',
+  },
+  hero: {
+    tagline: 'Poutník mezi světy.',
+    scrollHint: 'Začni výstup.',
+  },
+};
+
 const NAV = [
   { key:'partners',    label:'Partneři',   icon: Users,      color: 'text-blue-400' },
   { key:'expeditions', label:'Expedice',   icon: Mountain,   color: 'text-emerald-400' },
@@ -1236,6 +1448,7 @@ const NAV = [
   { key:'projects',    label:'Projekty',   icon: Folder,     color: 'text-amber-400' },
   { key:'media',       label:'Média',      icon: Tv,         color: 'text-red-400' },
   { key:'honza',       label:'O Honzovi',  icon: Type,       color: 'text-pink-400' },
+  { key:'sitetexts',   label:'Texty webu', icon: AlignLeft,  color: 'text-cyan-400' },
   { key:'contact',     label:'Kontakt',    icon: Mail,       color: 'text-teal-400' },
 ];
 
@@ -1261,6 +1474,7 @@ export default function AdminPanel() {
   const [story,       setStory]       = useState(() => loadContent('story',        DEF_STORY));
   const [osveta,      setOsveta]      = useState(() => loadContent('osveta',       DEF_OSVETA));
   const [promo,       setPromo]       = useState(() => loadContent('promo',        DEF_PROMO));
+  const [siteTexts,   setSiteTexts]   = useState(() => loadContent('site_texts',   DEF_SITE_TEXTS));
 
   const markDirty = useCallback((setter) => (...args) => { setter(...args); setDirty(true); }, []);
 
@@ -1280,6 +1494,7 @@ export default function AdminPanel() {
       saveContent('story',         story),
       saveContent('osveta',        osveta),
       saveContent('promo',         promo),
+      saveContent('site_texts',    siteTexts),
     ]);
     setDirty(false);
     setSaveMsg('Uloženo');
@@ -1288,7 +1503,7 @@ export default function AdminPanel() {
 
   const handlePreview = () => {
     const PFX = 'trava_admin_';
-    const data = { partners, expeditions, products, lectures, projects, media_video: mediaVideo, media_podcast: mediaPodcast, media_blog: mediaBlog, press, texts, story, osveta, promo };
+    const data = { partners, expeditions, products, lectures, projects, media_video: mediaVideo, media_podcast: mediaPodcast, media_blog: mediaBlog, press, texts, story, osveta, promo, site_texts: siteTexts };
     Object.entries(data).forEach(([k, v]) => {
       try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch {}
     });
@@ -1491,6 +1706,13 @@ export default function AdminPanel() {
               onResetTexts={() => handleReset('texts', DEF_TEXTS, setTexts)}
               onResetStory={() => handleReset('story', DEF_STORY, setStory)}
               onResetOsveta={() => handleReset('osveta', DEF_OSVETA, setOsveta)}
+            />
+          )}
+          {section === 'sitetexts' && (
+            <SiteTextsEditor
+              data={siteTexts}
+              onChange={markDirty(setSiteTexts)}
+              onReset={() => handleReset('site_texts', DEF_SITE_TEXTS, setSiteTexts)}
             />
           )}
           {section === 'contact' && (

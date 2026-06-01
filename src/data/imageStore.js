@@ -71,9 +71,27 @@ export function deleteImageData(imageId) {
 // Returns best available src: Supabase URL (imageUrl) > legacy localStorage (imageId) > null
 export function resolveImageSrc(item) {
   if (!item) return null;
+  // Support new gallery format: {url: "...", focalX, focalY}
+  if (item.url && typeof item.url === 'string') return item.url;
   if (item.imageUrl) return item.imageUrl;
   if (item.imageId) return getImageData(item.imageId) || null;
   return null;
+}
+
+// Returns CSS objectPosition value for an item's image focal point
+// item can have imageFocusX/imageFocusY (single image) or be a gallery item with focalX/focalY
+export function resolveImageFocal(item, defaults = { x: 50, y: 50 }) {
+  if (!item) return `${defaults.x}% ${defaults.y}%`;
+  const x = item.focalX ?? item.imageFocusX ?? defaults.x;
+  const y = item.focalY ?? item.imageFocusY ?? defaults.y;
+  return `${x}% ${y}%`;
+}
+
+// Normalize gallery array: strings → {url, focalX:50, focalY:50}
+export function normalizeGallery(images = []) {
+  return images.map(img =>
+    typeof img === 'string' ? { url: img, focalX: 50, focalY: 50 } : img
+  );
 }
 
 export function getImageStorageUsedMB() {
