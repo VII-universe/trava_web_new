@@ -3,6 +3,7 @@ import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee, Images, ZoomIn, ArrowRight } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
 
 import HotelBg        from '../assets/zmensene/hotel/czech-pub-highlander-006-hires.jpg';
 import HotelHero      from '../assets/zmensene/hotel/czech-pub-highlander-004-hires.jpg';
@@ -36,7 +37,17 @@ const FEATURES = [
     { icon: <Coffee   className="w-3.5 h-3.5 text-gold-500" />, label: 'Klid v srdci Thamelu' },
 ];
 
+const DEF_HOTEL_TEXTS = {
+    heading: 'v srdci Thamelu.',
+    p1: 'Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací před cestou do hor i po návratu z nich. Kathmandu Base Camp je kombinací pohodového zázemí, cestovatelské atmosféry a klidného prostoru jen pár kroků od všeho důležitého.',
+    p2: 'Ráno vás čeká poctivá kontinentální snídaně, večer terasa plná květin — a během dne místo, kde si odpočinete od ruchu Thamelu, dáte si čaj nebo jen chvíli zpomalíte před další cestou.',
+    p3: 'Najdete u nás čisté pokoje, rychlou Wi-Fi i lidi, kteří Nepál dobře znají a rádi pomohou. A vždy někdo, s kým se domluvíte i česky.',
+    bookingUrl: 'https://www.booking.com/hotel/np/kathmandu-base-camp.html',
+};
+
 const Hotel = ({ scrollProgress }) => {
+    const siteData  = loadContent('site_texts', {});
+    const hotelT    = { ...DEF_HOTEL_TEXTS, ...(siteData.hotel || {}) };
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeDot, setActiveDot]         = useState(0);
     const [galleryOpen, setGalleryOpen]     = useState(false);
@@ -240,7 +251,7 @@ const Hotel = ({ scrollProgress }) => {
                                         className="flex-1 flex items-center justify-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
                                         <Images className="w-3 h-3 text-gold-500" /> Galerie
                                     </button>
-                                    <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
+                                    <a href={hotelT.bookingUrl} target="_blank" rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-900 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
                                         Booking
                                     </a>
@@ -276,13 +287,9 @@ const Hotel = ({ scrollProgress }) => {
                         {/* Right content */}
                         <div className="w-[58%] flex flex-col p-7">
                             <img loading="lazy" src={HotelLogo} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none drop-shadow-sm" />
-                            <h2 className="font-serif text-2xl lg:text-3xl text-slate-900 mt-4 mb-1 leading-snug">Klidné zázemí<br/>v srdci Thamelu</h2>
-                            <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-2">
-                                Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací — před cestou do hor i po návratu z nich.
-                            </p>
-                            <p className="text-slate-500 text-sm leading-relaxed mb-3">
-                                Ráno čeká poctivá kontinentální snídaně, večer terasa plná květin. Čisté pokoje, rychlá Wi-Fi a vždy někdo, kdo Nepál dobře zná — a s kým se domluvíš i česky.
-                            </p>
+                            <h2 className="font-serif text-2xl lg:text-3xl text-slate-900 mt-4 mb-1 leading-snug">Klidné zázemí<br/><span className="italic text-slate-500">{hotelT.heading}</span></h2>
+                            <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-2">{hotelT.p1}</p>
+                            <p className="text-slate-500 text-sm leading-relaxed mb-3">{hotelT.p2}</p>
                             <div className="grid grid-cols-2 gap-2 mb-3">
                                 {FEATURES.map(({ icon, label }, i) => (
                                     <div key={i} className="flex items-center gap-2 text-slate-700">
@@ -324,7 +331,7 @@ const Hotel = ({ scrollProgress }) => {
                                         className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
                                         <Images className="w-3.5 h-3.5 text-gold-500" /> Galerie
                                     </button>
-                                    <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
+                                    <a href={hotelT.bookingUrl} target="_blank" rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
                                         Booking <ExternalLink className="w-3 h-3" />
                                     </a>
@@ -398,19 +405,13 @@ const Hotel = ({ scrollProgress }) => {
                                 <div>
                                     <p className="text-gold-600 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-2">Hotel Kathmandu Base Camp</p>
                                     <h2 className="font-serif text-2xl md:text-3xl text-slate-900 leading-tight mb-4">
-                                        Klidné zázemí<br/>v srdci <span className="italic text-slate-500">Thamelu.</span>
+                                        Klidné zázemí<br/>v srdci <span className="italic text-slate-500">{hotelT.heading}</span>
                                     </h2>
                                 </div>
 
-                                <p className="font-sans text-slate-800 text-sm md:text-base leading-relaxed font-medium">
-                                    Uprostřed rušného Káthmándú jsme vytvořili místo, kam se člověk rád vrací před cestou do hor i po návratu z nich. Kathmandu Base Camp je kombinací pohodového zázemí, cestovatelské atmosféry a klidného prostoru jen pár kroků od všeho důležitého.
-                                </p>
-                                <p className="font-sans text-slate-700 text-sm leading-relaxed">
-                                    Ráno vás čeká poctivá kontinentální snídaně, večer terasa plná květin — a během dne místo, kde si odpočinete od ruchu Thamelu, dáte si čaj nebo jen chvíli zpomalíte před další cestou.
-                                </p>
-                                <p className="font-sans text-slate-600 text-sm leading-relaxed">
-                                    Najdete u nás čisté pokoje, rychlou Wi-Fi i lidi, kteří Nepál dobře znají a rádi pomohou. A vždy někdo, s kým se domluvíte i česky.
-                                </p>
+                                <p className="font-sans text-slate-800 text-sm md:text-base leading-relaxed font-medium">{hotelT.p1}</p>
+                                <p className="font-sans text-slate-700 text-sm leading-relaxed">{hotelT.p2}</p>
+                                <p className="font-sans text-slate-600 text-sm leading-relaxed">{hotelT.p3}</p>
 
                                 {/* Features */}
                                 <div className="grid grid-cols-2 gap-2 pt-2">
@@ -425,7 +426,7 @@ const Hotel = ({ scrollProgress }) => {
 
                             {/* CTA */}
                             <div className="px-6 md:px-8 py-5 shrink-0 border-t border-slate-100 flex flex-col gap-2.5 bg-white/60">
-                                <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html"
+                                <a href={hotelT.bookingUrl}
                                     target="_blank" rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg group">
                                     Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />

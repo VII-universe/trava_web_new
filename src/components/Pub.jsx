@@ -3,6 +3,7 @@ import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Beer, Utensils, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn, ArrowRight } from 'lucide-react';
+import { loadContent } from '../data/adminStore';
 
 import PubBg      from '../assets/zmensene/kathmandu/_mg_0642.jpg';
 import PubHero    from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.jpg';
@@ -32,7 +33,17 @@ const FEATURES = [
     { icon: <Flame    className="w-3.5 h-3.5 text-gold-400" />, label: 'Živá atmosféra' },
 ];
 
+const DEF_PUB_TEXTS = {
+    heading: 'setkávání a dlouhých večerů',
+    p1: 'Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci, místní přátelé i lidé, kteří mají Nepál podobně pod kůží jako my.',
+    p2: 'Dobré pivo, nejlepší smažák v Nepálu, nepálské jídlo — a příběhy, které si sem lidé přinášejí z hor.',
+    p3: 'Někdo přijde na jedno pivo. Někdo tu zůstane celý večer. A někdo se sem vrací každý rok.',
+    websiteUrl: 'https://czechpubnepal.com/',
+};
+
 const Pub = ({ scrollProgress }) => {
+    const siteData = loadContent('site_texts', {});
+    const pubT = { ...DEF_PUB_TEXTS, ...(siteData.pub || {}) };
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeDot, setActiveDot]         = useState(0);
     const [galleryOpen, setGalleryOpen]     = useState(false);
@@ -234,7 +245,7 @@ const Pub = ({ scrollProgress }) => {
                                         className="flex-1 flex items-center justify-center gap-1.5 bg-white/10 border border-white/20 text-white text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
                                         <Images className="w-3 h-3 text-gold-400" /> Galerie
                                     </button>
-                                    <a href="https://czechpubnepal.com/" target="_blank" rel="noopener noreferrer"
+                                    <a href={pubT.websiteUrl} target="_blank" rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-1.5 bg-white/10 border border-white/20 text-white text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
                                         Web
                                     </a>
@@ -270,13 +281,9 @@ const Pub = ({ scrollProgress }) => {
                         {/* Right content */}
                         <div className="w-[58%] flex flex-col p-7">
                             <img loading="lazy" src={PubLogoNeg} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none" />
-                            <h2 className="font-serif text-2xl lg:text-3xl text-white mt-4 mb-2 leading-snug">Místo návratů,<br/>setkávání a dlouhých večerů</h2>
-                            <p className="text-white/80 text-sm md:text-base leading-relaxed mb-2">
-                                Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci a místní přátelé — lidé, kteří mají Nepál podobně pod kůží jako my.
-                            </p>
-                            <p className="text-white/55 text-sm leading-relaxed mb-3">
-                                Dobré pivo, nejlepší smažák v Nepálu, nepálské jídlo — a příběhy, které si sem lidé přinášejí z hor. Někdo přijde na jedno. Někdo tu zůstane celý večer.
-                            </p>
+                            <h2 className="font-serif text-2xl lg:text-3xl text-white mt-4 mb-2 leading-snug">Místo návratů,<br/><span className="italic text-slate-400">{pubT.heading}</span></h2>
+                            <p className="text-white/80 text-sm md:text-base leading-relaxed mb-2">{pubT.p1}</p>
+                            <p className="text-white/55 text-sm leading-relaxed mb-3">{pubT.p2}</p>
                             <div className="grid grid-cols-2 gap-2 mb-3">
                                 {FEATURES.map(({ icon, label }, i) => (
                                     <div key={i} className="flex items-center gap-2 text-white/80">
@@ -318,7 +325,7 @@ const Pub = ({ scrollProgress }) => {
                                         className="flex-1 flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
                                         <Images className="w-3.5 h-3.5 text-gold-400" /> Galerie
                                     </button>
-                                    <a href="https://czechpubnepal.com/" target="_blank" rel="noopener noreferrer"
+                                    <a href={pubT.websiteUrl} target="_blank" rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
                                         Web <ExternalLink className="w-3 h-3" />
                                     </a>
@@ -390,27 +397,19 @@ const Pub = ({ scrollProgress }) => {
                                 <div>
                                     <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-2">Czech Pub Nepal</p>
                                     <h2 className="font-serif text-2xl md:text-3xl text-white leading-tight mb-4">
-                                        Místo návratů, setkávání<br/>a <span className="italic text-slate-400">dlouhých večerů.</span>
+                                        Místo návratů, <span className="italic text-slate-400">{pubT.heading}</span>
                                     </h2>
                                 </div>
 
-                                <p className="font-sans text-white/85 text-sm md:text-base leading-relaxed font-medium">
-                                    Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci, místní přátelé i lidé, kteří mají Nepál podobně pod kůží jako my.
-                                </p>
-                                <p className="font-sans text-white/70 text-sm leading-relaxed">
-                                    Po dni v ulicích Thamelu nebo po návratu z hor si tu člověk dá dobré pivo, nejlepší smažák v Nepálu, bramborový salát, nepálské jídlo — a hlavně chvíli klidu mezi lidmi, kteří mají často podobné příběhy.
-                                </p>
+                                <p className="font-sans text-white/85 text-sm md:text-base leading-relaxed font-medium">{pubT.p1}</p>
+                                <p className="font-sans text-white/70 text-sm leading-relaxed">{pubT.p2}</p>
 
                                 {/* Citace */}
                                 <div className="border-l-2 border-gold-400/60 pl-4 space-y-1 py-1">
-                                    {['Někdo přijde na jedno pivo.', 'Někdo tu zůstane celý večer.', 'A někdo se sem vrací každý rok.'].map((s, i) => (
-                                        <p key={i} className="font-serif text-white/80 italic text-sm">{s}</p>
+                                    {pubT.p3.split('. ').filter(Boolean).map((s, i) => (
+                                        <p key={i} className="font-serif text-white/80 italic text-sm">{s}{s.endsWith('.') ? '' : '.'}</p>
                                     ))}
                                 </div>
-
-                                <p className="font-sans text-white/55 text-sm leading-relaxed">
-                                    V podstatě je špatně jen to, že české pivo není. Naučili jsme nepálské kolegy, jak se starat o trubky a servírovat dobré místní pivo.
-                                </p>
 
                                 {/* Features */}
                                 <div className="grid grid-cols-2 gap-2 pt-2">
@@ -425,9 +424,9 @@ const Pub = ({ scrollProgress }) => {
 
                             {/* CTA */}
                             <div className="px-6 md:px-8 py-5 shrink-0 border-t border-white/10 flex flex-col gap-2.5">
-                                <a href="https://czechpubnepal.com/" target="_blank" rel="noopener noreferrer"
+                                <a href={pubT.websiteUrl} target="_blank" rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-slate-900 font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg">
-                                    czechpubnepal.com <ExternalLink className="w-3.5 h-3.5" />
+                                    {pubT.websiteUrl?.replace('https://','').replace(/\/$/,'')} <ExternalLink className="w-3.5 h-3.5" />
                                 </a>
                                 <button onClick={() => { setDetailOpen(false); setGalleryOpen(true); }}
                                     className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl transition-all border border-white/15">

@@ -3,8 +3,11 @@ import { motion, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import EverestImage from '../assets/mount_everest_ivory.png';
 import LogoMain from '../assets/svg/honza_trava_logo_V1.svg';
+import { loadContent } from '../data/adminStore';
 
 const Hero = ({ scrollProgress }) => {
+    const siteData = loadContent('site_texts', {});
+    const heroT = { tagline: 'Poutník mezi světy.', scrollHint: 'Začni výstup.', ...(siteData.hero || {}) };
     // PHASE 1: 0.0 -> 0.20
 
     // Text
@@ -64,7 +67,7 @@ const Hero = ({ scrollProgress }) => {
                 </motion.div>
                 
                 <motion.h2 className="text-gold-600 font-sans tracking-[0.3em] text-xs md:text-sm font-bold uppercase drop-shadow-sm">
-                    Poutník mezi světy.
+                    {heroT.tagline}
                 </motion.h2>
             </motion.div>
 
@@ -73,7 +76,7 @@ const Hero = ({ scrollProgress }) => {
                 style={{ y: textY, opacity: textOpacity }}
                 className="absolute bottom-4 md:bottom-8 left-0 right-0 z-70 flex flex-col items-center gap-2"
             >
-                <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-bold drop-shadow-md">Začni výstup.</span>
+                <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-bold drop-shadow-md">{heroT.scrollHint}</span>
                 <ChevronDown className="w-5 md:w-6 h-5 md:h-6 text-gold-500 animate-bounce" />
             </motion.div>
 

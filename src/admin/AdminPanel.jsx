@@ -1126,8 +1126,11 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
 
           {sel === 'zacatky' && (
             <>
-              <Field label="Odstavec 1" value={b.p1} onChange={v=>upd('p1',v)} rows={4} icon={AlignLeft} />
-              <Field label="Odstavec 2" value={b.p2} onChange={v=>upd('p2',v)} rows={4} icon={AlignLeft} />
+              <Field label="Odstavec 1 (tučný úvod)" value={b.p1} onChange={v=>upd('p1',v)} rows={3} icon={AlignLeft} />
+              <Field label="Odstavec 2 (osmitisícovky)" value={b.p2} onChange={v=>upd('p2',v)} rows={3} icon={AlignLeft} />
+              <Field label="Odstavec 3 (14 Summits, hotel, pub)" value={b.p3} onChange={v=>upd('p3',v)} rows={3} icon={AlignLeft} />
+              <Field label="Odstavec 4 (zdraví, diagnóza)" value={b.p4} onChange={v=>upd('p4',v)} rows={3} icon={AlignLeft} />
+              <Field label="Odstavec 5 (závěrečná myšlenka — kurzíva)" value={b.p5} onChange={v=>upd('p5',v)} rows={2} icon={AlignLeft} />
               <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku (2 ks doporučeno)" />
             </>
           )}
@@ -1145,7 +1148,11 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
                   ))}
                 </div>
               </div>
-              <Field label="Text pod statistikami" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
+              <Field label="Text 1 (vznik 14 Summits)" value={b.text} onChange={v=>upd('text',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 2 (propojení, dal bhat)" value={b.text2} onChange={v=>upd('text2',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 3 (nejsme sterilní cestovka)" value={b.text3} onChange={v=>upd('text3',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 4 (přístup, aklimatizace)" value={b.text4} onChange={v=>upd('text4',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 5 (zázemí KTM — kurzíva)" value={b.text5} onChange={v=>upd('text5',v)} rows={2} icon={AlignLeft} />
               <div className="flex flex-col gap-1.5">
                 <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                   <Video className="w-3 h-3" /> YouTube video URL (embed)
@@ -1165,30 +1172,70 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
 
           {sel === 'nepal' && (
             <>
-              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
-              <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku (2 ks doporučeno)" />
+              <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+                <p className="text-xs font-bold text-amber-400 uppercase tracking-wider">Czech Pub Nepal</p>
+                <Field label="Nadpis (pubTitle)" value={b.pubTitle} onChange={v=>upd('pubTitle',v)} placeholder="Czech Pub Nepal" />
+                <Field label="Text 1" value={b.pubText} onChange={v=>upd('pubText',v)} rows={2} icon={AlignLeft} />
+                <Field label="Text 2" value={b.pubText2} onChange={v=>upd('pubText2',v)} rows={2} icon={AlignLeft} />
+                <Field label="Text 3 (kurzíva)" value={b.pubText3} onChange={v=>upd('pubText3',v)} rows={2} icon={AlignLeft} />
+              </div>
+              <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+                <p className="text-xs font-bold text-amber-400 uppercase tracking-wider">Hotel Kathmandu Base Camp</p>
+                <Field label="Nadpis (hotelTitle)" value={b.hotelTitle} onChange={v=>upd('hotelTitle',v)} placeholder="Hotel Kathmandu Base Camp" />
+                <Field label="Text 1" value={b.hotelText} onChange={v=>upd('hotelText',v)} rows={2} icon={AlignLeft} />
+                <Field label="Text 2" value={b.hotelText2} onChange={v=>upd('hotelText2',v)} rows={2} icon={AlignLeft} />
+                <Field label="Text 3" value={b.hotelText3} onChange={v=>upd('hotelText3',v)} rows={2} icon={AlignLeft} />
+                <Field label="Text 4" value={b.hotelText4} onChange={v=>upd('hotelText4',v)} rows={2} icon={AlignLeft} />
+                <Field label="Tagline (kurzíva dole)" value={b.hotelTagline} onChange={v=>upd('hotelTagline',v)} rows={2} icon={AlignLeft} />
+              </div>
+              <ImageGallery images={b.images||[]} onChange={v=>upd('images',v)} label="Fotky v bloku" />
             </>
           )}
 
           {sel === 'zdravi' && (
             <>
-              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
-              <Field label="Citát (na fotce)" value={b.quote} onChange={v=>upd('quote',v)} rows={2} icon={AlignLeft} placeholder={'„Hory jsou jen skály…"'} />
-              <ImagePicker imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} />
+              <Field label="Nadpis sekce" value={b.title} onChange={v=>upd('title',v)} icon={Type} placeholder="I zdraví patří k cestě." />
+              <Field label="Text 1 (diagnóza — tučný)" value={b.text} onChange={v=>upd('text',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 2 (osvěta, projekty)" value={b.text2} onChange={v=>upd('text2',v)} rows={3} icon={AlignLeft} />
+              <Field label="Citát (na fotce)" value={b.quote} onChange={v=>upd('quote',v)} rows={2} icon={AlignLeft} placeholder={'„Zdraví je vždycky víc než vrchol."'} />
+              <ImagePickerWithFocal imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} focalX={b.imageFocusX||50} focalY={b.imageFocusY||50} onChangeFocal={({focalX,focalY})=>{upd('imageFocusX',focalX);upd('imageFocusY',focalY);}} />
             </>
           )}
 
           {sel === 'prednasky' && (
             <>
-              <Field label="Text" value={b.text} onChange={v=>upd('text',v)} rows={4} icon={AlignLeft} />
-              <ImagePicker imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} />
+              <Field label="Nadpis sekce" value={b.title} onChange={v=>upd('title',v)} icon={Type} placeholder="Příběhy z hor, cest i života mezi nimi." />
+              <Field label="Text 1 (hlavní)" value={b.text} onChange={v=>upd('text',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 2 (o čem jsou přednášky)" value={b.text2} onChange={v=>upd('text2',v)} rows={3} icon={AlignLeft} />
+              <Field label="Text 3 (závěr — kurzíva)" value={b.text3} onChange={v=>upd('text3',v)} rows={2} icon={AlignLeft} />
+              <ImagePickerWithFocal imageUrl={b.imageUrl||''} onChangeImageUrl={v=>upd('imageUrl',v)} focalX={b.imageFocusX||50} focalY={b.imageFocusY||50} onChangeFocal={({focalX,focalY})=>{upd('imageFocusX',focalX);upd('imageFocusY',focalY);}} />
             </>
           )}
 
           {sel === 'tym' && (
-            <p className="text-sm text-slate-400 bg-slate-900/60 rounded-xl p-4 border border-slate-700">
-              Kartičky Miri a Subina se nastavují v sekcích <strong className="text-slate-200">Miri Jirková</strong> a <strong className="text-slate-200">Subin Tamang</strong> níže.
-            </p>
+            <>
+              <p className="text-xs text-slate-400 bg-slate-800/60 rounded-xl px-4 py-3 border border-slate-700">
+                Textové biografie zobrazené pod kartami v modalu příběhu. Profily (foto, statistiky) se nastavují v sekcích Miri a Subin níže.
+              </p>
+              <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+                <p className="text-xs font-bold text-pink-400 uppercase tracking-wider">Miri Jirková — biografie v modalu</p>
+                <Field label="Nadpis (miriTitle)" value={b.miriTitle} onChange={v=>upd('miriTitle',v)} placeholder="Miri Jirková" />
+                <Field label="Bio 1 (intro)" value={b.miriText} onChange={v=>upd('miriText',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 2 (expedice, treky)" value={b.miriText2} onChange={v=>upd('miriText2',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 3 (logistika, zkušenosti)" value={b.miriText3} onChange={v=>upd('miriText3',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 4 (druhý domov — kurzíva)" value={b.miriText4} onChange={v=>upd('miriText4',v)} rows={2} icon={AlignLeft} />
+              </div>
+              <div className="flex flex-col gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
+                <p className="text-xs font-bold text-teal-400 uppercase tracking-wider">Subin Thakuri — biografie v modalu</p>
+                <Field label="Nadpis (subinTitle)" value={b.subinTitle} onChange={v=>upd('subinTitle',v)} placeholder="Subin Thakuri" />
+                <Field label="Role (subinRole)" value={b.subinRole} onChange={v=>upd('subinRole',v)} placeholder="Zakladatel 14 Summits Expedition a partner na cestě." />
+                <Field label="Bio 1 (původ, počátky)" value={b.subinText} onChange={v=>upd('subinText',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 2 (20+ let, Everest)" value={b.subinText2} onChange={v=>upd('subinText2',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 3 (přátelství)" value={b.subinText3} onChange={v=>upd('subinText3',v)} rows={2} icon={AlignLeft} />
+                <Field label="Bio 4 (komunity)" value={b.subinText4} onChange={v=>upd('subinText4',v)} rows={2} icon={AlignLeft} />
+                <Field label="Citát Subina (subinQuote)" value={b.subinQuote} onChange={v=>upd('subinQuote',v)} rows={2} icon={AlignLeft} placeholder={'„Hora rozhoduje, jestli vás pustí nahoru…"'} />
+              </div>
+            </>
           )}
 
           {sel === 'kdedal' && (
@@ -1207,16 +1254,22 @@ function HonzaEditor({ texts, story, osveta, onTexts, onStory, onOsveta, onReset
             <Field label="Štítek (zlatý, nad nadpisem)" value={o.heading} onChange={v=>updOsveta('heading',v)} icon={Tag} />
             <Field label="Hlavní nadpis" value={o.title} onChange={v=>updOsveta('title',v)} icon={Type} />
           </div>
-          <Field label="Úvodní odstavec" value={o.intro} onChange={v=>updOsveta('intro',v)} rows={4} icon={AlignLeft} />
+          <Field label="Úvodní odstavec 1 (tučný, krátký)" value={o.intro} onChange={v=>updOsveta('intro',v)} rows={2} icon={AlignLeft} />
+          <Field label="Úvodní odstavec 2 (osobní zkušenost)" value={o.intro2} onChange={v=>updOsveta('intro2',v)} rows={3} icon={AlignLeft} />
+          <Field label="Úvodní odstavec 3 (kurzíva)" value={o.intro3} onChange={v=>updOsveta('intro3',v)} rows={2} icon={AlignLeft} />
           <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
-            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Sekce 1</p>
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Revma Liga & psoriatická artritida</p>
             <Field label="Nadpis sekce 1" value={o.section1Title} onChange={v=>updOsveta('section1Title',v)} />
-            <Field label="Text sekce 1" value={o.section1Text} onChange={v=>updOsveta('section1Text',v)} rows={4} icon={AlignLeft} />
+            <Field label="Text 1 (úvod spolupráce)" value={o.section1Text} onChange={v=>updOsveta('section1Text',v)} rows={3} icon={AlignLeft} />
+            <Field label="Text 2 (cíl, příklady)" value={o.section1Text2} onChange={v=>updOsveta('section1Text2',v)} rows={3} icon={AlignLeft} />
+            <Field label="Text 3 (závěr — tučný)" value={o.section1Text3} onChange={v=>updOsveta('section1Text3',v)} rows={2} icon={AlignLeft} />
           </div>
           <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
-            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Sekce 2</p>
+            <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Fuck Cancer</p>
             <Field label="Nadpis sekce 2" value={o.section2Title} onChange={v=>updOsveta('section2Title',v)} />
-            <Field label="Text sekce 2" value={o.section2Text} onChange={v=>updOsveta('section2Text',v)} rows={4} icon={AlignLeft} />
+            <Field label="Text 1 (propojení pacientů)" value={o.section2Text} onChange={v=>updOsveta('section2Text',v)} rows={2} icon={AlignLeft} />
+            <Field label="Text 2 (proč to podporuji)" value={o.section2Text2} onChange={v=>updOsveta('section2Text2',v)} rows={2} icon={AlignLeft} />
+            <Field label="Text 3 (prevence, osvěta)" value={o.section2Text3} onChange={v=>updOsveta('section2Text3',v)} rows={2} icon={AlignLeft} />
           </div>
           <div className="flex flex-col gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-600">
             <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">Box — odborná spolupráce</p>
