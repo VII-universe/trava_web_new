@@ -1049,82 +1049,73 @@ const Expeditions = ({ scrollProgress }) => {
                 className="w-full h-full"
             >
                 {/* ── Mobile carousel ── */}
-                {/* ── MOBILE: vertikální layout — stejný obsah jako desktop ── */}
-                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto px-4 pt-3 pb-3 gap-2.5">
+                {/* ── MOBILE: 2-kartový horizontální scroll ── */}
+                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto overflow-hidden">
 
-                    {/* Header */}
-                    <div className="shrink-0 flex items-center gap-3">
-                        <img src={Logo14Summits} alt="14 Summits" className="h-9 w-auto drop-shadow-lg opacity-90" />
+                    {/* Kompaktní header */}
+                    <div className="shrink-0 flex items-center gap-2.5 px-4 pt-3 pb-2">
+                        <img src={Logo14Summits} alt="14 Summits" className="h-8 w-auto drop-shadow-lg opacity-90" />
                         <div>
-                            <p className="text-gold-500 font-mono text-[9px] uppercase tracking-[0.35em] font-bold leading-none">04 — Expedice</p>
-                            <p className="text-white/60 text-[10px] font-sans mt-0.5">Vydej se se mnou na cesty</p>
+                            <p className="text-gold-500 font-mono text-[9px] uppercase tracking-[0.3em] font-bold leading-none">04 — Expedice (4500 m)</p>
+                            <p className="text-white/50 text-[10px] font-sans mt-0.5">Přejed doprava pro mapu →</p>
                         </div>
                     </div>
 
-                    {/* Info karta — 14 Summits */}
-                    <div className="shrink-0 bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-4">
-                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest font-bold mb-1.5">14 Summits Expedition · Nepál</p>
-                        <h2 className="font-serif text-xl text-white leading-tight mb-2">
-                            Čeští specialisté <span className="italic text-slate-400">na Nepál.</span>
-                        </h2>
-                        <p className="font-sans text-slate-300 text-sm leading-relaxed mb-3">
-                            Nejsme sterilní cestovka. Od pohodových treků po osmitisícovky — s osobním přístupem a zkušeným nepálským týmem.
-                        </p>
-                        <div className="grid grid-cols-3 gap-2">
-                            <button onClick={() => setIs14Open(true)}
-                                className="col-span-2 py-2.5 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
-                                O 14 Summits <ArrowRight className="w-3 h-3" />
-                            </button>
-                            <button onClick={() => setIsMiriOpen(true)}
-                                className="py-2.5 bg-white/10 border border-white/15 text-white/80 text-xs font-bold rounded-xl active:scale-95 transition-transform">
-                                Miri
-                            </button>
-                            <button onClick={() => setIsSubinOpen(true)}
-                                className="py-2.5 bg-white/10 border border-white/15 text-white/80 text-xs font-bold rounded-xl active:scale-95 transition-transform">
-                                Subin
-                            </button>
-                            <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer"
-                                className="col-span-2 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl text-center flex items-center justify-center gap-1.5">
-                                Chci do Nepálu <ArrowRight className="w-3 h-3" />
-                            </a>
-                        </div>
-                    </div>
+                    {/* 2 karty vedle sebe */}
+                    <div ref={expedCarouselRef} className="flex-1 min-h-0 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
 
-                    {/* Interaktivní mapa Nepálu — flex-1 */}
-                    <div className="flex-1 min-h-0 flex flex-col rounded-2xl overflow-hidden border border-[#7a9ab0]/40" style={{ minHeight: '200px' }}>
-                        <div className="shrink-0 flex items-center justify-between px-3 py-2 bg-[#0e1520]/90 border-b border-white/[0.07]">
-                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Regiony Nepálu</p>
-                            <p className="text-slate-500 text-[9px] font-mono">Ťukni na oblast</p>
+                        {/* Karta 1 — 14 Summits info */}
+                        <div className="shrink-0 snap-start w-[88vw] h-full bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-5 flex flex-col">
+                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest font-bold mb-2">14 Summits Expedition · Nepál</p>
+                            <h2 className="font-serif text-2xl text-white leading-tight mb-3">
+                                Čeští specialisté <span className="italic text-slate-400">na Nepál.</span>
+                            </h2>
+                            <p className="font-sans text-slate-300 text-sm leading-relaxed mb-4 flex-1">
+                                Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Od pohodových treků po osmitisícovky — s osobním přístupem, poctivou aklimatizací a zkušeným nepálským týmem.
+                            </p>
+                            <div className="flex flex-col gap-2.5 mt-auto">
+                                <button onClick={() => setIs14Open(true)}
+                                    className="w-full py-3 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                                    O 14 Summits Expedition <ArrowRight className="w-3.5 h-3.5" />
+                                </button>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button onClick={() => setIsMiriOpen(true)} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {miri.name.split(' ')[0]}</button>
+                                    <button onClick={() => setIsSubinOpen(true)} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {subin.name.split(' ')[0]}</button>
+                                </div>
+                                <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer"
+                                    className="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl text-center flex items-center justify-center gap-2">
+                                    Chci do Nepálu <ArrowRight className="w-3.5 h-3.5" />
+                                </a>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setShowAllExpeditions(true)} className="flex-1 py-2.5 bg-white/[0.07] border border-white/[0.12] text-white/70 text-xs font-bold rounded-xl active:scale-95 transition-transform">Výpravy</button>
+                                    <button onClick={() => setIsMapModalOpen(true)} className="flex-1 py-2.5 bg-white/[0.07] border border-white/[0.12] text-gold-400 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
+                                        <MapPin className="w-3.5 h-3.5" /> Mapa
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex-1 min-h-0">
-                            <NepalMap
-                                regions={REGIONS}
-                                onRegionClick={(region) => { setSelectedRegion(region); setIsRegionsOpen(true); }}
-                                isMobile
-                            />
-                        </div>
-                    </div>
 
-                    {/* Spodní akce */}
-                    <div className="shrink-0 flex gap-2">
-                        <button onClick={() => setShowAllExpeditions(true)}
-                            className="flex-1 py-3 bg-gold-500 hover:bg-gold-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
-                            Všechny výpravy <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                        <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer"
-                            className="px-4 py-3 bg-white/[0.07] border border-white/[0.12] text-white rounded-xl flex items-center justify-center active:scale-95 transition-transform">
-                            <Play className="w-4 h-4 fill-white" />
-                        </a>
-                        <button onClick={() => setIsMapModalOpen(true)}
-                            className="px-4 py-3 bg-white/[0.07] border border-white/[0.12] text-white rounded-xl flex items-center justify-center active:scale-95 transition-transform">
-                            <MapPin className="w-4 h-4 text-gold-400" />
-                        </button>
+                        {/* Karta 2 — Interaktivní mapa Nepálu */}
+                        <div className="shrink-0 snap-start w-[88vw] h-full flex flex-col rounded-2xl overflow-hidden border border-[#7a9ab0]/40">
+                            <div className="shrink-0 flex items-center justify-between px-3.5 py-2.5 bg-[#0a1020]/95 border-b border-white/[0.07]">
+                                <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Regiony Nepálu</p>
+                                <p className="text-slate-500 text-[9px] font-mono">1×=preview · 2×=detail</p>
+                            </div>
+                            <div className="flex-1 min-h-0">
+                                <NepalMap
+                                    regions={REGIONS}
+                                    onRegionClick={(region) => { setSelectedRegion(region); setIsRegionsOpen(true); }}
+                                    isMobile
+                                />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                {/* old carousel placeholder — keep for expedCarouselRef */}
+                {/* placeholder pro expedCarouselRef — nutný pro scroll-driven logiku */}
                 <div className="hidden" ref={expedCarouselRef}>
-                    <div className="flex gap-3 overflow-x-auto px-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div className="flex" style={{ scrollbarWidth: 'none' }}>
                             {/* 14 Summits card */}
                             <div className="shrink-0 snap-start w-[82vw] rounded-2xl bg-slate-950/75 backdrop-blur-xl border border-slate-700/50 p-5 flex flex-col gap-3">
                                 <div>

@@ -231,14 +231,20 @@ const Hotel = ({ scrollProgress }) => {
                                 </motion.div>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <button onClick={() => setGalleryOpen(true)}
-                                    className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-[11px] uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
-                                    <Images className="w-3.5 h-3.5 text-gold-500" /> Celá galerie ({galleryImages.length})
+                                <button onClick={() => setDetailOpen(true)}
+                                    className="flex items-center justify-center gap-2 bg-slate-900 text-white text-[11px] uppercase tracking-widest font-bold py-3.5 px-4 rounded-xl transition-all shadow-lg active:scale-95">
+                                    O hotelu více <ArrowRight className="w-3.5 h-3.5" />
                                 </button>
-                                <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-[11px] uppercase tracking-widest font-bold py-3.5 px-4 rounded-xl transition-all shadow-lg">
-                                    Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
-                                </a>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setGalleryOpen(true)}
+                                        className="flex-1 flex items-center justify-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
+                                        <Images className="w-3 h-3 text-gold-500" /> Galerie
+                                    </button>
+                                    <a href="https://www.booking.com/hotel/np/kathmandu-base-camp.html" target="_blank" rel="noopener noreferrer"
+                                        className="flex-1 flex items-center justify-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-900 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
+                                        Booking
+                                    </a>
+                                </div>
                                 <div className="flex justify-center gap-1.5 mt-1">
                                     <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeDot === 0 ? 'bg-gold-400' : 'bg-slate-200'}`} />
                                     <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${activeDot === 1 ? 'bg-gold-400' : 'bg-slate-200'}`} />
