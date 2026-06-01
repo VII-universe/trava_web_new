@@ -237,7 +237,6 @@ const Lectures = ({ scrollProgress }) => {
                         </div>
                     </div>
                 </div>
-                </div>
             </motion.div>
         </motion.div>
 
