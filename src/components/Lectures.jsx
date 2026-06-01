@@ -115,9 +115,23 @@ const Lectures = ({ scrollProgress }) => {
                 </div>
 
                 {/* ── Desktop: premium split — foto hero vlevo, info vpravo ── */}
-                <div className="hidden md:flex w-full h-full items-center justify-center px-6 lg:px-10 pointer-events-auto">
-                    <div className="w-full max-w-6xl grid grid-cols-[1fr_1fr] gap-4 lg:gap-5"
-                        style={{ height: 'clamp(460px, 74vh, 590px)' }}>
+                <div className="hidden md:flex w-full h-full flex-col items-center justify-center px-6 lg:px-10 pointer-events-auto gap-4 lg:gap-5">
+
+                    {/* Nadpis sekce */}
+                    <div className="w-full max-w-6xl flex items-end justify-between shrink-0">
+                        <div>
+                            <p className="text-gold-400 font-mono text-[10px] uppercase tracking-[0.45em] font-bold mb-2">08 — 7 200 m</p>
+                            <h2 className="font-serif text-3xl lg:text-4xl text-white leading-none">
+                                Přednášky <span className="italic text-slate-400">&amp; společné projekty.</span>
+                            </h2>
+                        </div>
+                        <p className="font-sans text-slate-500 text-sm leading-relaxed max-w-xs text-right hidden lg:block">
+                            Důležitá součást života kolem hor, Nepálu a cest — napříč celou republikou.
+                        </p>
+                    </div>
+
+                    <div className="w-full max-w-6xl grid grid-cols-[1fr_1fr] gap-4 lg:gap-5 flex-1 min-h-0"
+                        style={{ maxHeight: 'clamp(380px, 62vh, 500px)' }}>
 
                         {/* ── LEVÁ: foto hero karta ── */}
                         <div className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
@@ -222,6 +236,7 @@ const Lectures = ({ scrollProgress }) => {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </motion.div>
         </motion.div>
