@@ -956,6 +956,11 @@ const Expeditions = ({ scrollProgress }) => {
     const [subinSource, setSubinSource] = useState(null);
     const [is14Open, setIs14Open] = useState(false);
     const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+
+    // Mobile 2-card scroll-driven carousel (stejný pattern jako Hotel/Pub)
+    const mobTrackX    = useMotionValue(0);
+    const mobTrackRef  = useRef(null);
+    const mobDragging  = useRef(false);
     const [isVideoOpen, setIsVideoOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isRegionsOpen, setIsRegionsOpen] = useState(false);
@@ -1013,6 +1018,16 @@ const Expeditions = ({ scrollProgress }) => {
             el.scrollLeft = Math.max(0, Math.min(1, latest) * maxScroll);
         });
     }, [expedCarouselProgress]);
+
+    // Mobile 2-card scroll-driven carousel — stejný pattern jako Hotel/Pub
+    const mobileProg = useTransform(scrollProgress, [0.29, 0.34], [0, 1]);
+    useEffect(() => {
+        return mobileProg.on('change', (v) => {
+            if (window.innerWidth >= 768 || mobDragging.current) return;
+            const cardW = window.innerWidth * 0.88 + 12;
+            mobTrackX.set(-v * cardW);
+        });
+    }, [mobileProg, mobTrackX]);
     
     return (
         <>
@@ -1061,8 +1076,27 @@ const Expeditions = ({ scrollProgress }) => {
                         </div>
                     </div>
 
-                    {/* 2 karty vedle sebe */}
-                    <div ref={expedCarouselRef} className="flex-1 min-h-0 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+                    {/* 2 karty vedle sebe — scroll-driven jako Hotel/Pub */}
+                    <div className="flex-1 min-h-0 overflow-hidden pl-4 pr-2 pb-3">
+                    <motion.div
+                        ref={mobTrackRef}
+                        className="flex gap-3 h-full"
+                        style={{ x: mobTrackX, touchAction: 'pan-y' }}
+                        drag="x"
+                        dragConstraints={{ left: -(window.innerWidth * 0.88 + 12), right: 0 }}
+                        dragElastic={0.05}
+                        dragMomentum={false}
+                        onDragStart={() => { mobDragging.current = true; }}
+                        onDragEnd={(_, info) => {
+                            mobDragging.current = false;
+                            const cardW = window.innerWidth * 0.88 + 12;
+                            const cur = mobTrackX.get();
+                            const fastLeft  = info.velocity.x < -300;
+                            const fastRight = info.velocity.x > 300;
+                            const snapTo = (cur < -cardW * 0.4 || fastLeft) ? -cardW : 0;
+                            animate(mobTrackX, snapTo, { type: 'spring', stiffness: 350, damping: 30 });
+                        }}
+                    >
 
                         {/* Karta 1 — 14 Summits info */}
                         <div className="shrink-0 snap-start w-[88vw] h-full bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-5 flex flex-col">
@@ -1110,6 +1144,7 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </div>
 
+                    </motion.div>
                     </div>
                 </div>
 
