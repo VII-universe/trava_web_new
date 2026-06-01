@@ -392,14 +392,14 @@ function NepalMap({ regions, onRegionClick }) {
                         <path d={NEPAL_OUTLINE} />
                     </clipPath>
 
-                    {/* JEDEN plynulý výškový gradient — žádné skokové přechody */}
+                    {/* Plynulý terénní gradient — sníh → hory → lesy → terai */}
                     <linearGradient id="terrainGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#eee8de" stopOpacity="0.96" />
-                        <stop offset="12%"  stopColor="#d4c4a0" stopOpacity="0.82" />
-                        <stop offset="28%"  stopColor="#b09468" stopOpacity="0.62" />
-                        <stop offset="46%"  stopColor="#78a248" stopOpacity="0.58" />
-                        <stop offset="68%"  stopColor="#88b050" stopOpacity="0.52" />
-                        <stop offset="100%" stopColor="#98bc54" stopOpacity="0.42" />
+                        <stop offset="0%"   stopColor="#f2ede6" stopOpacity="0.98" />
+                        <stop offset="8%"   stopColor="#e0d4b8" stopOpacity="0.88" />
+                        <stop offset="22%"  stopColor="#c4a878" stopOpacity="0.72" />
+                        <stop offset="40%"  stopColor="#8ab050" stopOpacity="0.62" />
+                        <stop offset="65%"  stopColor="#90b84e" stopOpacity="0.55" />
+                        <stop offset="100%" stopColor="#9cc054" stopOpacity="0.45" />
                     </linearGradient>
                     {/* Hill shading SZ → JV — jemný */}
                     <linearGradient id="hillShade" x1="0" y1="0" x2="1" y2="1">
@@ -474,13 +474,7 @@ function NepalMap({ regions, onRegionClick }) {
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(100,75,40,0.055)" strokeWidth="0.5" />
                 ))}
 
-                {/* Himalajský sněhový pás — sleduje nový severní obrys */}
-                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
-                    fill="none" stroke="rgba(245,242,236,0.9)" strokeWidth="22" strokeLinecap="round" />
-                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
-                    fill="none" stroke="rgba(255,255,255,0.68)" strokeWidth="8" strokeLinecap="round" />
-                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
-                    fill="none" stroke="rgba(155,135,108,0.28)" strokeWidth="2" strokeLinecap="round" />
+                {/* Sníh je v terrainGrad — žádné extra tahy které by tvořily pruh */}
 
                 {/* ── ŘEKY — animované ── */}
                 <g style={{ pointerEvents:'none' }}>
