@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useTransform } from 'framer-motion';
+import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import CloudA from '../assets/cloud_a.png';
 import CloudB from '../assets/cloud_b.png';
 import Cloud3 from '../assets/cloud3.png';
@@ -203,10 +203,37 @@ const BRANDS = [
     { src: LogoPub,   name: 'Czech Pub Nepal',       tag: 'Bar & restaurace · Thamel'           },
 ];
 
+/* ── Variants pro staggered entry karet ── */
+const containerV = {
+    hidden:  {},
+    visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+    exit:    { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
+};
+const cardV = {
+    hidden:  { opacity: 0, y: 28, scale: 0.90 },
+    visible: { opacity: 1, y: 0,  scale: 1,    transition: { type: 'spring', damping: 22, stiffness: 280 } },
+    exit:    { opacity: 0, y: -12, scale: 0.95, transition: { duration: 0.18, ease: 'easeIn' } },
+};
+const headerV = {
+    hidden:  { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0,  transition: { duration: 0.4, ease: 'easeOut' } },
+    exit:    { opacity: 0, y: -8, transition: { duration: 0.15 } },
+};
+
 const LogoShowcase = ({ scrollProgress }) => {
     const opacity = useTransform(scrollProgress, [0.693, 0.702, 0.714, 0.726], [0, 1, 1, 0]);
     const scale   = useTransform(scrollProgress, [0.693, 0.704], [0.94, 1]);
     const y       = useTransform(scrollProgress, [0.693, 0.704, 0.714, 0.726], ['18px', '0px', '0px', '-12px']);
+
+    /* Sledujeme kdy je showcase viditelný → spouštíme stagger */
+    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        const unsub = opacity.on('change', v => {
+            if (v > 0.45 && !visible) setVisible(true);
+            if (v < 0.05)             setVisible(false);
+        });
+        return unsub;
+    }, [opacity]); // eslint-disable-line
 
     return (
         <motion.div
@@ -214,47 +241,100 @@ const LogoShowcase = ({ scrollProgress }) => {
             className="flex items-center justify-center p-4 md:p-8"
         >
             <div className="w-full max-w-[720px]">
-                {/* Header row */}
-                <div className="flex items-center gap-4 mb-5 md:mb-7">
-                    <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-500/50" />
-                    <div className="shrink-0 flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-gold-500" />
-                        <p className="font-mono text-gold-600 text-[9px] md:text-[10px] uppercase tracking-[0.45em] font-bold whitespace-nowrap">
-                            Pod jednou střechou
-                        </p>
-                        <div className="w-1 h-1 rounded-full bg-gold-500" />
-                    </div>
-                    <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gold-500/50" />
-                </div>
-
-                {/* 2×2 premium logo grid */}
-                <div className="grid grid-cols-2 gap-3 md:gap-4">
-                    {BRANDS.map(({ src, name, tag }) => (
-                        <div key={name}
-                            className="relative group bg-white/82 backdrop-blur-2xl border border-white/65 rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center gap-3 md:gap-4 overflow-hidden"
-                            style={{ boxShadow: '0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07)' }}
+                {/* Header — animovaný příjezd */}
+                <AnimatePresence>
+                    {visible && (
+                        <motion.div
+                            key="header"
+                            variants={headerV}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className="flex items-center gap-4 mb-5 md:mb-7"
                         >
-                            {/* Gold top accent */}
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
-
-                            {/* Logo */}
-                            <div className="flex items-center justify-center w-full" style={{ height: 'clamp(48px, 8vw, 72px)' }}>
-                                <img src={src} alt={name}
-                                    className="max-h-full max-w-full object-contain drop-shadow-sm"
-                                    draggable={false} />
+                            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-500/50" />
+                            <div className="shrink-0 flex items-center gap-2">
+                                <div className="w-1 h-1 rounded-full bg-gold-500" />
+                                <p className="font-mono text-gold-600 text-[9px] md:text-[10px] uppercase tracking-[0.45em] font-bold whitespace-nowrap">
+                                    Pod jednou střechou
+                                </p>
+                                <div className="w-1 h-1 rounded-full bg-gold-500" />
                             </div>
+                            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gold-500/50" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-                            {/* Divider */}
-                            <div className="w-8 h-px bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
+                {/* 2×2 grid s stagger animací */}
+                <AnimatePresence>
+                    {visible && (
+                        <motion.div
+                            key="grid"
+                            variants={containerV}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className="grid grid-cols-2 gap-3 md:gap-4"
+                        >
+                            {BRANDS.map(({ src, name, tag }) => (
+                                <motion.div
+                                    key={name}
+                                    variants={cardV}
+                                    whileHover={{
+                                        y: -10,
+                                        scale: 1.04,
+                                        boxShadow: '0 24px 64px rgba(0,0,0,0.18), 0 4px 16px rgba(212,175,55,0.18)',
+                                        transition: { type: 'spring', damping: 18, stiffness: 320 },
+                                    }}
+                                    whileTap={{ scale: 0.97, transition: { duration: 0.12 } }}
+                                    className="relative bg-white/82 backdrop-blur-2xl border border-white/65 rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center gap-3 md:gap-4 overflow-hidden cursor-default"
+                                    style={{ boxShadow: '0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07)' }}
+                                >
+                                    {/* Gold top accent — zesiluje při hoveru přes CSS */}
+                                    <motion.div
+                                        className="absolute top-0 left-0 right-0 h-px"
+                                        style={{ background: 'linear-gradient(to right, transparent, rgba(212,175,55,0.6), transparent)' }}
+                                        whileHover={{ opacity: 1.8 }}
+                                    />
+                                    {/* Subtle gold glow overlay při hoveru */}
+                                    <motion.div
+                                        className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none"
+                                        initial={{ opacity: 0 }}
+                                        whileHover={{ opacity: 1 }}
+                                        transition={{ duration: 0.25 }}
+                                        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%)' }}
+                                    />
 
-                            {/* Text */}
-                            <div className="text-center">
-                                <p className="font-serif text-slate-800 text-sm md:text-base leading-tight font-medium">{name}</p>
-                                <p className="text-gold-600 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] mt-1">{tag}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                                    {/* Logo */}
+                                    <motion.div
+                                        className="flex items-center justify-center w-full relative z-10"
+                                        style={{ height: 'clamp(48px, 8vw, 72px)' }}
+                                        whileHover={{ scale: 1.06 }}
+                                        transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+                                    >
+                                        <img src={src} alt={name}
+                                            className="max-h-full max-w-full object-contain drop-shadow-sm"
+                                            draggable={false} />
+                                    </motion.div>
+
+                                    {/* Divider */}
+                                    <motion.div
+                                        className="w-8 h-px relative z-10"
+                                        style={{ background: 'linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)' }}
+                                        whileHover={{ width: 48, opacity: 1.5 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+
+                                    {/* Text */}
+                                    <div className="text-center relative z-10">
+                                        <p className="font-serif text-slate-800 text-sm md:text-base leading-tight font-medium">{name}</p>
+                                        <p className="text-gold-600 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] mt-1">{tag}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </motion.div>
     );
