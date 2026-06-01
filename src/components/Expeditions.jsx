@@ -494,10 +494,12 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </div>
 
-                            {/* Video card */}
-                            <button
-                                onClick={() => setIsVideoOpen(true)}
-                                className="shrink-0 snap-start w-[72vw] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.98] transition-transform relative"
+                            {/* YouTube card */}
+                            <a
+                                href="https://www.youtube.com/@honzatrava"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0 snap-start w-[72vw] rounded-2xl overflow-hidden border border-white/10 active:scale-[0.98] transition-transform relative"
                             >
                                 <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent" />
@@ -509,11 +511,11 @@ const Expeditions = ({ scrollProgress }) => {
                                         </div>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[9px] font-bold mb-1">Sleduj film</p>
-                                        <p className="font-serif text-white text-sm leading-snug">Honzův příběh na 8000 m</p>
+                                        <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[9px] font-bold mb-1">YouTube kanál</p>
+                                        <p className="font-serif text-white text-sm leading-snug">Sleduj výpravy na YouTube</p>
                                     </div>
                                 </div>
-                            </button>
+                            </a>
 
                             {/* Expedition cards */}
                             {EXPEDITIONS_DISPLAY.map((exped) => (
@@ -545,9 +547,9 @@ const Expeditions = ({ scrollProgress }) => {
 
                 {/* ── Desktop layout ── */}
                 <div className="hidden md:flex w-full h-full flex-col items-center justify-center px-4 md:px-6">
-                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(min-width:768px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
-                    <div className="text-center mb-0.5 md:mb-4 xl:mb-6 relative z-10 pt-0 md:pt-0 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-64 xl:w-80 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
+                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(min-width:768px)_and_(min-height:820px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
+                    <div className="text-center mb-0.5 md:mb-4 xl:mb-6 relative z-10 md:pt-6 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-52 xl:w-72 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2 md:mb-3 mt-0.5 md:mt-4">
                         04 — Expedice (4500 m)
                     </h4>
@@ -557,15 +559,17 @@ const Expeditions = ({ scrollProgress }) => {
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Dobří parťáci na cestě jsou to nejcennější.</p>
                 </div>
 
-                {/* Cinematic video strip */}
+                {/* YouTube channel strip */}
                 <div className="relative z-10 max-w-7xl w-full px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mb-4 md:mb-5">
-                    <button
-                        onClick={() => setIsVideoOpen(true)}
-                        className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto"
+                    <a
+                        href="https://www.youtube.com/@honzatrava"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto flex"
                     >
                         <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
                         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/85" />
-                        <div className="relative flex items-center justify-center gap-5 h-full">
+                        <div className="relative flex items-center justify-center gap-5 h-full w-full">
                             <div className="relative shrink-0">
                                 <span className="absolute inset-0 rounded-full bg-gold-500/25 animate-ping" />
                                 <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full bg-gold-500/15 border-2 border-gold-400/80 flex items-center justify-center group-hover:bg-gold-500/35 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
@@ -573,11 +577,11 @@ const Expeditions = ({ scrollProgress }) => {
                                 </div>
                             </div>
                             <div className="text-left">
-                                <p className="text-gold-400 font-sans uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-bold mb-1">Sleduj film</p>
-                                <h3 className="font-serif text-white text-lg md:text-xl lg:text-2xl leading-tight drop-shadow-md">Honzův příběh — od Prahy na Manáslu</h3>
+                                <p className="text-gold-400 font-sans uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-bold mb-1">YouTube kanál</p>
+                                <h3 className="font-serif text-white text-lg md:text-xl lg:text-2xl leading-tight drop-shadow-md">Sleduj výpravy a cesty na YouTube</h3>
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
 
                 <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mt-0">
