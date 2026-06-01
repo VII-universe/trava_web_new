@@ -373,9 +373,25 @@ const TREK_ROUTES = [
     },
 ];
 
-function NepalMap({ regions, onRegionClick }) {
+function NepalMap({ regions, onRegionClick, isMobile = false }) {
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
+
+    // Touch: první tap = preview, druhý = navigace
+    const handleRegionClick = (regionId) => {
+        const reg = regions.find(x => x.id === regionId);
+        if (!reg) return;
+        if (isMobile) {
+            if (hovered === regionId) {
+                onRegionClick(reg);
+                setHovered(null);
+            } else {
+                setHovered(regionId);
+            }
+        } else {
+            onRegionClick(reg);
+        }
+    };
 
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
@@ -554,10 +570,10 @@ function NepalMap({ regions, onRegionClick }) {
                             stroke={isHov ? '#7a5008' : 'rgba(90,65,20,0.28)'}
                             strokeWidth={isHov ? 1.6 : 0.9}
                             filter={isHov ? 'url(#hglow)' : undefined}
-                            style={{ cursor: 'pointer', transition: 'fill 0.22s, stroke 0.22s' }}
-                            onMouseEnter={() => setHovered(r.id)}
-                            onMouseLeave={() => setHovered(null)}
-                            onClick={() => { const reg = regions.find(x => x.id === r.id); if (reg) onRegionClick(reg); }}
+                            style={{ cursor: 'pointer', transition: 'fill 0.22s, stroke 0.22s', WebkitTapHighlightColor: 'transparent' }}
+                            onMouseEnter={() => !isMobile && setHovered(r.id)}
+                            onMouseLeave={() => !isMobile && setHovered(null)}
+                            onClick={() => handleRegionClick(r.id)}
                         />
                     );
                 })}
@@ -739,7 +755,7 @@ function NepalMap({ regions, onRegionClick }) {
 
             {/* Hint — schová se při hoveru */}
             <div className={`absolute bottom-2.5 right-3.5 text-[8px] text-[#5a3820]/40 uppercase tracking-widest font-mono pointer-events-none transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
-                najeď · klikni
+                {isMobile ? 'ťukni · 2× detail' : 'najeď · klikni'}
             </div>
         </div>
     );
@@ -1033,15 +1049,82 @@ const Expeditions = ({ scrollProgress }) => {
                 className="w-full h-full"
             >
                 {/* ── Mobile carousel ── */}
-                <div className="md:hidden w-full h-full flex flex-col justify-center pointer-events-auto overflow-hidden">
-                    <div className="px-4 shrink-0 text-center mb-2">
-                        <img src={Logo14Summits} alt="14 Summits Logo" className="w-28 mx-auto mb-2 drop-shadow-lg opacity-90" />
-                        <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-1">04 — Expedice (4500 m)</h4>
-                        <h2 className="font-serif text-2xl text-white leading-tight mb-1">Vydej se se mnou na cesty</h2>
-                        <p className="text-slate-400 font-serif italic text-xs tracking-widest">Dobří parťáci jsou to nejcennější.</p>
+                {/* ── MOBILE: vertikální layout — stejný obsah jako desktop ── */}
+                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto px-4 pt-3 pb-3 gap-2.5">
+
+                    {/* Header */}
+                    <div className="shrink-0 flex items-center gap-3">
+                        <img src={Logo14Summits} alt="14 Summits" className="h-9 w-auto drop-shadow-lg opacity-90" />
+                        <div>
+                            <p className="text-gold-500 font-mono text-[9px] uppercase tracking-[0.35em] font-bold leading-none">04 — Expedice</p>
+                            <p className="text-white/60 text-[10px] font-sans mt-0.5">Vydej se se mnou na cesty</p>
+                        </div>
                     </div>
-                    <div className="shrink-0">
-                        <div ref={expedCarouselRef} className="flex gap-3 overflow-x-auto px-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+
+                    {/* Info karta — 14 Summits */}
+                    <div className="shrink-0 bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-4">
+                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest font-bold mb-1.5">14 Summits Expedition · Nepál</p>
+                        <h2 className="font-serif text-xl text-white leading-tight mb-2">
+                            Čeští specialisté <span className="italic text-slate-400">na Nepál.</span>
+                        </h2>
+                        <p className="font-sans text-slate-300 text-sm leading-relaxed mb-3">
+                            Nejsme sterilní cestovka. Od pohodových treků po osmitisícovky — s osobním přístupem a zkušeným nepálským týmem.
+                        </p>
+                        <div className="grid grid-cols-3 gap-2">
+                            <button onClick={() => setIs14Open(true)}
+                                className="col-span-2 py-2.5 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
+                                O 14 Summits <ArrowRight className="w-3 h-3" />
+                            </button>
+                            <button onClick={() => setIsMiriOpen(true)}
+                                className="py-2.5 bg-white/10 border border-white/15 text-white/80 text-xs font-bold rounded-xl active:scale-95 transition-transform">
+                                Miri
+                            </button>
+                            <button onClick={() => setIsSubinOpen(true)}
+                                className="py-2.5 bg-white/10 border border-white/15 text-white/80 text-xs font-bold rounded-xl active:scale-95 transition-transform">
+                                Subin
+                            </button>
+                            <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer"
+                                className="col-span-2 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl text-center flex items-center justify-center gap-1.5">
+                                Chci do Nepálu <ArrowRight className="w-3 h-3" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Interaktivní mapa Nepálu — flex-1 */}
+                    <div className="flex-1 min-h-0 flex flex-col rounded-2xl overflow-hidden border border-[#7a9ab0]/40" style={{ minHeight: '200px' }}>
+                        <div className="shrink-0 flex items-center justify-between px-3 py-2 bg-[#0e1520]/90 border-b border-white/[0.07]">
+                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Regiony Nepálu</p>
+                            <p className="text-slate-500 text-[9px] font-mono">Ťukni na oblast</p>
+                        </div>
+                        <div className="flex-1 min-h-0">
+                            <NepalMap
+                                regions={REGIONS}
+                                onRegionClick={(region) => { setSelectedRegion(region); setIsRegionsOpen(true); }}
+                                isMobile
+                            />
+                        </div>
+                    </div>
+
+                    {/* Spodní akce */}
+                    <div className="shrink-0 flex gap-2">
+                        <button onClick={() => setShowAllExpeditions(true)}
+                            className="flex-1 py-3 bg-gold-500 hover:bg-gold-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
+                            Všechny výpravy <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                        <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer"
+                            className="px-4 py-3 bg-white/[0.07] border border-white/[0.12] text-white rounded-xl flex items-center justify-center active:scale-95 transition-transform">
+                            <Play className="w-4 h-4 fill-white" />
+                        </a>
+                        <button onClick={() => setIsMapModalOpen(true)}
+                            className="px-4 py-3 bg-white/[0.07] border border-white/[0.12] text-white rounded-xl flex items-center justify-center active:scale-95 transition-transform">
+                            <MapPin className="w-4 h-4 text-gold-400" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* old carousel placeholder — keep for expedCarouselRef */}
+                <div className="hidden" ref={expedCarouselRef}>
+                    <div className="flex gap-3 overflow-x-auto px-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                             {/* 14 Summits card */}
                             <div className="shrink-0 snap-start w-[82vw] rounded-2xl bg-slate-950/75 backdrop-blur-xl border border-slate-700/50 p-5 flex flex-col gap-3">
                                 <div>
@@ -1175,15 +1258,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     </div>
                                 </div>
                             ))}
-                            {/* More expeditions card */}
-                            <div onClick={() => setShowAllExpeditions(true)} className="shrink-0 snap-start w-[55vw] rounded-2xl border border-white/20 bg-white/5 flex flex-col items-center justify-center gap-3 cursor-pointer active:scale-[0.98] transition-transform p-5">
-                                <div className="w-12 h-12 rounded-full border border-gold-500/50 flex items-center justify-center bg-gold-500/10">
-                                    <ArrowRight className="w-5 h-5 text-gold-400" />
-                                </div>
-                                <p className="font-sans font-bold text-white text-xs uppercase tracking-widest text-center">Více expedicí</p>
-                            </div>
                         </div>
-                    </div>
                 </div>
 
                 {/* ── Desktop layout ── */}
