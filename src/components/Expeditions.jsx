@@ -318,6 +318,132 @@ const DEF_TEXTS = {
     },
 };
 
+/* ─── Nepal Interactive Map ──────────────────────────────────────────── */
+const NEPAL_REGION_PATHS = [
+    { id: 'world',     path: 'M 0,145 L 156,58 L 156,245 L 0,258 Z',                                                                      cx: 62,  cy: 162 },
+    { id: 'annapurna', path: 'M 156,58 L 176,54 L 212,86 L 368,86 L 364,158 L 374,252 L 156,245 Z',                                       cx: 242, cy: 168 },
+    { id: 'mustang',   path: 'M 176,54 L 258,18 L 345,28 L 374,58 L 368,86 L 212,86 Z',                                                   cx: 282, cy: 57  },
+    { id: 'langtang',  path: 'M 374,58 L 438,38 L 456,86 L 448,164 L 438,258 L 374,252 L 364,158 L 368,86 Z',                             cx: 406, cy: 155 },
+    { id: 'manaslu',   path: 'M 438,38 L 578,30 L 576,86 L 562,178 L 578,264 L 438,258 L 448,164 L 456,86 Z',                             cx: 510, cy: 155 },
+    { id: 'khumbu',    path: 'M 578,30 L 820,62 L 820,270 L 578,264 L 562,178 L 576,86 Z',                                                cx: 700, cy: 162 },
+];
+
+const NEPAL_PEAKS = [
+    { x: 756, y: 26, name: 'Everest' },
+    { x: 494, y: 24, name: 'Manáslu' },
+    { x: 224, y: 35, name: 'Annapurna' },
+    { x: 166, y: 49, name: 'Dhaulagiri' },
+];
+
+const NEPAL_CITIES = [
+    { x: 452, y: 192, name: 'Káthmándú' },
+    { x: 248, y: 200, name: 'Pokhara' },
+];
+
+function NepalMap({ regions, onRegionClick }) {
+    const [hovered, setHovered] = useState(null);
+
+    const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
+    const hoveredPath   = hovered ? NEPAL_REGION_PATHS.find(r => r.id === hovered) : null;
+
+    return (
+        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1422] border border-white/[0.07] select-none">
+            <svg viewBox="0 0 820 290" className="w-full h-full" style={{ display: 'block' }}>
+                <defs>
+                    <radialGradient id="himalayaGlow" cx="50%" cy="0%" r="60%">
+                        <stop offset="0%" stopColor="#a8c4e0" stopOpacity="0.15" />
+                        <stop offset="100%" stopColor="#0a1422" stopOpacity="0" />
+                    </radialGradient>
+                    <filter id="regionGlow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur" />
+                        <feFlood floodColor="#d4af37" floodOpacity="0.55" result="clr" />
+                        <feComposite in="clr" in2="blur" operator="in" result="glow" />
+                        <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                    <filter id="peakGlow" x="-100%" y="-100%" width="300%" height="300%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
+                        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                </defs>
+
+                {/* Outer ocean */}
+                <rect width="820" height="290" fill="#060e18" />
+
+                {/* Nepal base */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="#162032" />
+
+                {/* Himalayan snow band */}
+                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62" fill="none" stroke="rgba(180,210,255,0.1)" strokeWidth="22" strokeLinecap="round" />
+
+                {/* Terrain glow from north */}
+                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="url(#himalayaGlow)" />
+
+                {/* Subtle horizontal terrain lines */}
+                {[100, 130, 160, 190, 220, 250].map((y) => (
+                    <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.025)" strokeWidth="0.5" />
+                ))}
+
+                {/* Interactive region fills */}
+                {NEPAL_REGION_PATHS.map((r) => {
+                    const isHov = hovered === r.id;
+                    return (
+                        <path
+                            key={r.id}
+                            d={r.path}
+                            fill={isHov ? 'rgba(212,175,55,0.2)' : r.id === 'world' ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.045)'}
+                            stroke={isHov ? 'rgba(212,175,55,0.7)' : 'rgba(255,255,255,0.09)'}
+                            strokeWidth={isHov ? 1.4 : 0.7}
+                            filter={isHov ? 'url(#regionGlow)' : undefined}
+                            style={{ cursor: 'pointer', transition: 'fill 0.22s ease, stroke 0.22s ease, stroke-width 0.22s ease' }}
+                            onMouseEnter={() => setHovered(r.id)}
+                            onMouseLeave={() => setHovered(null)}
+                            onClick={() => { const reg = regions.find(x => x.id === r.id); if (reg) onRegionClick(reg); }}
+                        />
+                    );
+                })}
+
+                {/* Mountain peaks */}
+                {NEPAL_PEAKS.map((p, i) => (
+                    <g key={i} style={{ pointerEvents: 'none' }}>
+                        <polygon points={`${p.x},${p.y - 1} ${p.x - 7},${p.y + 13} ${p.x + 7},${p.y + 13}`} fill="rgba(210,230,255,0.85)" filter="url(#peakGlow)" />
+                        <polygon points={`${p.x},${p.y - 1} ${p.x - 3},${p.y + 5} ${p.x + 3},${p.y + 5}`} fill="white" opacity="0.95" />
+                    </g>
+                ))}
+
+                {/* City markers */}
+                {NEPAL_CITIES.map((c, i) => (
+                    <g key={i} style={{ pointerEvents: 'none' }}>
+                        <circle cx={c.x} cy={c.y} r="3.5" fill="#d4af37" opacity="0.85" />
+                        <circle cx={c.x} cy={c.y} r="6.5" fill="none" stroke="#d4af37" strokeWidth="0.7" opacity="0.35" />
+                    </g>
+                ))}
+
+                {/* Kathmandu label – always visible */}
+                <text x="452" y="209" textAnchor="middle" fill="rgba(212,175,55,0.6)" fontSize="7.5" fontFamily="sans-serif" style={{ pointerEvents: 'none', letterSpacing: '0.06em' }}>Káthmándú</text>
+
+                {/* Hover tooltip */}
+                {hoveredRegion && hoveredPath && (() => {
+                    const W = 148, H = 42;
+                    const tx = Math.min(Math.max(hoveredPath.cx - W / 2, 4), 820 - W - 4);
+                    const ty = hoveredPath.cy < 70 ? hoveredPath.cy + 10 : hoveredPath.cy - H - 8;
+                    return (
+                        <g style={{ pointerEvents: 'none' }}>
+                            <rect x={tx} y={ty} width={W} height={H} rx={6} fill="rgba(8,16,28,0.96)" stroke="rgba(212,175,55,0.55)" strokeWidth={0.9} />
+                            <text x={tx + W / 2} y={ty + 16} textAnchor="middle" fill="white" fontSize="10.5" fontFamily="Georgia, serif" fontWeight="700">{hoveredRegion.name}</text>
+                            <text x={tx + W / 2} y={ty + 31} textAnchor="middle" fill="rgba(212,175,55,0.82)" fontSize="8" fontFamily="sans-serif">{hoveredRegion.subtitle}</text>
+                        </g>
+                    );
+                })()}
+            </svg>
+
+            {/* Hint */}
+            <div className="absolute bottom-2.5 right-3.5 text-[8px] text-white/20 uppercase tracking-widest font-mono pointer-events-none">
+                najeď · klikni
+            </div>
+        </div>
+    );
+}
+
 const Expeditions = ({ scrollProgress }) => {
     const adminExpeditions = loadContent('expeditions', null);
     const adminTexts = loadContent('texts', DEF_TEXTS);
@@ -741,102 +867,34 @@ const Expeditions = ({ scrollProgress }) => {
                             </div>
                         </motion.div>
 
-                        <div className="pointer-events-auto relative z-10 flex flex-col gap-3">
-                            {/* Header + arrow buttons */}
+                        {/* ── Nepal interactive map ── */}
+                        <div className="pointer-events-auto relative z-10 flex flex-col gap-2.5">
+                            {/* Header */}
                             <div className="bg-slate-950/80 backdrop-blur-md rounded-xl px-4 py-3 border border-white/[0.08]">
-                                <div className="flex items-center justify-between mb-1">
-                                    <h3 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[11px] font-bold">Co pro vás máme</h3>
-                                    <div className="flex gap-1.5">
-                                        <button
-                                            onClick={catScrollPrev}
-                                            className="w-7 h-7 rounded-full bg-slate-800 hover:bg-gold-500 border border-white/20 hover:border-gold-400 text-white flex items-center justify-center transition-all duration-200"
-                                            aria-label="Předchozí"
-                                        >
-                                            <ChevronLeft className="w-4 h-4" />
-                                        </button>
-                                        <button
-                                            onClick={catScrollNext}
-                                            className="w-7 h-7 rounded-full bg-slate-800 hover:bg-gold-500 border border-white/20 hover:border-gold-400 text-white flex items-center justify-center transition-all duration-200"
-                                            aria-label="Další"
-                                        >
-                                            <ChevronRight className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <p className="font-sans text-slate-300 text-xs leading-relaxed">
-                                    Od jeepového výletu až po osmitisícovku — Nepál je dostupný každému.
+                                <h3 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[11px] font-bold">Regiony & Možnosti</h3>
+                                <p className="font-sans text-slate-300 text-xs leading-relaxed mt-0.5">
+                                    Najeď na oblast — zjisti, co tam děláme.
                                 </p>
                             </div>
 
-                            {/* Draggable category cards */}
-                            <div ref={categoryDragRef} className="overflow-hidden rounded-xl h-[260px] lg:h-[290px] cursor-grab active:cursor-grabbing">
-                                <motion.div
-                                    drag="x"
-                                    dragConstraints={{ left: catDragLeft, right: 0 }}
-                                    dragElastic={0.05}
-                                    dragMomentum={true}
-                                    dragTransition={{ power: 0.25, timeConstant: 200 }}
-                                    style={{ x: catX }}
-                                    onPointerDown={() => { catDidDrag.current = false; }}
-                                    onDrag={() => { catDidDrag.current = true; }}
-                                    className="flex gap-2.5 h-full select-none"
-                                >
-                                    {CATEGORIES_DISPLAY.map((cat, i) => (
-                                        <button
-                                            key={cat.id}
-                                            onClick={() => { if (!catDidDrag.current) setSelectedCategory(cat); }}
-                                            className="group relative shrink-0 w-44 lg:w-48 h-full rounded-2xl overflow-hidden border border-white/[0.1] hover:border-gold-500/30 hover:-translate-y-1 transition-all duration-200 shadow-[0_16px_40px_rgba(0,0,0,0.55)] text-left"
-                                        >
-                                            {/* Full-bleed image */}
-                                            <img
-                                                src={cat.image}
-                                                alt={cat.label}
-                                                draggable={false}
-                                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.07]"
-                                            />
-                                            {/* Rich gradient */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/15 to-black/25" />
-                                            {/* Subtle gold shimmer on hover */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-gold-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-
-                                            {/* Top row: index + badge */}
-                                            <div className="absolute top-3 inset-x-3 flex items-start justify-between pointer-events-none">
-                                                <span className="font-mono text-[9px] text-gold-500/50 font-bold tracking-[0.2em] leading-none">
-                                                    {String(i + 1).padStart(2, '0')}
-                                                </span>
-                                                <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-md leading-tight ${cat.badgeClass}`}>
-                                                    {cat.difficulty}
-                                                </span>
-                                            </div>
-
-                                            {/* Bottom content */}
-                                            <div className="absolute inset-x-0 bottom-0 p-4 pointer-events-none">
-                                                <h4 className="font-serif text-white text-base lg:text-lg leading-tight mb-1.5 drop-shadow-md group-hover:text-gold-200 transition-colors duration-300">{cat.label}</h4>
-                                                <p className="font-sans text-slate-400 text-[10px] leading-snug line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{cat.tagline}</p>
-                                                <div className="flex items-center gap-1 text-gold-400 text-[9px] font-bold uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                    Více <ArrowRight className="w-2.5 h-2.5" />
-                                                </div>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </motion.div>
+                            {/* Map */}
+                            <div className="h-[268px] lg:h-[298px]">
+                                <NepalMap
+                                    regions={REGIONS}
+                                    onRegionClick={(region) => {
+                                        setSelectedRegion(region);
+                                        setIsRegionsOpen(true);
+                                    }}
+                                />
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex gap-2.5 mt-1">
-                                <button
-                                    onClick={() => setIsRegionsOpen(true)}
-                                    className="flex-1 py-3 px-4 bg-white/[0.08] border border-white/[0.12] text-white text-[10px] font-bold uppercase tracking-[0.12em] rounded-xl hover:bg-white/[0.15] hover:border-white/20 transition-all flex items-center justify-center gap-1.5"
-                                >
-                                    <MapPin className="w-3.5 h-3.5 shrink-0" /> Oblasti
-                                </button>
-                                <button
-                                    onClick={() => setShowAllExpeditions(true)}
-                                    className="flex-1 py-3 px-4 bg-gold-500 text-white text-[10px] font-bold uppercase tracking-[0.12em] rounded-xl hover:bg-gold-400 transition-all flex items-center justify-center gap-1.5 shadow-[0_0_16px_rgba(212,175,55,0.25)]"
-                                >
-                                    Výpravy <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                                </button>
-                            </div>
+                            {/* Action */}
+                            <button
+                                onClick={() => setShowAllExpeditions(true)}
+                                className="py-3 px-4 bg-gold-500 text-white text-[10px] font-bold uppercase tracking-[0.12em] rounded-xl hover:bg-gold-400 transition-all flex items-center justify-center gap-1.5 shadow-[0_0_16px_rgba(212,175,55,0.25)]"
+                            >
+                                Všechny výpravy <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                            </button>
                         </div>
                     </div>
                 </div>
