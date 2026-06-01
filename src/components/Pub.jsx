@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { MapPin, X, ExternalLink, Beer, Utensils, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn } from 'lucide-react';
+import { MapPin, X, ExternalLink, Beer, Utensils, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn, ArrowRight } from 'lucide-react';
 
 import PubBg      from '../assets/zmensene/kathmandu/_mg_0642.jpg';
 import PubHero    from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.jpg';
@@ -24,11 +24,11 @@ import P13 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.
 const galleryImages = [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13];
 
 const FEATURES = [
-    { icon: <Beer     className="w-3.5 h-3.5 text-gold-400" />, label: 'České pivo na čepu' },
+    { icon: <Beer     className="w-3.5 h-3.5 text-gold-400" />, label: 'Místní pivo na čepu' },
     { icon: <Utensils className="w-3.5 h-3.5 text-gold-400" />, label: 'Smažák & bramborák' },
-    { icon: <Users    className="w-3.5 h-3.5 text-gold-400" />, label: 'Expedice & trekaři' },
+    { icon: <Utensils className="w-3.5 h-3.5 text-gold-400" />, label: 'Nepálské jídlo' },
+    { icon: <Users    className="w-3.5 h-3.5 text-gold-400" />, label: 'Trekaři & horolezci' },
     { icon: <Star     className="w-3.5 h-3.5 text-gold-400" />, label: 'Domluvíš se česky' },
-    { icon: <Clock    className="w-3.5 h-3.5 text-gold-400" />, label: 'Otevřeno každý den' },
     { icon: <Flame    className="w-3.5 h-3.5 text-gold-400" />, label: 'Živá atmosféra' },
 ];
 
@@ -36,6 +36,7 @@ const Pub = ({ scrollProgress }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeDot, setActiveDot]         = useState(0);
     const [galleryOpen, setGalleryOpen]     = useState(false);
+    const [detailOpen, setDetailOpen]       = useState(false);
     const lenis      = useLenis();
     const trackRef   = useRef(null);
     const trackX     = useMotionValue(0);
@@ -52,7 +53,7 @@ const Pub = ({ scrollProgress }) => {
     const dskRun       = useRef(null);
     const dskDragging  = useRef(false);
 
-    useScrollLock(!!selectedImage || galleryOpen);
+    useScrollLock(!!selectedImage || galleryOpen || detailOpen);
 
     const si = galleryImages.indexOf(selectedImage);
     const handleNext = (e) => { e.stopPropagation(); setSelectedImage(galleryImages[(si + 1) % galleryImages.length]); };
@@ -260,15 +261,15 @@ const Pub = ({ scrollProgress }) => {
                                 <h3 className="text-white font-serif text-3xl leading-tight">Czech Pub<br/>Nepal</h3>
                             </div>
                         </div>
-                        {/* Right content – no overflow-y, no lenis-prevent → page scroll works freely */}
+                        {/* Right content */}
                         <div className="w-[58%] flex flex-col p-7">
                             <img loading="lazy" src={PubLogoNeg} alt="" className="h-[90px] lg:h-[110px] w-auto object-contain object-left -mt-4 lg:-mt-5 -ml-3 -mb-2 self-start pointer-events-none" />
-                            <h2 className="font-serif text-2xl lg:text-3xl text-white mt-4 mb-2 leading-snug">Místo, kde se<br/>potkávají dobrodruzi</h2>
+                            <h2 className="font-serif text-2xl lg:text-3xl text-white mt-4 mb-2 leading-snug">Místo návratů,<br/>setkávání a dlouhých večerů</h2>
                             <p className="text-white/80 text-sm md:text-base leading-relaxed mb-2">
-                                Středobod českého vesmíru v Nepálu. Po návratu z treku nebo expedice tu sdílíš příběhy s lidmi, kteří mají hory pod kůží. Pivko v ruce, smažák na stole — přesně tak, jak to má být.
+                                Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci a místní přátelé — lidé, kteří mají Nepál podobně pod kůží jako my.
                             </p>
                             <p className="text-white/55 text-sm leading-relaxed mb-3">
-                                České i nepálské pivo na čepu, poctivý bramborový salát a nejlepší smažený sýr v Káthmándú.
+                                Dobré pivo, nejlepší smažák v Nepálu, nepálské jídlo — a příběhy, které si sem lidé přinášejí z hor. Někdo přijde na jedno. Někdo tu zůstane celý večer.
                             </p>
                             <div className="grid grid-cols-2 gap-2 mb-3">
                                 {FEATURES.map(({ icon, label }, i) => (
@@ -302,15 +303,20 @@ const Pub = ({ scrollProgress }) => {
                                 </motion.div>
                             </div>
                             <div className="mt-auto flex flex-col gap-2">
-                                <button onClick={() => setGalleryOpen(true)}
-                                    className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-gold-400/50 text-white text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all">
-                                    <Images className="w-4 h-4 text-gold-400" />
-                                    Celá galerie ({galleryImages.length} fotek)
+                                <button onClick={() => setDetailOpen(true)}
+                                    className="group flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-slate-900 text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg">
+                                    O pubu více <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                                 </button>
-                                <a href="https://maps.app.goo.gl/czechpubnepal" target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-slate-900 text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg">
-                                    Navštívit na mapě <ExternalLink className="w-3.5 h-3.5" />
-                                </a>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setGalleryOpen(true)}
+                                        className="flex-1 flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
+                                        <Images className="w-3.5 h-3.5 text-gold-400" /> Galerie
+                                    </button>
+                                    <a href="https://czechpubnepal.com/" target="_blank" rel="noopener noreferrer"
+                                        className="flex-1 flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
+                                        Web <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -318,6 +324,115 @@ const Pub = ({ scrollProgress }) => {
 
             </div>
         </motion.div>
+
+        {/* ── PUB DETAIL MODAL ── */}
+        <AnimatePresence>
+            {detailOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-[108] flex items-center justify-center p-0 md:p-6 lg:p-10 bg-slate-950/88 backdrop-blur-md pointer-events-auto"
+                    onClick={() => setDetailOpen(false)}
+                >
+                    <motion.div
+                        initial={{ scale: 0.96, y: 20, opacity: 0 }}
+                        animate={{ scale: 1, y: 0, opacity: 1 }}
+                        exit={{ scale: 0.96, y: 16, opacity: 0 }}
+                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                        onClick={e => e.stopPropagation()}
+                        className="bg-[#111827] w-full max-w-5xl max-h-[96vh] rounded-none md:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row border border-white/10"
+                    >
+                        {/* Levá strana — fotky */}
+                        <div className="md:w-[46%] shrink-0 flex flex-col gap-0.5 bg-slate-950 min-h-[40vh] md:min-h-0">
+                            <div className="relative flex-1 min-h-[200px]">
+                                <img src={PubHero} alt="Czech Pub Nepal" className="absolute inset-0 w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                                <div className="absolute bottom-4 left-4">
+                                    <span className="inline-flex items-center gap-1.5 text-gold-400 bg-slate-950/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                                        <MapPin className="w-3 h-3" /> Thamel, Káthmándú
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-0.5 shrink-0" style={{ height: 120 }}>
+                                {[P1, P2, P3, P4, P5, P6].slice(0,6).map((src, i) => (
+                                    <button key={i} onClick={() => { setDetailOpen(false); setSelectedImage(src); }}
+                                        className="relative overflow-hidden group">
+                                        <img loading="lazy" src={src} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-400" />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
+                                            <ZoomIn className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Pravá strana — obsah */}
+                        <div className="flex-1 flex flex-col overflow-y-auto overscroll-contain" data-lenis-prevent>
+                            {/* Header */}
+                            <div className="flex items-center justify-between px-6 md:px-8 pt-6 pb-4 shrink-0 border-b border-white/10">
+                                <img src={PubLogoNeg} alt="Czech Pub Nepal" className="h-10 w-auto object-contain" />
+                                <button onClick={() => setDetailOpen(false)}
+                                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
+
+                            {/* Text */}
+                            <div className="px-6 md:px-8 py-6 space-y-4 flex-1">
+                                <div>
+                                    <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-2">Czech Pub Nepal</p>
+                                    <h2 className="font-serif text-2xl md:text-3xl text-white leading-tight mb-4">
+                                        Místo návratů, setkávání<br/>a <span className="italic text-slate-400">dlouhých večerů.</span>
+                                    </h2>
+                                </div>
+
+                                <p className="font-sans text-white/85 text-sm md:text-base leading-relaxed font-medium">
+                                    Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo, kde se po trecích a expedicích potkávají cestovatelé, horolezci, místní přátelé i lidé, kteří mají Nepál podobně pod kůží jako my.
+                                </p>
+                                <p className="font-sans text-white/70 text-sm leading-relaxed">
+                                    Po dni v ulicích Thamelu nebo po návratu z hor si tu člověk dá dobré pivo, nejlepší smažák v Nepálu, bramborový salát, nepálské jídlo — a hlavně chvíli klidu mezi lidmi, kteří mají často podobné příběhy.
+                                </p>
+
+                                {/* Citace */}
+                                <div className="border-l-2 border-gold-400/60 pl-4 space-y-1 py-1">
+                                    {['Někdo přijde na jedno pivo.', 'Někdo tu zůstane celý večer.', 'A někdo se sem vrací každý rok.'].map((s, i) => (
+                                        <p key={i} className="font-serif text-white/80 italic text-sm">{s}</p>
+                                    ))}
+                                </div>
+
+                                <p className="font-sans text-white/55 text-sm leading-relaxed">
+                                    V podstatě je špatně jen to, že české pivo není. Naučili jsme nepálské kolegy, jak se starat o trubky a servírovat dobré místní pivo.
+                                </p>
+
+                                {/* Features */}
+                                <div className="grid grid-cols-2 gap-2 pt-2">
+                                    {FEATURES.map(({ icon, label }, i) => (
+                                        <div key={i} className="flex items-center gap-2.5 bg-white/[0.06] border border-white/[0.1] rounded-xl px-3 py-2.5">
+                                            <div className="p-1.5 bg-white/10 rounded-lg shrink-0">{icon}</div>
+                                            <span className="text-xs font-semibold text-white/75 leading-tight">{label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <div className="px-6 md:px-8 py-5 shrink-0 border-t border-white/10 flex flex-col gap-2.5">
+                                <a href="https://czechpubnepal.com/" target="_blank" rel="noopener noreferrer"
+                                    className="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-slate-900 font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg">
+                                    czechpubnepal.com <ExternalLink className="w-3.5 h-3.5" />
+                                </a>
+                                <button onClick={() => { setDetailOpen(false); setGalleryOpen(true); }}
+                                    className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl transition-all border border-white/15">
+                                    <Images className="w-3.5 h-3.5 text-gold-400" /> Celá galerie ({galleryImages.length} fotek)
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
 
         {/* GALLERY MODAL */}
         <AnimatePresence>
