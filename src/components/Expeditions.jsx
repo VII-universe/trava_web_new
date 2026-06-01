@@ -227,6 +227,7 @@ const REGIONS = [
         difficulty: 'Střední–Extrémní',
         desc: 'Nejslavnější horský region světa. EBC, Island Peak, Ama Dablam — každý najde svoji horu. Namche Bazaar je základna, ledovec Khumbu magnet.',
         highlights: ['Everest Base Camp (5364 m)', 'Island Peak (6189 m)', 'Ama Dablam (6812 m)', 'Klášter Tengboche', 'Namche Bazaar'],
+        mapUrl: 'https://maps.google.com/maps?q=27.98,86.93&z=10&t=p&output=embed&hl=cs',
     },
     {
         id: 'annapurna',
@@ -238,6 +239,7 @@ const REGIONS = [
         difficulty: 'Snadné–Extrémní',
         desc: 'Oblast pro každého — od jógových retreatů u Pokhary po technický výstup na Annapurnu I. Poon Hill je povinnost, Annapurna circuit legenda.',
         highlights: ['Annapurna circuit (200 km)', 'Poon Hill sunrise (3210 m)', 'Jógové retreaty v Pokhaře', 'ABC (4130 m)', 'Dhaulagiri pohled'],
+        mapUrl: 'https://maps.google.com/maps?q=28.6,83.82&z=9&t=p&output=embed&hl=cs',
     },
     {
         id: 'mustang',
@@ -249,6 +251,7 @@ const REGIONS = [
         difficulty: 'Snadné (jeep) – Střední (trek)',
         desc: 'Mustang je jiný svět. Dostupný jeepem — nemusíte být horolezec. Skalnaté kaňony, tibetská kultura, kláštery s tisíciletou historií. Minimum turistů.',
         highlights: ['Lo Manthang — tibetské královské město', 'Jeskyně Chhoser', 'Chrám Thubchen Gompa', 'Jeepová trasa Upper Mustang', 'Tiji festival (jaro)'],
+        mapUrl: 'https://maps.google.com/maps?q=29.18,83.97&z=10&t=p&output=embed&hl=cs',
     },
     {
         id: 'manaslu',
@@ -260,6 +263,7 @@ const REGIONS = [
         difficulty: 'Střední–Extrémní',
         desc: 'Manaslu circuit — alternativa k Annapurně se třetinou turistů. Tsum Valley patří k posledním nedotčeným místům na Zemi. Manáslu (8163 m) je naše vlajková loď.',
         highlights: ['Manaslu circuit (177 km)', 'Tsum Valley — zakázaná oblast', 'Larke La průsmyk (5106 m)', 'Expedice Manáslu (8163 m)'],
+        mapUrl: 'https://maps.google.com/maps?q=28.55,84.56&z=10&t=p&output=embed&hl=cs',
     },
     {
         id: 'langtang',
@@ -271,6 +275,7 @@ const REGIONS = [
         difficulty: 'Snadné–Střední',
         desc: '2 hodiny autem z Káthmándú. Skvělé pro kratší výlety nebo první trek. Yak farmy, gletschery a jezerní okruh Gosaikunda. Méně navštěvovaný, stejně krásný.',
         highlights: ['Langtang valley trek', 'Gosaikunda — posvátná jezera (4380 m)', 'Kyanjin Gompa & Langtang Lirung', 'Ideální na 10–14 dní'],
+        mapUrl: 'https://maps.google.com/maps?q=28.46,85.51&z=10&t=p&output=embed&hl=cs',
     },
     {
         id: 'world',
@@ -282,6 +287,7 @@ const REGIONS = [
         difficulty: 'Střední–Extrémní',
         desc: 'Nepál je naše domovina, ale jezdíme i jinam. Aconcagua, Kilimandžáro, Elbrus nebo ekvádorské sopky — vždy se stejným přístupem a péčí.',
         highlights: ['Aconcagua (6961 m) — vrchol obou Amerik', 'Kilimandžáro (5895 m) — střecha Afriky', 'Elbrus (5642 m) — střecha Evropy', 'Sopky Ekvádoru — Cotopaxi & Chimborazo'],
+        mapUrl: 'https://maps.google.com/maps?q=28.5,82.0&z=6&t=p&output=embed&hl=cs',
     },
 ];
 
@@ -839,70 +845,28 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                                 className="flex flex-col h-full"
                             >
-                                {/* Region mapa místo fotky */}
-                                <div className="relative shrink-0 overflow-hidden bg-[#b4c8d4]" style={{ height: '42%', minHeight: 160 }}>
-                                    {/* Zoomed region map */}
-                                    {(() => {
-                                        const rp = NEPAL_REGION_PATHS.find(r => r.id === selected.id);
-                                        if (!rp) return null;
-                                        const zoom = 2.6;
-                                        const W = 820/zoom, H = 390/zoom;
-                                        const x = Math.max(-10, Math.min(820-W+10, rp.cx-W/2));
-                                        const y = Math.max(-50, Math.min(240, rp.cy-H/2));
-                                        const vb = `${Math.round(x)} ${Math.round(y)} ${Math.round(W)} ${Math.round(H)}`;
-                                        return (
-                                            <svg viewBox={vb} className="w-full h-full" style={{ display: 'block' }}>
-                                                <defs>
-                                                    {NEPAL_REGION_PATHS.map(r => (
-                                                        <clipPath key={`modal-cp-${r.id}`} id={`modal-cp-${r.id}`}><path d={r.path} /></clipPath>
-                                                    ))}
-                                                    <linearGradient id="mTerrainGrad" x1="0" y1="0" x2="0" y2="1">
-                                                        <stop offset="0%" stopColor="#eee8de" stopOpacity="0.96" />
-                                                        <stop offset="30%" stopColor="#c4a878" stopOpacity="0.62" />
-                                                        <stop offset="65%" stopColor="#88b050" stopOpacity="0.55" />
-                                                        <stop offset="100%" stopColor="#9cc054" stopOpacity="0.45" />
-                                                    </linearGradient>
-                                                </defs>
-                                                {/* Background */}
-                                                <rect width="820" height="290" fill="#aec2cc" />
-                                                {/* Nepal terrain */}
-                                                <path d={NEPAL_OUTLINE} fill="#dcd0b0" />
-                                                <path d={NEPAL_OUTLINE} fill="url(#mTerrainGrad)" />
-                                                {/* Dimmed other regions */}
-                                                {NEPAL_REGION_PATHS.filter(r => r.id !== selected.id).map(r => (
-                                                    <path key={r.id} d={r.path} fill="rgba(0,0,0,0.18)" />
-                                                ))}
-                                                {/* Selected region — zlatá s glow */}
-                                                <path d={rp.path}
-                                                    fill="rgba(212,175,55,0.28)"
-                                                    stroke="#d4af37" strokeWidth="2.5" />
-                                                {/* Photos clipped to region */}
-                                                {selected.image && (
-                                                    <image href={selected.image} x="0" y="0" width="820" height="290"
-                                                        preserveAspectRatio="xMidYMid slice"
-                                                        clipPath={`url(#modal-cp-${selected.id})`}
-                                                        opacity="0.35" />
-                                                )}
-                                                {/* Nepal border */}
-                                                <path d={NEPAL_OUTLINE} fill="none" stroke="rgba(80,60,30,0.55)" strokeWidth="1.4" />
-                                                {/* Region label */}
-                                                <text x={rp.cx} y={rp.cy} textAnchor="middle" dominantBaseline="middle"
-                                                    fill="white" fontSize="18" fontFamily="Georgia, serif" fontWeight="700"
-                                                    style={{ filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.8))' }}>
-                                                    {selected.name}
-                                                </text>
-                                            </svg>
-                                        );
-                                    })()}
+                                {/* Google Maps iframe */}
+                                <div className="relative shrink-0 overflow-hidden bg-slate-900" style={{ height: '45%', minHeight: 180 }}>
+                                    {selected.mapUrl ? (
+                                        <iframe
+                                            src={selected.mapUrl}
+                                            className="absolute inset-0 w-full h-full border-0"
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                            title={`Mapa — ${selected.name}`}
+                                        />
+                                    ) : (
+                                        <img src={selected.image} alt={selected.name} className="w-full h-full object-cover opacity-60" />
+                                    )}
                                     {/* Mobile back */}
                                     <button onClick={handleBack}
-                                        className="md:hidden absolute top-3 left-3 flex items-center gap-1.5 bg-black/40 text-white/80 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-full backdrop-blur-sm">
+                                        className="md:hidden absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-black/60 text-white text-[9px] font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
                                         <ChevronLeft className="w-3 h-3" /> zpět
                                     </button>
-                                    {/* Region info overlay */}
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#06090f]/95 to-transparent px-5 py-4">
-                                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] mb-1 font-bold">{selected.subtitle}</p>
-                                        <h3 className="font-serif text-white text-xl md:text-2xl leading-tight">{selected.name}</h3>
+                                    {/* Name overlay */}
+                                    <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-[#06090f]/90 to-transparent px-5 py-3 pointer-events-none">
+                                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] mb-0.5 font-bold">{selected.subtitle}</p>
+                                        <h3 className="font-serif text-white text-lg md:text-xl leading-tight">{selected.name}</h3>
                                     </div>
                                 </div>
 
@@ -2340,11 +2304,18 @@ const Expeditions = ({ scrollProgress }) => {
                                     transition={{ duration: 0.25 }}
                                     className="flex flex-col md:flex-row h-full max-h-[90vh]"
                                 >
-                                    <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0">
-                                        <img src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0f1923] via-[#0f1923]/30 to-transparent" />
-                                        <div className="absolute bottom-5 left-5 flex flex-col gap-1.5">
-                                            <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-white border border-white/20 w-fit backdrop-blur-sm">{selectedRegion.difficulty}</span>
+                                    <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0 bg-slate-900">
+                                        {selectedRegion.mapUrl ? (
+                                            <iframe src={selectedRegion.mapUrl}
+                                                className="absolute inset-0 w-full h-full border-0"
+                                                loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                                                title={`Mapa — ${selectedRegion.name}`} />
+                                        ) : (
+                                            <img src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0f1923]/60 via-transparent to-transparent pointer-events-none" />
+                                        <div className="absolute bottom-5 left-5 flex flex-col gap-1.5 pointer-events-none">
+                                            <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/60 text-white border border-white/20 w-fit backdrop-blur-sm">{selectedRegion.difficulty}</span>
                                             <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gold-500/20 text-gold-300 border border-gold-500/30 w-fit backdrop-blur-sm">{selectedRegion.bestSeason}</span>
                                         </div>
                                     </div>
