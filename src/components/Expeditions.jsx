@@ -398,7 +398,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
 
             {/* ── SVG map — ilustrativní kartografie s výškovými zónami ── */}
             {/* SEVER = NAHOŘE (Tibet/Čína nahoře, Indie dole) ✓ */}
-            <svg viewBox="0 0 820 290" className="w-full h-full" style={{ display: 'block' }}>
+            {/* Na mobilu: viewBox −80/+80 → poměr 820:450 (1.82:1) místo 820:290 (2.83:1) */}
+            <svg viewBox={isMobile ? "0 -80 820 450" : "0 0 820 290"} className="w-full h-full" style={{ display: 'block' }}>
                 <defs>
                     {/* Clip paths pro regiony i pro Nepál jako celek */}
                     {NEPAL_REGION_PATHS.map(r => (
@@ -473,9 +474,11 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
-                <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
-                <text x="410" y="13"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
-                <text x="11"  y="196" fill="rgba(50,80,100,0.32)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
+                {!isMobile && <>
+                    <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
+                    <text x="410" y="13"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
+                    <text x="11"  y="196" fill="rgba(50,80,100,0.32)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
+                </>}
 
                 {/* ── TERÉN NEPÁLU — jeden plynulý gradient, žádné viditelné pruhy ── */}
                 {/* Základní barva středohorských kopců */}
@@ -516,8 +519,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                         fill="none" stroke="#4878a0" strokeWidth="0.7" strokeLinecap="round" opacity="0.6" />
                 </g>
 
-                {/* ── Národní parky ── */}
-                <g fill="none" style={{ pointerEvents: 'none' }}>
+                {/* ── Národní parky + trek labels — jen desktop ── */}
+                {!isMobile && <g fill="none" style={{ pointerEvents: 'none' }}>
                     <ellipse cx="718" cy="196" rx="52" ry="28"
                         stroke="#3a6a2a" strokeWidth="1.2" strokeDasharray="4 2.5" opacity="0.7" />
                     <text x="718" y="231" textAnchor="middle" fill="#2a5a1a" fontSize="9.5"
@@ -528,10 +531,10 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                     <text x="390" y="183" textAnchor="middle" fill="#2a5a1a" fontSize="9"
                         fontFamily="sans-serif" fontStyle="italic" fontWeight="600"
                         filter="url(#thalo)">Annapurna CA</text>
-                </g>
+                </g>}
 
-                {/* ── Trekingové trasy ── */}
-                <g style={{ pointerEvents: 'none' }}>
+                {/* ── Trekingové trasy — jen desktop ── */}
+                {!isMobile && <g style={{ pointerEvents: 'none' }}>
                     {TREK_ROUTES.map(r => (
                         <g key={r.id}>
                             <path d={r.path} fill="none" stroke="rgba(255,248,235,0.65)"
@@ -540,13 +543,10 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                                 strokeWidth="2" strokeLinecap="round" strokeDasharray="6 4" />
                         </g>
                     ))}
-                    <text x="702" y="204" fill="#7a3c08" fontSize="9" fontFamily="sans-serif"
-                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">EBC Trek</text>
-                    <text x="432" y="155" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif"
-                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">Annapurna Circuit</text>
-                    <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif"
-                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">Langtang</text>
-                </g>
+                    <text x="702" y="204" fill="#7a3c08" fontSize="9" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">EBC Trek</text>
+                    <text x="432" y="155" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">Annapurna Circuit</text>
+                    <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">Langtang</text>
+                </g>}
 
                 {/* Fotky regionů — jen při hoveru */}
                 {NEPAL_REGION_PATHS.map(r => {
@@ -581,59 +581,39 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                 {/* Nepál — border — světlejší na severu (Tibet), tmavší na jihu (Indie) */}
                 <path d={NEPAL_OUTLINE} fill="none" stroke="rgba(80,60,30,0.55)" strokeWidth="1.4" />
 
-                {/* ── Ilustrativní hory — elevation halos + světlá/stínová strana ── */}
+                {/* ── Hory — na mobilu jen trojúhelníky (bez halos/textu) ── */}
                 {NEPAL_PEAKS.map((p, i) => {
-                    const ht  = p.baseY - p.tip;
-                    const sl  = p.tip + ht * 0.36;
-                    const sw  = p.w * 0.44;
-                    const lny = p.baseY + 22;
-                    const lay = p.baseY + 40;
+                    const ht = p.baseY - p.tip;
+                    const sl = p.tip + ht * 0.36;
+                    const sw = p.w * 0.44;
                     return (
                         <g key={i} style={{ pointerEvents: 'none' }}>
-                            {/* Elevation halos — vrstevnicové prstence kolem vrcholu */}
-                            {[1.8, 1.45, 1.15].map((scale, hi) => (
-                                <ellipse key={hi}
-                                    cx={p.x} cy={p.baseY - (ht * 0.15 * (3-hi))}
+                            {/* Halos jen na desktopu */}
+                            {!isMobile && [1.8, 1.45, 1.15].map((scale, hi) => (
+                                <ellipse key={hi} cx={p.x} cy={p.baseY - (ht * 0.15 * (3-hi))}
                                     rx={p.w * scale * 0.85} ry={p.w * scale * 0.28}
-                                    fill="none"
-                                    stroke={`rgba(100,75,40,${0.06 + hi*0.04})`}
-                                    strokeWidth="0.6" />
+                                    fill="none" stroke={`rgba(100,75,40,${0.06 + hi*0.04})`} strokeWidth="0.6" />
                             ))}
-                            {/* Stín pod horou */}
-                            <ellipse cx={p.x + 3} cy={p.baseY + 2.5} rx={p.w * 0.75} ry={4} fill="rgba(50,25,10,0.2)" />
-                            {/* Osvětlená strana (SZ světlo) */}
-                            <polygon points={`${p.x},${p.tip} ${p.x-p.w},${p.baseY} ${p.x},${p.baseY}`} fill="#8a6038" filter="url(#mshadow)" />
-                            {/* Stínová strana (JV) */}
+                            {!isMobile && <ellipse cx={p.x+3} cy={p.baseY+2.5} rx={p.w*0.75} ry={4} fill="rgba(50,25,10,0.2)" />}
+                            <polygon points={`${p.x},${p.tip} ${p.x-p.w},${p.baseY} ${p.x},${p.baseY}`} fill="#8a6038" filter={isMobile ? undefined : "url(#mshadow)"} />
                             <polygon points={`${p.x},${p.tip} ${p.x},${p.baseY} ${p.x+p.w},${p.baseY}`} fill="#4a2c12" />
-                            {/* Mezivrstvy — přechod barvy */}
-                            <polygon points={`${p.x},${sl} ${p.x-sw*0.8},${p.baseY-ht*0.15} ${p.x},${p.baseY-ht*0.15}`} fill="rgba(120,90,45,0.3)" />
-                            {/* Sněhová čepice — osvětlená */}
+                            {!isMobile && <polygon points={`${p.x},${sl} ${p.x-sw*0.8},${p.baseY-ht*0.15} ${p.x},${p.baseY-ht*0.15}`} fill="rgba(120,90,45,0.3)" />}
                             <polygon points={`${p.x},${p.tip} ${p.x-sw},${sl} ${p.x},${sl}`} fill="#f0ece6" opacity="0.96" />
-                            {/* Sněhová čepice — stínová */}
                             <polygon points={`${p.x},${p.tip} ${p.x},${sl} ${p.x+sw},${sl}`} fill="#ddd9d2" opacity="0.9" />
-                            {/* Sněhová hrana */}
-                            <line x1={p.x-sw} y1={sl} x2={p.x+sw} y2={sl} stroke="rgba(180,165,145,0.5)" strokeWidth="0.6" />
-                            {/* Hřebenová čára */}
-                            <line x1={p.x-p.w} y1={p.baseY} x2={p.x+p.w} y2={p.baseY} stroke="#3a2010" strokeWidth="0.8" opacity="0.4" />
-                            {/* Název */}
-                            <text x={p.x+p.lx} y={lny} textAnchor={p.anchor}
-                                fill="#1a0e04" fontSize="17"
-                                fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic" fontWeight="700"
-                                filter="url(#thalo)">{p.name}</text>
-                            {/* Výška */}
-                            <text x={p.x+p.lx} y={lay} textAnchor={p.anchor}
-                                fill="#5a3820" fontSize="14"
-                                fontFamily="'Courier New', Courier, monospace"
-                                filter="url(#thalo)">{p.alt}</text>
+                            {/* Text jen na desktopu */}
+                            {!isMobile && <>
+                                <text x={p.x+p.lx} y={p.baseY+22} textAnchor={p.anchor} fill="#1a0e04" fontSize="17" fontFamily="Georgia,serif" fontStyle="italic" fontWeight="700" filter="url(#thalo)">{p.name}</text>
+                                <text x={p.x+p.lx} y={p.baseY+40} textAnchor={p.anchor} fill="#5a3820" fontSize="14" fontFamily="monospace" filter="url(#thalo)">{p.alt}</text>
+                            </>}
                         </g>
                     );
                 })}
 
-                {/* ── Města ── */}
+                {/* ── Města — na mobilu jen tečky (bez textu) ── */}
                 {NEPAL_CITIES.map((c, i) => {
                     const isCapital = c.type === 'capital';
                     const isCity    = c.type === 'city';
-                    const r         = isCapital ? 5.5 : isCity ? 4 : 3;
+                    const r         = isMobile ? (isCapital ? 5 : 3.5) : (isCapital ? 5.5 : isCity ? 4 : 3);
                     const dotColor  = isCapital ? '#aa0000' : '#1e1008';
                     const labelY    = c.labelBelow ? c.y + r + 16 : c.y - r - 6;
                     const labelSize = isCapital ? 22 : isCity ? 19 : 16;
@@ -641,17 +621,20 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                         <g key={i} style={{ pointerEvents: 'none' }}>
                             {isCapital && <>
                                 <circle cx={c.x} cy={c.y} r={r+5.5} fill="none" stroke="#aa0000" strokeWidth="0.9" opacity="0.28" />
-                                <circle cx={c.x} cy={c.y} r={r+2.5} fill="none" stroke="#aa0000" strokeWidth="0.8" opacity="0.5"  />
+                                <circle cx={c.x} cy={c.y} r={r+2.5} fill="none" stroke="#aa0000" strokeWidth="0.8" opacity="0.5" />
                             </>}
                             <circle cx={c.x} cy={c.y} r={r} fill={dotColor} />
                             {!isCapital && <circle cx={c.x} cy={c.y} r={r*0.38} fill="rgba(255,255,255,0.65)" />}
-                            <text x={c.x+(c.labelDx||0)} y={labelY}
-                                textAnchor={c.labelDx > 0 ? 'start' : 'middle'}
-                                fill={isCapital ? '#880000' : '#1a0e04'}
-                                fontSize={labelSize}
-                                fontFamily={isCapital ? "Georgia, serif" : "Arial, sans-serif"}
-                                fontWeight={isCapital ? '700' : isCity ? '600' : '500'}
-                                filter="url(#thalo)">{c.name}</text>
+                            {/* Textové popisky jen na desktopu */}
+                            {!isMobile && (
+                                <text x={c.x+(c.labelDx||0)} y={labelY}
+                                    textAnchor={c.labelDx > 0 ? 'start' : 'middle'}
+                                    fill={isCapital ? '#880000' : '#1a0e04'}
+                                    fontSize={labelSize}
+                                    fontFamily={isCapital ? "Georgia, serif" : "Arial, sans-serif"}
+                                    fontWeight={isCapital ? '700' : isCity ? '600' : '500'}
+                                    filter="url(#thalo)">{c.name}</text>
+                            )}
                         </g>
                     );
                 })}
@@ -664,27 +647,24 @@ function NepalMap({ regions, onRegionClick, isMobile = false }) {
                     <polygon points="0, 12 -4.5,0 4.5,0"  fill="#9a8070" />
                     <polygon points="-12,0 0,-4.5 0,4.5"  fill="#3a2010" opacity="0.55" />
                     <polygon points=" 12,0 0,-4.5 0,4.5"  fill="#9a8070" opacity="0.55" />
-                    <text x="0" y="-17" textAnchor="middle" fill="#3a2010" fontSize="12" fontFamily="sans-serif" fontWeight="700">S</text>
+                    {!isMobile && <text x="0" y="-17" textAnchor="middle" fill="#3a2010" fontSize="12" fontFamily="sans-serif" fontWeight="700">S</text>}
                 </g>
 
-                {/* ── Měřítko — 100 km = 105 SVG jednotek ── */}
-                <g style={{ pointerEvents:'none' }} transform="translate(645,272)">
-                    {/* Linie */}
+                {/* ── Měřítko — jen desktop ── */}
+                {!isMobile && <g style={{ pointerEvents:'none' }} transform="translate(645,272)">
                     <line x1="0" y1="0" x2="105" y2="0" stroke="#3a2810" strokeWidth="1.2" />
                     <line x1="0" y1="-4" x2="0" y2="4" stroke="#3a2810" strokeWidth="1.2" />
                     <line x1="105" y1="-4" x2="105" y2="4" stroke="#3a2810" strokeWidth="1.2" />
                     <line x1="52.5" y1="-3" x2="52.5" y2="3" stroke="#3a2810" strokeWidth="0.8" />
-                    {/* Černo-bílé proužky */}
                     <rect x="0" y="-3" width="52.5" height="6" fill="#3a2810" opacity="0.7" rx="1" />
                     <rect x="52.5" y="-3" width="52.5" height="6" fill="rgba(220,210,190,0.9)" rx="1" />
-                    {/* Texty */}
-                    <text x="0"   y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">0</text>
+                    <text x="0"    y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">0</text>
                     <text x="52.5" y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">50</text>
-                    <text x="105" y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">100 km</text>
-                </g>
+                    <text x="105"  y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">100 km</text>
+                </g>}
 
-                {/* Hover — název regionu na mapě */}
-                {hoveredRegion && (() => {
+                {/* Hover — název regionu (jen desktop) */}
+                {!isMobile && hoveredRegion && (() => {
                     const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
                     if (!rp) return null;
                     const tx = Math.min(Math.max(rp.cx, 65), 755);
