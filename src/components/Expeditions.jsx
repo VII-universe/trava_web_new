@@ -320,24 +320,29 @@ const DEF_TEXTS = {
 
 /* ─── Nepal Interactive Map ──────────────────────────────────────────── */
 const NEPAL_REGION_PATHS = [
-    { id: 'world',     path: 'M 0,145 L 156,58 L 156,245 L 0,258 Z',                                                                      cx: 62,  cy: 162 },
-    { id: 'annapurna', path: 'M 156,58 L 176,54 L 212,86 L 368,86 L 364,158 L 374,252 L 156,245 Z',                                       cx: 242, cy: 168 },
-    { id: 'mustang',   path: 'M 176,54 L 258,18 L 345,28 L 374,58 L 368,86 L 212,86 Z',                                                   cx: 282, cy: 57  },
-    { id: 'langtang',  path: 'M 374,58 L 438,38 L 456,86 L 448,164 L 438,258 L 374,252 L 364,158 L 368,86 Z',                             cx: 406, cy: 155 },
-    { id: 'manaslu',   path: 'M 438,38 L 578,30 L 576,86 L 562,178 L 578,264 L 438,258 L 448,164 L 456,86 Z',                             cx: 510, cy: 155 },
-    { id: 'khumbu',    path: 'M 578,30 L 820,62 L 820,270 L 578,264 L 562,178 L 576,86 Z',                                                cx: 700, cy: 162 },
+    { id: 'world',     path: 'M 0,145 L 156,58 L 156,245 L 0,258 Z',                                                                      cx: 62,  cy: 185 },
+    { id: 'annapurna', path: 'M 156,58 L 176,54 L 212,86 L 368,86 L 364,158 L 374,252 L 156,245 Z',                                       cx: 255, cy: 178 },
+    { id: 'mustang',   path: 'M 176,54 L 258,18 L 345,28 L 374,58 L 368,86 L 212,86 Z',                                                   cx: 285, cy: 60  },
+    { id: 'langtang',  path: 'M 374,58 L 438,38 L 456,86 L 448,164 L 438,258 L 374,252 L 364,158 L 368,86 Z',                             cx: 406, cy: 162 },
+    { id: 'manaslu',   path: 'M 438,38 L 578,30 L 576,86 L 562,178 L 578,264 L 438,258 L 448,164 L 456,86 Z',                             cx: 510, cy: 162 },
+    { id: 'khumbu',    path: 'M 578,30 L 820,62 L 820,270 L 578,264 L 562,178 L 576,86 Z',                                                cx: 700, cy: 168 },
 ];
 
+// Souřadnice přepočítány ze skutečných GPS koordinát:
+// x = (lon° - 80°) * (820/8)  |  y = (30.4° - lat°) * (290/4)
 const NEPAL_PEAKS = [
-    { x: 756, y: 26, name: 'Everest' },
-    { x: 494, y: 24, name: 'Manáslu' },
-    { x: 224, y: 35, name: 'Annapurna' },
-    { x: 166, y: 49, name: 'Dhaulagiri' },
+    { x: 358, y: 38, name: 'Dhaulagiri', alt: '8 167 m', anchor: 'end',    lx: -3,  ly: -7 },
+    { x: 392, y: 47, name: 'Annapurna',  alt: '8 091 m', anchor: 'start',  lx:  3,  ly: -7 },
+    { x: 468, y: 30, name: 'Manáslu',    alt: '8 163 m', anchor: 'middle', lx:  0,  ly: -7 },
+    { x: 710, y: 44, name: 'Everest',    alt: '8 848 m', anchor: 'end',    lx: -3,  ly: -7 },
 ];
 
 const NEPAL_CITIES = [
-    { x: 452, y: 192, name: 'Káthmándú' },
-    { x: 248, y: 200, name: 'Pokhara' },
+    { x: 545, y: 192, name: 'Káthmándú', type: 'capital', labelBelow: true,  labelDx: 0  },
+    { x: 409, y: 162, name: 'Pokhara',   type: 'city',    labelBelow: false, labelDx: 0  },
+    { x: 689, y: 194, name: 'Lukla',     type: 'town',    labelBelow: false, labelDx: 8  },
+    { x: 382, y: 126, name: 'Jomsom',    type: 'town',    labelBelow: true,  labelDx: 0  },
+    { x: 407, y: 56,  name: 'Lo Manthang', type: 'town',  labelBelow: true,  labelDx: 10 },
 ];
 
 function NepalMap({ regions, onRegionClick }) {
@@ -431,26 +436,84 @@ function NepalMap({ regions, onRegionClick }) {
                     );
                 })}
 
-                {/* ── Horské vrcholy ── */}
+                {/* ── NEPAL vodoznak ── */}
+                <text x="415" y="232" textAnchor="middle" fill="rgba(255,255,255,0.032)" fontSize="46" fontFamily="Georgia, serif" fontWeight="900" letterSpacing="0.3em" style={{ pointerEvents: 'none' }}>NEPAL</text>
+
+                {/* ── Horské vrcholy s popisy ── */}
                 {NEPAL_PEAKS.map((p, i) => (
                     <g key={i} style={{ pointerEvents: 'none' }}>
+                        {/* Stín pod trojúhelníkem */}
+                        <polygon points={`${p.x},${p.y + 16} ${p.x - 9},${p.y + 16} ${p.x + 9},${p.y + 16}`} fill="rgba(0,0,0,0.4)" />
+                        {/* Trojúhelník */}
                         <polygon points={`${p.x},${p.y - 1} ${p.x - 7},${p.y + 13} ${p.x + 7},${p.y + 13}`} fill="rgba(210,232,255,0.88)" filter="url(#pglow)" />
+                        {/* Sněhová čepice */}
                         <polygon points={`${p.x},${p.y - 1} ${p.x - 3},${p.y + 5} ${p.x + 3},${p.y + 5}`} fill="white" opacity="0.96" />
+                        {/* Název vrcholu */}
+                        <text
+                            x={p.x + p.lx}
+                            y={p.y + p.ly}
+                            textAnchor={p.anchor}
+                            fill="rgba(235,245,255,0.92)"
+                            fontSize="6.8"
+                            fontFamily="sans-serif"
+                            fontWeight="700"
+                            letterSpacing="0.04em"
+                            style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))' }}
+                        >{p.name}</text>
+                        {/* Výška */}
+                        <text
+                            x={p.x + p.lx}
+                            y={p.y + p.ly + 8}
+                            textAnchor={p.anchor}
+                            fill="rgba(212,175,55,0.72)"
+                            fontSize="5.8"
+                            fontFamily="monospace"
+                            style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.9))' }}
+                        >{p.alt}</text>
                     </g>
                 ))}
 
-                {/* ── Města ── */}
-                {NEPAL_CITIES.map((c, i) => (
-                    <g key={i} style={{ pointerEvents: 'none' }}>
-                        <circle cx={c.x} cy={c.y} r="3.5" fill="#d4af37" opacity="0.88" />
-                        <circle cx={c.x} cy={c.y} r="7" fill="none" stroke="#d4af37" strokeWidth="0.8" opacity="0.3" />
-                    </g>
-                ))}
+                {/* ── Města a vesnice ── */}
+                {NEPAL_CITIES.map((c, i) => {
+                    const isCapital = c.type === 'capital';
+                    const isCity = c.type === 'city';
+                    const r = isCapital ? 4 : isCity ? 3 : 2.2;
+                    const labelY = c.labelBelow ? c.y + r + 9 : c.y - r - 5;
+                    return (
+                        <g key={i} style={{ pointerEvents: 'none' }}>
+                            {/* Outer ring */}
+                            <circle cx={c.x} cy={c.y} r={r + (isCapital ? 4 : 2.5)} fill="none" stroke="#d4af37" strokeWidth={isCapital ? 0.9 : 0.6} opacity={isCapital ? 0.35 : 0.2} />
+                            {/* Dot */}
+                            <circle cx={c.x} cy={c.y} r={r} fill="#d4af37" opacity={isCapital ? 0.96 : isCity ? 0.78 : 0.65} />
+                            {/* Hvězdička pro hlavní město */}
+                            {isCapital && (
+                                <text x={c.x} y={c.y + 0.5} textAnchor="middle" dominantBaseline="middle" fill="rgba(8,15,26,0.9)" fontSize="4" fontWeight="900" style={{ pointerEvents: 'none' }}>★</text>
+                            )}
+                            {/* Název */}
+                            <text
+                                x={c.x + (c.labelDx || 0)}
+                                y={labelY}
+                                textAnchor={c.labelDx > 0 ? 'start' : 'middle'}
+                                fill={isCapital ? 'rgba(212,175,55,0.92)' : 'rgba(200,165,40,0.72)'}
+                                fontSize={isCapital ? 8 : isCity ? 7 : 6}
+                                fontFamily="sans-serif"
+                                fontWeight={isCapital ? '700' : '500'}
+                                letterSpacing="0.05em"
+                                style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))' }}
+                            >{c.name}</text>
+                        </g>
+                    );
+                })}
 
-                {/* KTM label */}
-                <text x="452" y="209" textAnchor="middle" fill="rgba(212,175,55,0.55)" fontSize="7.5" fontFamily="sans-serif" style={{ pointerEvents: 'none', letterSpacing: '0.07em' }}>Káthmándú</text>
+                {/* ── Kompas ── */}
+                <g style={{ pointerEvents: 'none' }} transform="translate(795,22)">
+                    <circle cx="0" cy="0" r="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.12)" strokeWidth="0.6" />
+                    <polygon points="0,-7 -2.5,0 2.5,0" fill="rgba(235,245,255,0.85)" />
+                    <polygon points="0,7 -2.5,0 2.5,0" fill="rgba(255,255,255,0.2)" />
+                    <text x="0" y="-10" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="6" fontFamily="sans-serif" fontWeight="700">N</text>
+                </g>
 
-                {/* Název hovered regionu přímo na mapě */}
+                {/* ── Název hovered regionu přímo na mapě ── */}
                 {hoveredRegion && (() => {
                     const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
                     if (!rp) return null;
