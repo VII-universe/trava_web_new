@@ -379,7 +379,10 @@ const TREK_ROUTES = [
     },
 ];
 
-function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null }) {
+// Google Maps URL pro hlavní mapu — centrum Nepálu, terrain, zoom 7
+const NEPAL_GMAP = 'https://maps.google.com/maps?q=28.15,84.0&z=7&t=p&output=embed&hl=cs';
+
+function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null, useGoogleMaps = false }) {
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
@@ -419,6 +422,100 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
             onRegionClick(reg);
         }
     };
+
+    // ── Google Maps varianta ──────────────────────────────────────────────
+    if (useGoogleMaps) {
+        const gmUrl = focusRegionId
+            ? (regions.find(r => r.id === focusRegionId)?.mapUrl || NEPAL_GMAP)
+            : NEPAL_GMAP;
+
+        return (
+            <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1520] border border-[#4a6a80]/30 select-none shadow-2xl">
+                {/* Google Maps iframe */}
+                <iframe src={gmUrl} className="absolute inset-0 w-full h-full border-0"
+                    loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mapa Nepálu"
+                    style={{ filter: 'saturate(0.75) contrast(1.15) brightness(0.7) hue-rotate(195deg)' }} />
+                {/* Overlays */}
+                <div className="absolute inset-0 pointer-events-none"
+                     style={{ background: 'linear-gradient(135deg,rgba(212,175,55,0.07) 0%,rgba(6,9,15,0.18) 100%)', mixBlendMode:'overlay' }} />
+                <div className="absolute inset-0 pointer-events-none"
+                     style={{ boxShadow: 'inset 0 0 80px rgba(4,7,14,0.65)' }} />
+
+                {/* SVG overlay — region obrysy + interaktivita */}
+                <svg viewBox="0 -50 820 390" className="absolute inset-0 w-full h-full" style={{ display:'block' }}>
+                    {NEPAL_REGION_PATHS.map(r => {
+                        const isHov = hovered === r.id;
+                        const isDim = hovered && !isHov;
+                        return (
+                            <path key={r.id} d={r.path}
+                                fill={isHov ? 'rgba(212,175,55,0.2)' : isDim ? 'rgba(0,0,0,0.15)' : 'rgba(212,175,55,0.04)'}
+                                stroke={isHov ? 'rgba(212,175,55,0.9)' : 'rgba(212,175,55,0.3)'}
+                                strokeWidth={isHov ? 2.5 : 1.2}
+                                filter={isHov ? 'drop-shadow(0 0 8px rgba(212,175,55,0.5))' : undefined}
+                                style={{ cursor:'pointer', transition:'fill 0.2s,stroke 0.2s', WebkitTapHighlightColor:'transparent' }}
+                                onMouseEnter={() => !isMobile && setHovered(r.id)}
+                                onMouseLeave={() => !isMobile && setHovered(null)}
+                                onClick={() => handleRegionClick(r.id)}
+                            />
+                        );
+                    })}
+                    {hoveredRegion && (() => {
+                        const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
+                        if (!rp) return null;
+                        const tx = Math.min(Math.max(rp.cx, 65), 755);
+                        const ty = rp.cy < 75 ? rp.cy + 25 : rp.cy - 10;
+                        return (
+                            <g style={{ pointerEvents:'none' }}>
+                                <text x={tx} y={ty+1} textAnchor="middle" fill="rgba(0,0,0,0.7)" fontSize="15" fontFamily="Georgia,serif" fontWeight="700">{hoveredRegion.name}</text>
+                                <text x={tx} y={ty} textAnchor="middle" fill="white" fontSize="15" fontFamily="Georgia,serif" fontWeight="700" style={{ filter:'drop-shadow(0 1px 4px rgba(0,0,0,0.95))' }}>{hoveredRegion.name}</text>
+                                <text x={tx} y={ty+14} textAnchor="middle" fill="rgba(212,175,55,0.85)" fontSize="9" fontFamily="monospace" fontWeight="700" letterSpacing="0.08em">{hoveredRegion.subtitle?.toUpperCase()}</text>
+                            </g>
+                        );
+                    })()}
+                </svg>
+
+                {/* Slide-up preview panel */}
+                <AnimatePresence>
+                    {hoveredRegion && (
+                        <motion.div key={hoveredRegion.id}
+                            initial={{ y:'100%', opacity:0 }} animate={{ y:0, opacity:1 }} exit={{ y:'100%', opacity:0 }}
+                            transition={{ type:'spring', damping:32, stiffness:420 }}
+                            className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height:114 }}>
+                            <div className="absolute inset-0 overflow-hidden">
+                                <img src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition:'center 40%' }} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#04070e] via-[#04070e]/90 to-[#04070e]/60" />
+                            </div>
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/70 to-transparent" />
+                            <div className="absolute inset-0 flex items-center gap-3 px-4">
+                                <div className="w-[68px] h-[88px] rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-lg">
+                                    <img src={hoveredRegion.image} alt={hoveredRegion.name} className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1.5">
+                                        <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-gold-400">{hoveredRegion.altitude}</span>
+                                        <span className="w-px h-3 bg-white/25 shrink-0" />
+                                        <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-slate-400">{hoveredRegion.difficulty}</span>
+                                    </div>
+                                    <h3 className="font-serif text-white text-[15px] leading-tight mb-1 drop-shadow-lg">{hoveredRegion.name}</h3>
+                                    <p className="font-sans text-slate-400 text-[11px] leading-snug line-clamp-1">{hoveredRegion.desc}</p>
+                                </div>
+                                <div className="shrink-0 flex flex-col items-center gap-1.5">
+                                    <div className="w-9 h-9 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center">
+                                        <ArrowRight className="w-4 h-4 text-gold-400" />
+                                    </div>
+                                    <span className="text-[8px] font-mono text-gold-500/60 uppercase tracking-widest">detail</span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+                <div className={`absolute bottom-2.5 right-3.5 text-[8px] text-white/25 uppercase tracking-widest font-mono pointer-events-none transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
+                    {isMobile ? 'ťukni · 2× detail' : 'najeď · klikni'}
+                </div>
+            </div>
+        );
+    }
+    // ── konec Google Maps varianty ─────────────────────────────────────────
 
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
@@ -825,6 +922,7 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                             regions={regions}
                             onRegionClick={handleSelect}
                             focusRegionId={focusId}
+                            useGoogleMaps
                         />
                     </div>
                 </div>
@@ -1537,7 +1635,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 </p>
                             </div>
 
-                            {/* Map */}
+                            {/* Map — Google Maps s region overlay */}
                             <div className="h-[268px] lg:h-[298px]">
                                 <NepalMap
                                     regions={REGIONS}
@@ -1545,6 +1643,7 @@ const Expeditions = ({ scrollProgress }) => {
                                         setSelectedRegion(region);
                                         setIsRegionsOpen(true);
                                     }}
+                                    useGoogleMaps
                                 />
                             </div>
 
