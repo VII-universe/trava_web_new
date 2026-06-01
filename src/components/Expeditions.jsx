@@ -319,22 +319,31 @@ const DEF_TEXTS = {
 };
 
 /* ─── Nepal Interactive Map ──────────────────────────────────────────── */
+// Nepál outline: x=(lon-80)*102.5, y=(30.4-lat)*72.5
+const NEPAL_OUTLINE = 'M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196 L 820,290 L 718,276 L 615,247 C 577,240 544,236 513,232 C 476,228 443,226 410,225 C 375,222 340,214 308,210 C 272,206 238,198 205,189 C 170,180 136,170 103,160 C 68,150 34,140 0,131 Z';
+
 const NEPAL_REGION_PATHS = [
-    { id: 'world',     path: 'M 0,145 L 156,58 L 156,245 L 0,258 Z',                                                                      cx: 62,  cy: 185 },
-    { id: 'annapurna', path: 'M 156,58 L 176,54 L 212,86 L 368,86 L 364,158 L 374,252 L 156,245 Z',                                       cx: 255, cy: 178 },
-    { id: 'mustang',   path: 'M 176,54 L 258,18 L 345,28 L 374,58 L 368,86 L 212,86 Z',                                                   cx: 285, cy: 60  },
-    { id: 'langtang',  path: 'M 374,58 L 438,38 L 456,86 L 448,164 L 438,258 L 374,252 L 364,158 L 368,86 Z',                             cx: 406, cy: 162 },
-    { id: 'manaslu',   path: 'M 438,38 L 578,30 L 576,86 L 562,178 L 578,264 L 438,258 L 448,164 L 456,86 Z',                             cx: 510, cy: 162 },
-    { id: 'khumbu',    path: 'M 578,30 L 820,62 L 820,270 L 578,264 L 562,178 L 576,86 Z',                                                cx: 700, cy: 168 },
+    // Západ Nepálu (x 0-155)
+    { id: 'world',     path: 'M 0,15 C 68,25 103,29 155,50 L 155,178 C 103,160 68,150 0,131 Z',                                          cx: 65,  cy: 95  },
+    // Annapurna (x 155-374)
+    { id: 'annapurna', path: 'M 155,50 C 182,57 230,84 308,102 L 374,94 L 374,222 L 308,210 C 238,198 170,180 155,178 Z',                  cx: 255, cy: 155 },
+    // Horní Mustang — severní výběžek (x 308-450, y 87-152)
+    { id: 'mustang',   path: 'M 308,102 L 374,94 L 400,87 L 427,90 L 450,94 L 450,152 L 308,150 Z',                                       cx: 378, cy: 118 },
+    // Langtang — úzký pás (x 374-472)
+    { id: 'langtang',  path: 'M 374,94 L 450,94 L 472,102 L 472,225 L 374,222 Z',                                                          cx: 418, cy: 162 },
+    // Manaslu (x 472-580)
+    { id: 'manaslu',   path: 'M 472,102 C 490,118 513,142 580,154 L 580,240 L 472,225 Z',                                                  cx: 522, cy: 168 },
+    // Khumbu / Everest (x 580-820)
+    { id: 'khumbu',    path: 'M 580,154 C 616,167 660,171 708,175 L 820,196 L 820,290 L 615,247 C 568,240 513,232 580,240 Z',              cx: 700, cy: 220 },
 ];
 
-// GPS: x = (lon° - 80°)*(820/8), y = (30.4° - lat°)*(290/4)
-// tip = vrchol trojúhelníku, baseY = základna u hranice, w = poloviční šířka
+// GPS: x=(lon-80)*102.5, y=(30.4-lat)*72.5 — summit position
+// tip = apex SVG y (above summit), baseY = base of triangle
 const NEPAL_PEAKS = [
-    { x: 358, tip: 10, baseY: 41, w: 22, name: 'Dhaulagiri', alt: '8 167 m', anchor: 'end',    lx: -8  },
-    { x: 392, tip: 21, baseY: 49, w: 20, name: 'Annapurna',  alt: '8 091 m', anchor: 'start',  lx:  8  },
-    { x: 468, tip:  4, baseY: 32, w: 24, name: 'Manáslu',    alt: '8 163 m', anchor: 'middle', lx:  0  },
-    { x: 710, tip:  5, baseY: 45, w: 28, name: 'Everest',    alt: '8 848 m', anchor: 'end',    lx: -8  },
+    { x: 358, tip: 108, baseY: 132, w: 20, name: 'Dhaulagiri', alt: '8 167 m', anchor: 'end',    lx: -6 },
+    { x: 392, tip: 112, baseY: 140, w: 18, name: 'Annapurna',  alt: '8 091 m', anchor: 'start',  lx:  6 },
+    { x: 468, tip: 116, baseY: 144, w: 22, name: 'Manáslu',    alt: '8 163 m', anchor: 'middle', lx:  0 },
+    { x: 710, tip: 158, baseY: 182, w: 26, name: 'Everest',    alt: '8 848 m', anchor: 'end',    lx: -6 },
 ];
 
 const NEPAL_CITIES = [
@@ -361,7 +370,7 @@ function NepalMap({ regions, onRegionClick }) {
                         <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}><path d={r.path} /></clipPath>
                     ))}
                     <clipPath id="nepalClip">
-                        <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" />
+                        <path d={NEPAL_OUTLINE} />
                     </clipPath>
 
                     {/* Himalajská sněhová zóna — bledá nahoře */}
@@ -438,7 +447,7 @@ function NepalMap({ regions, onRegionClick }) {
 
                 {/* ── VÝŠKOVÉ ZÓNY NEPÁLU ── */}
                 {/* Základní barva — teplé zeleno-hnědé středohorské kopce */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z"
+                <path d={NEPAL_OUTLINE}
                     fill="#b4a868" />
 
                 {/* Zelená zóna — lesy a střední kopce (clipped) */}
@@ -451,7 +460,7 @@ function NepalMap({ regions, onRegionClick }) {
                 <rect x="0" y="0" width="820" height="90" fill="url(#snowZone)" clipPath="url(#nepalClip)" />
 
                 {/* Hill shading — světlo ze SZ, stín na JV */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z"
+                <path d={NEPAL_OUTLINE}
                     fill="url(#hillShade)" />
 
                 {/* Vrstevnicové linie — subtilní */}
@@ -459,14 +468,13 @@ function NepalMap({ regions, onRegionClick }) {
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(100,75,40,0.055)" strokeWidth="0.5" />
                 ))}
 
-                {/* Himalajský sněhový pás — vrstvený */}
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
-                    fill="none" stroke="rgba(245,242,236,0.92)" strokeWidth="22" strokeLinecap="round" />
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
-                    fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="8" strokeLinecap="round" />
-                {/* Sněhová hrana — tmavší spodní lem */}
-                <path d="M 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62"
-                    fill="none" stroke="rgba(160,140,110,0.3)" strokeWidth="2" strokeLinecap="round" />
+                {/* Himalajský sněhový pás — sleduje nový severní obrys */}
+                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
+                    fill="none" stroke="rgba(245,242,236,0.9)" strokeWidth="22" strokeLinecap="round" />
+                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
+                    fill="none" stroke="rgba(255,255,255,0.68)" strokeWidth="8" strokeLinecap="round" />
+                <path d="M 0,15 C 35,20 68,25 103,29 C 155,38 182,57 205,72 C 230,84 255,93 308,102 C 352,97 374,94 400,87 C 424,88 438,90 450,94 C 462,98 472,102 490,118 C 505,130 513,142 538,144 C 556,144 568,145 580,154 C 598,161 616,167 660,171 L 708,175 L 820,196"
+                    fill="none" stroke="rgba(155,135,108,0.28)" strokeWidth="2" strokeLinecap="round" />
 
                 {/* ── ŘEKY — animované ── */}
                 <g style={{ pointerEvents:'none' }}>
@@ -523,7 +531,7 @@ function NepalMap({ regions, onRegionClick }) {
                 })}
 
                 {/* Nepál — border */}
-                <path d="M 0,145 L 45,105 L 95,76 L 156,58 L 176,54 L 222,40 L 258,18 L 295,22 L 345,28 L 374,58 L 415,38 L 438,38 L 468,32 L 525,26 L 578,30 L 638,36 L 700,44 L 762,52 L 820,62 L 820,270 L 0,260 Z" fill="none" stroke="#3a2810" strokeWidth="1.6" />
+                <path d={NEPAL_OUTLINE} fill="none" stroke="#3a2810" strokeWidth="1.6" />
 
                 {/* ── Ilustrativní hory — elevation halos + světlá/stínová strana ── */}
                 {NEPAL_PEAKS.map((p, i) => {
