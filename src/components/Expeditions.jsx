@@ -1761,6 +1761,37 @@ const Expeditions = ({ scrollProgress }) => {
                                 Naše cesty začínají i končí v centru Thamelu — v Czech Pub Nepal a Hotel Kathmandu Base Camp. Místo, kde si po treku člověk dá dobré jídlo, pivo, horkou sprchu a chvíli klidu před další cestou.
                             </p>
 
+                            {/* Co pro vás máme */}
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-4 h-px bg-gold-400 shrink-0" />
+                                <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Co pro vás máme</h3>
+                            </div>
+                            <p className="font-serif text-slate-900 text-lg md:text-xl leading-snug font-medium mb-4">
+                                Od pohodových cest až po vysoké hory.
+                            </p>
+                            <p className="font-sans text-slate-700 leading-relaxed mb-6 text-sm">
+                                Nepál nemusí být jen o extrémech a velkých výkonech. Někdo chce poznat kláštery, horské vesnice a buddhistickou kulturu. Jiný sní o treku pod Everestem nebo výstupu na šestitisícový vrchol. Společně hledáme cestu, která bude dávat smysl právě vám.
+                            </p>
+
+                            {/* Foto grid */}
+                            <div className="grid grid-cols-3 gap-2 mb-8">
+                                {[
+                                    { src: MeraImg,    alt: 'Trek Himálaj',   pos: 'object-center' },
+                                    { src: MustangImg, alt: 'Mustang',         pos: 'object-center' },
+                                    { src: YogaImg,    alt: 'Jógový trek',    pos: 'object-top'    },
+                                    { src: AconcaImg,  alt: 'Výstup 6000m+',  pos: 'object-center' },
+                                    { src: EcuadorImg, alt: 'Expedice',       pos: 'object-center' },
+                                    { src: ManasluImg, alt: 'Manáslu 8163 m', pos: 'object-top'    },
+                                ].map((p, i) => (
+                                    <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
+                                        <img loading="lazy" src={p.src} alt={p.alt}
+                                            className={`w-full h-full object-cover ${p.pos} group-hover:scale-105 transition-transform duration-500`} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <p className="absolute bottom-2 left-2 right-2 text-white text-[10px] font-sans font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 truncate">{p.alt}</p>
+                                    </div>
+                                ))}
+                            </div>
+
                             {/* CTA */}
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <a
