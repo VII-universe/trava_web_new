@@ -392,31 +392,21 @@ function NepalMap({ regions, onRegionClick }) {
                         <path d={NEPAL_OUTLINE} />
                     </clipPath>
 
-                    {/* Himalajský sněh a ledovce */}
-                    <linearGradient id="snowZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#f0ece6" stopOpacity="0.98" />
-                        <stop offset="45%"  stopColor="#d8ceba" stopOpacity="0.7"  />
-                        <stop offset="100%" stopColor="#c4b898" stopOpacity="0"    />
+                    {/* JEDEN plynulý výškový gradient — žádné skokové přechody */}
+                    <linearGradient id="terrainGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%"   stopColor="#eee8de" stopOpacity="0.96" />
+                        <stop offset="12%"  stopColor="#d4c4a0" stopOpacity="0.82" />
+                        <stop offset="28%"  stopColor="#b09468" stopOpacity="0.62" />
+                        <stop offset="46%"  stopColor="#78a248" stopOpacity="0.58" />
+                        <stop offset="68%"  stopColor="#88b050" stopOpacity="0.52" />
+                        <stop offset="100%" stopColor="#98bc54" stopOpacity="0.42" />
                     </linearGradient>
-                    {/* Alpská skalní zóna — teplejší hnědá */}
-                    <linearGradient id="alpineZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#a89268" stopOpacity="0.92" />
-                        <stop offset="55%"  stopColor="#b09a60" stopOpacity="0.4"  />
-                        <stop offset="100%" stopColor="#b8a855" stopOpacity="0"    />
-                    </linearGradient>
-                    {/* Lesní a střední kopce — sytější zelená */}
-                    <linearGradient id="hillZone" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#6a9845" stopOpacity="0"    />
-                        <stop offset="28%"  stopColor="#78a848" stopOpacity="0.6"  />
-                        <stop offset="65%"  stopColor="#88b448" stopOpacity="0.7"  />
-                        <stop offset="100%" stopColor="#98c050" stopOpacity="0.55" />
-                    </linearGradient>
-                    {/* Hill shading SZ → JV */}
+                    {/* Hill shading SZ → JV — jemný */}
                     <linearGradient id="hillShade" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%"   stopColor="white" stopOpacity="0.16" />
-                        <stop offset="42%"  stopColor="white" stopOpacity="0"    />
-                        <stop offset="58%"  stopColor="black" stopOpacity="0"    />
-                        <stop offset="100%" stopColor="black" stopOpacity="0.12" />
+                        <stop offset="0%"   stopColor="white" stopOpacity="0.15" />
+                        <stop offset="40%"  stopColor="white" stopOpacity="0"    />
+                        <stop offset="60%"  stopColor="black" stopOpacity="0"    />
+                        <stop offset="100%" stopColor="black" stopOpacity="0.11" />
                     </linearGradient>
 
                     {/* Region hover */}
@@ -464,19 +454,13 @@ function NepalMap({ regions, onRegionClick }) {
                 <text x="410" y="14"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
                 <text x="11"  y="196" fill="rgba(50,80,100,0.32)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
 
-                {/* ── VÝŠKOVÉ ZÓNY NEPÁLU ── */}
-                {/* Základní barva — teplé zeleno-hnědé středohorské kopce */}
-                <path d={NEPAL_OUTLINE}
-                    fill="#b4a868" />
-
-                {/* Zelená zóna — lesy a střední kopce (clipped) */}
-                <rect x="0" y="80" width="820" height="200" fill="url(#hillZone)" clipPath="url(#nepalClip)" />
-
-                {/* Alpská skalní zóna — hnědošedá (clipped) */}
-                <rect x="0" y="0" width="820" height="120" fill="url(#alpineZone)" clipPath="url(#nepalClip)" />
-
-                {/* Himalajský sněhový pokryv — světle krémová nahoře (clipped) */}
-                <rect x="0" y="0" width="820" height="90" fill="url(#snowZone)" clipPath="url(#nepalClip)" />
+                {/* ── TERÉN NEPÁLU — jeden plynulý gradient, žádné viditelné pruhy ── */}
+                {/* Základní barva středohorských kopců */}
+                <path d={NEPAL_OUTLINE} fill="#aaa460" />
+                {/* Plynulý výškový gradient (sníh nahoře → lesy → terai dole) */}
+                <path d={NEPAL_OUTLINE} fill="url(#terrainGrad)" />
+                {/* Hill shading */}
+                <path d={NEPAL_OUTLINE} fill="url(#hillShade)" />
 
                 {/* Hill shading — světlo ze SZ, stín na JV */}
                 <path d={NEPAL_OUTLINE}
@@ -519,19 +503,17 @@ function NepalMap({ regions, onRegionClick }) {
                         fill="none" stroke="#4878a0" strokeWidth="0.7" strokeLinecap="round" opacity="0.6" />
                 </g>
 
-                {/* ── Národní parky — dotted boundary ── */}
+                {/* ── Národní parky ── */}
                 <g fill="none" style={{ pointerEvents: 'none' }}>
-                    {/* Sagarmatha National Park (Khumbu) */}
                     <ellipse cx="718" cy="196" rx="52" ry="28"
-                        stroke="#4a7a3a" strokeWidth="0.9" strokeDasharray="3 2.5" opacity="0.55" />
-                    <text x="718" y="230" textAnchor="middle" fill="#4a7a3a" fontSize="9"
-                        fontFamily="sans-serif" fontStyle="italic" opacity="0.7"
+                        stroke="#3a6a2a" strokeWidth="1.2" strokeDasharray="4 2.5" opacity="0.7" />
+                    <text x="718" y="231" textAnchor="middle" fill="#2a5a1a" fontSize="9.5"
+                        fontFamily="sans-serif" fontStyle="italic" fontWeight="600"
                         filter="url(#thalo)">Sagarmatha NP</text>
-                    {/* Annapurna Conservation Area */}
                     <ellipse cx="390" cy="140" rx="58" ry="36"
-                        stroke="#4a7a3a" strokeWidth="0.9" strokeDasharray="3 2.5" opacity="0.5" />
-                    <text x="385" y="182" textAnchor="middle" fill="#4a7a3a" fontSize="8.5"
-                        fontFamily="sans-serif" fontStyle="italic" opacity="0.65"
+                        stroke="#3a6a2a" strokeWidth="1.2" strokeDasharray="4 2.5" opacity="0.65" />
+                    <text x="390" y="183" textAnchor="middle" fill="#2a5a1a" fontSize="9"
+                        fontFamily="sans-serif" fontStyle="italic" fontWeight="600"
                         filter="url(#thalo)">Annapurna CA</text>
                 </g>
 
@@ -539,21 +521,18 @@ function NepalMap({ regions, onRegionClick }) {
                 <g style={{ pointerEvents: 'none' }}>
                     {TREK_ROUTES.map(r => (
                         <g key={r.id}>
-                            {/* Stínová vrstva */}
-                            <path d={r.path} fill="none" stroke="rgba(255,255,255,0.4)"
-                                strokeWidth="2.8" strokeLinecap="round" strokeDasharray="5 3.5" />
-                            {/* Hlavní linie */}
-                            <path d={r.path} fill="none" stroke="#b05c10"
-                                strokeWidth="1.6" strokeLinecap="round" strokeDasharray="5 3.5" opacity="0.85" />
+                            <path d={r.path} fill="none" stroke="rgba(255,248,235,0.65)"
+                                strokeWidth="3.5" strokeLinecap="round" strokeDasharray="6 4" />
+                            <path d={r.path} fill="none" stroke="#c06010"
+                                strokeWidth="2" strokeLinecap="round" strokeDasharray="6 4" />
                         </g>
                     ))}
-                    {/* Popisky tras */}
-                    <text x="700" y="202" fill="#7a3e08" fontSize="8" fontFamily="sans-serif"
-                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">EBC Trek</text>
-                    <text x="430" y="153" fill="#7a3e08" fontSize="7.5" fontFamily="sans-serif"
-                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">Annapurna Circuit</text>
-                    <text x="500" y="166" fill="#7a3e08" fontSize="7.5" fontFamily="sans-serif"
-                        fontStyle="italic" filter="url(#thalo)" opacity="0.85">Langtang</text>
+                    <text x="702" y="204" fill="#7a3c08" fontSize="9" fontFamily="sans-serif"
+                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">EBC Trek</text>
+                    <text x="432" y="155" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif"
+                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">Annapurna Circuit</text>
+                    <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif"
+                        fontStyle="italic" fontWeight="600" filter="url(#thalo)">Langtang</text>
                 </g>
 
                 {/* Fotky regionů — jen při hoveru */}
