@@ -5,6 +5,7 @@ import { X, ExternalLink, ChevronLeft, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 import IcefallImg from '../assets/icefall_bg.jpg';
 import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
+import SingingRockImg  from '../assets/svg/Singing_Rock_RGB-03.jpg';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
 import YateLogo from '../assets/svg/yate_logo.jpg';
 import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.png';
@@ -81,9 +82,9 @@ const FLAGS = [
         productImage: SummitGearImg,
         image: 'https://images.unsplash.com/photo-1516682703881-80a22a30bbdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '21%',
-        stripes: ['#7c1c1c', '#f5f5f5', '#7c1c1c'],
+        stripes: ['#1a1a1a', '#f5a623', '#1a1a1a'],
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 85% 92%, 75% 100%, 65% 85%, 55% 95%, 40% 90%, 20% 96%, 0% 90%)',
-        logo: <div className="absolute inset-0 flex items-center justify-center bg-[#7c1c1c] px-3 py-4"><img src={SingingRockLogo} alt="Singing Rock" className="w-full h-auto" style={{ filter: 'brightness(0) invert(1)' }} /></div>,
+        logo: <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] p-2"><img src={SingingRockImg} alt="Singing Rock" className="w-full h-auto object-contain" /></div>,
     },
     {
         id: 'rockpoint',
