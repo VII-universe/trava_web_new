@@ -445,13 +445,15 @@ function NepalMap({ regions, onRegionClick }) {
                     `}</style>
                 </defs>
 
-                {/* Okolní území */}
+                {/* Okolní území — plná plocha */}
                 <rect width="820" height="290" fill="#a8bcc8" />
+                {/* Horní pás (Tibet/Čína) — překryje modrý okraj SVG plynulou barvou */}
+                <rect x="0" y="0" width="820" height="20" fill="#c8d4da" />
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
                 <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
-                <text x="410" y="14"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
+                <text x="410" y="13"  textAnchor="middle" fill="rgba(50,80,100,0.38)" fontSize="16" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.25em" style={{ pointerEvents:'none' }}>ČÍNA  ·  TIBET</text>
                 <text x="11"  y="196" fill="rgba(50,80,100,0.32)" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" transform="rotate(-90 11 196)" style={{ pointerEvents:'none' }}>INDIE</text>
 
                 {/* ── TERÉN NEPÁLU — jeden plynulý gradient, žádné viditelné pruhy ── */}
@@ -459,12 +461,8 @@ function NepalMap({ regions, onRegionClick }) {
                 <path d={NEPAL_OUTLINE} fill="#aaa460" />
                 {/* Plynulý výškový gradient (sníh nahoře → lesy → terai dole) */}
                 <path d={NEPAL_OUTLINE} fill="url(#terrainGrad)" />
-                {/* Hill shading */}
+                {/* Hill shading — světlo ze SZ */}
                 <path d={NEPAL_OUTLINE} fill="url(#hillShade)" />
-
-                {/* Hill shading — světlo ze SZ, stín na JV */}
-                <path d={NEPAL_OUTLINE}
-                    fill="url(#hillShade)" />
 
                 {/* Vrstevnicové linie — subtilní */}
                 {[95,118,142,165,190,215,242].map(y => (
