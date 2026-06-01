@@ -377,15 +377,30 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
-    // Zoom animace při focusu na region
-    const [zoom, setZoom] = useState({ x: 0, y: 0, scale: 1 });
+    // Animovaný viewBox — plynulý zoom přes framer-motion MotionValues
+    const vbX = useMotionValue(0);
+    const vbY = useMotionValue(-50);
+    const vbW = useMotionValue(820);
+    const vbH = useMotionValue(390);
+    const animViewBox = useTransform([vbX, vbY, vbW, vbH],
+        ([x, y, w, h]) => `${Math.round(x)} ${Math.round(y)} ${Math.round(w)} ${Math.round(h)}`);
+
     useEffect(() => {
-        if (!focusRegionId) { setZoom({ x: 0, y: 0, scale: 1 }); return; }
+        const sp = { type: 'spring', damping: 26, stiffness: 140 };
+        if (!focusRegionId) {
+            animate(vbX, 0, sp); animate(vbY, -50, sp);
+            animate(vbW, 820, sp); animate(vbH, 390, sp);
+            return;
+        }
         const rp = NEPAL_REGION_PATHS.find(r => r.id === focusRegionId);
         if (!rp) return;
-        const s = 2.2;
-        setZoom({ x: 410 - rp.cx * s, y: 145 - rp.cy * s, scale: s });
-    }, [focusRegionId]);
+        const zoom = 2.4;
+        const W = 820 / zoom, H = 390 / zoom;
+        const x = Math.max(-10, Math.min(820 - W + 10, rp.cx - W / 2));
+        const y = Math.max(-50, Math.min(240, rp.cy - H / 2));
+        animate(vbX, x, sp); animate(vbY, y, sp);
+        animate(vbW, W, sp); animate(vbH, H, sp);
+    }, [focusRegionId]); // eslint-disable-line
 
     // Touch: první tap = preview, druhý = navigace
     const handleRegionClick = (regionId) => {
@@ -402,17 +417,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
 
-            {/* Zoom-out tlačítko — viditelné jen při focusu */}
-            {focusRegionId && (
-                <button onClick={() => onRegionClick && setHovered(null)}
-                    className="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-[#0a1422]/80 hover:bg-[#0a1422] text-white/70 hover:text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-sm transition-all">
-                    <ChevronLeft className="w-3 h-3" /> Celá mapa
-                </button>
-            )}
-
-            {/* ── SVG map — viewBox s trojrozměrným panoramatem ── */}
-            {/* Jednotný viewBox pro desktop i mobil — proporce 820×390 (2.1:1) */}
-            <svg viewBox="0 -50 820 390" className="w-full h-full" style={{ display: 'block', overflow: 'hidden' }}>
+            {/* ── SVG map — plynulý zoom přes animovaný viewBox ── */}
+            <motion.svg viewBox={animViewBox} className="w-full h-full" style={{ display: 'block' }}>
                 <defs>
                     {/* Clip paths pro regiony i pro Nepál jako celek */}
                     {NEPAL_REGION_PATHS.map(r => (
@@ -488,14 +494,6 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
-
-                {/* ── ZOOMOVATELNÝ obsah — animuje při focusu na region ── */}
-                <motion.g
-                    animate={{ x: zoom.x, y: zoom.y, scale: zoom.scale }}
-                    initial={false}
-                    transition={{ type: 'spring', damping: 28, stiffness: 160 }}
-                    style={{ transformOrigin: '0px 0px' }}
-                >
 
                 {!isMobile && <>
                     <text x="410" y="278" textAnchor="middle" fill="rgba(50,80,100,0.42)" fontSize="17" fontFamily="Georgia, serif" fontStyle="italic" letterSpacing="0.28em" style={{ pointerEvents:'none' }}>INDIE</text>
@@ -702,10 +700,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     );
                 })()}
 
-                </motion.g>
-                {/* Konec zoomovatelného obsahu */}
-
-            </svg>
+            </motion.svg>
 
             {/* ── Rich preview panel — vyjede ze spodu ── */}
             <AnimatePresence>
@@ -844,35 +839,70 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                                 className="flex flex-col h-full"
                             >
-                                {/* Hero + mini mapa */}
-                                <div className="relative h-40 md:h-52 shrink-0 overflow-hidden">
-                                    <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#06090f] via-[#06090f]/55 to-transparent" />
-                                    {/* Mobile back button */}
+                                {/* Region mapa místo fotky */}
+                                <div className="relative shrink-0 overflow-hidden bg-[#b4c8d4]" style={{ height: '42%', minHeight: 160 }}>
+                                    {/* Zoomed region map */}
+                                    {(() => {
+                                        const rp = NEPAL_REGION_PATHS.find(r => r.id === selected.id);
+                                        if (!rp) return null;
+                                        const zoom = 2.6;
+                                        const W = 820/zoom, H = 390/zoom;
+                                        const x = Math.max(-10, Math.min(820-W+10, rp.cx-W/2));
+                                        const y = Math.max(-50, Math.min(240, rp.cy-H/2));
+                                        const vb = `${Math.round(x)} ${Math.round(y)} ${Math.round(W)} ${Math.round(H)}`;
+                                        return (
+                                            <svg viewBox={vb} className="w-full h-full" style={{ display: 'block' }}>
+                                                <defs>
+                                                    {NEPAL_REGION_PATHS.map(r => (
+                                                        <clipPath key={`modal-cp-${r.id}`} id={`modal-cp-${r.id}`}><path d={r.path} /></clipPath>
+                                                    ))}
+                                                    <linearGradient id="mTerrainGrad" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="0%" stopColor="#eee8de" stopOpacity="0.96" />
+                                                        <stop offset="30%" stopColor="#c4a878" stopOpacity="0.62" />
+                                                        <stop offset="65%" stopColor="#88b050" stopOpacity="0.55" />
+                                                        <stop offset="100%" stopColor="#9cc054" stopOpacity="0.45" />
+                                                    </linearGradient>
+                                                </defs>
+                                                {/* Background */}
+                                                <rect width="820" height="290" fill="#aec2cc" />
+                                                {/* Nepal terrain */}
+                                                <path d={NEPAL_OUTLINE} fill="#dcd0b0" />
+                                                <path d={NEPAL_OUTLINE} fill="url(#mTerrainGrad)" />
+                                                {/* Dimmed other regions */}
+                                                {NEPAL_REGION_PATHS.filter(r => r.id !== selected.id).map(r => (
+                                                    <path key={r.id} d={r.path} fill="rgba(0,0,0,0.18)" />
+                                                ))}
+                                                {/* Selected region — zlatá s glow */}
+                                                <path d={rp.path}
+                                                    fill="rgba(212,175,55,0.28)"
+                                                    stroke="#d4af37" strokeWidth="2.5" />
+                                                {/* Photos clipped to region */}
+                                                {selected.image && (
+                                                    <image href={selected.image} x="0" y="0" width="820" height="290"
+                                                        preserveAspectRatio="xMidYMid slice"
+                                                        clipPath={`url(#modal-cp-${selected.id})`}
+                                                        opacity="0.35" />
+                                                )}
+                                                {/* Nepal border */}
+                                                <path d={NEPAL_OUTLINE} fill="none" stroke="rgba(80,60,30,0.55)" strokeWidth="1.4" />
+                                                {/* Region label */}
+                                                <text x={rp.cx} y={rp.cy} textAnchor="middle" dominantBaseline="middle"
+                                                    fill="white" fontSize="18" fontFamily="Georgia, serif" fontWeight="700"
+                                                    style={{ filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.8))' }}>
+                                                    {selected.name}
+                                                </text>
+                                            </svg>
+                                        );
+                                    })()}
+                                    {/* Mobile back */}
                                     <button onClick={handleBack}
-                                        className="md:hidden absolute top-4 left-4 flex items-center gap-1.5 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors">
-                                        <ChevronLeft className="w-3.5 h-3.5" /> zpět
+                                        className="md:hidden absolute top-3 left-3 flex items-center gap-1.5 bg-black/40 text-white/80 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-full backdrop-blur-sm">
+                                        <ChevronLeft className="w-3 h-3" /> zpět
                                     </button>
-                                    {/* Mini přehledová mapa — ukazuje kde v Nepálu jsme */}
-                                    <div className="absolute top-3 right-3 w-20 h-10 rounded-lg overflow-hidden border border-white/20 shadow-xl"
-                                         style={{ background: '#a8bcc8' }}>
-                                        <svg viewBox="0 0 820 290" className="w-full h-full">
-                                            <rect width="820" height="290" fill="#a8bcc8" />
-                                            <path d={NEPAL_OUTLINE} fill="#dcd0b0" />
-                                            {NEPAL_REGION_PATHS.map(r => (
-                                                <path key={r.id} d={r.path}
-                                                    fill={r.id === selected.id ? 'rgba(212,175,55,0.7)' : 'rgba(50,30,10,0.08)'}
-                                                    stroke={r.id === selected.id ? '#d4af37' : 'transparent'}
-                                                    strokeWidth="2" />
-                                            ))}
-                                            <circle cx={NEPAL_REGION_PATHS.find(r=>r.id===selected.id)?.cx||0}
-                                                    cy={NEPAL_REGION_PATHS.find(r=>r.id===selected.id)?.cy||0}
-                                                    r="8" fill="none" stroke="#d4af37" strokeWidth="2" opacity="0.8" />
-                                        </svg>
-                                    </div>
-                                    <div className="absolute bottom-4 left-5 right-5">
+                                    {/* Region info overlay */}
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#06090f]/95 to-transparent px-5 py-4">
                                         <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] mb-1 font-bold">{selected.subtitle}</p>
-                                        <h3 className="font-serif text-white text-2xl md:text-3xl leading-tight">{selected.name}</h3>
+                                        <h3 className="font-serif text-white text-xl md:text-2xl leading-tight">{selected.name}</h3>
                                     </div>
                                 </div>
 
