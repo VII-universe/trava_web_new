@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ivory text-slate-800 font-sans antialiased overflow-x-hidden;
+  }
+}
+
+/* Mobile scroll-snap: stops swipes gently at section boundaries */
+@media (max-width: 767px) {
+  .h-\[1600vh\] {
+    scroll-snap-type: y proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-snap-anchor-start {
+    scroll-snap-align: start;
+  }
+}
+
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  /* Glassmorphism utility for translucent content blocks */
+  .glass-card {
+    @apply bg-white/85 backdrop-blur-xl border border-white/60 shadow-2xl shadow-slate-200/60 rounded-2xl;
+  }
+}
+
+/* Premium floating scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 14px; /* wide track to allow for transparent borders */
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 0; /* Keeps the thumb away from the absolute top/bottom rounded corners of modals */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4); /* gold-500 with opacity */
+  border-radius: 14px;
+  border: 4px solid transparent; /* invisible border creates the padding around thumb */
+  background-clip: padding-box; /* clips background so border stays transparent */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Realistic Snow Effect for Contact Section */
+.snow {
+  position: absolute;
+  top: -10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10px) translateX(0) scale(1.0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(50vh) translateX(15px) scale(0.9);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(105vh) translateX(-15px) scale(1.0);
+    opacity: 0;
+  }
+}
