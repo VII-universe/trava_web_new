@@ -3,7 +3,7 @@ import { loadContent } from '../data/adminStore';
 import { resolveImageSrc } from '../data/imageStore';
 import { motion, useTransform, useScroll, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { ArrowLeft, ArrowRight, X, MapPin, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, MapPin, Play, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
 import SummitImage from '../assets/summit_bg.png';
 import HonzaProfile from '../assets/honza_profile.png';
