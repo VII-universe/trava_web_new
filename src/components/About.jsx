@@ -365,7 +365,7 @@ const About = ({ scrollProgress }) => {
                                     <div className="w-full md:w-2/5 shrink-0 flex flex-col gap-2 self-stretch min-h-[176px]">
                                         {(story.zacatky.images?.length >= 1 ? story.zacatky.images : [StoryImg2, StoryImg1]).slice(0,2).map((src, i) => (
                                             <div key={i} className="relative rounded-2xl overflow-hidden flex-1 min-h-[120px]">
-                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
+                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
                                             </div>
                                         ))}
                                     </div>
@@ -455,7 +455,7 @@ const About = ({ scrollProgress }) => {
                                 {/* Hotel Kathmandu Base Camp */}
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px] order-last md:order-first">
-                                        <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover" />
+                                        <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover object-top" />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-serif text-xl md:text-2xl text-slate-900 mb-4 leading-tight">{story.nepal.hotelTitle}</h3>
@@ -566,27 +566,6 @@ const About = ({ scrollProgress }) => {
                                     </button>
                                 </div>
 
-                                {/* Miri bio */}
-                                <div className="mt-8 pt-6 border-t border-slate-200">
-                                    <h4 className="font-serif text-lg text-slate-900 mb-3">{story.tym.miriTitle}</h4>
-                                    <p className="font-sans text-slate-700 text-sm leading-relaxed mb-3">{story.tym.miriText}</p>
-                                    <p className="font-sans text-slate-600 text-sm leading-relaxed mb-3">{story.tym.miriText2}</p>
-                                    <p className="font-sans text-slate-600 text-sm leading-relaxed mb-3">{story.tym.miriText3}</p>
-                                    <p className="font-sans text-slate-500 text-sm leading-relaxed italic">{story.tym.miriText4}</p>
-                                </div>
-
-                                {/* Subin bio */}
-                                <div className="mt-6 pt-6 border-t border-slate-200">
-                                    <h4 className="font-serif text-lg text-slate-900 mb-1">{story.tym.subinTitle}</h4>
-                                    <p className="font-sans text-gold-600 text-[10px] uppercase tracking-widest font-bold mb-4">{story.tym.subinRole}</p>
-                                    <p className="font-sans text-slate-700 text-sm leading-relaxed mb-3">{story.tym.subinText}</p>
-                                    <p className="font-sans text-slate-600 text-sm leading-relaxed mb-3">{story.tym.subinText2}</p>
-                                    <p className="font-sans text-slate-600 text-sm leading-relaxed mb-3">{story.tym.subinText3}</p>
-                                    <p className="font-sans text-slate-600 text-sm leading-relaxed mb-4">{story.tym.subinText4}</p>
-                                    <blockquote className="border-l-2 border-gold-400 pl-4 font-serif italic text-slate-700 text-sm leading-relaxed">
-                                        {story.tym.subinQuote}
-                                    </blockquote>
-                                </div>
                             </div>
 
                             {/* BLOCK 7: Kde dál – dark */}
