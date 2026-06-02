@@ -833,15 +833,29 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                 {!isMobile && hoveredRegion && (() => {
                     const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
                     if (!rp) return null;
-                    const tx = Math.min(Math.max(rp.cx, 65), 755);
-                    const ty = rp.cy < 75 ? rp.cy + 25 : rp.cy - 10;
+                    const tx = Math.min(Math.max(rp.cx, 75), 745);
+                    const ty = rp.cy < 80 ? rp.cy + 28 : rp.cy - 14;
+                    const name = hoveredRegion.name;
+                    const charW = 9, pad = 14;
+                    const bw = name.length * charW + pad * 2;
+                    const bh = 28;
                     return (
-                        <text x={tx} y={ty} textAnchor="middle"
-                            fill="#1a0e04" fontSize="16"
-                            fontFamily="Georgia, serif" fontWeight="700"
-                            filter="url(#thalo)" style={{ pointerEvents:'none' }}>
-                            {hoveredRegion.name}
-                        </text>
+                        <g style={{ pointerEvents: 'none' }}>
+                            {/* Tmavý background za text */}
+                            <rect x={tx - bw/2} y={ty - bh + 5} width={bw} height={bh}
+                                rx="6" fill="rgba(10,14,24,0.82)" />
+                            <text x={tx} y={ty} textAnchor="middle"
+                                fill="white" fontSize="14"
+                                fontFamily="Georgia, serif" fontWeight="700">
+                                {name}
+                            </text>
+                            {/* Tagline */}
+                            <text x={tx} y={ty + 14} textAnchor="middle"
+                                fill="rgba(212,175,55,0.85)" fontSize="9"
+                                fontFamily="monospace" fontWeight="700" letterSpacing="0.06em">
+                                {hoveredRegion.subtitle?.toUpperCase()}
+                            </text>
+                        </g>
                     );
                 })()}
 
@@ -1204,7 +1218,7 @@ const Expeditions = ({ scrollProgress }) => {
     useEffect(() => {
         return mobileProg.on('change', (v) => {
             if (window.innerWidth >= 768 || mobDragging.current) return;
-            const cardW = window.innerWidth * 0.88 + 12;
+            const cardW = window.innerWidth * 0.82 + 12;
             mobTrackX.set(-v * cardW);
         });
     }, [mobileProg, mobTrackX]);
@@ -1256,30 +1270,28 @@ const Expeditions = ({ scrollProgress }) => {
                         </div>
                     </div>
 
-                    {/* 2 karty vedle sebe — scroll-driven jako Hotel/Pub */}
-                    <div className="flex-1 min-h-0 overflow-hidden pl-4 pr-2 pb-3">
+                    {/* 2 karty — scroll-driven, 82vw × 76vh jako Hotel/Pub */}
+                    <div className="shrink-0 overflow-hidden" style={{ paddingLeft: '9vw' }}>
                     <motion.div
                         ref={mobTrackRef}
-                        className="flex gap-3 h-full"
+                        className="flex gap-3 pointer-events-auto"
                         style={{ x: mobTrackX, touchAction: 'pan-y' }}
                         drag="x"
-                        dragConstraints={{ left: -(window.innerWidth * 0.88 + 12), right: 0 }}
+                        dragConstraints={{ left: -(window.innerWidth * 0.82 + 12), right: 0 }}
                         dragElastic={0.05}
                         dragMomentum={false}
                         onDragStart={() => { mobDragging.current = true; }}
                         onDragEnd={(_, info) => {
                             mobDragging.current = false;
-                            const cardW = window.innerWidth * 0.88 + 12;
+                            const cardW = window.innerWidth * 0.82 + 12;
                             const cur = mobTrackX.get();
-                            const fastLeft  = info.velocity.x < -300;
-                            const fastRight = info.velocity.x > 300;
-                            const snapTo = (cur < -cardW * 0.4 || fastLeft) ? -cardW : 0;
+                            const snapTo = (cur < -cardW * 0.4 || info.velocity.x < -300) ? -cardW : 0;
                             animate(mobTrackX, snapTo, { type: 'spring', stiffness: 350, damping: 30 });
                         }}
                     >
 
                         {/* Karta 1 — 14 Summits info */}
-                        <div className="shrink-0 snap-start w-[88vw] h-full bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-5 flex flex-col">
+                        <div className="shrink-0 snap-start w-[82vw] bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-5 flex flex-col" style={{ height: '76vh' }}>
                             <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest font-bold mb-2">14 Summits Expedition · Nepál</p>
                             <h2 className="font-serif text-2xl text-white leading-tight mb-3">
                                 Čeští specialisté <span className="italic text-slate-400">na Nepál.</span>
@@ -1310,12 +1322,12 @@ const Expeditions = ({ scrollProgress }) => {
                         </div>
 
                         {/* Karta 2 — Interaktivní mapa Nepálu */}
-                        <div className="shrink-0 snap-start w-[88vw] h-full flex flex-col rounded-2xl overflow-hidden border border-[#7a9ab0]/40">
+                        <div className="shrink-0 snap-start w-[82vw] flex flex-col rounded-2xl overflow-hidden border border-[#7a9ab0]/40" style={{ height: '76vh' }}>
                             <div className="shrink-0 flex items-center justify-between px-3.5 py-2.5 bg-[#0a1020]/95 border-b border-white/[0.07]">
                                 <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.35em] font-bold">Regiony Nepálu</p>
-                                <p className="text-slate-500 text-[9px] font-mono">1×=preview · 2×=detail</p>
+                                <p className="text-slate-500 text-[9px] font-mono">ťukni · 2× = detail</p>
                             </div>
-                            <div className="flex-1 min-h-0">
+                            <div className="flex-1 min-h-0" style={{ minHeight: 0 }}>
                                 <NepalMap
                                     regions={REGIONS}
                                     onRegionClick={(region) => { setSelectedRegion(region); setIsRegionsOpen(true); }}
@@ -1677,7 +1689,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 </p>
                             </div>
 
-                            {/* Map — flex-1 aby měla stejnou výšku jako levý panel */}
+                            {/* Map — vlastní SVG (přesný, funguje na vše) */}
                             <div className="flex-1 min-h-[220px]">
                                 <NepalMap
                                     regions={REGIONS}
@@ -1685,7 +1697,6 @@ const Expeditions = ({ scrollProgress }) => {
                                         setSelectedRegion(region);
                                         setIsRegionsOpen(true);
                                     }}
-                                    useGoogleMaps
                                 />
                             </div>
 
