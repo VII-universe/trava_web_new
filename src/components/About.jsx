@@ -455,7 +455,7 @@ const About = ({ scrollProgress }) => {
                                 {/* Hotel Kathmandu Base Camp */}
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px] order-last md:order-first">
-                                        <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover object-top" />
+                                        <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover" style={{ objectPosition: '75% top' }} />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-serif text-xl md:text-2xl text-slate-900 mb-4 leading-tight">{story.nepal.hotelTitle}</h3>
