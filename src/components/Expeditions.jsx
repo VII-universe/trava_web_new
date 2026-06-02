@@ -560,7 +560,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     // ── konec Google Maps varianty ─────────────────────────────────────────
 
     return (
-        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none shadow-inner">
+        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none"
+             style={{ boxShadow: 'inset 0 28px 32px rgba(195,215,225,0.55), inset 0 -28px 32px rgba(140,165,182,0.45)' }}>
 
             {/* ── SVG map — plynulý zoom přes animovaný viewBox ── */}
             <motion.svg viewBox={animViewBox} className="w-full h-full" style={{ display: 'block' }}>
@@ -626,16 +627,9 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     `}</style>
                 </defs>
 
-                {/* Okolní území — gradient světlejší nahoře (Tibet/sníh) → modrošedá dole (Indie) */}
-                <defs>
-                    <linearGradient id="outerGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%"   stopColor="#dde6ea" />
-                        <stop offset="12%"  stopColor="#c0cdd5" />
-                        <stop offset="100%" stopColor="#a8bcc8" />
-                    </linearGradient>
-                </defs>
+                {/* Okolní území — pevná barva, bez gradientu přes celou plochu */}
                 {/* Fixní pozadí — nezoomuje */}
-                <rect width="820" height="290" fill="url(#outerGrad)" />
+                <rect width="820" height="290" fill="#b8cad4" />
                 {[0,14,28,42,56,70,84,98,112,126,140,154,168,182,196,210,224,238,252,266,280].map(y => (
                     <line key={y} x1="0" y1={y} x2="820" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
                 ))}
