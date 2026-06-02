@@ -691,23 +691,16 @@ const Icefall = ({ scrollProgress }) => {
                             </button>
                         </div>
 
-                        {/* Sekundární partneři — úplně dole */}
+                        {/* Sekundární partneři — pills úplně dole */}
                         <div className="mt-5 flex flex-col items-center gap-2">
                             <span className="text-[8px] font-sans font-bold uppercase tracking-[0.28em] text-slate-500">Také spolupracujeme</span>
-                            <div className="flex gap-4 justify-center flex-wrap">
-                                {SECONDARY_DISPLAY.map((flag, i) => (
-                                    <div key={flag.id} className="flex flex-col items-center cursor-pointer" onClick={() => setSelectedFlag(flag)}>
-                                        <div className="relative cloth-texture bg-white" style={{
-                                            width: 52, height: 72,
-                                            animation: `flutter ${2.8 + i * 0.4}s ${i * 0.35}s ease-in-out infinite`,
-                                            clipPath: flag.clipPath,
-                                            filter: 'url(#frayedEdge)'
-                                        }}>
-                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
-                                            <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
-                                        </div>
-                                        <span className="mt-1 font-sans text-[7px] font-bold text-slate-500 uppercase tracking-wider text-center leading-tight" style={{ maxWidth: 52 }}>{flag.name}</span>
-                                    </div>
+                            <div className="flex gap-2 justify-center flex-wrap">
+                                {SECONDARY_DISPLAY.map((flag) => (
+                                    <button key={flag.id}
+                                        onClick={() => setSelectedFlag(flag)}
+                                        className="px-3 py-1.5 rounded-full bg-white/90 border border-slate-200 shadow-sm text-[10px] font-bold font-sans text-slate-700 uppercase tracking-wider">
+                                        {flag.name}
+                                    </button>
                                 ))}
                             </div>
                         </div>
