@@ -76,8 +76,6 @@ const Lectures = ({ scrollProgress }) => {
             <div className="md:hidden absolute inset-0">
                 <img src={Tour50Img} className="absolute inset-0 w-full h-full object-cover object-top" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/40 to-slate-950" />
-                {/* Tmavý panel dole — stejná výška jako content blok */}
-                <div className="absolute bottom-0 left-0 right-0 bg-slate-950" style={{ height: '64%' }} />
             </div>
             {/* Desktop: tmavý gradient */}
             <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-[#1A202C] to-[#0F172A]" />
