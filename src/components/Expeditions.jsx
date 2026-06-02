@@ -379,12 +379,54 @@ const TREK_ROUTES = [
     },
 ];
 
-// Google Maps URL pro hlavní mapu — centrum Nepálu, terrain, zoom 7
-const NEPAL_GMAP = 'https://maps.google.com/maps?q=28.15,84.0&z=7&t=p&output=embed&hl=cs';
+// zoom=6 → Nepal (8° lon) se vejde do ~500px; center na střed Nepálu
+const NEPAL_GMAP = 'https://maps.google.com/maps?ll=28.3,84.0&z=6&t=p&output=embed&hl=cs';
+const GMAP_ZOOM   = 6;
+const GMAP_LON_C  = 84.0;
+const GMAP_LAT_C  = 28.3;
+
+/** Kalibruje SVG viewBox tak aby odpovídal přesně tomu, co zobrazuje Google Maps iframe */
+function computeGMapViewBox(W, H) {
+    const worldPx = 256 * Math.pow(2, GMAP_ZOOM);
+    const pxPerLon = worldPx / 360;
+    const merc = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+    const mercToLat = m => (2 * Math.atan(Math.exp(m)) - Math.PI / 2) * 180 / Math.PI;
+    const merc_scale = worldPx / (2 * Math.PI);
+    const merc_c = merc(GMAP_LAT_C);
+
+    const lon_l = GMAP_LON_C - (W / 2) / pxPerLon;
+    const lon_r = GMAP_LON_C + (W / 2) / pxPerLon;
+    const lat_t = mercToLat(merc_c + (H / 2) / merc_scale);
+    const lat_b = mercToLat(merc_c - (H / 2) / merc_scale);
+
+    // Převod do naší souřadnicové soustavy: x=(lon-80)*102.5, y=(30.4-lat)*72.5
+    const vx = (lon_l - 80) * 102.5;
+    const vy = (30.4 - lat_t) * 72.5;
+    const vw = (lon_r - lon_l) * 102.5;
+    const vh = (lat_t - lat_b) * 72.5;
+    return `${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}`;
+}
 
 function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null, useGoogleMaps = false }) {
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
+
+    // Dynamická kalibrace SVG → Google Maps
+    const gmContainerRef = useRef(null);
+    const [calibVB, setCalibVB] = useState('-153 -34 1125 390');
+    useEffect(() => {
+        if (!useGoogleMaps) return;
+        const calibrate = () => {
+            const el = gmContainerRef.current;
+            if (!el) return;
+            const { width: W, height: H } = el.getBoundingClientRect();
+            if (W > 0 && H > 0) setCalibVB(computeGMapViewBox(W, H));
+        };
+        calibrate();
+        const ro = new ResizeObserver(calibrate);
+        if (gmContainerRef.current) ro.observe(gmContainerRef.current);
+        return () => ro.disconnect();
+    }, [useGoogleMaps]);
 
     // Animovaný viewBox — plynulý zoom přes framer-motion MotionValues
     const vbX = useMotionValue(0);
@@ -430,7 +472,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
             : NEPAL_GMAP;
 
         return (
-            <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1520] border border-[#4a6a80]/30 select-none shadow-2xl">
+            <div ref={gmContainerRef} className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1520] border border-[#4a6a80]/30 select-none shadow-2xl">
                 {/* Google Maps iframe */}
                 <iframe src={gmUrl} className="absolute inset-0 w-full h-full border-0"
                     loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mapa Nepálu"
@@ -441,8 +483,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                 <div className="absolute inset-0 pointer-events-none"
                      style={{ boxShadow: 'inset 0 0 80px rgba(4,7,14,0.65)' }} />
 
-                {/* SVG overlay — region obrysy + interaktivita */}
-                <svg viewBox="0 -50 820 390" className="absolute inset-0 w-full h-full" style={{ display:'block' }}>
+                {/* SVG overlay — kalibrovaný viewBox přesně odpovídá Google Maps */}
+                <svg viewBox={calibVB} className="absolute inset-0 w-full h-full" style={{ display:'block' }}>
                     {NEPAL_REGION_PATHS.map(r => {
                         const isHov = hovered === r.id;
                         const isDim = hovered && !isHov;
@@ -1465,7 +1507,7 @@ const Expeditions = ({ scrollProgress }) => {
                 </div>
 
                 <div className="relative z-10 max-w-7xl w-full flex justify-center px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mt-0">
-                    <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
+                    <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-stretch">
 
                         <motion.div
                             initial={{ rotate: -20, x: -100, y: 40, opacity: 0 }}
@@ -1626,17 +1668,17 @@ const Expeditions = ({ scrollProgress }) => {
                         </motion.div>
 
                         {/* ── Nepal interactive map ── */}
-                        <div className="pointer-events-auto relative z-10 flex flex-col gap-2.5">
+                        <div className="pointer-events-auto relative z-10 flex flex-col gap-2.5 h-full">
                             {/* Header */}
-                            <div className="bg-slate-950/80 backdrop-blur-md rounded-xl px-4 py-3 border border-white/[0.08]">
+                            <div className="shrink-0 bg-slate-950/80 backdrop-blur-md rounded-xl px-4 py-3 border border-white/[0.08]">
                                 <h3 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-[11px] font-bold">Regiony & Možnosti</h3>
                                 <p className="font-sans text-slate-300 text-xs leading-relaxed mt-0.5">
                                     Najeď na oblast — zjisti, co tam děláme.
                                 </p>
                             </div>
 
-                            {/* Map — Google Maps s region overlay */}
-                            <div className="h-[268px] lg:h-[298px]">
+                            {/* Map — flex-1 aby měla stejnou výšku jako levý panel */}
+                            <div className="flex-1 min-h-[220px]">
                                 <NepalMap
                                     regions={REGIONS}
                                     onRegionClick={(region) => {
