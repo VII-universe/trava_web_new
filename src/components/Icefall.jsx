@@ -619,7 +619,7 @@ const Icefall = ({ scrollProgress }) => {
                         </p>
                         <button
                             onClick={() => setIsInfoOpen(true)}
-                            className="group mt-3 md:mt-4 inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-[10px] rounded-xl transition-all duration-300 backdrop-blur-sm border border-white/20 pointer-events-auto"
+                            className="group mt-3 md:mt-4 hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-[10px] rounded-xl transition-all duration-300 backdrop-blur-sm border border-white/20 pointer-events-auto"
                         >
                             O spolupráci více <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </button>
@@ -642,58 +642,79 @@ const Icefall = ({ scrollProgress }) => {
                         </div>
                     </div>
 
-                    {/* ── Mobile: 3 angled rope rows (hidden on desktop) ── */}
-                    <div className="md:hidden absolute z-20 pointer-events-auto" style={{ top: '18%', left: 0, right: 0, padding: '0 8px' }}>
+                    {/* ── Mobile: 2 řady, portrét vlajky, blíže k sobě ── */}
+                    <div className="md:hidden absolute z-20 pointer-events-auto" style={{ top: '26%', left: 0, right: 0, padding: '0 10px' }}>
                         <style>{flagStyles}</style>
 
+                        {/* Hlavní partneři — 2 řady */}
                         {[
-                            { flags: [FLAGS_DISPLAY[0], FLAGS_DISPLAY[1], FLAGS_DISPLAY[2]], angle: -2 },
-                            { flags: [FLAGS_DISPLAY[3], FLAGS_DISPLAY[4]], angle: 1.5 },
-                            { flags: [FLAGS_DISPLAY[5], FLAGS_DISPLAY[6]], angle: -1 },
+                            { flags: FLAGS_DISPLAY.slice(0, 4), angle: -1.2 },
+                            { flags: FLAGS_DISPLAY.slice(4, 7), angle: 1 },
                         ].map((row, rowIdx) => (
-                            <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 4 }}>
-                                <svg viewBox="0 0 400 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 24, display: 'block' }}>
-                                    <path d="M0,16 C133,4 266,20 400,12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
-                                    <path d="M0,14 C133,2 266,18 400,10" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
-                                    <path d="M0,12 C133,0 266,16 400,8" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
+                            <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 2 }}>
+                                <svg viewBox="0 0 400 22" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 20, display: 'block' }}>
+                                    <path d="M0,14 C133,4 266,18 400,10" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
+                                    <path d="M0,12 C133,2 266,16 400,8" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
+                                    <path d="M0,10 C133,0 266,14 400,6" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
                                 </svg>
-                                <div className="relative w-full" style={{ height: 155, marginTop: -4 }}>
+                                <div className="relative w-full" style={{ height: 112, marginTop: -2 }}>
                                     {row.flags.map((flag, i) => {
-                                        const positions3 = ['18%', '50%', '82%'];
-                                        const positions2 = ['25%', '75%'];
-                                        const left = row.flags.length === 3
-                                            ? positions3[i]
-                                            : positions2[i];
+                                        const pos4 = ['12%', '37%', '63%', '88%'];
+                                        const pos3 = ['18%', '50%', '82%'];
+                                        const left = row.flags.length === 4 ? pos4[i] : pos3[i];
                                         return (
-                                            <div
-                                                key={flag.id}
-                                                className="absolute flex flex-col items-center cursor-pointer"
-                                                style={{ left, top: -8, transform: 'translateX(-50%)' }}
-                                                onClick={() => setSelectedFlag(flag)}
-                                            >
-                                                <div
-                                                    className="relative cloth-texture bg-white"
-                                                    style={{
-                                                        width: 112, height: 112,
-                                                        animation: `flutter ${2.4 + (rowIdx * 3 + i) * 0.5}s ${(rowIdx * 3 + i) * 0.35}s ease-in-out infinite`,
-                                                        clipPath: flag.clipPath,
-                                                        filter: 'url(#frayedEdge)'
-                                                    }}
-                                                >
+                                            <div key={flag.id} className="absolute flex flex-col items-center cursor-pointer"
+                                                style={{ left, top: -6, transform: 'translateX(-50%)' }}
+                                                onClick={() => setSelectedFlag(flag)}>
+                                                <div className="relative cloth-texture bg-white" style={{
+                                                    width: 64, height: 96,
+                                                    animation: `flutter ${2.4 + (rowIdx * 4 + i) * 0.45}s ${(rowIdx * 4 + i) * 0.28}s ease-in-out infinite`,
+                                                    clipPath: flag.clipPath,
+                                                    filter: 'url(#frayedEdge)'
+                                                }}>
                                                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
                                                     <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
                                                 </div>
-                                                <span className="mt-1.5 font-sans text-[11px] font-bold text-slate-700 uppercase tracking-wider text-center leading-tight">{flag.name}</span>
+                                                <span className="mt-1 font-sans text-[8px] font-bold text-slate-700 uppercase tracking-wider text-center leading-tight" style={{ maxWidth: 64 }}>{flag.name}</span>
                                             </div>
                                         );
                                     })}
                                 </div>
                             </div>
                         ))}
+
+                        {/* Button O spolupráci — viditelný hned pod vlajkami */}
+                        <div className="flex justify-center mt-3">
+                            <button onClick={() => setIsInfoOpen(true)}
+                                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 text-white font-bold uppercase tracking-[0.15em] text-[10px] rounded-xl backdrop-blur-sm border border-white/20 pointer-events-auto">
+                                O spolupráci více <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                        </div>
+
+                        {/* Sekundární partneři — úplně dole */}
+                        <div className="mt-5 flex flex-col items-center gap-2">
+                            <span className="text-[8px] font-sans font-bold uppercase tracking-[0.28em] text-slate-500">Také spolupracujeme</span>
+                            <div className="flex gap-4 justify-center flex-wrap">
+                                {SECONDARY_DISPLAY.map((flag, i) => (
+                                    <div key={flag.id} className="flex flex-col items-center cursor-pointer" onClick={() => setSelectedFlag(flag)}>
+                                        <div className="relative cloth-texture bg-white" style={{
+                                            width: 52, height: 72,
+                                            animation: `flutter ${2.8 + i * 0.4}s ${i * 0.35}s ease-in-out infinite`,
+                                            clipPath: flag.clipPath,
+                                            filter: 'url(#frayedEdge)'
+                                        }}>
+                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/25 z-10 pointer-events-none mix-blend-multiply" />
+                                            <div className="absolute inset-0 flex items-center justify-center">{flag.logo}</div>
+                                        </div>
+                                        <span className="mt-1 font-sans text-[7px] font-bold text-slate-500 uppercase tracking-wider text-center leading-tight" style={{ maxWidth: 52 }}>{flag.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
-                    {/* ── Tagline + past partners — positioned safely above the cloud mask ── */}
-                    <div className="absolute bottom-[18%] md:bottom-[16%] left-0 right-0 text-center z-20 pointer-events-none flex flex-col items-center gap-2 px-4">
+                    {/* ── Tagline + past partners — jen desktop ── */}
+                    <div className="absolute bottom-[18%] md:bottom-[16%] left-0 right-0 text-center z-20 pointer-events-none hidden md:flex flex-col items-center gap-2 px-4">
                         <h3 className="font-serif text-lg md:text-2xl text-slate-700 italic drop-shadow-[0_2px_6px_rgba(255,255,255,0.9)]">
                             S&nbsp;těmi, kteří věří ve stejné věci.
                         </h3>
