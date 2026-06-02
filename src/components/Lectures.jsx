@@ -69,11 +69,18 @@ const Lectures = ({ scrollProgress }) => {
 
     return (
         <>
-        {/* BACKGROUND */}
+        {/* BACKGROUND — jen opacity, žádný Y pohyb */}
         <motion.div style={{ opacity: containerOpacity, zIndex: 40 }}
-            className="absolute inset-0 w-full h-full pointer-events-none bg-gradient-to-b from-[#1A202C] to-[#0F172A]">
-            <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-white/20 to-transparent blur-[60px] opacity-40" />
-            <motion.div className="absolute inset-0 bg-[#f8f9fa]" style={{ opacity: lightenOpacity }} />
+            className="absolute inset-0 w-full h-full pointer-events-none">
+            {/* Mobil: foto pozadí přes celou obrazovku */}
+            <div className="md:hidden absolute inset-0">
+                <img src={Tour50Img} className="absolute inset-0 w-full h-full object-cover object-top" alt="" />
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/40 to-slate-950" />
+            </div>
+            {/* Desktop: tmavý gradient */}
+            <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-[#1A202C] to-[#0F172A]" />
+            <div className="hidden md:block absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-white/20 to-transparent blur-[60px] opacity-40" />
+            <motion.div className="hidden md:block absolute inset-0 bg-[#f8f9fa]" style={{ opacity: lightenOpacity }} />
         </motion.div>
 
         {/* CONTENT */}
@@ -81,23 +88,18 @@ const Lectures = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full pointer-events-none">
             <motion.div style={{ y: containerY }} className="w-full h-full">
 
-                {/* ── Mobile — hero image layout ── */}
-                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto overflow-hidden">
+                {/* ── Mobile — content slides in with Y, background image stays fixed ── */}
+                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto">
 
-                    {/* Hero foto — fixní výška */}
-                    <div className="relative shrink-0" style={{ height: '36%' }}>
-                        <img src={Tour50Img} alt="Přednáška"
-                            className="absolute inset-0 w-full h-full object-cover object-top" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/30 to-slate-950" />
+                    {/* Top area — průhledná, text přes background image */}
+                    <div className="shrink-0 flex flex-col justify-end px-5 pb-3" style={{ height: '36%' }}>
                         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 px-5 pb-3">
-                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-1">
-                                08 — Přednášky · 7200 m
-                            </p>
-                            <h2 className="font-serif text-2xl text-white leading-tight drop-shadow-lg">
-                                Příběhy z hor, cest i <span className="italic text-gold-300">návratů.</span>
-                            </h2>
-                        </div>
+                        <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-1">
+                            08 — Přednášky · 7200 m
+                        </p>
+                        <h2 className="font-serif text-2xl text-white leading-tight drop-shadow-lg">
+                            Příběhy z hor, cest i <span className="italic text-gold-300">návratů.</span>
+                        </h2>
                     </div>
 
                     {/* Obsah — přirozené stohování od vrchu, bez flex-1 roztahování */}
