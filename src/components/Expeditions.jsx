@@ -847,9 +847,9 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     const isActive = isHov || isCycle;
                     const labelMap = { world: 'Západ', annapurna: 'Annapurna', mustang: 'Mustang', langtang: 'Langtang', manaslu: 'Manaslu', khumbu: 'Khumbu' };
                     const label = labelMap[r.id] || reg.name;
-                    const fs = isMobile ? 18 : 12;
-                    const tw = label.length * (isMobile ? 10.5 : 7.2) + (isMobile ? 28 : 22);
-                    const th = isMobile ? 34 : 24;
+                    const fs = isMobile ? 24 : 12;
+                    const tw = label.length * (isMobile ? 13.5 : 7.2) + (isMobile ? 32 : 22);
+                    const th = isMobile ? 42 : 24;
                     let px = r.cx, py = r.cy;
                     if (r.id === 'mustang') py = 103;
                     if (r.id === 'annapurna') py = 172;
