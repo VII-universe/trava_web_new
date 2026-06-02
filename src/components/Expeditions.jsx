@@ -1255,15 +1255,6 @@ const Expeditions = ({ scrollProgress }) => {
                 {/* ── MOBILE: 2-kartový horizontální scroll ── */}
                 <div className="md:hidden w-full h-full flex flex-col justify-center pointer-events-auto overflow-hidden">
 
-                    {/* Kompaktní header */}
-                    <div className="shrink-0 flex items-center gap-2.5 px-4 pt-3 pb-2">
-                        <img src={Logo14Summits} alt="14 Summits" className="h-8 w-auto drop-shadow-lg opacity-90" />
-                        <div>
-                            <p className="text-gold-500 font-mono text-[9px] uppercase tracking-[0.3em] font-bold leading-none">04 — Expedice (4500 m)</p>
-                            <p className="text-white/50 text-[10px] font-sans mt-0.5">Přejed doprava pro mapu →</p>
-                        </div>
-                    </div>
-
                     {/* 2 karty — scroll-driven, 82vw × 76vh jako Hotel/Pub */}
                     <div className="shrink-0 overflow-hidden" style={{ paddingLeft: '9vw' }}>
                     <motion.div
@@ -1284,14 +1275,26 @@ const Expeditions = ({ scrollProgress }) => {
                         }}
                     >
 
-                        {/* Karta 1 — 14 Summits info */}
-                        <div className="shrink-0 snap-start w-[82vw] bg-slate-950/80 backdrop-blur-xl border border-white/[0.12] rounded-2xl p-5 flex flex-col" style={{ height: '76vh' }}>
-                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-widest font-bold mb-2">14 Summits Expedition · Nepál</p>
-                            <h2 className="font-serif text-2xl text-white leading-tight mb-3">
-                                Čeští specialisté <span className="italic text-slate-400">na Nepál.</span>
-                            </h2>
-                            <p className="font-sans text-slate-300 text-sm leading-relaxed mb-4 flex-1">
-                                Nejsme sterilní cestovka z letáku. Známe kopce, lidi i místa. Od pohodových treků po osmitisícovky — s osobním přístupem, poctivou aklimatizací a zkušeným nepálským týmem.
+                        {/* Karta 1 — 14 Summits info (jako Hotel/Pub) */}
+                        <div className="shrink-0 snap-start w-[82vw] bg-slate-900 border border-white/[0.12] rounded-2xl overflow-hidden flex flex-col" style={{ height: '76vh' }}>
+
+                            {/* Hero — logo + label — jako Hotel/Pub */}
+                            <div className="relative shrink-0" style={{ flex: '0 0 40%' }}>
+                                <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/30 to-transparent" />
+                                <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
+                                    <img src={Logo14Summits} alt="14 Summits" className="h-32 w-auto object-contain object-left -ml-2 mb-1 drop-shadow-lg opacity-95 pointer-events-none" />
+                                    <div className="inline-flex items-center gap-1 text-gold-400 mb-1 bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                                        <span className="text-[9px] uppercase tracking-widest font-bold">04 — Expedice (4500 m)</span>
+                                    </div>
+                                    <h3 className="text-white font-serif text-base leading-snug">Čeští specialisté na Nepál</h3>
+                                </div>
+                            </div>
+
+                            {/* Obsah */}
+                            <div className="flex flex-col flex-1 p-4">
+                            <p className="font-sans text-slate-300 text-sm leading-relaxed mb-3 flex-1">
+                                Nejsme sterilní cestovka z letáku. Od pohodových treků po osmitisícovky — s osobním přístupem a zkušeným nepálským týmem.
                             </p>
                             <div className="flex flex-col gap-2.5 mt-auto">
                                 <button onClick={() => setIs14Open(true)}
@@ -1313,6 +1316,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     </button>
                                 </div>
                             </div>
+                            </div>{/* konec obsahu */}
                         </div>
 
                         {/* Karta 2 — Interaktivní mapa Nepálu */}
