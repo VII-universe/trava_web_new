@@ -411,6 +411,20 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
+    // Auto-cycling highlight — přepíná regiony dokud uživatel neinteraguje
+    const [cycleHighlight, setCycleHighlight] = useState(NEPAL_REGION_PATHS[0].id);
+    const [autoCycling, setAutoCycling] = useState(true);
+    const cycleIdxRef = useRef(0);
+    useEffect(() => {
+        if (!autoCycling || hovered) return;
+        const ids = NEPAL_REGION_PATHS.map(r => r.id);
+        const timer = setInterval(() => {
+            cycleIdxRef.current = (cycleIdxRef.current + 1) % ids.length;
+            setCycleHighlight(ids[cycleIdxRef.current]);
+        }, 1800);
+        return () => clearInterval(timer);
+    }, [autoCycling, hovered]); // eslint-disable-line
+
     // Dynamická kalibrace SVG → Google Maps
     const gmContainerRef = useRef(null);
     const [calibVB, setCalibVB] = useState('-153 -34 1125 390');
@@ -522,7 +536,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                         <motion.div key={hoveredRegion.id}
                             initial={{ y:'100%', opacity:0 }} animate={{ y:0, opacity:1 }} exit={{ y:'100%', opacity:0 }}
                             transition={{ type:'spring', damping:32, stiffness:420 }}
-                            className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height:114 }}>
+                            className="absolute bottom-0 left-0 right-0 cursor-pointer" style={{ height:114 }}
+                            onClick={() => { onRegionClick(hoveredRegion); setHovered(null); setAutoCycling(false); }}>
                             <div className="absolute inset-0 overflow-hidden">
                                 <img src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition:'center 40%' }} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#04070e] via-[#04070e]/90 to-[#04070e]/60" />
@@ -731,9 +746,9 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                             strokeWidth={isHov ? 1.6 : 0.9}
                             filter={isHov ? 'url(#hglow)' : undefined}
                             style={{ cursor: 'pointer', transition: 'fill 0.22s, stroke 0.22s', WebkitTapHighlightColor: 'transparent' }}
-                            onMouseEnter={() => !isMobile && setHovered(r.id)}
+                            onMouseEnter={() => { if (!isMobile) { setHovered(r.id); setAutoCycling(false); } }}
                             onMouseLeave={() => !isMobile && setHovered(null)}
-                            onClick={() => handleRegionClick(r.id)}
+                            onClick={() => { setAutoCycling(false); handleRegionClick(r.id); }}
                         />
                     );
                 })}
@@ -823,6 +838,44 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     <text x="105"  y="-7" textAnchor="middle" fill="#3a2810" fontSize="8" fontFamily="monospace">100 km</text>
                 </g>}
 
+                {/* Region name pills — vždy viditelné, auto-cycling zvýraznění */}
+                {NEPAL_REGION_PATHS.map(r => {
+                    const reg = regions.find(x => x.id === r.id);
+                    if (!reg) return null;
+                    const isHov = hovered === r.id;
+                    const isCycle = !hovered && cycleHighlight === r.id;
+                    const isActive = isHov || isCycle;
+                    const labelMap = { world: 'Západ', annapurna: 'Annapurna', mustang: 'Mustang', langtang: 'Langtang', manaslu: 'Manaslu', khumbu: 'Khumbu' };
+                    const label = labelMap[r.id] || reg.name;
+                    const fs = isMobile ? 10 : 8.5;
+                    const tw = label.length * (isMobile ? 6.2 : 5.5) + (isMobile ? 22 : 18);
+                    const th = isMobile ? 22 : 18;
+                    let px = r.cx, py = r.cy;
+                    if (r.id === 'mustang') py = 103;
+                    if (r.id === 'annapurna') py = 172;
+                    if (r.id === 'langtang') py = 195;
+                    if (r.id === 'manaslu') { px = 518; py = 188; }
+                    px = Math.max(tw / 2 + 4, Math.min(818 - tw / 2, px));
+                    return (
+                        <g key={`pill-${r.id}`} style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                            onClick={() => { setAutoCycling(false); handleRegionClick(r.id); }}
+                            onMouseEnter={() => { if (!isMobile) { setHovered(r.id); setAutoCycling(false); } }}
+                            onMouseLeave={() => { if (!isMobile) setHovered(null); }}>
+                            <rect x={px - tw / 2} y={py - th / 2} width={tw} height={th} rx={th / 2}
+                                fill={isActive ? 'rgba(212,175,55,0.9)' : 'rgba(10,14,28,0.72)'}
+                                stroke={isActive ? '#d4af37' : 'rgba(255,255,255,0.3)'}
+                                strokeWidth={isActive ? 1.5 : 0.7}
+                                style={{ transition: 'fill 0.35s, stroke 0.35s' }} />
+                            <text x={px} y={py + 0.5} textAnchor="middle" dominantBaseline="middle"
+                                fill={isActive ? '#1a0800' : 'rgba(255,255,255,0.92)'}
+                                fontSize={fs} fontFamily="sans-serif" fontWeight={isActive ? '800' : '600'}
+                                style={{ pointerEvents: 'none' }}>
+                                {label}
+                            </text>
+                        </g>
+                    );
+                })}
+
                 {/* Hover — název regionu (jen desktop) */}
                 {!isMobile && hoveredRegion && (() => {
                     const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
@@ -864,8 +917,9 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: '100%', opacity: 0 }}
                         transition={{ type: 'spring', damping: 32, stiffness: 420 }}
-                        className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                        className="absolute bottom-0 left-0 right-0 cursor-pointer"
                         style={{ height: 118 }}
+                        onClick={() => { onRegionClick(hoveredRegion); setHovered(null); setAutoCycling(false); }}
                     >
                         {/* Foto pozadí s gradient overlay */}
                         <div className="absolute inset-0 overflow-hidden">
