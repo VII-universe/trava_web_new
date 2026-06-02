@@ -84,55 +84,57 @@ const Lectures = ({ scrollProgress }) => {
                 {/* ── Mobile — hero image layout ── */}
                 <div className="md:hidden w-full h-full flex flex-col pointer-events-auto overflow-hidden">
 
-                    {/* Hero foto — horní 42% */}
-                    <div className="relative shrink-0" style={{ flex: '0 0 42%' }}>
+                    {/* Hero foto — fixní výška */}
+                    <div className="relative shrink-0" style={{ height: '36%' }}>
                         <img src={Tour50Img} alt="Přednáška"
                             className="absolute inset-0 w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/30 to-slate-950" />
-                        {/* Gold top line */}
                         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 px-5 pb-4">
-                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-1.5">
+                        <div className="absolute bottom-0 left-0 right-0 px-5 pb-3">
+                            <p className="text-gold-400 font-mono text-[9px] uppercase tracking-[0.4em] font-bold mb-1">
                                 08 — Přednášky · 7200 m
                             </p>
-                            <h2 className="font-serif text-[1.6rem] text-white leading-tight drop-shadow-lg">
-                                Příběhy z hor, cest<br/>i <span className="italic text-gold-300">návratů.</span>
+                            <h2 className="font-serif text-2xl text-white leading-tight drop-shadow-lg">
+                                Příběhy z hor, cest i <span className="italic text-gold-300">návratů.</span>
                             </h2>
                         </div>
                     </div>
 
-                    {/* Obsah dole */}
-                    <div className="flex flex-col px-4 pt-3 pb-4 gap-3 bg-slate-950 overflow-hidden" style={{ flex: '0 0 58%' }}>
+                    {/* Obsah — flex-1 se scrollovatelným středem a pinnutými tlačítky dole */}
+                    <div className="flex-1 flex flex-col min-h-0 bg-slate-950 px-4 pt-3">
 
-                        {/* Audience grid */}
-                        <div className="grid grid-cols-2 gap-2 shrink-0">
-                            {AUDIENCES.map((a, i) => (
-                                <div key={i} className="flex items-center gap-2 bg-white/[0.07] border border-white/[0.1] rounded-xl px-3 py-2.5">
-                                    <span className="text-gold-400 shrink-0">{a.icon}</span>
-                                    <span className="text-white/80 text-[11px] font-semibold leading-tight">{a.label}</span>
+                        {/* Scrollovatelný střed */}
+                        <div className="flex-1 flex flex-col gap-2.5 min-h-0 overflow-hidden">
+                            {/* Audience grid */}
+                            <div className="grid grid-cols-2 gap-2 shrink-0">
+                                {AUDIENCES.map((a, i) => (
+                                    <div key={i} className="flex items-center gap-2 bg-white/[0.07] border border-white/[0.1] rounded-xl px-3 py-2">
+                                        <span className="text-gold-400 shrink-0">{a.icon}</span>
+                                        <span className="text-white/80 text-[11px] font-semibold leading-tight">{a.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Event teaser */}
+                            <button onClick={() => setSelectedEvent(EVENTS_DETAIL[0])}
+                                className="group relative rounded-2xl overflow-hidden shrink-0 text-left"
+                                style={{ height: 66 }}>
+                                <img src={CollabImg} alt="Projekty"
+                                    className="absolute inset-0 w-full h-full object-cover object-center opacity-60" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/30" />
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent" />
+                                <div className="relative h-full flex items-center px-4 gap-3">
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-gold-400 text-[8px] font-bold uppercase tracking-widest mb-0.5">50 let tour &amp; projekty</p>
+                                        <p className="text-white font-serif text-sm leading-tight truncate">Langmajer, Horký, Juračka&hellip;</p>
+                                    </div>
+                                    <ArrowRight className="w-4 h-4 text-gold-400 shrink-0" />
                                 </div>
-                            ))}
+                            </button>
                         </div>
 
-                        {/* Event teaser — klikatelný */}
-                        <button onClick={() => setSelectedEvent(EVENTS_DETAIL[0])}
-                            className="group relative rounded-2xl overflow-hidden shrink-0 text-left"
-                            style={{ height: 72 }}>
-                            <img src={CollabImg} alt="Projekty"
-                                className="absolute inset-0 w-full h-full object-cover object-center opacity-60 group-active:opacity-80 transition-opacity" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/30" />
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent" />
-                            <div className="relative h-full flex items-center px-4 gap-3">
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-gold-400 text-[8px] font-bold uppercase tracking-widest mb-0.5">50 let tour &amp; projekty</p>
-                                    <p className="text-white font-serif text-sm leading-tight truncate">Langmajer, Horký, Juračka&hellip;</p>
-                                </div>
-                                <ArrowRight className="w-4 h-4 text-gold-400 shrink-0" />
-                            </div>
-                        </button>
-
-                        {/* Akce buttons */}
-                        <div className="flex flex-col gap-2 mt-auto">
+                        {/* Tlačítka — vždy viditelná, pinnuta ke spodku */}
+                        <div className="shrink-0 flex flex-col gap-2 py-3">
                             <div className="flex gap-2">
                                 <button onClick={() => setShowTopics(true)}
                                     className="flex-1 flex items-center justify-center gap-1.5 bg-white/[0.07] border border-white/[0.12] text-white text-[10px] font-bold uppercase tracking-widest py-2.5 rounded-xl active:scale-[0.97] transition-transform">
