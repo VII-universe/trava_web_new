@@ -362,10 +362,10 @@ const About = ({ scrollProgress }) => {
                                 </div>
                                 <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">{story.zacatky.title}</h3>
                                 <div className="flex flex-col md:flex-row gap-6">
-                                    <div className="w-full md:w-2/5 shrink-0 flex flex-col gap-2 self-stretch min-h-[176px]">
+                                    <div className="w-full md:w-2/5 shrink-0 flex flex-row gap-2 self-stretch min-h-[180px]">
                                         {(story.zacatky.images?.length >= 1 ? story.zacatky.images : [StoryImg2, StoryImg1]).slice(0,2).map((src, i) => (
-                                            <div key={i} className="relative rounded-2xl overflow-hidden flex-1 min-h-[120px]">
-                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+                                            <div key={i} className="relative rounded-2xl overflow-hidden flex-1 min-h-[180px]">
+                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover object-[center_20%]" />
                                             </div>
                                         ))}
                                     </div>
