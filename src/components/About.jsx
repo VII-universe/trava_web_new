@@ -361,11 +361,11 @@ const About = ({ scrollProgress }) => {
                                     <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.3em]">{story.zacatky.sectionLabel}</span>
                                 </div>
                                 <h3 className="font-serif text-2xl md:text-3xl text-slate-900 mb-5 leading-tight">{story.zacatky.title}</h3>
-                                <div className="flex flex-col md:flex-row gap-6 items-start">
-                                    <div className="w-full md:w-2/5 shrink-0 grid grid-cols-2 gap-2 h-44 md:h-52">
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    <div className="w-full md:w-2/5 shrink-0 flex flex-col gap-2 self-stretch min-h-[176px]">
                                         {(story.zacatky.images?.length >= 1 ? story.zacatky.images : [StoryImg2, StoryImg1]).slice(0,2).map((src, i) => (
-                                            <div key={i} className="relative rounded-2xl overflow-hidden">
-                                                <img src={src} alt="" className="w-full h-full object-cover object-center" />
+                                            <div key={i} className="relative rounded-2xl overflow-hidden flex-1 min-h-[120px]">
+                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
                                             </div>
                                         ))}
                                     </div>
@@ -392,7 +392,7 @@ const About = ({ scrollProgress }) => {
                                         <iframe src={story.hory.videoUrl} className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Video" />
                                     </div>
                                 ) : (
-                                    <div className="grid grid-cols-3 gap-2 mb-6 h-28 md:h-36">
+                                    <div className="grid grid-cols-3 gap-2 mb-6 h-48 md:h-64">
                                         {(story.hory.images?.length >= 1 ? story.hory.images : [ManasluSummitImg, SummitSelfieImg, StoryImg3]).slice(0,3).map((src, i) => (
                                             <div key={i} className="relative rounded-xl overflow-hidden">
                                                 <img src={src} alt="" className="w-full h-full object-cover object-top" />
@@ -438,14 +438,14 @@ const About = ({ scrollProgress }) => {
                                 </div>
 
                                 {/* Czech Pub Nepal */}
-                                <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
+                                <div className="flex flex-col md:flex-row gap-6 mb-8">
                                     <div className="flex-1">
                                         <h3 className="font-serif text-xl md:text-2xl text-slate-900 mb-4 leading-tight">{story.nepal.pubTitle}</h3>
                                         <p className="font-sans text-slate-700 text-sm leading-relaxed mb-3">{story.nepal.pubText}</p>
                                         <p className="font-sans text-slate-700 text-sm leading-relaxed mb-3">{story.nepal.pubText2}</p>
                                         <p className="font-sans text-slate-500 text-sm leading-relaxed italic">{story.nepal.pubText3}</p>
                                     </div>
-                                    <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden h-44">
+                                    <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px]">
                                         <img src={KtmPubImg} alt="Czech Pub Nepal" className="w-full h-full object-cover" />
                                     </div>
                                 </div>
@@ -453,8 +453,8 @@ const About = ({ scrollProgress }) => {
                                 <div className="border-t border-slate-200 my-6" />
 
                                 {/* Hotel Kathmandu Base Camp */}
-                                <div className="flex flex-col md:flex-row gap-6 items-start">
-                                    <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden h-44 order-last md:order-first">
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px] order-last md:order-first">
                                         <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1">
@@ -474,7 +474,7 @@ const About = ({ scrollProgress }) => {
 
                             {/* BLOCK 4: Zdraví */}
                             <div className="px-6 md:px-10 py-8 md:py-10 bg-slate-50 border-b border-slate-200">
-                                <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="flex flex-col md:flex-row gap-6">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="w-5 h-px bg-gold-400 shrink-0" />
@@ -495,7 +495,7 @@ const About = ({ scrollProgress }) => {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="w-full md:w-1/3 shrink-0 relative rounded-2xl overflow-hidden h-44 md:h-52">
+                                    <div className="w-full md:w-1/3 shrink-0 relative rounded-2xl overflow-hidden self-stretch min-h-[160px]">
                                         <img src={story.zdravi.imageUrl || ClimbersImg} alt="" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                                         <blockquote className="absolute bottom-4 left-4 right-4 font-serif italic text-white text-sm leading-snug drop-shadow-lg">
@@ -507,8 +507,8 @@ const About = ({ scrollProgress }) => {
 
                             {/* BLOCK 5: Přednášky */}
                             <div className="px-6 md:px-10 py-8 md:py-10 border-b border-slate-200">
-                                <div className="flex flex-col md:flex-row gap-6 items-center">
-                                    <div className="w-full md:w-2/5 shrink-0 relative rounded-2xl overflow-hidden h-44">
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    <div className="w-full md:w-2/5 shrink-0 relative rounded-2xl overflow-hidden self-stretch min-h-[160px]">
                                         <img src={story.prednasky.imageUrl || LectureImg} alt="Přednáška" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
                                     </div>
