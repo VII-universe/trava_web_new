@@ -72,10 +72,12 @@ const Lectures = ({ scrollProgress }) => {
         {/* BACKGROUND — jen opacity, žádný Y pohyb */}
         <motion.div style={{ opacity: containerOpacity, zIndex: 40 }}
             className="absolute inset-0 w-full h-full pointer-events-none">
-            {/* Mobil: foto pozadí přes celou obrazovku */}
+            {/* Mobil: foto nahoře + tmavý panel dole — oba jen opacity */}
             <div className="md:hidden absolute inset-0">
                 <img src={Tour50Img} className="absolute inset-0 w-full h-full object-cover object-top" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/40 to-slate-950" />
+                {/* Tmavý panel dole — stejná výška jako content blok */}
+                <div className="absolute bottom-0 left-0 right-0 bg-slate-950" style={{ height: '64%' }} />
             </div>
             {/* Desktop: tmavý gradient */}
             <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-[#1A202C] to-[#0F172A]" />
@@ -102,8 +104,8 @@ const Lectures = ({ scrollProgress }) => {
                         </h2>
                     </div>
 
-                    {/* Obsah — přirozené stohování od vrchu, bez flex-1 roztahování */}
-                    <div className="flex-1 bg-slate-950 px-4 pt-3 pb-4 flex flex-col gap-2.5">
+                    {/* Obsah — průhledný, pozadí řeší background vrstva */}
+                    <div className="flex-1 px-4 pt-3 pb-4 flex flex-col gap-2.5">
 
                         {/* Audience grid */}
                         <div className="grid grid-cols-2 gap-2">
