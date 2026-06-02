@@ -271,9 +271,9 @@ const Hotel = ({ scrollProgress }) => {
                     [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80]
                     [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70]
                     [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
-                    <motion.div className="max-w-5xl w-full bg-white/90 backdrop-blur-2xl border border-white/70 shadow-2xl rounded-[2rem] overflow-hidden pointer-events-auto flex" whileHover={{ y: -3 }}>
+                    <motion.div className="max-w-5xl w-full bg-white/90 backdrop-blur-2xl border border-white/70 shadow-2xl rounded-[2rem] pointer-events-auto flex" whileHover={{ y: -3 }}>
                         {/* Left image */}
-                        <div className="w-[42%] relative flex-shrink-0">
+                        <div className="w-[42%] relative flex-shrink-0 overflow-hidden rounded-l-[2rem]">
                             <img loading="lazy" src={HotelHero} className="w-full h-full object-cover" alt="" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/20 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
