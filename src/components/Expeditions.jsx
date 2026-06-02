@@ -1026,7 +1026,6 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                             regions={regions}
                             onRegionClick={handleSelect}
                             focusRegionId={focusId}
-                            useGoogleMaps
                         />
                     </div>
                 </div>
