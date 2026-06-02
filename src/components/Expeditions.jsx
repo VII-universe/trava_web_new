@@ -1259,7 +1259,7 @@ const Expeditions = ({ scrollProgress }) => {
             >
                 {/* ── Mobile carousel ── */}
                 {/* ── MOBILE: 2-kartový horizontální scroll ── */}
-                <div className="md:hidden w-full h-full flex flex-col pointer-events-auto overflow-hidden">
+                <div className="md:hidden w-full h-full flex flex-col justify-center pointer-events-auto overflow-hidden">
 
                     {/* Kompaktní header */}
                     <div className="shrink-0 flex items-center gap-2.5 px-4 pt-3 pb-2">
