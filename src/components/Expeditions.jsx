@@ -700,12 +700,12 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                         stroke="#3a6a2a" strokeWidth="1.2" strokeDasharray="4 2.5" opacity="0.7" />
                     <text x="718" y="231" textAnchor="middle" fill="#2a5a1a" fontSize="9.5"
                         fontFamily="sans-serif" fontStyle="italic" fontWeight="600"
-                        filter="url(#thalo)">Sagarmatha NP</text>
+                        stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Sagarmatha NP</text>
                     <ellipse cx="390" cy="140" rx="58" ry="36"
                         stroke="#3a6a2a" strokeWidth="1.2" strokeDasharray="4 2.5" opacity="0.65" />
                     <text x="390" y="183" textAnchor="middle" fill="#2a5a1a" fontSize="9"
                         fontFamily="sans-serif" fontStyle="italic" fontWeight="600"
-                        filter="url(#thalo)">Annapurna CA</text>
+                        stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Annapurna CA</text>
                 </g>}
 
                 {/* ── Trekingové trasy — jen desktop ── */}
@@ -718,20 +718,22 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                                 strokeWidth="2" strokeLinecap="round" strokeDasharray="6 4" />
                         </g>
                     ))}
-                    <text x="702" y="204" fill="#7a3c08" fontSize="9" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">EBC Trek</text>
-                    <text x="432" y="155" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">Annapurna Circuit</text>
-                    <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" filter="url(#thalo)">Langtang</text>
+                    <text x="702" y="204" fill="#7a3c08" fontSize="9" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">EBC Trek</text>
+                    <text x="432" y="155" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Annapurna Circuit</text>
+                    <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Langtang</text>
                 </g>}
 
-                {/* Fotky regionů — jen při hoveru */}
+                {/* Fotky regionů — jen při hoveru (clipPath na <g> kvůli Chrome) */}
                 {NEPAL_REGION_PATHS.map(r => {
                     const reg = regions.find(x => x.id === r.id);
                     if (!reg?.image) return null;
                     return (
-                        <image key={`img-${r.id}`} href={reg.image} x="0" y="0" width="820" height="290"
-                            preserveAspectRatio="xMidYMid slice" clipPath={`url(#cp-${r.id})`}
-                            opacity={hovered === r.id ? 0.35 : 0}
-                            style={{ transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
+                        <g key={`img-${r.id}`} clipPath={`url(#cp-${r.id})`} style={{ pointerEvents: 'none' }}>
+                            <image href={reg.image} x="0" y="0" width="820" height="290"
+                                preserveAspectRatio="xMidYMid slice"
+                                opacity={hovered === r.id ? 0.35 : 0}
+                                style={{ transition: 'opacity 0.3s ease' }} />
+                        </g>
                     );
                 })}
 
@@ -777,8 +779,8 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                             <polygon points={`${p.x},${p.tip} ${p.x},${sl} ${p.x+sw},${sl}`} fill="#ddd9d2" opacity="0.9" />
                             {/* Text jen na desktopu */}
                             {!isMobile && <>
-                                <text x={p.x+p.lx} y={p.baseY+22} textAnchor={p.anchor} fill="#1a0e04" fontSize="17" fontFamily="Georgia,serif" fontStyle="italic" fontWeight="700" filter="url(#thalo)">{p.name}</text>
-                                <text x={p.x+p.lx} y={p.baseY+40} textAnchor={p.anchor} fill="#5a3820" fontSize="14" fontFamily="monospace" filter="url(#thalo)">{p.alt}</text>
+                                <text x={p.x+p.lx} y={p.baseY+22} textAnchor={p.anchor} fill="#1a0e04" fontSize="17" fontFamily="Georgia,serif" fontStyle="italic" fontWeight="700" stroke="rgba(240,235,222,0.98)" strokeWidth="3.5" strokeLinejoin="round" paintOrder="stroke fill">{p.name}</text>
+                                <text x={p.x+p.lx} y={p.baseY+40} textAnchor={p.anchor} fill="#5a3820" fontSize="14" fontFamily="monospace" stroke="rgba(240,235,222,0.95)" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke fill">{p.alt}</text>
                             </>}
                         </g>
                     );
@@ -808,7 +810,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                                     fontSize={labelSize}
                                     fontFamily={isCapital ? "Georgia, serif" : "Arial, sans-serif"}
                                     fontWeight={isCapital ? '700' : isCity ? '600' : '500'}
-                                    filter="url(#thalo)">{c.name}</text>
+                                    stroke="rgba(240,235,222,0.95)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">{c.name}</text>
                             )}
                         </g>
                     );
