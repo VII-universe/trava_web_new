@@ -585,13 +585,18 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     {NEPAL_REGION_PATHS.map(r => (
                         <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}><path d={r.path} /></clipPath>
                     ))}
-                    {/* Masky pro fotky regionů — mask je cross-browser spolehlivější než clipPath na <image> */}
-                    {NEPAL_REGION_PATHS.map(r => (
-                        <mask key={`mask-${r.id}`} id={`mask-${r.id}`} maskUnits="userSpaceOnUse">
-                            <rect width="820" height="390" y="-50" fill="black" />
-                            <path d={r.path} fill="white" />
-                        </mask>
-                    ))}
+                    {/* Pattern fill pro fotky regionů — path s fill=url(#pattern) = obrázek přirozeně ořízlý tvarem */}
+                    {NEPAL_REGION_PATHS.map(r => {
+                        const reg = regions.find(x => x.id === r.id);
+                        if (!reg?.image) return null;
+                        return (
+                            <pattern key={`pat-${r.id}`} id={`pat-${r.id}`}
+                                patternUnits="userSpaceOnUse" x="0" y="-50" width="820" height="390">
+                                <image href={reg.image} x="0" y="-50" width="820" height="390"
+                                    preserveAspectRatio="xMidYMid slice" />
+                            </pattern>
+                        );
+                    })}
                     <clipPath id="nepalClip">
                         <path d={NEPAL_OUTLINE} />
                     </clipPath>
@@ -730,14 +735,13 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Langtang</text>
                 </g>}
 
-                {/* Fotky regionů — mask je cross-browser spolehlivější než clipPath na <image> */}
+                {/* Fotky regionů — path s pattern fill = přirozený ořez tvarem oblasti */}
                 {NEPAL_REGION_PATHS.map(r => {
                     const reg = regions.find(x => x.id === r.id);
                     if (!reg?.image) return null;
                     return (
-                        <image key={`img-${r.id}`} href={reg.image} x="0" y="-50" width="820" height="390"
-                            preserveAspectRatio="xMidYMid slice"
-                            mask={`url(#mask-${r.id})`}
+                        <path key={`img-${r.id}`} d={r.path}
+                            fill={`url(#pat-${r.id})`}
                             opacity={hovered === r.id ? 0.35 : 0}
                             style={{ transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
                     );
