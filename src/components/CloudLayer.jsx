@@ -221,9 +221,9 @@ const headerV = {
 };
 
 const LogoShowcase = ({ scrollProgress }) => {
-    const opacity = useTransform(scrollProgress, [0.693, 0.702, 0.722, 0.740], [0, 1, 1, 0]);
-    const scale   = useTransform(scrollProgress, [0.693, 0.704], [0.94, 1]);
-    const y       = useTransform(scrollProgress, [0.693, 0.704, 0.722, 0.740], ['18px', '0px', '0px', '-12px']);
+    const opacity = useTransform(scrollProgress, [0.680, 0.690, 0.722, 0.740], [0, 1, 1, 0]);
+    const scale   = useTransform(scrollProgress, [0.680, 0.692], [0.94, 1]);
+    const y       = useTransform(scrollProgress, [0.680, 0.690, 0.722, 0.740], ['18px', '0px', '0px', '-12px']);
 
     /* Sledujeme kdy je showcase viditelný → spouštíme stagger */
     const [visible, setVisible] = useState(false);
