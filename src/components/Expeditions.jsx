@@ -581,9 +581,16 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
             {/* ── SVG map — plynulý zoom přes animovaný viewBox ── */}
             <motion.svg viewBox={animViewBox} className="w-full h-full" style={{ display: 'block' }}>
                 <defs>
-                    {/* Clip paths pro regiony i pro Nepál jako celek */}
+                    {/* Clip paths pro Nepál jako celek */}
                     {NEPAL_REGION_PATHS.map(r => (
                         <clipPath key={`cp-${r.id}`} id={`cp-${r.id}`}><path d={r.path} /></clipPath>
+                    ))}
+                    {/* Masky pro fotky regionů — mask je cross-browser spolehlivější než clipPath na <image> */}
+                    {NEPAL_REGION_PATHS.map(r => (
+                        <mask key={`mask-${r.id}`} id={`mask-${r.id}`} maskUnits="userSpaceOnUse">
+                            <rect width="820" height="390" y="-50" fill="black" />
+                            <path d={r.path} fill="white" />
+                        </mask>
                     ))}
                     <clipPath id="nepalClip">
                         <path d={NEPAL_OUTLINE} />
@@ -723,17 +730,16 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     <text x="502" y="168" fill="#7a3c08" fontSize="8.5" fontFamily="sans-serif" fontStyle="italic" fontWeight="600" stroke="rgba(240,235,222,0.92)" strokeWidth="2.5" strokeLinejoin="round" paintOrder="stroke fill">Langtang</text>
                 </g>}
 
-                {/* Fotky regionů — jen při hoveru (clipPath na <g> kvůli Chrome) */}
+                {/* Fotky regionů — mask je cross-browser spolehlivější než clipPath na <image> */}
                 {NEPAL_REGION_PATHS.map(r => {
                     const reg = regions.find(x => x.id === r.id);
                     if (!reg?.image) return null;
                     return (
-                        <g key={`img-${r.id}`} clipPath={`url(#cp-${r.id})`} style={{ pointerEvents: 'none' }}>
-                            <image href={reg.image} x="0" y="0" width="820" height="290"
-                                preserveAspectRatio="xMidYMid slice"
-                                opacity={hovered === r.id ? 0.35 : 0}
-                                style={{ transition: 'opacity 0.3s ease' }} />
-                        </g>
+                        <image key={`img-${r.id}`} href={reg.image} x="0" y="-50" width="820" height="390"
+                            preserveAspectRatio="xMidYMid slice"
+                            mask={`url(#mask-${r.id})`}
+                            opacity={hovered === r.id ? 0.35 : 0}
+                            style={{ transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
                     );
                 })}
 
