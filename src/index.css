@@ -7,6 +7,16 @@
 @layer base {
   body {
     @apply bg-ivory text-slate-800 font-sans antialiased overflow-x-hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Safari: prevent fixed/sticky positioning bugs caused by overflow-x:hidden */
+    min-height: 100%;
+  }
+
+  /* Safari: ensure h-screen maps to correct viewport height */
+  html {
+    height: -webkit-fill-available;
+    height: 100%;
   }
 }
 

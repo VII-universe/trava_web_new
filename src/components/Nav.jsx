@@ -138,8 +138,8 @@ const Nav = ({ scrollProgress }) => {
                             <X className="w-6 h-6" />
                         </button>
 
-                        <div className="min-h-full flex flex-col items-center justify-center py-20 px-6">
-                            <nav className="flex flex-col gap-2 sm:gap-3 md:gap-4 [@media(min-height:780px)]:gap-6 [@media(min-height:960px)]:gap-8 text-center w-full max-w-2xl">
+                        <div className="min-h-full flex flex-col items-center justify-center py-10 md:py-20 px-6">
+                            <nav className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 text-center w-full max-w-2xl">
                                 <h4 className="text-gold-500 font-sans uppercase tracking-[0.4em] text-xs font-bold mb-2 md:mb-4">
                                     Navigace Výpravou
                                 </h4>
@@ -150,7 +150,7 @@ const Nav = ({ scrollProgress }) => {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 + index * 0.05, duration: 0.4 }}
                                         onClick={() => handleNavClick(item.progress)}
-                                        className="group relative inline-flex items-center justify-center font-serif text-2xl sm:text-3xl [@media(min-height:780px)]:md:text-4xl [@media(min-height:960px)]:md:text-5xl text-slate-400 hover:text-white transition-colors duration-300 py-0.5"
+                                        className="group relative inline-flex items-center justify-center font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-slate-400 hover:text-white transition-colors duration-300 py-0.5"
                                     >
                                         <span className="relative z-10">{item.label}</span>
                                         <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-gold-500 group-hover:w-1/2 transition-all duration-300" />

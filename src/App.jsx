@@ -93,6 +93,49 @@ function App() {
           {/* Navigation Overlay */}
           <Nav scrollProgress={smoothProgress} />
 
+          {/* Floating Social Media Bar on bottom-left (Desktop only) */}
+          <div className="hidden md:flex fixed bottom-8 left-8 z-[80] flex-col gap-3">
+            <a
+              href="https://www.instagram.com/honzatravatravnicek"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-slate-800/10 bg-white/70 backdrop-blur-md shadow-md flex items-center justify-center text-slate-700 hover:bg-gold-500 hover:border-gold-500 hover:text-white hover:scale-110 transition-all duration-300"
+              title="Instagram"
+            >
+              <span className="sr-only">Instagram</span>
+              <svg className="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/honzatrava"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-slate-800/10 bg-white/70 backdrop-blur-md shadow-md flex items-center justify-center text-slate-700 hover:bg-gold-500 hover:border-gold-500 hover:text-white hover:scale-110 transition-all duration-300"
+              title="Facebook"
+            >
+              <span className="sr-only">Facebook</span>
+              <svg className="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a
+              href="https://www.youtube.com/@honzatrava"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-slate-800/10 bg-white/70 backdrop-blur-md shadow-md flex items-center justify-center text-slate-700 hover:bg-red-500 hover:border-red-500 hover:text-white hover:scale-110 transition-all duration-300"
+              title="YouTube"
+            >
+              <span className="sr-only">YouTube</span>
+              <svg className="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12.19a29 29 0 0 0 1.46 5.77 2.78 2.78 0 0 0 1.95 1.96c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12.19a29 29 0 0 0-1.46-5.77z"></path>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
+              </svg>
+            </a>
+          </div>
+
           {/* Global Progress Indicators */}
           <ProgressBar scrollProgress={smoothProgress} />
           <Altimeter scrollProgress={smoothProgress} />

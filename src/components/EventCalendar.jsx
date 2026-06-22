@@ -165,6 +165,7 @@ export default function EventCalendar({ onClose }) {
     const [hoveredDay, setHoveredDay] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
     const [eventDetail, setEventDetail] = useState(null);
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
 
     const filtered = filter === 'all' ? allEvents : allEvents.filter(e => e.type === filter);
 
@@ -250,111 +251,181 @@ export default function EventCalendar({ onClose }) {
                             <div className="overflow-y-auto flex-1" data-lenis-prevent>
                                 <div className="px-5 py-5">
 
-                                    {/* Filter chips */}
-                                    <div className="flex gap-2 mb-5">
-                                        {FILTERS.map(f => (
-                                            <button key={f.key} onClick={() => { setFilter(f.key); setSelectedDay(null); }}
-                                                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${filter === f.key ? f.active : f.idle}`}>
-                                                {f.dot && <span className={`w-1.5 h-1.5 rounded-full ${f.dot}`} />}
-                                                {f.label}
+                                    {/* View Switcher & Filter Chips */}
+                                    <div className="flex flex-col gap-3 mb-5 border-b border-white/5 pb-4">
+                                        <div className="flex bg-white/5 p-0.5 rounded-xl border border-white/8 w-full">
+                                            <button
+                                                type="button"
+                                                onClick={() => { setViewMode('grid'); setSelectedDay(null); }}
+                                                className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${viewMode === 'grid' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                                            >
+                                                Kalendář
                                             </button>
-                                        ))}
+                                            <button
+                                                type="button"
+                                                onClick={() => { setViewMode('list'); setSelectedDay(null); }}
+                                                className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${viewMode === 'list' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                                            >
+                                                Seznam akcí
+                                            </button>
+                                        </div>
+
+                                        <div className="flex gap-2">
+                                            {FILTERS.map(f => (
+                                                <button key={f.key} onClick={() => { setFilter(f.key); setSelectedDay(null); }}
+                                                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all ${filter === f.key ? f.active : f.idle}`}>
+                                                    {f.dot && <span className={`w-1.5 h-1.5 rounded-full ${f.dot}`} />}
+                                                    {f.label}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
 
-                                    {/* Month nav */}
-                                    <div className="flex items-center justify-between mb-4">
-                                        <button onClick={prevMonth}
-                                            className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
-                                            <ChevronLeft className="w-5 h-5" />
-                                        </button>
-                                        <h3 className="text-white font-bold text-lg tracking-tight">
-                                            {MONTHS[month]} {year}
-                                        </h3>
-                                        <button onClick={nextMonth}
-                                            className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
-                                            <ChevronRight className="w-5 h-5" />
-                                        </button>
-                                    </div>
+                                    {viewMode === 'list' ? (
+                                        /* ── List View ── */
+                                        <div className="space-y-2.5 pb-4">
+                                            {(() => {
+                                                const todayStr = new Date().toISOString().slice(0, 10);
+                                                const upcoming = filtered.filter(e => e.date >= todayStr);
+                                                
+                                                if (upcoming.length === 0) {
+                                                    return (
+                                                        <div className="text-center py-10 text-slate-500 text-xs">
+                                                            Žádné nadcházející akce.
+                                                        </div>
+                                                    );
+                                                }
 
-                                    {/* Day labels */}
-                                    <div className="grid grid-cols-7 mb-1">
-                                        {DAYS.map(d => (
-                                            <div key={d} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-wider py-1">
-                                                {d}
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    {/* Calendar grid */}
-                                    <div className="grid grid-cols-7 gap-px">
-                                        {cells.map((day, i) => {
-                                            if (!day) return <div key={i} className="aspect-square" />;
-                                            const ds = dateStr(day);
-                                            const evs = byDate[ds] || [];
-                                            const hasL = evs.some(e => e.type === 'lecture');
-                                            const hasP = evs.some(e => e.type === 'project');
-                                            const isSel = selectedDay === day;
-                                            const isCur = isToday(day);
-
-                                            return (
-                                                <div key={i} className="relative">
-                                                    <button
-                                                        onClick={() => { setSelectedDay(isSel ? null : (evs.length ? day : null)); }}
-                                                        onMouseEnter={() => evs.length && setHoveredDay(day)}
-                                                        onMouseLeave={() => setHoveredDay(null)}
-                                                        className={`relative w-full aspect-square flex flex-col items-center justify-center rounded-xl transition-all duration-150
-                                                            ${evs.length ? 'cursor-pointer hover:bg-white/8' : 'cursor-default'}
-                                                            ${isSel ? 'bg-white/12 ring-1 ring-white/25' : ''}
-                                                            ${isCur && !isSel ? 'ring-1 ring-gold-500/50' : ''}`}
-                                                    >
-                                                        <span className={`text-sm font-semibold leading-none ${isCur ? 'text-gold-400' : evs.length ? 'text-white' : 'text-slate-600'}`}>
-                                                            {day}
-                                                        </span>
-                                                        {evs.length > 0 && (
-                                                            <div className="flex gap-0.5 mt-1">
-                                                                {hasL && <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />}
-                                                                {hasP && <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />}
+                                                return upcoming.map(ev => {
+                                                    const isLecture = ev.type === 'lecture';
+                                                    const accentColor = isLecture ? 'border-gold-500/30 bg-gold-500/5 hover:border-gold-500/50' : 'border-blue-500/30 bg-blue-500/5 hover:border-blue-500/50';
+                                                    const typeBadge = isLecture ? 'bg-gold-500/20 text-gold-300 border-gold-500/30' : 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+                                                    
+                                                    return (
+                                                        <button
+                                                            key={ev.id}
+                                                            onClick={() => setEventDetail(ev)}
+                                                            className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 ${accentColor} flex flex-col gap-2 group pointer-events-auto`}
+                                                        >
+                                                            <div className="flex justify-between items-center w-full">
+                                                                <span className="text-[10px] font-mono text-slate-400 font-bold">{formatDate(ev.date)}</span>
+                                                                <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 border rounded ${typeBadge}`}>
+                                                                    {isLecture ? 'Přednáška' : 'Projekt'}
+                                                                </span>
                                                             </div>
-                                                        )}
-                                                    </button>
+                                                            <div>
+                                                                <h4 className="font-serif text-sm text-white group-hover:text-gold-400 transition-colors leading-snug font-bold">{ev.title}</h4>
+                                                                {ev.subtitle && <p className="text-slate-400 text-xs mt-0.5 leading-normal">{ev.subtitle}</p>}
+                                                            </div>
+                                                            {ev.location && (
+                                                                <p className="text-[10px] text-slate-500 font-sans flex items-center gap-1 mt-0.5">
+                                                                    <MapPin className="w-3 h-3 text-gold-500/60 pointer-events-none" /> {ev.location}
+                                                                </p>
+                                                            )}
+                                                        </button>
+                                                    );
+                                                });
+                                            })()}
+                                        </div>
+                                    ) : (
+                                        /* ── Original Calendar Grid View ── */
+                                        <>
+                                            {/* Month nav */}
+                                            <div className="flex items-center justify-between mb-4">
+                                                <button onClick={prevMonth}
+                                                    className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
+                                                    <ChevronLeft className="w-5 h-5" />
+                                                </button>
+                                                <h3 className="text-white font-bold text-lg tracking-tight">
+                                                    {MONTHS[month]} {year}
+                                                </h3>
+                                                <button onClick={nextMonth}
+                                                    className="p-2 text-slate-400 hover:text-white hover:bg-white/8 rounded-xl transition-colors">
+                                                    <ChevronRight className="w-5 h-5" />
+                                                </button>
+                                            </div>
 
-                                                    {/* Hover tooltip — desktop only */}
-                                                    <AnimatePresence>
-                                                        {hoveredDay === day && evs.length > 0 && !isSel && (
-                                                            <motion.div
-                                                                initial={{ opacity: 0, y: 6, scale: 0.94 }}
-                                                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                                exit={{ opacity: 0, y: 4, scale: 0.94 }}
-                                                                transition={{ duration: 0.14 }}
-                                                                className="absolute z-50 bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none hidden md:block"
-                                                                style={{ width: 210 }}
+                                            {/* Day labels */}
+                                            <div className="grid grid-cols-7 mb-1">
+                                                {DAYS.map(d => (
+                                                    <div key={d} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-wider py-1">
+                                                        {d}
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {/* Calendar grid */}
+                                            <div className="grid grid-cols-7 gap-px">
+                                                {cells.map((day, i) => {
+                                                    if (!day) return <div key={i} className="aspect-square" />;
+                                                    const ds = dateStr(day);
+                                                    const evs = byDate[ds] || [];
+                                                    const hasL = evs.some(e => e.type === 'lecture');
+                                                    const hasP = evs.some(e => e.type === 'project');
+                                                    const isSel = selectedDay === day;
+                                                    const isCur = isToday(day);
+
+                                                    return (
+                                                        <div key={i} className="relative">
+                                                            <button
+                                                                onClick={() => { setSelectedDay(isSel ? null : (evs.length ? day : null)); }}
+                                                                onMouseEnter={() => evs.length && setHoveredDay(day)}
+                                                                onMouseLeave={() => setHoveredDay(null)}
+                                                                className={`relative w-full aspect-square flex flex-col items-center justify-center rounded-xl transition-all duration-150
+                                                                    ${evs.length ? 'cursor-pointer hover:bg-white/8' : 'cursor-default'}
+                                                                    ${isSel ? 'bg-white/12 ring-1 ring-white/25' : ''}
+                                                                    ${isCur && !isSel ? 'ring-1 ring-gold-500/50' : ''}`}
                                                             >
-                                                                <div className="bg-slate-800 border border-white/12 rounded-2xl p-3.5 shadow-2xl">
-                                                                    <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-slate-800 border-r border-b border-white/12 rotate-45" />
-                                                                    {evs.map((ev, idx) => (
-                                                                        <div key={ev.id} className={idx > 0 ? 'mt-2.5 pt-2.5 border-t border-white/8' : ''}>
-                                                                            <div className="flex items-center gap-1.5 mb-1">
-                                                                                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
-                                                                                <span className={`text-[10px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
-                                                                                    {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
-                                                                                </span>
-                                                                            </div>
-                                                                            <p className="text-white text-xs font-semibold leading-snug">{ev.title}</p>
-                                                                            {ev.location && (
-                                                                                <p className="text-slate-500 text-[10px] flex items-center gap-1 mt-0.5">
-                                                                                    <MapPin className="w-2.5 h-2.5" />{ev.location}
-                                                                                </p>
-                                                                            )}
+                                                                <span className={`text-sm font-semibold leading-none ${isCur ? 'text-gold-400' : evs.length ? 'text-white' : 'text-slate-600'}`}>
+                                                                    {day}
+                                                                </span>
+                                                                {evs.length > 0 && (
+                                                                    <div className="flex gap-0.5 mt-1">
+                                                                        {hasL && <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />}
+                                                                        {hasP && <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />}
+                                                                    </div>
+                                                                )}
+                                                            </button>
+
+                                                            {/* Hover tooltip — desktop only */}
+                                                            <AnimatePresence>
+                                                                {hoveredDay === day && evs.length > 0 && !isSel && (
+                                                                    <motion.div
+                                                                        initial={{ opacity: 0, y: 6, scale: 0.94 }}
+                                                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                                        exit={{ opacity: 0, y: 4, scale: 0.94 }}
+                                                                        transition={{ duration: 0.14 }}
+                                                                        className="absolute z-50 bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none hidden md:block"
+                                                                        style={{ width: 210 }}
+                                                                    >
+                                                                        <div className="bg-slate-800 border border-white/12 rounded-2xl p-3.5 shadow-2xl">
+                                                                            <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-slate-800 border-r border-b border-white/12 rotate-45" />
+                                                                            {evs.map((ev, idx) => (
+                                                                                <div key={ev.id} className={idx > 0 ? 'mt-2.5 pt-2.5 border-t border-white/8' : ''}>
+                                                                                    <div className="flex items-center gap-1.5 mb-1">
+                                                                                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${ev.type === 'lecture' ? 'bg-gold-400' : 'bg-blue-400'}`} />
+                                                                                        <span className={`text-[10px] font-bold uppercase tracking-wider ${ev.type === 'lecture' ? 'text-gold-500' : 'text-blue-400'}`}>
+                                                                                            {ev.type === 'lecture' ? 'Přednáška' : 'Projekt'}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <p className="text-white text-xs font-semibold leading-snug">{ev.title}</p>
+                                                                                    {ev.location && (
+                                                                                        <p className="text-slate-500 text-[10px] flex items-center gap-1 mt-0.5">
+                                                                                            <MapPin className="w-2.5 h-2.5" />{ev.location}
+                                                                                        </p>
+                                                                                    )}
+                                                                                </div>
+                                                                            ))}
                                                                         </div>
-                                                                    ))}
-                                                                </div>
-                                                            </motion.div>
-                                                        )}
-                                                    </AnimatePresence>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+                                                                    </motion.div>
+                                                                )}
+                                                            </AnimatePresence>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </>
+                                    )}
 
                                     {/* Selected day detail */}
                                     <AnimatePresence>

@@ -17,7 +17,7 @@ import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.jpg
 import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
 import PortraitImg from '../assets/zmensene/portrety/expedice_a_treky/_mg_1567-3.jpg';
 import MiriLeadImg from '../assets/zmensene/portrety/miri/dsc05711.jpg';
-import SubinLeadImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
+import SubinLeadImg from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.jpg';
 import KtmPubImg from '../assets/zmensene/portrety/ktm/czech-pub-highlander-001-hires.jpg';
 import KtmPub2Img from '../assets/zmensene/portrety/ktm/czech-pub-highlander-002-hires.jpg';
 import LectureImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
@@ -39,7 +39,7 @@ const GALLERY_PHOTOS = [
     { src: SubinLeadImg,     label: 'Subin Thakuri',         pos: 'object-center' },
 ];
 
-const DEF_ABOUT = { tagline: 'Honza Tráva — profesionální dobrodruh', title: 'Horolezec. Cestovatel. Podnikatel.', description: 'Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.' };
+const DEF_ABOUT = { tagline: 'Honza Tráva — profesionální dobrodruh', title: 'Horolezec. Cestovatel. Průvodce.', description: 'Výstupy na osmitisícovky, expedice do Himálaje, vlastní hotel a pub v Káthmándú, přednáškové turné po celé republice. Honza Tráva žije naplno — a zve vás s sebou.' };
 const DEF_STORY_LOCAL = {
     zacatky: {
         sectionLabel: 'Začátky',
@@ -71,13 +71,13 @@ const DEF_STORY_LOCAL = {
         pubTitle: 'Czech Pub Nepal',
         pubText:  'Czech Pub Nepal není jen česká hospoda v Káthmándú. Je to místo návratů, setkávání a dlouhých večerů po cestách horami.',
         pubText2: 'Společně ho provozujeme se Subinem Thakurim a Miri Jirkovou. U čepovaného piva, smažáku nebo nepálského jídla se tu přirozeně potkávají cestovatelé, horolezci, expati i místní kamarádi.',
-        pubText3: 'Pro někoho první zastávka po příletu. Pro jiného poslední večer před odchodem do hor. A pro spoustu lidí už tak trochu druhý domov.',
+        pubText3: 'Pro někoho první zastávka po příletu. Pro jiného poslední večer před odchodem do hor. A pro spoustu lidí místo plné přátelství a historek z kopců.',
         hotelTitle: 'Hotel Kathmandu Base Camp',
         hotelText:  'Uprostřed ruchu Káthmándú existuje místo, kde člověk po návratu z hor konečně zpomalí. Horká sprcha, klidný pokoj, kafe na terase plné květin a pocit, že se není kam hnát.',
         hotelText2: 'Hotel Kathmandu Base Camp vznikl přirozeně — z letitého vztahu k místu, kam se sami pořád vracíme. Není to anonymní hotel pro turisty. Spíš základna, zázemí a místo setkávání lidí, kteří mají rádi hory, Nepál a cesty s přesahem.',
         hotelText3: 'Najdete ho jen pár minut od centra Thamelu. Přesto si tu člověk často připadá o kus dál od chaosu města. Ráno kontinentální snídaně, večer sdílení příběhů z treků a expedic na střešní terase nebo o pár kroků vedle v Czech Pubu.',
         hotelText4: 'Ať už vyrážíte do hor, nebo se z nich vracíte unavení a zaprášení, Kathmandu Base Camp je místo, kde můžete na chvíli vydechnout.',
-        hotelTagline: 'Pro někoho hotel. Pro někoho základní tábor. A pro spoustu lidí postupně druhý domov.',
+        hotelTagline: 'Pro někoho hotel. Pro někoho základní tábor. A pro spoustu lidí prostě místo, kam se s radostí vrací.',
         text: '',
         images: [],
     },
@@ -156,6 +156,7 @@ const About = ({ scrollProgress }) => {
 
     const [isStoryOpen, setIsStoryOpen] = useState(false);
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
+    const [osvetaSource, setOsvetaSource] = useState('main');
     const [galleryOpen, setGalleryOpen] = useState(false);
     const [lightboxIdx, setLightboxIdx] = useState(null);
 
@@ -301,7 +302,10 @@ const About = ({ scrollProgress }) => {
                             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
                         </button>
                         <button
-                            onClick={() => setIsOsvetaOpen(true)}
+                            onClick={() => {
+                                setOsvetaSource('main');
+                                setIsOsvetaOpen(true);
+                            }}
                             className="group relative inline-flex items-center justify-center gap-3 py-4 px-8 bg-white/70 hover:bg-white/90 text-slate-800 font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl transition-all duration-300 border border-slate-300/60 hover:border-slate-400/60 backdrop-blur-sm w-full sm:w-auto"
                         >
                             <span className="relative z-10">Osvěta & Zdraví</span>
@@ -346,7 +350,7 @@ const About = ({ scrollProgress }) => {
                                     Honza <span className="italic text-slate-300">Tráva.</span>
                                 </h1>
                                 <p className="text-white/50 text-[10px] font-mono tracking-[0.25em] uppercase">
-                                    Horolezec · Cestovatel · Podnikatel · Přednášející
+                                    Horolezec · Cestovatel · Průvodce · Přednášející
                                 </p>
                             </div>
                         </div>
@@ -491,7 +495,14 @@ const About = ({ scrollProgress }) => {
                                             <a href="https://www.fuckcancer.cz" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm">
                                                 Fuck Cancer <ExternalLink className="w-3 h-3" />
                                             </a>
-                                            <button onClick={() => setIsStoryOpen(false) || setTimeout(() => setIsOsvetaOpen(true), 50)} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm">
+                                            <button
+                                                onClick={() => {
+                                                    setOsvetaSource('story');
+                                                    setIsStoryOpen(false);
+                                                    setTimeout(() => setIsOsvetaOpen(true), 50);
+                                                }}
+                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-300 hover:border-gold-400 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm"
+                                            >
                                                 Osvěta & Zdraví <ArrowRight className="w-3 h-3" />
                                             </button>
                                         </div>
@@ -631,6 +642,18 @@ const About = ({ scrollProgress }) => {
                         onClick={(e) => e.stopPropagation()}
                         className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
                     >
+                        {osvetaSource === 'story' && (
+                            <button
+                                onClick={() => {
+                                    setIsOsvetaOpen(false);
+                                    setTimeout(() => setIsStoryOpen(true), 50);
+                                }}
+                                className="absolute top-6 left-6 z-10 flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/70 hover:bg-white/90 text-slate-900 font-bold text-xs uppercase tracking-wider transition-colors backdrop-blur-md shadow-sm border border-white/40 font-sans"
+                            >
+                                <ChevronLeft className="w-4 h-4 pointer-events-none" /> Zpět na příběh
+                            </button>
+                        )}
+
                         <button
                             onClick={() => setIsOsvetaOpen(false)}
                             className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/50 hover:bg-white/80 text-slate-900 transition-colors backdrop-blur-md shadow-sm border border-white/40"
@@ -674,10 +697,20 @@ const About = ({ scrollProgress }) => {
                                     </p>
                                 )}
                                 {osveta.section1Text3 && (
-                                    <p className="font-sans text-slate-700 leading-relaxed font-semibold mb-6">
+                                    <p className="font-sans text-slate-700 leading-relaxed font-semibold mb-4">
                                         {osveta.section1Text3}
                                     </p>
                                 )}
+                                <div className="mb-6">
+                                    <a
+                                        href="https://www.revmaliga.cz"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-200 font-sans"
+                                    >
+                                        Oficiální web Revma Liga <ExternalLink className="w-3.5 h-3.5 pointer-events-none" />
+                                    </a>
+                                </div>
 
                                 <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-4">{osveta.section2Title}</h3>
                                 <p className="font-sans text-slate-700 leading-relaxed mb-4">
@@ -689,10 +722,20 @@ const About = ({ scrollProgress }) => {
                                     </p>
                                 )}
                                 {osveta.section2Text3 && (
-                                    <p className="font-sans text-slate-700 leading-relaxed mb-6">
+                                    <p className="font-sans text-slate-700 leading-relaxed mb-4">
                                         {osveta.section2Text3}
                                     </p>
                                 )}
+                                <div className="mb-6">
+                                    <a
+                                        href="https://www.fuckcancer.cz"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-200 font-sans"
+                                    >
+                                        Oficiální web Fuck Cancer <ExternalLink className="w-3.5 h-3.5 pointer-events-none" />
+                                    </a>
+                                </div>
 
                                 <div className="mt-10 p-6 bg-slate-100 rounded-2xl border border-slate-200">
                                     <h4 className="font-serif text-xl text-slate-900 mb-3">{osveta.expertBoxTitle}</h4>
@@ -762,11 +805,8 @@ const About = ({ scrollProgress }) => {
                                         onClick={() => setLightboxIdx(i)}
                                         className="group relative rounded-xl overflow-hidden aspect-square cursor-zoom-in"
                                     >
-                                        <img src={photo.src} alt={photo.label} className={`w-full h-full object-cover ${photo.pos} group-hover:scale-105 transition-transform duration-500`} />
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300" />
-                                        <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                            <p className="text-white text-xs font-sans font-medium leading-tight">{photo.label}</p>
-                                        </div>
+                                        <img src={photo.src} alt="" className={`w-full h-full object-cover ${photo.pos} group-hover:scale-105 transition-transform duration-500`} />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 animate-fade-in" />
                                     </button>
                                 ))}
                             </div>
@@ -808,10 +848,9 @@ const About = ({ scrollProgress }) => {
                     >
                         <img
                             src={GALLERY_PHOTOS[lightboxIdx].src}
-                            alt={GALLERY_PHOTOS[lightboxIdx].label}
+                            alt=""
                             className="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl"
                         />
-                        <p className="text-white/50 text-sm font-sans mt-3 tracking-wide">{GALLERY_PHOTOS[lightboxIdx].label}</p>
                     </motion.div>
 
                     <button

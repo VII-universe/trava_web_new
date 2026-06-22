@@ -31,9 +31,13 @@ import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.jpg';
 import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.jpg';
 
 // Subin Assets
-import SubinLead from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07682.jpg';
-import SubinGallery1 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20241015_120407.jpg';
-import SubinGallery2 from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240729_142531.jpg';
+import SubinLead from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.jpg';
+import SubinGallery1 from '../assets/subin/709821647_27683722964561782_5900556086665768720_n.jpg';
+import SubinGallery2 from '../assets/subin/708222255_27683721301228615_6923514414452475433_n.jpg';
+import SubinGallery3 from '../assets/subin/726900823_27973041375629938_2489518176787229142_n.jpg';
+import SubinGallery4 from '../assets/subin/703890808_27563455109921902_6801214269235911091_n.jpg';
+import SubinGallery5 from '../assets/subin/709756548_27683698914564187_8442966694392456609_n.jpg';
+import SubinGallery6 from '../assets/subin/726808686_27973041822296560_7565319684635736943_n.jpg';
 
 function ModalSlider({ images, fallback, className = '', children }) {
     const all = images?.length ? images : (fallback ? [fallback] : []);
@@ -285,11 +289,126 @@ const REGIONS = [
         altitude: 'do 6961 m',
         bestSeason: 'Dle destinace',
         difficulty: 'Střední–Extrémní',
-        desc: 'Nepál je naše domovina, ale jezdíme i jinam. Aconcagua, Kilimandžáro, Elbrus nebo ekvádorské sopky — vždy se stejným přístupem a péčí.',
-        highlights: ['Aconcagua (6961 m) — vrchol obou Amerik', 'Kilimandžáro (5895 m) — střecha Afriky', 'Elbrus (5642 m) — střecha Evropy', 'Sopky Ekvádoru — Cotopaxi & Chimborazo'],
-        mapUrl: 'https://maps.google.com/maps?q=28.5,82.0&z=6&t=p&output=embed&hl=cs',
+        desc: 'Nepál je naše domovina, ale létáme i jinam. Aktuálně pořádáme výpravy do divoké Patagonie a na Kilimandžáro, případně na Aconcaguu či ekvádorské sopky — vždy s osobním přístupem a maximální péčí.',
+        highlights: ['Patagonie — divoká krajina na konci světa', 'Kilimandžáro (5895 m) — střecha Afriky', 'Aconcagua (6961 m) — vrchol obou Amerik', 'Sopky Ekvádoru — Cotopaxi & Chimborazo'],
+        mapUrl: 'https://maps.google.com/maps?q=-46.9,-72.3&z=5&t=p&output=embed&hl=cs',
     },
 ];
+
+const REGIONS_DETAILS = {
+    khumbu: {
+        itinerary: [
+            { day: 'Den 1', title: 'Přílet do Káthmándú', desc: 'Přílet do nepálského hlavního města, ubytování v hotelu v Thamelu, setkání s týmem a organizační příprava.' },
+            { day: 'Den 2', title: 'Odlet do Lukly (2840 m) & trek do Phakdingu (2610 m)', desc: 'Scénický let do jednoho z nejnebezpečnějších letišť světa. Poté zahájení treku údolím řeky Dudh Kosi.' },
+            { day: 'Den 3', title: 'Phakding – Namche Bazaar (3440 m)', desc: 'Stoupání podél řeky, překonání slavného visutého mostu Hillary Suspension Bridge a strmý výstup do hlavního města Šerpů.' },
+            { day: 'Den 4', title: 'Aklimatizační den v Namche Bazaar', desc: 'Výlet k hotelu Everest View (3880 m) s prvním pohledem na Mount Everest, Lhotse a Ama Dablam.' },
+            { day: 'Den 5', title: 'Namche Bazaar – Tengboche (3867 m)', desc: 'Cesta s nádhernými výhledy na himálajské velikány, zakončená výstupem k slavnému buddhistickému klášteru Tengboche.' },
+            { day: 'Den 6', title: 'Tengboche – Dingboche (4410 m)', desc: 'Sestup lesem a následný výstup do alpské krajiny nad hranicí lesa, úchvatné pohledy na Island Peak.' },
+            { day: 'Den 7', title: 'Aklimatizační den v Dingboche', desc: 'Výstup na vyhlídkový vrchol Nangkartshang Peak (5080 m) pro adaptaci na vyšší nadmořskou výšku.' },
+            { day: 'Den 8', title: 'Dingboche – Lobuche (4910 m)', desc: 'Pozvolné stoupání údolím k Thukle, kolem památníků obětem Mount Everestu až na okraj ledovce Khumbu.' },
+            { day: 'Den 9', title: 'Lobuche – Gorak Shep (5160 m) – Everest Base Camp (5364 m)', desc: 'Dosažení základního tábora pod Mount Everestem, sledování ledopádu Khumbu Icefall a návrat do Gorak Shepu.' },
+            { day: 'Den 10', title: 'Gorak Shep – Kala Patthar (5545 m) – Pheriche (4240 m)', desc: 'Ranní výstup na Kala Patthar pro nejlepší výhled na Mount Everest při východu slunce, následný sestup do Pheriche.' },
+            { day: 'Den 11', title: 'Pheriche – Namche Bazaar (3440 m)', desc: 'Dlouhý, ale převážně klesající pochod zpět do Namche Bazaaru.' },
+            { day: 'Den 12', title: 'Namche Bazaar – Lukla (2840 m)', desc: 'Závěrečný den pochodu zpět do Lukly, oslava úspěšného treku s nosiči a průvodci.' },
+            { day: 'Den 13', title: 'Odlet z Lukly do Káthmándú', desc: 'Ranní let zpět do Káthmándú, volný čas na nákupy suvenýrů a rozlučkovou večeři v Czech Pub Nepal.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/ZqLsz5Kq0Yk',
+        photos: [
+            'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80'
+        ]
+    },
+    annapurna: {
+        itinerary: [
+            { day: 'Den 1', title: 'Přejezd z Káthmándú do Dharapani (1860 m)', desc: 'Dlouhý celodenní přesun džípy podél divoké řeky Marsyangdi do výchozího bodu treku.' },
+            { day: 'Den 2', title: 'Dharapani – Chame (2670 m)', desc: 'Trek borovicovými lesy, překonání několika visutých mostů s výhledy na Lamjung Himal.' },
+            { day: 'Den 3', title: 'Chame – Pisang (3200 m)', desc: 'Stoupání úzkým údolím kolem dramatické skalní stěny Paungda Danda až do malebného Pisangu.' },
+            { day: 'Den 4', title: 'Pisang – Manang (3540 m)', desc: 'Cesta přes Horní Pisang a vesnici Ghyaru s panoramatickými výhledy na Annapurnu II a IV.' },
+            { day: 'Den 5', title: 'Aklimatizační den v Manangu', desc: 'Odpočinkový den, možnost výletu k ledovcovému jezeru Gangapurna nebo k jeskyni Milarepa.' },
+            { day: 'Den 6', title: 'Manang – Yak Kharka (4018 m)', desc: 'Kratší výstup do vysokohorské zóny, kde se pasou divocí modří berani a jaci.' },
+            { day: 'Den 7', title: 'Yak Kharka – Thorong Phedi (4450 m)', desc: 'Pozvolný výstup na úpatí průsmyku Thorong La, příprava a časný spánek před nejnáročnějším dnem.' },
+            { day: 'Den 8', title: 'Thorong Phedi – Thorong La Pass (5416 m) – Muktinath (3760 m)', desc: 'Časný ranní výstup do nejvyššího bodu treku Thorong La a dlouhý sestup k posvátným chrámům Muktinath.' },
+            { day: 'Den 9', title: 'Muktinath – Jomsom (2720 m)', desc: 'Sestup větrným a polopouštním korytem řeky Kali Gandaki přes Kagbeni až do Jomsomu.' },
+            { day: 'Den 10', title: 'Odlet/přejezd z Jomsomu do Pokhary', desc: 'Krátký přelet mezi horami nebo divoká jízda džípem do jezerního města Pokhara, zasloužený odpočinek.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/5aFv9m1gUa8',
+        photos: [
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=600&q=80'
+        ]
+    },
+    mustang: {
+        itinerary: [
+            { day: 'Den 1', title: 'Přejezd do Kagbeni (2800 m)', desc: 'Přesun do Jomsomu a následný pěší přesun do Kagbeni, které je historickou branou do Horního Mustangu.' },
+            { day: 'Den 2', title: 'Kagbeni – Chele (3050 m)', desc: 'Vstup do chráněné oblasti, cesta polopouštní krajinou podél řeky Kali Gandaki až do vesnice Chele.' },
+            { day: 'Den 3', title: 'Chele – Syangboche (3800 m)', desc: 'Výstup přes několik sedel (např. Taklam La 3624 m) s výhledy na osmitisícovku Dhaulágirí.' },
+            { day: 'Den 4', title: 'Syangboche – Ghami (3520 m)', desc: 'Cesta kolem typických čortenů a tibetských vesnic s výhledy na barevně zbarvené útesy.' },
+            { day: 'Den 5', title: 'Ghami – Tsarang (3560 m)', desc: 'Míjení nejdelší Mani zdi v Nepálu a výstup do Tsarang s jeho dominantním palácem a klášterem.' },
+            { day: 'Den 6', title: 'Tsarang – Lo Manthang (3810 m)', desc: 'Dosažení opevněného hlavního města království Lo, kolébky tibetské kultury.' },
+            { day: 'Den 7', title: 'Průzkum Lo Manthangu a okolí', desc: 'Návštěva historických klášterů, královského paláce a celodenní výlet k tajemným jeskyním Chosar.' },
+            { day: 'Den 8', title: 'Lo Manthang – Dhakmar (3820 m)', desc: 'Návrat jinou trasou kolem rudých skalních stěn a starobylého kláštera Ghar Gompa.' },
+            { day: 'Den 9', title: 'Dhakmar – Ghiling (3570 m)', desc: 'Sestup pustou větrnou krajinou, ubytování v autentické vesnici Ghiling.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/5aFv9m1gUa8',
+        photos: [
+            'https://images.unsplash.com/photo-1486916856992-e4db22c8df33?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'
+        ]
+    },
+    manaslu: {
+        itinerary: [
+            { day: 'Den 1', title: 'Přejezd z Káthmándú do Machha Khola (900 m)', desc: 'Cesta džípem z údolí Káthmándú do hlubokého kaňonu řeky Budhi Gandaki.' },
+            { day: 'Den 2', title: 'Machha Khola – Jagat (1410 m)', desc: 'Trek podél divoké řeky, stoupání přes visuté mosty a vstup do chráněné oblasti Manaslu v Jagatu.' },
+            { day: 'Den 3', title: 'Jagat – Deng (1800 m)', desc: 'Pochod bambusovými lesy a úzkými roklemi, které se postupně rozšiřují do tibetských vesnic.' },
+            { day: 'Den 4', title: 'Deng – Namrung (2630 m)', desc: 'Strmější stoupání tibetskou kulturní oblastí s malovanými čorteny a modlitebními mlýnky.' },
+            { day: 'Den 5', title: 'Namrung – Lho (3180 m)', desc: 'Pochod kolem buddhistických klášterů s prvním úchvatným výhledem na majestátní vrchol Manáslu.' },
+            { day: 'Den 6', title: 'Lho – Sama Gaon (3530 m)', desc: 'Cesta do největší vesnice v oblasti pod úpatím osmitisícovky Manáslu, aklimatizační příprava.' },
+            { day: 'Den 7', title: 'Aklimatizační den v Sama Gaon', desc: 'Výlet k základnímu táboru Manaslu Base Camp (4400 m) nebo k posvátnému jezeru Birendra Tal.' },
+            { day: 'Den 8', title: 'Sama Gaon – Samdo (3860 m)', desc: 'Krátký trek divokou krajinou blízko tibetské hranice, pozorování stád jaků.' },
+            { day: 'Den 9', title: 'Samdo – Dharmasala (4460 m)', desc: 'Pochod na úpatí průsmyku Larke La, ubytování v kamenné chatě (Larke Phedi).' },
+            { day: 'Den 10', title: 'Dharmasala – Larke La Pass (5106 m) – Bimthang (3720 m)', desc: 'Náročný celodenní přechod vysokohorského sedla s výhledy na Annapurnu II a Himlung Himal, sestup do Bimthangu.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/5aFv9m1gUa8',
+        photos: [
+            'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'
+        ]
+    },
+    langtang: {
+        itinerary: [
+            { day: 'Den 1', title: 'Přejezd ze Syabrubesi do Lama Hotel (2480 m)', desc: 'Přesun z Káthmándú do Syabrubesi džípem a následně pěšky podél řeky Langtang Khola.' },
+            { day: 'Den 2', title: 'Lama Hotel – Langtang Village (3430 m)', desc: 'Postupný výstup údolím s výhledy na Langtang Lirung, průchod vesnicí obnovenou po zemětřesení.' },
+            { day: 'Den 3', title: 'Langtang Village – Kyanjin Gompa (3870 m)', desc: 'Krátký pochod vysokohorskými pastvinami k hlavnímu buddhistickému klášteru v údolí a místní sýrárně.' },
+            { day: 'Den 4', title: 'Výstup na Kyanjin Ri (4773 m) / Tserko Ri (4984 m)', desc: 'Aklimatizační a vyhlídkový výstup na jeden z vrcholů nad Kyanjin Gompa pro úchvatný 360° výhled na ledovce.' },
+            { day: 'Den 5', title: 'Kyanjin Gompa – Lama Hotel (2480 m)', desc: 'Rychlý celodenní sestup údolím zpět do Lama Hotelu.' },
+            { day: 'Den 6', title: 'Lama Hotel – Syabrubesi (1550 m) – Káthmándú', desc: 'Návrat k džípu a přejezd zpět do hlavního města, zakončení výpravy.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/5aFv9m1gUa8',
+        photos: [
+            'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=600&q=80'
+        ]
+    },
+    world: {
+        itinerary: [
+            { day: 'Aklimatizace & příprava', title: 'Zahájení expedice a postupná aklimatizace', desc: 'Přílet do výchozí země, přesun do základního tábora a postupné aklimatizační výstupy na okolní vrcholy.' },
+            { day: 'Výstup do výškových táborů', title: 'Budování výškových táborů', desc: 'Přenášení materiálu, budování postupových táborů a čekání na vhodné povětrnostní okno.' },
+            { day: 'Vrcholový den', title: 'Útok na vrchol', desc: 'Časný noční start, překonání klíčových technických pasáží a dosažení samotného vrcholu za východu slunce.' },
+            { day: 'Návrat a sestup', title: 'Bezpečný sestup zpět', desc: 'Sestup z výškových táborů zpět do základního tábora, sbalení materiálu a návrat do civilizace.' }
+        ],
+        videoUrl: 'https://www.youtube.com/embed/5aFv9m1gUa8',
+        photos: [
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'
+        ]
+    }
+};
 
 function mergeAdmin(base, adminArr) {
     if (!adminArr) return base;
@@ -408,6 +527,7 @@ function computeGMapViewBox(W, H) {
 }
 
 function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null, useGoogleMaps = false }) {
+    const [mapMode, setMapMode] = useState(useGoogleMaps ? 'gmaps' : 'svg');
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
@@ -429,7 +549,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     const gmContainerRef = useRef(null);
     const [calibVB, setCalibVB] = useState('-153 -34 1125 390');
     useEffect(() => {
-        if (!useGoogleMaps) return;
+        if (mapMode !== 'gmaps') return;
         const calibrate = () => {
             const el = gmContainerRef.current;
             if (!el) return;
@@ -440,7 +560,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
         const ro = new ResizeObserver(calibrate);
         if (gmContainerRef.current) ro.observe(gmContainerRef.current);
         return () => ro.disconnect();
-    }, [useGoogleMaps]);
+    }, [mapMode]);
 
     // Animovaný viewBox — plynulý zoom přes framer-motion MotionValues
     const vbX = useMotionValue(0);
@@ -480,13 +600,30 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     };
 
     // ── Google Maps varianta ──────────────────────────────────────────────
-    if (useGoogleMaps) {
+    if (mapMode === 'gmaps') {
         const gmUrl = focusRegionId
             ? (regions.find(r => r.id === focusRegionId)?.mapUrl || NEPAL_GMAP)
             : NEPAL_GMAP;
 
         return (
             <div ref={gmContainerRef} className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1520] border border-[#4a6a80]/30 select-none shadow-2xl">
+                {/* View Selector Toggle Group (Kreslená / Google Maps) */}
+                <div className="absolute top-3 right-3 z-30 flex bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-0.5 pointer-events-auto">
+                    <button
+                        type="button"
+                        onClick={() => { setMapMode('svg'); setAutoCycling(false); }}
+                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'svg' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
+                    >
+                        Kreslená
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => { setMapMode('gmaps'); setAutoCycling(false); }}
+                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'gmaps' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
+                    >
+                        Google Maps
+                    </button>
+                </div>
                 {/* Google Maps iframe */}
                 <iframe src={gmUrl} className="absolute inset-0 w-full h-full border-0"
                     loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mapa Nepálu"
@@ -577,6 +714,23 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#b4c8d4] border border-[#7a9ab0]/40 select-none"
              style={{ boxShadow: 'inset 0 28px 32px rgba(195,215,225,0.55), inset 0 -28px 32px rgba(140,165,182,0.45)' }}>
+            {/* View Selector Toggle Group (Kreslená / Google Maps) */}
+            <div className="absolute top-3 right-3 z-30 flex bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-0.5 pointer-events-auto">
+                <button
+                    type="button"
+                    onClick={() => { setMapMode('svg'); setAutoCycling(false); }}
+                    className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'svg' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
+                >
+                    Kreslená
+                </button>
+                <button
+                    type="button"
+                    onClick={() => { setMapMode('gmaps'); setAutoCycling(false); }}
+                    className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'gmaps' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
+                >
+                    Google Maps
+                </button>
+            </div>
 
             {/* ── SVG map — plynulý zoom přes animovaný viewBox ── */}
             <motion.svg viewBox={animViewBox} className="w-full h-full" style={{ display: 'block' }}>
@@ -1214,21 +1368,18 @@ const Expeditions = ({ scrollProgress }) => {
     const mobTrackX    = useMotionValue(0);
     const mobTrackRef  = useRef(null);
     const mobDragging  = useRef(false);
-    const [isVideoOpen, setIsVideoOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isRegionsOpen, setIsRegionsOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
+    const [regionTab, setRegionTab] = useState('oblast'); // 'oblast' | 'itinerar' | 'galerie'
 
-    const VIDEO_EMBED_URL = 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID';
+    const handleSelectRegion = (region) => {
+        setSelectedRegion(region);
+        setRegionTab('oblast');
+    };
 
     // Prevent body scroll when modal is open
-    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || isVideoOpen || selectedCategory || isRegionsOpen || is14Open || isMapModalOpen);
-
-    useEffect(() => {
-        const handleEsc = (e) => { if (e.key === 'Escape') setIsVideoOpen(false); };
-        window.addEventListener('keydown', handleEsc);
-        return () => window.removeEventListener('keydown', handleEsc);
-    }, []);
+    useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || selectedCategory || isRegionsOpen || is14Open || isMapModalOpen);
 
     // Allow external components (About story modal) to open team modals
     useEffect(() => {
@@ -1367,8 +1518,8 @@ const Expeditions = ({ scrollProgress }) => {
                                     O 14 Summits Expedition <ArrowRight className="w-3.5 h-3.5" />
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <button onClick={() => setIsMiriOpen(true)} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {miri.name.split(' ')[0]}</button>
-                                    <button onClick={() => setIsSubinOpen(true)} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {subin.name.split(' ')[0]}</button>
+                                    <button onClick={() => { setMiriSource('expeditions'); setIsMiriOpen(true); }} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {miri.name.split(' ')[0]}</button>
+                                    <button onClick={() => { setSubinSource('expeditions'); setIsSubinOpen(true); }} className="py-2.5 bg-white/10 border border-white/15 text-white text-xs font-bold rounded-xl active:scale-95 transition-transform">O {subin.name.split(' ')[0]}</button>
                                 </div>
                                 <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer"
                                     className="w-full py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl text-center flex items-center justify-center gap-2">
@@ -1393,8 +1544,12 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="flex-1 min-h-0" style={{ minHeight: 0 }}>
                                 <NepalMap
                                     regions={REGIONS}
-                                    onRegionClick={(region) => { setSelectedRegion(region); setIsRegionsOpen(true); }}
-                                    isMobile
+                                    onRegionClick={(region) => {
+                                        handleSelectRegion(region);
+                                        setIsRegionsOpen(true);
+                                    }}
+                                    isMobile={true}
+                                    focusRegionId={selectedRegion?.id}
                                 />
                             </div>
                         </div>
@@ -1421,8 +1576,8 @@ const Expeditions = ({ scrollProgress }) => {
                                         <MapPin className="w-3 h-3 text-gold-400/70" /> Regiony Nepálu
                                     </button>
                                     <div className="flex gap-2">
-                                        <button onClick={() => setIsMiriOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {miri.name.split(' ')[0]}</button>
-                                        <button onClick={() => setIsSubinOpen(true)} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {subin.name.split(' ')[0]}</button>
+                                        <button onClick={() => { setMiriSource('expeditions'); setIsMiriOpen(true); }} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {miri.name.split(' ')[0]}</button>
+                                        <button onClick={() => { setSubinSource('expeditions'); setIsSubinOpen(true); }} className="flex-1 py-2.5 px-3 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all active:scale-95">O {subin.name.split(' ')[0]}</button>
                                     </div>
                                     <a href="https://14summitsexpedition.cz" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-gradient-to-r from-gold-500 to-gold-600 text-white font-bold uppercase tracking-wider text-xs rounded-xl text-center flex items-center justify-center gap-2">
                                         Chci do Nepálu <ArrowRight className="w-3.5 h-3.5" />
@@ -1477,7 +1632,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     <div className="relative">
                                         <span className="absolute inset-0 rounded-full bg-gold-500/30 animate-ping" />
                                         <div className="relative w-14 h-14 rounded-full bg-gold-500/20 border-2 border-gold-400 flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(212,175,55,0.4)]">
-                                            <Play className="w-5 h-5 text-gold-300 fill-gold-300 ml-0.5" />
+                                            <Play className="w-5 h-5 text-gold-300 fill-gold-300 ml-0.5 pointer-events-none" />
                                         </div>
                                     </div>
                                     <div className="text-center">
@@ -1543,26 +1698,26 @@ const Expeditions = ({ scrollProgress }) => {
                 </div>
 
                 {/* ── Desktop layout ── */}
-                <div className="hidden md:flex w-full h-full flex-col items-center justify-center px-4 md:px-6">
-                <div className="w-full flex flex-col items-center justify-center origin-center transition-transform duration-300 [@media(min-width:768px)_and_(min-height:820px)]:-translate-y-16 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.85] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.75] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.65] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.55]">
-                    <div className="text-center mb-0.5 md:mb-4 xl:mb-6 relative z-10 md:pt-6 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-52 xl:w-72 mb-1 xl:mb-2 drop-shadow-lg opacity-90" />
-                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2 md:mb-3 mt-0.5 md:mt-4">
+                <div className="hidden md:flex w-full h-full flex-col items-center justify-start [@media(min-height:1000px)_and_(min-width:768px)]:justify-center px-4 md:px-6 overflow-hidden">
+                <div className="w-full flex flex-col items-center origin-top transition-transform duration-300 [@media(max-height:950px)_and_(min-width:768px)]:scale-[0.88] [@media(max-height:820px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:720px)_and_(min-width:768px)]:scale-[0.72]">
+                    <div className="text-center mb-0.5 md:mb-4 xl:mb-6 [@media(max-height:950px)_and_(min-width:768px)]:mb-1 relative z-10 md:pt-4 [@media(max-height:950px)_and_(min-width:768px)]:pt-2 xl:pt-6 flex flex-col items-center">
+                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-48 xl:w-64 mb-1 [@media(max-height:950px)_and_(min-width:768px)]:mb-0 drop-shadow-lg opacity-90" />
+                    <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2 md:mb-2 mt-0.5 md:mt-2 [@media(max-height:950px)_and_(min-width:768px)]:mt-1 [@media(max-height:950px)_and_(min-width:768px)]:mb-1">
                         04 — Expedice (4500 m)
                     </h4>
-                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 md:mb-2 drop-shadow-md">
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-1 drop-shadow-md">
                         Vydej se se mnou na cesty
                     </h2>
                     <p className="text-slate-300 font-serif italic text-base md:text-lg tracking-widest drop-shadow">Dobří parťáci na cestě jsou to nejcennější.</p>
                 </div>
 
                 {/* YouTube channel strip */}
-                <div className="relative z-10 max-w-7xl w-full px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mb-4 md:mb-5">
+                <div className="relative z-10 max-w-7xl w-full px-4 md:px-8 lg:pl-10 lg:pr-32 xl:px-6 mb-3 md:mb-4 [@media(max-height:950px)_and_(min-width:768px)]:mb-2">
                     <a
                         href="https://www.youtube.com/@honzatrava"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative w-full h-24 md:h-28 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto flex"
+                        className="group relative w-full h-24 md:h-28 [@media(max-height:950px)_and_(min-width:768px)]:h-20 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/50 transition-all duration-500 pointer-events-auto flex"
                     >
                         <img loading="lazy" fetchPriority="low" src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 group-hover:brightness-50 group-hover:scale-105 transition-all duration-700 object-[50%_30%]" alt="" />
                         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-950/85" />
@@ -1570,7 +1725,7 @@ const Expeditions = ({ scrollProgress }) => {
                             <div className="relative shrink-0">
                                 <span className="absolute inset-0 rounded-full bg-gold-500/25 animate-ping" />
                                 <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full bg-gold-500/15 border-2 border-gold-400/80 flex items-center justify-center group-hover:bg-gold-500/35 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-                                    <Play className="w-4 h-4 md:w-5 md:h-5 text-gold-300 fill-gold-300 ml-0.5" />
+                                    <Play className="w-4 h-4 md:w-5 md:h-5 text-gold-300 fill-gold-300 ml-0.5 pointer-events-none" />
                                 </div>
                             </div>
                             <div className="text-left">
@@ -1694,7 +1849,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 Treky, expedice i vlastní zázemí v Káthmándú — od pohodových cest po osmitisícové vrcholy, vždy s osobním přístupem, poctivou aklimatizací a zkušeným nepálským týmem.
                             </p>
 
-                            <div className="mt-6 md:mt-8 pt-5 border-t border-white/10 flex flex-col gap-2.5">
+                            <div className="mt-4 md:mt-6 [@media(max-height:950px)_and_(min-width:768px)]:mt-3 pt-4 [@media(max-height:950px)_and_(min-width:768px)]:pt-3 border-t border-white/10 flex flex-col gap-2 [@media(max-height:950px)_and_(min-width:768px)]:gap-1.5">
                                 <button
                                     onClick={() => setIs14Open(true)}
                                     className="group relative w-full inline-flex items-center justify-center gap-2 py-3 px-5 bg-white/15 hover:bg-white/25 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all duration-300 border border-white/25 overflow-hidden"
@@ -1713,7 +1868,7 @@ const Expeditions = ({ scrollProgress }) => {
                                 </button>
                                 <div className="flex gap-2.5">
                                     <button
-                                        onClick={() => setIsMiriOpen(true)}
+                                        onClick={() => { setMiriSource('expeditions'); setIsMiriOpen(true); }}
                                         className="group relative flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.12em] text-xs rounded-xl transition-all duration-300 border border-white/20 overflow-hidden"
                                     >
                                         <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
@@ -1721,7 +1876,7 @@ const Expeditions = ({ scrollProgress }) => {
                                         <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                                     </button>
                                     <button
-                                        onClick={() => setIsSubinOpen(true)}
+                                        onClick={() => { setSubinSource('expeditions'); setIsSubinOpen(true); }}
                                         className="group relative flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-[0.12em] text-xs rounded-xl transition-all duration-300 border border-white/20 overflow-hidden"
                                     >
                                         <div className="absolute inset-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
@@ -1757,9 +1912,10 @@ const Expeditions = ({ scrollProgress }) => {
                                 <NepalMap
                                     regions={REGIONS}
                                     onRegionClick={(region) => {
-                                        setSelectedRegion(region);
+                                        handleSelectRegion(region);
                                         setIsRegionsOpen(true);
                                     }}
+                                    focusRegionId={selectedRegion?.id}
                                 />
                             </div>
 
@@ -2098,7 +2254,7 @@ const Expeditions = ({ scrollProgress }) => {
                     regions={REGIONS}
                     onClose={() => setIsMapModalOpen(false)}
                     onOpenRegion={(region) => {
-                        setSelectedRegion(region);
+                        handleSelectRegion(region);
                         setIsRegionsOpen(true);
                     }}
                 />
@@ -2275,14 +2431,21 @@ const Expeditions = ({ scrollProgress }) => {
                         className="bg-ivory w-full max-w-6xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row relative"
                     >
                         {/* Top bar: back + close */}
-                        {subinSource === 'story' && (
+                        {subinSource === 'story' ? (
                             <button
                                 onClick={() => { setIsSubinOpen(false); window.dispatchEvent(new CustomEvent('openStoryFromTeam')); }}
                                 className="absolute top-5 left-6 z-10 flex items-center gap-2 text-slate-500 hover:text-slate-900 text-xs font-bold uppercase tracking-widest transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4" /> Zpět na příběh
                             </button>
-                        )}
+                        ) : subinSource === 'expeditions' ? (
+                            <button
+                                onClick={() => setIsSubinOpen(false)}
+                                className="absolute top-5 left-6 z-10 flex items-center gap-2 text-slate-500 hover:text-slate-900 text-xs font-bold uppercase tracking-widest transition-colors"
+                            >
+                                <ArrowLeft className="w-4 h-4" /> Zpět na expedice
+                            </button>
+                        ) : null}
                         <button
                             onClick={() => setIsSubinOpen(false)}
                             className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
@@ -2328,17 +2491,29 @@ const Expeditions = ({ scrollProgress }) => {
 
                         {/* Right Gallery Grid */}
                         <div
-                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 grid-rows-2 gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
+                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 auto-rows-[minmax(0,160px)] md:auto-rows-[minmax(0,180px)] gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
                             data-lenis-prevent
                         >
-                            <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-1">
-                                <img src={SubinLead} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-2">
+                                <img src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery1} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery2} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            </div>
+                            <div className="relative rounded-2xl overflow-hidden group">
+                                <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </motion.div>
@@ -2366,14 +2541,21 @@ const Expeditions = ({ scrollProgress }) => {
                     >
                         {/* Top bar: back + close */}
                         <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 pt-5 pb-4 bg-gradient-to-b from-ivory/95 to-transparent pointer-events-none md:hidden" />
-                        {miriSource === 'story' && (
+                        {miriSource === 'story' ? (
                             <button
                                 onClick={() => { setIsMiriOpen(false); window.dispatchEvent(new CustomEvent('openStoryFromTeam')); }}
                                 className="absolute top-5 left-6 z-10 flex items-center gap-2 text-slate-500 hover:text-slate-900 text-xs font-bold uppercase tracking-widest transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4" /> Zpět na příběh
                             </button>
-                        )}
+                        ) : miriSource === 'expeditions' ? (
+                            <button
+                                onClick={() => setIsMiriOpen(false)}
+                                className="absolute top-5 left-6 z-10 flex items-center gap-2 text-slate-500 hover:text-slate-900 text-xs font-bold uppercase tracking-widest transition-colors"
+                            >
+                                <ArrowLeft className="w-4 h-4" /> Zpět na expedice
+                            </button>
+                        ) : null}
                         <button
                             onClick={() => setIsMiriOpen(false)}
                             className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-3 rounded-full bg-slate-900/10 hover:bg-slate-900 text-slate-800 hover:text-white transition-colors backdrop-blur-md border border-transparent hover:border-slate-800"
@@ -2575,19 +2757,90 @@ const Expeditions = ({ scrollProgress }) => {
                                             <p className="text-gold-400 font-sans uppercase tracking-[0.25em] text-[10px] font-bold mb-2 mt-2">{selectedRegion.subtitle}</p>
                                             <h2 className="font-serif text-3xl md:text-4xl text-white mb-2 leading-tight">{selectedRegion.name}</h2>
                                             <p className="font-sans text-slate-400 text-sm mb-1">Nadm. výška: <span className="text-white font-semibold">{selectedRegion.altitude}</span></p>
-                                            <p className="font-sans text-slate-300 leading-relaxed text-sm md:text-base mt-4 mb-6">{selectedRegion.desc}</p>
 
-                                            <div className="p-5 bg-white/[0.04] rounded-2xl border border-white/[0.08] mb-6">
-                                                <h4 className="font-serif text-lg text-white mb-4">Co tato oblast nabízí:</h4>
-                                                <ul className="space-y-2.5">
-                                                    {selectedRegion.highlights.map((h, i) => (
-                                                        <li key={i} className="flex gap-3 text-slate-300 font-sans text-sm items-start">
-                                                            <ArrowRight className="w-3.5 h-3.5 text-gold-500 mt-0.5 shrink-0" />
-                                                            {h}
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                            {/* Tab switcher */}
+                                            <div className="flex border-b border-white/10 mb-6 mt-4">
+                                                <button
+                                                    onClick={() => setRegionTab('oblast')}
+                                                    className={`pb-2.5 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${regionTab === 'oblast' ? 'border-gold-500 text-gold-400 font-bold' : 'border-transparent text-slate-400 hover:text-white'}`}
+                                                >
+                                                    Oblast
+                                                </button>
+                                                <button
+                                                    onClick={() => setRegionTab('itinerar')}
+                                                    className={`pb-2.5 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${regionTab === 'itinerar' ? 'border-gold-500 text-gold-400 font-bold' : 'border-transparent text-slate-400 hover:text-white'}`}
+                                                >
+                                                    Itinerář
+                                                </button>
+                                                <button
+                                                    onClick={() => setRegionTab('galerie')}
+                                                    className={`pb-2.5 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${regionTab === 'galerie' ? 'border-gold-500 text-gold-400 font-bold' : 'border-transparent text-slate-400 hover:text-white'}`}
+                                                >
+                                                    Galerie & Video
+                                                </button>
                                             </div>
+
+                                            {regionTab === 'oblast' && (
+                                                <>
+                                                    <p className="font-sans text-slate-300 leading-relaxed text-sm md:text-base mt-2 mb-6">{selectedRegion.desc}</p>
+                                                    <div className="p-5 bg-white/[0.04] rounded-2xl border border-white/[0.08] mb-6 text-left">
+                                                        <h4 className="font-serif text-lg text-white mb-4">Co tato oblast nabízí:</h4>
+                                                        <ul className="space-y-2.5">
+                                                            {selectedRegion.highlights.map((h, i) => (
+                                                                <li key={i} className="flex gap-3 text-slate-300 font-sans text-sm items-start">
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-gold-500 mt-0.5 shrink-0 pointer-events-none" />
+                                                                    {h}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                </>
+                                            )}
+
+                                            {regionTab === 'itinerar' && (
+                                                <div className="space-y-4 mb-6">
+                                                    {REGIONS_DETAILS[selectedRegion.id]?.itinerary.map((item, idx) => (
+                                                        <div key={idx} className="flex gap-4 p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-left">
+                                                            <div className="shrink-0">
+                                                                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 bg-gold-500/20 text-gold-300 border border-gold-500/30 rounded-md">
+                                                                    {item.day}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <h4 className="font-serif text-sm text-white font-bold mb-1">{item.title}</h4>
+                                                                <p className="font-sans text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {regionTab === 'galerie' && (
+                                                <div className="space-y-6 mb-6">
+                                                    {REGIONS_DETAILS[selectedRegion.id]?.videoUrl && (
+                                                        <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 shadow-lg bg-black">
+                                                            <iframe
+                                                                src={REGIONS_DETAILS[selectedRegion.id].videoUrl}
+                                                                title={`Video — ${selectedRegion.name}`}
+                                                                className="absolute inset-0 w-full h-full border-0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowFullScreen
+                                                            />
+                                                        </div>
+                                                    )}
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        {REGIONS_DETAILS[selectedRegion.id]?.photos.map((imgUrl, i) => (
+                                                            <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 group relative bg-black/40">
+                                                                <img
+                                                                    src={imgUrl}
+                                                                    alt={`${selectedRegion.name} ${i + 1}`}
+                                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
 
                                             <a
                                                 href="https://14summitsexpedition.cz"
@@ -2596,7 +2849,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                 className="w-full py-4 px-6 bg-gradient-to-br from-gold-500 to-gold-600 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(212,175,55,0.25)]"
                                             >
                                                 Mám zájem o {selectedRegion.name}
-                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform pointer-events-none" />
                                             </a>
                                         </div>
                                     </div>
@@ -2632,7 +2885,7 @@ const Expeditions = ({ scrollProgress }) => {
                                             {REGIONS.map((region) => (
                                                 <button
                                                     key={region.id}
-                                                    onClick={() => setSelectedRegion(region)}
+                                                    onClick={() => handleSelectRegion(region)}
                                                     className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/40 transition-all duration-300 text-left"
                                                 >
                                                     <img
@@ -2663,48 +2916,6 @@ const Expeditions = ({ scrollProgress }) => {
             )}
         </AnimatePresence>
 
-        {/* ── VIDEO LIGHTBOX MODAL ── */}
-        <AnimatePresence>
-            {isVideoOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-10 pointer-events-auto bg-black/97 backdrop-blur-xl"
-                    onClick={() => setIsVideoOpen(false)}
-                >
-                    <button
-                        onClick={() => setIsVideoOpen(false)}
-                        className="absolute top-5 right-5 md:top-8 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/15 z-10"
-                        aria-label="Zavřít video"
-                    >
-                        <X className="w-5 h-5 md:w-6 md:h-6" />
-                    </button>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.88, y: 30 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.92, y: 20 }}
-                        transition={{ type: "spring", damping: 28, stiffness: 320 }}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.15)] border border-gold-500/20"
-                    >
-                        <iframe
-                            src={`${VIDEO_EMBED_URL}?autoplay=1&rel=0&modestbranding=1`}
-                            className="w-full h-full"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowFullScreen
-                            title="Honzův příběh"
-                        />
-                    </motion.div>
-
-                    <p className="absolute bottom-6 left-0 w-full text-center text-slate-600 font-mono text-[10px] tracking-widest uppercase select-none">
-                        Klikni mimo video nebo stiskni Esc pro zavření
-                    </p>
-                </motion.div>
-            )}
-        </AnimatePresence>
         </>
     );
 };

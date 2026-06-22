@@ -236,7 +236,7 @@ const Hotel = ({ scrollProgress }) => {
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])}
                                             className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 active:scale-[0.97] md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -246,14 +246,18 @@ const Hotel = ({ scrollProgress }) => {
                                     className="flex items-center justify-center gap-2 bg-slate-900 text-white text-[11px] uppercase tracking-widest font-bold py-3.5 px-4 rounded-xl transition-all shadow-lg active:scale-95">
                                     O hotelu více <ArrowRight className="w-3.5 h-3.5" />
                                 </button>
-                                <div className="flex gap-2">
+                                <div className="grid grid-cols-3 gap-1.5">
                                     <button onClick={() => setGalleryOpen(true)}
-                                        className="flex-1 flex items-center justify-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
-                                        <Images className="w-3 h-3 text-gold-500" /> Galerie
+                                        className="flex items-center justify-center gap-1 bg-slate-100 border border-slate-200 text-slate-700 text-[9px] uppercase tracking-wider font-bold py-2 rounded-xl transition-all">
+                                        <Images className="w-3 h-3 text-gold-500 pointer-events-none" /> Galerie
                                     </button>
                                     <a href={hotelT.bookingUrl} target="_blank" rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-900 text-[10px] uppercase tracking-widest font-bold py-2.5 rounded-xl transition-all">
+                                        className="flex items-center justify-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 text-[9px] uppercase tracking-wider font-bold py-2 rounded-xl transition-all">
                                         Booking
+                                    </a>
+                                    <a href="https://www.hotelkathmandubasecamp.com" target="_blank" rel="noopener noreferrer"
+                                        className="flex items-center justify-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-900 text-[9px] uppercase tracking-wider font-bold py-2 rounded-xl transition-all">
+                                        Web <ExternalLink className="w-2.5 h-2.5 pointer-events-none" />
                                     </a>
                                 </div>
                                 <div className="flex justify-center gap-1.5 mt-1">
@@ -316,7 +320,7 @@ const Hotel = ({ scrollProgress }) => {
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-slate-200 shadow-sm md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -326,14 +330,18 @@ const Hotel = ({ scrollProgress }) => {
                                     className="group flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white text-xs uppercase tracking-widest font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-slate-900/20">
                                     O hotelu více <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                                 </button>
-                                <div className="flex gap-2">
+                                <div className="grid grid-cols-3 gap-2">
                                     <button onClick={() => setGalleryOpen(true)}
-                                        className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
-                                        <Images className="w-3.5 h-3.5 text-gold-500" /> Galerie
+                                        className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-gold-50 border border-slate-200 hover:border-gold-300 text-slate-700 text-xs uppercase tracking-widest font-bold py-3 px-2 rounded-xl transition-all">
+                                        <Images className="w-3.5 h-3.5 text-gold-500 pointer-events-none" /> Galerie
                                     </button>
                                     <a href={hotelT.bookingUrl} target="_blank" rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs uppercase tracking-widest font-bold py-3 px-4 rounded-xl transition-all">
-                                        Booking <ExternalLink className="w-3 h-3" />
+                                        className="flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs uppercase tracking-widest font-bold py-3 px-2 rounded-xl transition-all">
+                                        Booking <ExternalLink className="w-3 h-3 pointer-events-none" />
+                                    </a>
+                                    <a href="https://www.hotelkathmandubasecamp.com" target="_blank" rel="noopener noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-xs uppercase tracking-widest font-bold py-3 px-2 rounded-xl transition-all">
+                                        Web <ExternalLink className="w-3.5 h-3.5 pointer-events-none" />
                                     </a>
                                 </div>
                             </div>
@@ -426,14 +434,21 @@ const Hotel = ({ scrollProgress }) => {
 
                             {/* CTA */}
                             <div className="px-6 md:px-8 py-5 shrink-0 border-t border-slate-100 flex flex-col gap-2.5 bg-white/60">
-                                <a href={hotelT.bookingUrl}
-                                    target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg group">
-                                    Rezervovat pokoj <ExternalLink className="w-3.5 h-3.5" />
-                                </a>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <a href={hotelT.bookingUrl}
+                                        target="_blank" rel="noopener noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg group">
+                                        Rezervovat <ExternalLink className="w-3.5 h-3.5 pointer-events-none" />
+                                    </a>
+                                    <a href="https://www.hotelkathmandubasecamp.com"
+                                        target="_blank" rel="noopener noreferrer"
+                                        className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-xl transition-all shadow-lg group">
+                                        Oficiální web <ExternalLink className="w-3.5 h-3.5 pointer-events-none" />
+                                    </a>
+                                </div>
                                 <button onClick={() => { setDetailOpen(false); setGalleryOpen(true); }}
                                     className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl transition-all">
-                                    <Images className="w-3.5 h-3.5 text-gold-500" /> Celá galerie ({galleryImages.length} fotek)
+                                    <Images className="w-3.5 h-3.5 text-gold-500 pointer-events-none" /> Celá galerie ({galleryImages.length} fotek)
                                 </button>
                             </div>
                         </div>
@@ -475,7 +490,7 @@ const Hotel = ({ scrollProgress }) => {
                                     onClick={() => { setGalleryOpen(false); setSelectedImage(src); }}
                                     className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900"
                                 >
-                                    <img loading="lazy" src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
+                                    <img src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
                                         <ZoomIn className="w-7 h-7 text-white drop-shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>

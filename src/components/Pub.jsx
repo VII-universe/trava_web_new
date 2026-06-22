@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLenis } from 'lenis/react';
 import { motion, useTransform, AnimatePresence, useMotionValue, animate as fmAnimate } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { MapPin, X, ExternalLink, Beer, Utensils, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn, ArrowRight } from 'lucide-react';
+import { MapPin, X, ExternalLink, Beer, Utensils, UtensilsCrossed, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 
 import PubBg      from '../assets/zmensene/kathmandu/_mg_0642.jpg';
@@ -26,7 +26,7 @@ const galleryImages = [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13];
 
 const FEATURES = [
     { icon: <Beer     className="w-3.5 h-3.5 text-gold-400" />, label: 'Místní pivo na čepu' },
-    { icon: <Utensils className="w-3.5 h-3.5 text-gold-400" />, label: 'Smažák & bramborák' },
+    { icon: <UtensilsCrossed className="w-3.5 h-3.5 text-gold-400" />, label: 'Smažák & bramborák' },
     { icon: <Utensils className="w-3.5 h-3.5 text-gold-400" />, label: 'Nepálské jídlo' },
     { icon: <Users    className="w-3.5 h-3.5 text-gold-400" />, label: 'Trekaři & horolezci' },
     { icon: <Star     className="w-3.5 h-3.5 text-gold-400" />, label: 'Domluvíš se česky' },
@@ -230,7 +230,7 @@ const Pub = ({ scrollProgress }) => {
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])}
                                             className="relative flex-shrink-0 h-full aspect-[3/4] rounded-xl overflow-hidden border border-white/20 active:scale-[0.97] md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -310,7 +310,7 @@ const Pub = ({ scrollProgress }) => {
                                 >
                                     {[...galleryImages, ...galleryImages].map((src, i) => (
                                         <button key={i} onClick={() => setSelectedImage(galleryImages[i % galleryImages.length])} className="relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border border-white/20 shadow-sm md:hover:scale-[2.5] hover:z-10 transition-all duration-300">
-                                            <img loading="lazy" src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
+                                            <img src={src} className="w-full h-full object-cover" alt="" loading="lazy" />
                                         </button>
                                     ))}
                                 </motion.div>
@@ -472,7 +472,7 @@ const Pub = ({ scrollProgress }) => {
                                     onClick={() => { setGalleryOpen(false); setSelectedImage(src); }}
                                     className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900"
                                 >
-                                    <img loading="lazy" src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
+                                    <img src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" loading="lazy" />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
                                         <ZoomIn className="w-7 h-7 text-white drop-shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>

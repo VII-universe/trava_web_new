@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { Calendar, X, Mail, CheckCircle2, ArrowRight, Mic, Building2, Users, Star, ExternalLink } from 'lucide-react';
+import { Calendar, X, Mail, CheckCircle2, ArrowRight, Mic, Building2, Users, Star, ExternalLink, ArrowLeft, Download } from 'lucide-react';
+import { useLenis } from 'lenis/react';
 import { loadContent } from '../data/adminStore';
 import EventCalendar from './EventCalendar';
 import BookingBg  from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
@@ -18,6 +19,114 @@ const TOPICS = [
     { id: 'peak',    title: 'Peakfest stories',           subtitle: 'Festival & projekty' },
     { id: 'zdravi',  title: 'Zdraví a život s nemocí',    subtitle: 'Osvěta & osobní příběh' },
 ];
+
+const TOPICS_DETAILS = {
+    nepal: {
+        description: 'Autentický pohled na zemi pod Himálajem očima člověka, který tam tráví velkou část roku. Přednáška vás provede nejen nejznámějšími trekovými trasami, ale zavede vás i do odlehlých vesnic, ukáže každodenní život místních obyvatel Šerpů a poodhalí kouzlo a chaos hlavního města Káthmándú.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Propagační plakát (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Kniha Nepál křížem krážem',
+            desc: 'Autobiografický cestopis plný fotografií a zážitků z nepálských kopců a vesnic.'
+        }
+    },
+    '5osmi': {
+        description: 'Strhující povídání o pěti úspěšných výstupech na osmitisícové vrcholy bez použití přídavného kyslíku. O radosti z vrcholu, o extrémní únavě, o rozhodování v kritických situacích, o ztrátě kamarádů, ale i o tom, proč se do zóny smrti stále vracet.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Prezentace pro pořadatele (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Náramek 14 Summits',
+            desc: 'Ručně vyráběný náramek z Nepálu na podporu místních dětí a škol.'
+        }
+    },
+    neha: {
+        description: 'Společný projekt Honzy Trávy a fotografa a vědce Petra Jana Juračky. Kontrast drsného světa vysokých hor a jemných, poetických detailů nepálské přírody a kultury zachycených špičkovou technikou i dronem.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Technický rider pro promítání (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Kalendář Něha Himálaje',
+            desc: 'Nástěnný kalendář s velkoformátovými fotografiemi z nepálských expedic.'
+        }
+    },
+    ama: {
+        description: 'Ama Dablam je často označována za nejkrásnější horu světa. Tato přednáška mapuje expedici na tuto strmou a technicky náročnou dominantu údolí Khumbu. Od aklimatizace přes lezení v ledových stěnách až po vrcholové okamžiky s výhledem na Mount Everest.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Plakát Ama Dablam (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Kniha Ama Dablam a já',
+            desc: 'Fotografická publikace věnovaná výstupu na nejkrásnější horu světa.'
+        }
+    },
+    jeste: {
+        description: 'Unikátní přednáška o tom, jak se populární český herec Jiří Langmajer vydal s Honzou Trávou do Himálaje překonat sám sebe. O humoru, o krizích, o chlapském přátelství a o tom, že posouvat své limity můžeme v každém věku.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Plakát s J. Langmajerem (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Triko "Ještě jsme neskončili"',
+            desc: 'Limitovaná edice triček ze 100% bio bavlny s originálním horským motivem.'
+        }
+    },
+    peak: {
+        description: 'Představení příběhů z horského festivalu PEAKfest a dalších kulturně-komunitních aktivit na Jizerce. Projekce krátkých filmů, představení projektů a povídání o propojování komunit milovníků hor a přírody.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Programový leták PEAKfest (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Festivalový merch PEAKfest',
+            desc: 'Čepice, plecháčky a drobnosti z limitované edice našeho horského festivalu.'
+        }
+    },
+    zdravi: {
+        description: 'Hluboce osobní a inspirativní přednáška o boji s vážnou nemocí (revmatoidní artritidou) a o tom, jak se nevzdat svých snů ani s fyzickým omezením. Honza sdílí své zkušenosti s léčbou, aklimatizací a návratem k expedicím.',
+        downloads: [
+            { label: 'Anotace přednášky (PDF)', url: '#' },
+            { label: 'Osvětový leták Revma Liga (PDF)', url: '#' }
+        ],
+        photos: [
+            'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80'
+        ],
+        merch: {
+            title: 'Charitativní náramek Fuck Cancer',
+            desc: 'Náramek na podporu organizace Fuck Cancer a osvěty o onkologických onemocněních.'
+        }
+    }
+};
 
 /* ── Pro koho ── */
 const AUDIENCES = [
@@ -55,12 +164,23 @@ const EVENTS_DETAIL = [
 ];
 
 const Lectures = ({ scrollProgress }) => {
+    const lenis = useLenis();
     const [bookingOpen, setBookingOpen]       = useState(false);
     const [selectedEvent, setSelectedEvent]   = useState(null);
     const [showTopics, setShowTopics]         = useState(false);
+    const [selectedTopic, setSelectedTopic]   = useState(null);
     const [calendarOpen, setCalendarOpen]     = useState(false);
 
-    useScrollLock(bookingOpen || !!selectedEvent || showTopics || calendarOpen);
+    const handleGoToMerch = () => {
+        setShowTopics(false);
+        setSelectedTopic(null);
+        setTimeout(() => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            lenis?.scrollTo(totalHeight * 0.59, { duration: 1.4 });
+        }, 150);
+    };
+
+    useScrollLock(bookingOpen || !!selectedEvent || showTopics || calendarOpen || !!selectedTopic);
 
     // PHASE 8: 0.63 → 0.72
     const containerOpacity = useTransform(scrollProgress, [0.62, 0.65, 0.67, 0.69], [0, 1, 1, 0]);
@@ -392,41 +512,119 @@ const Lectures = ({ scrollProgress }) => {
             {showTopics && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                     className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 md:p-8 pointer-events-auto"
-                    onClick={() => setShowTopics(false)}>
+                    onClick={() => { setShowTopics(false); setSelectedTopic(null); }}>
                     <motion.div initial={{ scale: 0.95, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
                         exit={{ scale: 0.95, y: 16, opacity: 0 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                         onClick={e => e.stopPropagation()}
-                        className="bg-[#fcfbf9] border border-white/60 shadow-2xl rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-                        <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
-                            <div>
-                                <h3 className="font-serif text-2xl md:text-3xl text-slate-900">Přednášky & Témata</h3>
-                                <p className="text-slate-400 text-[10px] uppercase tracking-widest mt-0.5">{TOPICS.length} přednášek · anotace na webu</p>
-                            </div>
-                            <button onClick={() => setShowTopics(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition"><X className="w-5 h-5" /></button>
-                        </div>
-                        <div className="flex-1 overflow-y-auto p-6 overscroll-contain" data-lenis-prevent>
-                            <div className="space-y-2">
-                                {TOPICS.map((t, i) => (
-                                    <div key={t.id} className="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-2xl hover:border-gold-200 hover:shadow-sm transition-all">
-                                        <span className="font-mono text-[11px] text-slate-300 font-black w-5 shrink-0">0{i+1}</span>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-serif text-slate-900 text-[15px] leading-tight">{t.title}</p>
-                                            <p className="text-gold-600 text-[10px] font-bold uppercase tracking-widest mt-0.5">{t.subtitle}</p>
+                        className="bg-[#fcfbf9] border border-white/60 shadow-2xl rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col relative">
+                        {selectedTopic ? (
+                            /* ── Topic Detail View ── */
+                            <div className="flex flex-col h-full max-h-[90vh]">
+                                <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
+                                    <button
+                                        onClick={() => setSelectedTopic(null)}
+                                        className="flex items-center gap-2 text-slate-500 hover:text-slate-950 text-xs font-bold uppercase tracking-widest transition-colors"
+                                    >
+                                        <ArrowLeft className="w-4 h-4" /> Zpět na témata
+                                    </button>
+                                    <button onClick={() => { setSelectedTopic(null); setShowTopics(false); }} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition">
+                                        <X className="w-5 h-5" />
+                                    </button>
+                                </div>
+                                <div className="flex-1 overflow-y-auto p-6 md:p-8 overscroll-contain text-left" data-lenis-prevent>
+                                    <p className="text-gold-600 text-xs font-bold uppercase tracking-widest mb-1">{selectedTopic.subtitle}</p>
+                                    <h3 className="font-serif text-3xl text-slate-950 mb-6">{selectedTopic.title}</h3>
+                                    
+                                    <div className="space-y-6">
+                                        <div>
+                                            <h4 className="font-serif text-lg text-slate-900 mb-2 font-bold">Anotace přednášky</h4>
+                                            <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">{TOPICS_DETAILS[selectedTopic.id]?.description}</p>
+                                        </div>
+                                        
+                                        {/* Materials to download */}
+                                        <div>
+                                            <h4 className="font-serif text-lg text-slate-900 mb-3 font-bold">Materiály ke stažení</h4>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                                {TOPICS_DETAILS[selectedTopic.id]?.downloads.map((dl, idx) => (
+                                                    <a
+                                                        key={idx}
+                                                        href={dl.url}
+                                                        onClick={(e) => { e.preventDefault(); alert(`Stahování: ${dl.label}`); }}
+                                                        className="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-gold-50 border border-slate-100 hover:border-gold-300 rounded-xl transition-all group"
+                                                    >
+                                                        <span className="text-xs font-bold text-slate-700 group-hover:text-gold-950">{dl.label}</span>
+                                                        <Download className="w-4 h-4 text-slate-400 group-hover:text-gold-600 shrink-0 pointer-events-none" />
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Recommended Merch */}
+                                        {TOPICS_DETAILS[selectedTopic.id]?.merch && (
+                                            <div className="p-5 bg-gold-50 border border-gold-200/60 rounded-2xl">
+                                                <h5 className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-700 mb-1">Doporučený Merch k přednášce</h5>
+                                                <h4 className="font-serif text-base text-gold-950 font-bold mb-1">{TOPICS_DETAILS[selectedTopic.id].merch.title}</h4>
+                                                <p className="font-sans text-xs text-gold-800 leading-relaxed mb-4">{TOPICS_DETAILS[selectedTopic.id].merch.desc}</p>
+                                                <button
+                                                    onClick={handleGoToMerch}
+                                                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold uppercase tracking-widest text-[10px] rounded-lg transition-all"
+                                                >
+                                                    Zobrazit v E-shopu <ArrowRight className="w-3.5 h-3.5 pointer-events-none" />
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        {/* Photo grid */}
+                                        <div>
+                                            <h4 className="font-serif text-lg text-slate-900 mb-3 font-bold">Fotografie z přednášky / cest</h4>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                {TOPICS_DETAILS[selectedTopic.id]?.photos.map((photoUrl, pIdx) => (
+                                                    <div key={pIdx} className="aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                                                        <img src={photoUrl} alt={`${selectedTopic.title} ${pIdx + 1}`} className="w-full h-full object-cover" />
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                        </div>
-                        <div className="px-7 py-5 border-t border-slate-100 shrink-0 flex items-center justify-between gap-3">
-                            <a href="https://www.honzatravnicek.cz/prednaska/" target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-gold-600 hover:text-gold-700 text-xs font-bold uppercase tracking-widest transition-colors">
-                                Anotace & rezervace <ExternalLink className="w-3 h-3" />
-                            </a>
-                            <button onClick={() => { setShowTopics(false); setBookingOpen(true); }}
-                                className="px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gold-600 transition">
-                                Booking & Kontakt
-                            </button>
-                        </div>
+                        ) : (
+                            /* ── Original Topics List View ── */
+                            <>
+                                <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
+                                    <div>
+                                        <h3 className="font-serif text-2xl md:text-3xl text-slate-900">Přednášky & Témata</h3>
+                                        <p className="text-slate-400 text-[10px] uppercase tracking-widest mt-0.5">{TOPICS.length} přednášek · klikněte pro detail</p>
+                                    </div>
+                                    <button onClick={() => setShowTopics(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition"><X className="w-5 h-5" /></button>
+                                </div>
+                                <div className="flex-1 overflow-y-auto p-6 overscroll-contain" data-lenis-prevent>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        {TOPICS.map((t, i) => (
+                                            <button
+                                                key={t.id}
+                                                onClick={() => setSelectedTopic(t)}
+                                                className="w-full flex items-center gap-4 p-4 bg-white border border-slate-100 hover:border-gold-300 rounded-2xl hover:shadow-md transition-all text-left group"
+                                            >
+                                                <span className="font-mono text-[11px] text-slate-300 font-black w-5 shrink-0 group-hover:text-gold-500">0{i+1}</span>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="font-serif text-slate-950 text-[15px] leading-tight font-bold group-hover:text-gold-600 transition-colors">{t.title}</p>
+                                                    <p className="text-gold-600 text-[10px] font-bold uppercase tracking-widest mt-0.5">{t.subtitle}</p>
+                                                </div>
+                                                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-gold-600 group-hover:translate-x-1 transition-all shrink-0 pointer-events-none" />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="px-7 py-5 border-t border-slate-100 shrink-0 flex items-center justify-between gap-3">
+                                    <span className="text-xs text-slate-400">Vyberte téma přednášky pro detaily.</span>
+                                    <button onClick={() => { setShowTopics(false); setBookingOpen(true); }}
+                                        className="px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gold-600 transition">
+                                        Booking & Kontakt
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </motion.div>
                 </motion.div>
             )}

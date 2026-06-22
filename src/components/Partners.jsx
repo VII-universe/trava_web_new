@@ -6,7 +6,6 @@ import IcefallImage from '../assets/icefall_bg.jpg';
 import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
 import YateLogo from '../assets/svg/yate_logo.jpg';
-import HoneyBeanLogo from '../assets/svg/honeybean_logo.png';
 import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.png';
 
 const CURRENT_PARTNERS = [
@@ -16,7 +15,6 @@ const CURRENT_PARTNERS = [
     { name: 'YATE',            logo: YateLogo,           discount: null,          logoClass: '' },
     { name: 'Adventure Menu',  logo: null,               discount: null,          logoClass: '' },
     { name: 'More Than Honey', logo: MoreThanHoneyLogo,  discount: 'honzatrava10', logoClass: '' },
-    { name: 'Honey Bean',      logo: HoneyBeanLogo,      discount: 'honzatrava10', logoClass: '' },
 ];
 
 const PAST_PARTNERS = [

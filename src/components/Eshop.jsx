@@ -90,7 +90,6 @@ const CATEGORIES = [
         desc: 'Věci, které s námi jezdí do hor už dlouho — a které sami pravidelně používáme.',
         note: null,
         items: [
-            { name: 'Medové tuby HoneyBean', detail: 'energie na cesty' },
             { name: 'Manukový med More Than Honey', detail: 'UMF certifikovaný' },
         ],
     },
@@ -162,6 +161,9 @@ const Eshop = ({ scrollProgress }) => {
                     className="shrink-0 flex items-center justify-center gap-2 px-5 py-3.5 bg-slate-900 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-xs rounded-xl transition-all shadow-lg">
                     Vstoupit do e-shopu <ExternalLink className="w-3.5 h-3.5" />
                 </a>
+                <p className="text-[10px] text-slate-500 italic text-center leading-normal mt-1 max-w-xs mx-auto">
+                    Spuštění plnohodnotného e-shopu plánujeme na podzim 2026. Do té doby je možné produkty (knihy, náramky, med) objednat přímo na e-mailu <a href="mailto:booking@honzatrava.cz" className="underline hover:text-gold-600">booking@honzatrava.cz</a>.
+                </p>
             </div>
 
             {/* ── Desktop ── */}
@@ -201,6 +203,9 @@ const Eshop = ({ scrollProgress }) => {
                             Vstoupit do e-shopu
                             <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </a>
+                        <p className="text-[11px] text-slate-500 italic leading-relaxed mt-4 max-w-sm">
+                            Spuštění plnohodnotného e-shopu plánujeme na podzim 2026. Do té doby je možné produkty (knihy, náramky, med) objednat přímo na e-mailu <a href="mailto:booking@honzatrava.cz" className="underline hover:text-gold-600">booking@honzatrava.cz</a>.
+                        </p>
                     </div>
 
                     {/* Right: 3 category cards stacked */}

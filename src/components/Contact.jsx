@@ -59,22 +59,22 @@ function ContactModal({ onClose }) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <a href="mailto:honzatravatravnicek@gmail.com"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/8 rounded-2xl transition-all group">
-                                <Mail className="w-4 h-4 text-gold-400 shrink-0" />
+                                <Mail className="w-4 h-4 text-gold-400 shrink-0 pointer-events-none" />
                                 <span className="text-sm text-white group-hover:text-gold-300 transition-colors truncate">honzatravatravnicek@gmail.com</span>
                             </a>
                             <a href="mailto:info@14summitsexpedition.cz"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/8 rounded-2xl transition-all group">
-                                <Mail className="w-4 h-4 text-gold-400 shrink-0" />
+                                <Mail className="w-4 h-4 text-gold-400 shrink-0 pointer-events-none" />
                                 <span className="text-sm text-white group-hover:text-gold-300 transition-colors truncate">info@14summitsexpedition.cz</span>
                             </a>
                             <a href="tel:+420776359536"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/8 rounded-2xl transition-all group">
-                                <Phone className="w-4 h-4 text-gold-400 shrink-0" />
+                                <Phone className="w-4 h-4 text-gold-400 shrink-0 pointer-events-none" />
                                 <span className="text-sm text-white group-hover:text-gold-300 transition-colors">+420 776 359 536</span>
                             </a>
                             <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-emerald-500/15 border border-white/8 hover:border-emerald-500/30 rounded-2xl transition-all group">
-                                <Video className="w-4 h-4 text-emerald-400 shrink-0" />
+                                <Video className="w-4 h-4 text-emerald-400 shrink-0 pointer-events-none" />
                                 <div>
                                     <span className="text-xs text-slate-400 block">Video hovor</span>
                                     <span className="text-sm text-white group-hover:text-emerald-300 transition-colors">Google Meet</span>
@@ -85,7 +85,7 @@ function ContactModal({ onClose }) {
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
                             <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-red-500/15 border border-white/8 hover:border-red-500/30 rounded-2xl transition-all group">
-                                <Youtube className="w-4 h-4 text-red-400 shrink-0" />
+                                <Youtube className="w-4 h-4 text-red-400 shrink-0 pointer-events-none" />
                                 <div className="min-w-0">
                                     <span className="text-xs text-slate-400 block">YouTube</span>
                                     <span className="text-sm text-white truncate">@honzatrava</span>
@@ -93,7 +93,7 @@ function ContactModal({ onClose }) {
                             </a>
                             <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-blue-500/15 border border-white/8 hover:border-blue-500/30 rounded-2xl transition-all group">
-                                <Facebook className="w-4 h-4 text-blue-400 shrink-0" />
+                                <Facebook className="w-4 h-4 text-blue-400 shrink-0 pointer-events-none" />
                                 <div className="min-w-0">
                                     <span className="text-xs text-slate-400 block">Facebook</span>
                                     <span className="text-sm text-white truncate">Honza „Tráva" Trávníček</span>
@@ -101,7 +101,7 @@ function ContactModal({ onClose }) {
                             </a>
                             <a href="https://www.instagram.com/honzatravatravnicek" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-pink-500/15 border border-white/8 hover:border-pink-500/30 rounded-2xl transition-all group">
-                                <Instagram className="w-4 h-4 text-pink-400 shrink-0" />
+                                <Instagram className="w-4 h-4 text-pink-400 shrink-0 pointer-events-none" />
                                 <div className="min-w-0">
                                     <span className="text-xs text-slate-400 block">Instagram</span>
                                     <span className="text-sm text-white truncate">honzatravatravnicek</span>
@@ -310,35 +310,72 @@ const Contact = ({ scrollProgress }) => {
                             <h5 className="text-slate-500 text-xs tracking-widest uppercase font-bold mb-4 md:mb-6">Sledujte cestu</h5>
                             <div className="flex gap-3">
                                 <a href="https://www.instagram.com/honzatravatravnicek" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Instagram">
-                                    <Instagram className="w-5 h-5" />
+                                    <Instagram className="w-5 h-5 pointer-events-none" />
                                 </a>
                                 <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Facebook">
-                                    <Facebook className="w-5 h-5" />
+                                    <Facebook className="w-5 h-5 pointer-events-none" />
                                 </a>
                                 <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300 hover:scale-110" title="YouTube">
-                                    <Youtube className="w-5 h-5" />
+                                    <Youtube className="w-5 h-5 pointer-events-none" />
                                 </a>
                             </div>
+
+                            {/* Newsletter card */}
+                            <div className="mt-6 p-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-left pointer-events-auto">
+                                <h5 className="text-gold-500 text-xs tracking-widest uppercase font-bold mb-2">Newsletter</h5>
+                                <p className="text-slate-400 text-xs mb-3 font-sans leading-relaxed">Dostávejte novinky a termíny přednášek přímo do e-mailu.</p>
+                                <form onSubmit={(e) => { e.preventDefault(); alert('Děkujeme za přihlášení k odběru newsletteru!'); e.target.reset(); }} className="flex gap-2">
+                                    <input
+                                        type="email"
+                                        placeholder="Váš e-mail"
+                                        required
+                                        className="flex-1 bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                                    />
+                                    <button type="submit" className="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold uppercase text-[10px] tracking-wider rounded-xl active:scale-95 transition-transform flex items-center gap-1">
+                                        Odeslat <ArrowRight className="w-3.5 h-3.5 pointer-events-none" />
+                                    </button>
+                                </form>
+                            </div>
+
                             <button
                                 onClick={() => setContactOpen(true)}
-                                className="flex items-center gap-2 px-5 py-3 bg-white/8 hover:bg-white/15 border border-white/15 hover:border-white/30 rounded-xl text-white text-sm font-bold uppercase tracking-wider transition-all"
+                                className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-white/8 hover:bg-white/15 border border-white/15 hover:border-white/30 rounded-xl text-white text-sm font-bold uppercase tracking-wider transition-all pointer-events-auto"
                             >
-                                Všechny kontakty & promo materiály <ArrowRight className="w-4 h-4" />
+                                Všechny kontakty & promo materiály <ArrowRight className="w-4 h-4 pointer-events-none" />
                             </button>
                         </div>
                     </div>
 
                     {/* Mobile contact strip */}
-                    <div className="lg:hidden flex flex-wrap justify-center gap-2 -mt-1">
-                        <a href="mailto:booking@honzatrava.cz" className="flex items-center gap-2 px-4 py-2.5 bg-white/8 border border-white/10 rounded-xl text-white text-xs font-semibold hover:bg-gold-500/20 hover:border-gold-500/40 transition-all">
-                            <Mail className="w-3.5 h-3.5 text-gold-400" /> booking@honzatrava.cz
-                        </a>
-                        <button
-                            onClick={() => setContactOpen(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-white/8 border border-white/10 rounded-xl text-white text-xs font-semibold hover:bg-white/15 transition-all"
-                        >
-                            Kontakty & promo <ArrowRight className="w-3 h-3" />
-                        </button>
+                    <div className="lg:hidden flex flex-col gap-3 w-full pointer-events-auto">
+                        <div className="flex flex-wrap justify-center gap-2 -mt-1">
+                            <a href="mailto:booking@honzatrava.cz" className="flex items-center gap-2 px-4 py-2.5 bg-white/8 border border-white/10 rounded-xl text-white text-xs font-semibold hover:bg-gold-500/20 hover:border-gold-500/40 transition-all">
+                                <Mail className="w-3.5 h-3.5 text-gold-400 pointer-events-none" /> booking@honzatrava.cz
+                            </a>
+                            <button
+                                onClick={() => setContactOpen(true)}
+                                className="flex items-center gap-2 px-4 py-2.5 bg-white/8 border border-white/10 rounded-xl text-white text-xs font-semibold hover:bg-white/15 transition-all"
+                            >
+                                Kontakty & promo <ArrowRight className="w-3 h-3 pointer-events-none" />
+                            </button>
+                        </div>
+
+                        {/* Mobile newsletter card */}
+                        <div className="w-full max-w-sm mx-auto mt-2 p-4 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-center">
+                            <h5 className="text-gold-500 text-xs tracking-widest uppercase font-bold mb-1">Odběr newsletteru</h5>
+                            <p className="text-slate-400 text-[11px] mb-3">Zadejte e-mail a neuteče vám žádná přednáška ani výprava.</p>
+                            <form onSubmit={(e) => { e.preventDefault(); alert('Děkujeme za přihlášení k odběru newsletteru!'); e.target.reset(); }} className="flex gap-2">
+                                <input
+                                    type="email"
+                                    placeholder="Váš e-mail"
+                                    required
+                                    className="flex-1 bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
+                                />
+                                <button type="submit" className="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold uppercase text-[10px] tracking-wider rounded-xl transition-all">
+                                    Přihlásit
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     {/* Right Column: Form */}
@@ -394,9 +431,20 @@ const Contact = ({ scrollProgress }) => {
                                 />
                             </div>
 
-                            <button type="button" className="group w-full md:w-auto mt-6 flex items-center justify-center gap-4 bg-white text-slate-900 py-3 md:py-4 px-8 md:px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-500 hover:text-white transition-all duration-300 shadow-md">
+                            <div className="flex items-center gap-3 pt-2">
+                                <input
+                                    type="checkbox"
+                                    id="contact-newsletter"
+                                    className="rounded border-white/20 bg-transparent text-gold-500 focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                                />
+                                <label htmlFor="contact-newsletter" className="text-xs text-slate-400 cursor-pointer select-none">
+                                    Chci odebírat novinky a newsletter z mých cest.
+                                </label>
+                            </div>
+
+                            <button type="button" className="group w-full md:w-auto mt-6 flex items-center justify-center gap-4 bg-white text-slate-900 py-3 md:py-4 px-8 md:px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-50 hover:text-white transition-all duration-300 shadow-md">
                                 Odeslat zprávu
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform pointer-events-none" />
                             </button>
                         </form>
                     </div>

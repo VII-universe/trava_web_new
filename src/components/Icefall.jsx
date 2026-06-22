@@ -9,7 +9,6 @@ import SingingRockImg  from '../assets/svg/Singing_Rock_RGB-03.jpg';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
 import YateLogo from '../assets/svg/yate_logo.jpg';
 import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.png';
-import HoneyBeanLogo from '../assets/svg/honeybean_logo.png';
 import MedTubaImg from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
 import RopeActionImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
 import SummitGearImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.jpg';
@@ -25,24 +24,24 @@ const FLAGS = [
         name: 'Progress',
         partnership: 'Technický partner',
         discount: 'TRAVA10',
-        website: 'progress-lana.cz',
-        websiteUrl: 'https://www.progress-lana.cz',
-        quote: 'Lana, co znají osm tisíc.',
-        description: 'Progress je český výrobce horolezeckých lan a pomůcek s tradicí sahající desítky let zpět. Jejich lana jsem měl s sebou na více než šesti osmitisícovkách a vždy držela přesně tehdy, když to bylo nejdůležitější.',
+        website: 'progress-sports.cz',
+        websiteUrl: 'https://www.progress-sports.cz',
+        quote: 'Funkční sportovní oblečení do extrémních podmínek.',
+        description: 'Progress je tradiční český výrobce špičkového funkčního prádla a sportovního oblečení. Jejich termoprádlo a outdoorové oblečení mě doprovází na všech expedicích do Himálaje a spolehlivě mě hřeje i v těch nejkrutějších mrazech.',
         collaboration: [
-            'Exkluzivní dodávka lan a záchytných pomůcek na všechny expedice',
-            'Testování produktů v extrémních podmínkách nad 7000 m n. m.',
-            'Ambasadorská spolupráce — doporučení na přednáškách a v online obsahu',
+            'Dodávka funkčního prádla a izolačních vrstev pro celý expediční tým',
+            'Testování prototypů merino vlny a bambusových vláken v extrémních mrazech',
+            'Ambasadorská spolupráce — doporučení na přednáškách a sportovních akcích',
         ],
         events: [
-            { title: 'Manaslu 2022', image: RopeActionImg, desc: 'Lana Progress na úspěšném výstupu Manaslu (8163 m) — první česká ženská expedice na osmitisícovku. Lano vydrželo každý pád i každý jistící manévr v podmínkách, kde záleží na každém milimetru.' },
-            { title: 'Testovací kampaň prototypů', image: SummitGearImg, desc: 'Honza průběžně testuje nové produkty Progress před uvedením na trh. Zpětná vazba přímo z terénu pomáhá optimalizovat pevnost, váhu a ergonomii nových lan a pomůcek.' },
+            { title: 'Testování v Himálaji', image: SummitGearImg, desc: 'Funkční prádlo Progress z merino vlny bylo klíčovým prvkem výbavy na expedici Manaslu. V zóně smrti, kde teploty klesají pod -30 °C, spolehlivě udržovalo tělesnou teplotu a odvádělo vlhkost.' },
+            { title: 'Nová kolekce outdoor', image: RopeActionImg, desc: 'Spoluvývoj a testování nové řady outdoorového oblečení pro extrémní vysokohorské podmínky. Zpětná vazba z výšek nad 7000 m pomáhá zlepšit střihy a materiály.' },
         ],
         media: [
-            { title: 'Video: Výstup na Manaslu s lanem Progress', url: 'https://www.progress-lana.cz' },
-            { title: 'Fotoreportáž: Lana na osmitisícovkách', url: 'https://www.progress-lana.cz' },
+            { title: 'Oficiální e-shop Progress', url: 'https://www.progress-sports.cz' },
+            { title: 'Video: Jak se obléct do extrémní zimy', url: 'https://www.progress-sports.cz' },
         ],
-        productImage: RopeActionImg,
+        productImage: SummitGearImg,
         image: 'https://images.unsplash.com/photo-1526459879585-a32ec4a4498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         left: '7%',
         stripes: ['#1a3a5c', '#e8f4f8', '#1a3a5c'],
@@ -52,7 +51,7 @@ const FLAGS = [
                 <svg viewBox="0 0 160 68" style={{ width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                     <text x="80" y="32" textAnchor="middle" fill="white" fontSize="20" fontFamily="Arial, sans-serif" fontWeight="900" letterSpacing="4">PROGRESS</text>
                     <line x1="22" y1="40" x2="138" y2="40" stroke="rgba(255,255,255,0.25)" strokeWidth="0.6"/>
-                    <text x="80" y="54" textAnchor="middle" fill="rgba(180,210,255,0.65)" fontSize="9" fontFamily="Arial, sans-serif" fontWeight="600" letterSpacing="2">{'LANA & VYBAVENI'}</text>
+                    <text x="80" y="54" textAnchor="middle" fill="rgba(180,210,255,0.65)" fontSize="9" fontFamily="Arial, sans-serif" fontWeight="600" letterSpacing="2">{'SPORTSWEAR'}</text>
                 </svg>
             </div>
         ),
@@ -125,7 +124,7 @@ const FLAGS = [
         quote: 'České outdoorové vybavení s duší.',
         description: 'Yate je český výrobce kempingového a trekkingového vybavení. Spacáky, karimatky a stany, které fungují i v podmínkách, kde teplota padne pod mínus dvacet. Spolehlivost bez zbytečných kompromisů.',
         collaboration: [
-            'Spacáky a karimatky pro zimní expedice nad 8000 m n. m.',
+            'Spacáky and karimatky pro zimní expedice nad 8000 m n. m.',
             'Testování výrobků v extrémních mrazech Himálaje a Karákoramu',
             'Doporučení produktů v e-shopu trava.cz a na přednáškách',
         ],
@@ -206,34 +205,6 @@ const FLAGS = [
         stripes: ['#d4860a', '#fff8e7', '#d4860a'],
         clipPath: 'polygon(0% 0%, 100% 0%, 99% 70%, 96% 100%, 88% 95%, 72% 98%, 55% 93%, 35% 98%, 15% 92%, 0% 98%)',
         logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img src={MoreThanHoneyLogo} alt="MoreThanHoney" className="w-full h-full object-contain" /></div>,
-    },
-    {
-        id: 'honeybean',
-        name: 'HoneyBean',
-        partnership: 'Ambasador značky',
-        discount: 'honzatrava10',
-        website: 'honeybean.cz',
-        websiteUrl: 'https://www.honeybean.cz',
-        quote: 'Káva s duší, med s příběhem.',
-        description: 'HoneyBean je projekt, který spojuje to nejlepší ze dvou světů — speciální kávu a manukový med. Ranní rituál před výstupem i po návratu. Honza spolupracuje s HoneyBean jako ambasador, protože věří v produkt, který sám každý den používá.',
-        collaboration: [
-            'Ambasador HoneyBean od roku 2022',
-            'Ranní rituál s HoneyBean kávou a medem — součást každé expedice i každodenního života',
-            'Prodej produktů v e-shopu trava.cz a doporučení ve video obsahu',
-        ],
-        events: [
-            { title: 'Série: Ranní rutina horolezce', image: MedTubaImg, desc: 'Série videí z expedičního táboření — Honza připravuje kávu HoneyBean v 5000 m n. m. Záběry z tábora ukazují rituál, který drží Honzu v kondici fyzické i psychické připravenosti.' },
-            { title: 'Pop-up prezentace Praha', image: LectureImg, desc: 'Honza se zúčastnil představení HoneyBean na outdoorovém eventu v centru Prahy. Živé vaření a degustace ukázaly veřejnosti kombinaci specialty kávy a manukového medu.' },
-        ],
-        media: [
-            { title: 'Video: Ranní rutina horolezce (feat. HoneyBean)', url: 'https://www.honeybean.cz' },
-        ],
-        productImage: MedTubaImg,
-        image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        left: '92%',
-        stripes: ['#3d1c02', '#c8a04a', '#3d1c02'],
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 85% 92%, 75% 100%, 65% 85%, 55% 95%, 40% 90%, 20% 96%, 0% 90%)',
-        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img src={HoneyBeanLogo} alt="HoneyBean" className="w-full h-full object-contain" /></div>,
     },
 ];
 
@@ -648,8 +619,8 @@ const Icefall = ({ scrollProgress }) => {
 
                         {/* Hlavní partneři — 2 řady */}
                         {[
-                            { flags: FLAGS_DISPLAY.slice(0, 4), angle: -1.2 },
-                            { flags: FLAGS_DISPLAY.slice(4, 7), angle: 1 },
+                            { flags: FLAGS_DISPLAY.slice(0, 3), angle: -1.2 },
+                            { flags: FLAGS_DISPLAY.slice(3, 6), angle: 1 },
                         ].map((row, rowIdx) => (
                             <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 2 }}>
                                 <svg viewBox="0 0 400 22" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 20, display: 'block' }}>
