@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { Mountain, Wind, Thermometer } from 'lucide-react';
-import ClimbersImg from '../assets/climbers_bg.jpg';
+import ClimbersImg from '../assets/climbers_bg.webp';
 
 const Climb = ({ scrollProgress }) => {
     // PHASE 6 (after Nepal): 0.78 -> 0.90 (The Climb)
@@ -39,7 +39,7 @@ const Climb = ({ scrollProgress }) => {
                 <div className="absolute inset-0 bg-[#F1F5F9]" />
 
                 {/* Background Image */}
-                <img
+                <img loading="lazy"
                     src={ClimbersImg}
                     alt="Climbers on ridge"
                     className="w-full h-full object-cover object-center opacity-40 filter grayscale contrast-125"

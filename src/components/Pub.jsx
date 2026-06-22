@@ -5,22 +5,22 @@ import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Beer, Utensils, UtensilsCrossed, Users, ChevronLeft, ChevronRight, Star, Clock, Flame, Images, ZoomIn, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 
-import PubBg      from '../assets/zmensene/kathmandu/_mg_0642.jpg';
-import PubHero    from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.jpg';
+import PubBg      from '../assets/zmensene/kathmandu/_mg_0642.webp';
+import PubHero    from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.webp';
 import PubLogoNeg from '../assets/svg/honza_trava_logo_pub_negativni_V1.svg';
-import P1  from '../assets/zmensene/pub/prostory/czech-pub-highlander-036-hires.jpg';
-import P2  from '../assets/zmensene/pub/prostory/czech-pub-highlander-039-hires.jpg';
-import P3  from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hires.jpg';
-import P4  from '../assets/zmensene/pub/prostory/czech-pub-highlander-041-hires.jpg';
-import P5  from '../assets/zmensene/pub/prostory/czech-pub-highlander-042-hires.jpg';
-import P6  from '../assets/zmensene/pub/prostory/czech-pub-highlander-043-hires.jpg';
-import P7  from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.jpg';
-import P8  from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.jpg';
-import P9  from '../assets/zmensene/pub/prostory/czech-pub-highlander-046-hires.jpg';
-import P10 from '../assets/zmensene/pub/prostory/czech-pub-highlander-047-hires.jpg';
-import P11 from '../assets/zmensene/pub/prostory/czech-pub-highlander-048-hires.jpg';
-import P12 from '../assets/zmensene/pub/prostory/czech-pub-highlander-049-hires.jpg';
-import P13 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.jpg';
+import P1  from '../assets/zmensene/pub/prostory/czech-pub-highlander-036-hires.webp';
+import P2  from '../assets/zmensene/pub/prostory/czech-pub-highlander-039-hires.webp';
+import P3  from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hires.webp';
+import P4  from '../assets/zmensene/pub/prostory/czech-pub-highlander-041-hires.webp';
+import P5  from '../assets/zmensene/pub/prostory/czech-pub-highlander-042-hires.webp';
+import P6  from '../assets/zmensene/pub/prostory/czech-pub-highlander-043-hires.webp';
+import P7  from '../assets/zmensene/pub/prostory/czech-pub-highlander-044-hires.webp';
+import P8  from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.webp';
+import P9  from '../assets/zmensene/pub/prostory/czech-pub-highlander-046-hires.webp';
+import P10 from '../assets/zmensene/pub/prostory/czech-pub-highlander-047-hires.webp';
+import P11 from '../assets/zmensene/pub/prostory/czech-pub-highlander-048-hires.webp';
+import P12 from '../assets/zmensene/pub/prostory/czech-pub-highlander-049-hires.webp';
+import P13 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.webp';
 
 const galleryImages = [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13];
 
@@ -360,7 +360,7 @@ const Pub = ({ scrollProgress }) => {
                         {/* Levá strana — fotky */}
                         <div className="md:w-[46%] shrink-0 flex flex-col gap-0.5 bg-slate-950 min-h-[40vh] md:min-h-0">
                             <div className="relative flex-1 min-h-[200px]">
-                                <img src={PubHero} alt="Czech Pub Nepal" className="absolute inset-0 w-full h-full object-cover" />
+                                <img loading="lazy" src={PubHero} alt="Czech Pub Nepal" className="absolute inset-0 w-full h-full object-cover" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                                 <div className="absolute bottom-4 left-4">
                                     <span className="inline-flex items-center gap-1.5 text-gold-400 bg-slate-950/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
@@ -385,7 +385,7 @@ const Pub = ({ scrollProgress }) => {
                         <div className="flex-1 flex flex-col overflow-y-auto overscroll-contain" data-lenis-prevent>
                             {/* Header */}
                             <div className="flex items-center justify-between px-6 md:px-8 pt-6 pb-4 shrink-0 border-b border-white/10">
-                                <img src={PubLogoNeg} alt="Czech Pub Nepal" className="h-10 w-auto object-contain" />
+                                <img loading="lazy" src={PubLogoNeg} alt="Czech Pub Nepal" className="h-10 w-auto object-contain" />
                                 <button onClick={() => setDetailOpen(false)}
                                     className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
                                     <X className="w-4 h-4" />

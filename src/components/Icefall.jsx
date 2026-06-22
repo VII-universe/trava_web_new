@@ -3,17 +3,17 @@ import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { X, ExternalLink, ChevronLeft, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
-import IcefallImg from '../assets/icefall_bg.jpg';
+import IcefallImg from '../assets/icefall_bg.webp';
 import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
-import SingingRockImg  from '../assets/svg/Singing_Rock_RGB-03.jpg';
+import SingingRockImg  from '../assets/svg/Singing_Rock_RGB-03.webp';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
-import YateLogo from '../assets/svg/yate_logo.jpg';
-import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.png';
-import MedTubaImg from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
-import RopeActionImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
-import SummitGearImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.jpg';
-import CampImg from '../assets/zmensene/portrety/expedice_a_treky/20240709_160740.jpg';
-import LectureImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
+import YateLogo from '../assets/svg/yate_logo.webp';
+import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.webp';
+import MedTubaImg from '../assets/zmensene/portrety/med___tuba_kopie.webp';
+import RopeActionImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.webp';
+import SummitGearImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.webp';
+import CampImg from '../assets/zmensene/portrety/expedice_a_treky/20240709_160740.webp';
+import LectureImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.webp';
 
 /* ─── Sponsor data ──────────────────────────────────────── */
 // Hlavni partneri: Progress, Singing Rock, Rock Point, Yate, Adventure Menu, MoreThanHoney, HoneyBean
@@ -83,7 +83,7 @@ const FLAGS = [
         left: '21%',
         stripes: ['#1a1a1a', '#f5a623', '#1a1a1a'],
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 95%, 85% 92%, 75% 100%, 65% 85%, 55% 95%, 40% 90%, 20% 96%, 0% 90%)',
-        logo: <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] p-2"><img src={SingingRockImg} alt="Singing Rock" className="w-full h-auto object-contain" /></div>,
+        logo: <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] p-2"><img loading="lazy" src={SingingRockImg} alt="Singing Rock" className="w-full h-auto object-contain" /></div>,
     },
     {
         id: 'rockpoint',
@@ -112,7 +112,7 @@ const FLAGS = [
         left: '35%',
         stripes: ['#0f2a4a', '#c8a040', '#0f2a4a'],
         clipPath: 'polygon(0% 0%, 100% 0%, 98% 98%, 85% 90%, 75% 96%, 60% 88%, 45% 96%, 25% 90%, 10% 98%, 0% 92%)',
-        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img src={RockPointLogo} alt="Rock Point" className="w-full h-full object-contain" /></div>,
+        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img loading="lazy" src={RockPointLogo} alt="Rock Point" className="w-full h-full object-contain" /></div>,
     },
     {
         id: 'yate',
@@ -139,7 +139,7 @@ const FLAGS = [
         left: '50%',
         stripes: ['#2d6a2d', '#f0f7e6', '#2d6a2d'],
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 92%, 80% 97%, 60% 90%, 40% 98%, 20% 90%, 5% 80%, 0% 70%)',
-        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img src={YateLogo} alt="Yate" className="w-full h-full object-contain" /></div>,
+        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img loading="lazy" src={YateLogo} alt="Yate" className="w-full h-full object-contain" /></div>,
     },
     {
         id: 'adventuremenu',
@@ -204,7 +204,7 @@ const FLAGS = [
         left: '78%',
         stripes: ['#d4860a', '#fff8e7', '#d4860a'],
         clipPath: 'polygon(0% 0%, 100% 0%, 99% 70%, 96% 100%, 88% 95%, 72% 98%, 55% 93%, 35% 98%, 15% 92%, 0% 98%)',
-        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img src={MoreThanHoneyLogo} alt="MoreThanHoney" className="w-full h-full object-contain" /></div>,
+        logo: <div className="w-full h-full flex items-center justify-center bg-white p-2"><img loading="lazy" src={MoreThanHoneyLogo} alt="MoreThanHoney" className="w-full h-full object-contain" /></div>,
     },
 ];
 
@@ -487,7 +487,7 @@ function applyAdminOverrides(base, adminArr) {
                 <div className="w-full h-full flex items-center justify-center p-3"
                     style={{ background: bgColor }}>
                     {ov.logoUrl
-                        ? <img src={ov.logoUrl} alt={ov.name}
+                        ? <img loading="lazy" src={ov.logoUrl} alt={ov.name}
                             className="w-full h-full object-contain max-h-full" />
                         : <span style={{ color: 'white', fontSize: '11px', fontWeight: 900,
                             textAlign: 'center', letterSpacing: '1px', textTransform: 'uppercase',
@@ -551,7 +551,7 @@ const Icefall = ({ scrollProgress }) => {
                         style={{ y: bgY, opacity: imageOpacity }}
                         className="absolute inset-0 w-full h-full scale-125 origin-center"
                     >
-                        <img
+                        <img loading="lazy"
                             src={IcefallImg}
                             alt="Khumbu Icefall"
                             className="absolute inset-0 w-full h-full object-cover object-center filter contrast-125 brightness-110 saturate-0"
@@ -721,7 +721,7 @@ const Icefall = ({ scrollProgress }) => {
                         >
                             {/* Hero */}
                             <div className="relative h-32 md:h-40 shrink-0 overflow-hidden">
-                                <img src={IcefallImg} alt="" className="w-full h-full object-cover object-center grayscale opacity-60" />
+                                <img loading="lazy" src={IcefallImg} alt="" className="w-full h-full object-cover object-center grayscale opacity-60" />
                                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/60 to-slate-950/95" />
                                 <button
                                     onClick={() => setIsInfoOpen(false)}

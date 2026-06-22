@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight, X, Download, Youtube, Globe, Video, FileText } from 'lucide-react';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
+import BaseCampImg from '../assets/base_camp_bg.webp';
 import { loadContent } from '../data/adminStore';
 import { useScrollLock } from '../hooks/useScrollLock';
 
@@ -231,7 +231,7 @@ const Contact = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full bg-slate-900 overflow-hidden pointer-events-none"
         >
             <div className="absolute inset-0 overflow-hidden">
-                <img src={BaseCampImg} className="w-full h-full object-cover opacity-10 mix-blend-luminosity scale-110" alt="Background" />
+                <img loading="lazy" src={BaseCampImg} className="w-full h-full object-cover opacity-10 mix-blend-luminosity scale-110" alt="Background" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900" />
 
                 {/* Snow Effect */}

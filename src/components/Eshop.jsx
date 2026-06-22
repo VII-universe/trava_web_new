@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ShoppingBag, ExternalLink, X, ArrowRight, BookOpen, Camera, Shirt, Gem, Heart } from 'lucide-react';
-import IcefallBg   from '../assets/icefall_bg.jpg';
-import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.jpg';
-import KnihaImg    from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
-import TrickoImg   from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
-import NaramekImg  from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
-import MedImg      from '../assets/zmensene/portrety/med___tuba_kopie.jpg';
+import IcefallBg   from '../assets/icefall_bg.webp';
+import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.webp';
+import KnihaImg    from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.webp';
+import TrickoImg   from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.webp';
+import NaramekImg  from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.webp';
+import MedImg      from '../assets/zmensene/portrety/med___tuba_kopie.webp';
 
 const CATEGORIES = [
     {
@@ -110,7 +110,7 @@ const Eshop = ({ scrollProgress }) => {
         <motion.div style={{ opacity: bgOpacity, zIndex: 0 }} className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute inset-0 bg-[#F5F0EA]" />
             <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
-                <img src={IcefallBg} alt="" className="w-full h-full object-cover"
+                <img loading="lazy" src={IcefallBg} alt="" className="w-full h-full object-cover"
                     style={{ opacity: 0.14, filter: 'sepia(0.4) contrast(1.15) brightness(0.95)' }} />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#F5F0EA] via-[#F5F0EA]/94 to-[#F5F0EA]/55" />
@@ -143,7 +143,7 @@ const Eshop = ({ scrollProgress }) => {
                         <button key={cat.id} onClick={() => setActive(cat)}
                             className="group relative flex items-center gap-3 bg-white border border-slate-100 rounded-2xl p-3 text-left active:scale-[0.98] transition-all shadow-sm overflow-hidden">
                             <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                                <img src={cat.img} alt="" className="absolute inset-0 w-full h-full object-cover opacity-15 group-hover:opacity-25 transition-opacity scale-105" />
+                                <img loading="lazy" src={cat.img} alt="" className="absolute inset-0 w-full h-full object-cover opacity-15 group-hover:opacity-25 transition-opacity scale-105" />
                             </div>
                             <div className="relative w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0 text-gold-400">
                                 {cat.icon}
@@ -219,7 +219,7 @@ const Eshop = ({ scrollProgress }) => {
                             >
                                 {/* Background image */}
                                 <div className="absolute inset-0">
-                                    <img src={cat.img} alt="" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-600" />
+                                    <img loading="lazy" src={cat.img} alt="" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-600" />
                                     <div className={`absolute inset-0 bg-gradient-to-r ${cat.color} via-slate-900/60 to-transparent`} />
                                 </div>
 
@@ -268,7 +268,7 @@ const Eshop = ({ scrollProgress }) => {
                     >
                         {/* Hero image */}
                         <div className="md:w-[44%] shrink-0 relative min-h-[200px]">
-                            <img src={active.img} alt={active.name} className="absolute inset-0 w-full h-full object-cover" />
+                            <img loading="lazy" src={active.img} alt={active.name} className="absolute inset-0 w-full h-full object-cover" />
                             <div className={`absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r ${active.color} via-slate-900/50 to-transparent`} />
                             <div className="absolute bottom-5 left-5 right-5 md:right-0">
                                 <div className={`inline-flex items-center gap-1.5 border rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest mb-2 ${active.accent}`}>

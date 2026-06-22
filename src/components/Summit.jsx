@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { Trophy, Star, ChevronUp, X } from 'lucide-react';
-import SummitImg from '../assets/summit_bg.png';
-import ClimbersImg from '../assets/climbers_bg.jpg';
-import HonzaProfileImg from '../assets/honza_profile.png';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
+import SummitImg from '../assets/summit_bg.webp';
+import ClimbersImg from '../assets/climbers_bg.webp';
+import HonzaProfileImg from '../assets/honza_profile.webp';
+import BaseCampImg from '../assets/base_camp_bg.webp';
 
 const Summit = ({ scrollProgress }) => {
     const [isOsvetaOpen, setIsOsvetaOpen] = useState(false);
@@ -130,17 +130,17 @@ const Summit = ({ scrollProgress }) => {
                         <div className="hidden md:flex w-full md:w-[45%] lg:w-[40%] flex-col gap-3 shrink-0 mt-4 md:mt-0">
                             {/* Main large image */}
                             <div className="w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden shadow-md relative group">
-                                <img src={ClimbersImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Tým v akci" />
+                                <img loading="lazy" src={ClimbersImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Tým v akci" />
                                 <div className="absolute inset-0 border border-black/5 rounded-2xl pointer-events-none" />
                             </div>
                             {/* Two small images */}
                             <div className="flex flex-row gap-3">
                                 <div className="flex-1 aspect-video md:aspect-[4/3] rounded-xl overflow-hidden shadow-sm relative group">
-                                    <img src={HonzaProfileImg} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Na vrcholu" />
+                                    <img loading="lazy" src={HonzaProfileImg} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="Na vrcholu" />
                                     <div className="absolute inset-0 border border-black/5 rounded-xl pointer-events-none" />
                                 </div>
                                 <div className="flex-1 aspect-video md:aspect-[4/3] rounded-xl overflow-hidden shadow-sm relative group">
-                                    <img src={BaseCampImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Společná cesta" />
+                                    <img loading="lazy" src={BaseCampImg} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Společná cesta" />
                                     <div className="absolute inset-0 border border-black/5 rounded-xl pointer-events-none" />
                                 </div>
                             </div>
@@ -223,7 +223,7 @@ const Summit = ({ scrollProgress }) => {
                         
                         {/* Right: Image */}
                         <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
-                            <img src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+                            <img loading="lazy" src={ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                             <div className="absolute bottom-8 left-8 right-8 text-white z-10">
                                 <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
-import CloudA from '../assets/cloud_a.png';
-import CloudB from '../assets/cloud_b.png';
-import Cloud3 from '../assets/cloud3.png';
+import CloudA from '../assets/cloud_a.webp';
+import CloudB from '../assets/cloud_b.webp';
+import Cloud3 from '../assets/cloud3.webp';
 import LogoMain  from '../assets/svg/honza_trava_logo_V1.svg';
 import Logo14    from '../assets/svg/honza_trava_logo_14_V1.svg';
 import LogoHotel from '../assets/svg/honza_trava_logo_hotel_V1.svg';

@@ -4,23 +4,23 @@ import { useLenis } from 'lenis/react';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { loadContent } from '../data/adminStore';
 import { ArrowRight, X, Star, ExternalLink, ChevronLeft, ChevronRight, Images } from 'lucide-react';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
-import HonzaProfile from '../assets/honza_profile.png';
-import ClimbersImg from '../assets/climbers_bg.jpg';
-import StoryImg1 from '../assets/zmensene/portrety/historie/trava30.jpg';
-import StoryImg2 from '../assets/zmensene/portrety/historie/037.jpg';
-import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.jpg';
-import ManasluSummitImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.jpg';
-import SummitSelfieImg from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.jpg';
-import TrailWalkImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
-import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.jpg';
-import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
-import PortraitImg from '../assets/zmensene/portrety/expedice_a_treky/_mg_1567-3.jpg';
-import MiriLeadImg from '../assets/zmensene/portrety/miri/dsc05711.jpg';
-import SubinLeadImg from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.jpg';
-import KtmPubImg from '../assets/zmensene/portrety/ktm/czech-pub-highlander-001-hires.jpg';
-import KtmPub2Img from '../assets/zmensene/portrety/ktm/czech-pub-highlander-002-hires.jpg';
-import LectureImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
+import BaseCampImg from '../assets/base_camp_bg.webp';
+import HonzaProfile from '../assets/honza_profile.webp';
+import ClimbersImg from '../assets/climbers_bg.webp';
+import StoryImg1 from '../assets/zmensene/portrety/historie/trava30.webp';
+import StoryImg2 from '../assets/zmensene/portrety/historie/037.webp';
+import StoryImg3 from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.webp';
+import ManasluSummitImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.webp';
+import SummitSelfieImg from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.webp';
+import TrailWalkImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.webp';
+import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.webp';
+import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.webp';
+import PortraitImg from '../assets/zmensene/portrety/expedice_a_treky/_mg_1567-3.webp';
+import MiriLeadImg from '../assets/zmensene/portrety/miri/dsc05711.webp';
+import SubinLeadImg from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.webp';
+import KtmPubImg from '../assets/zmensene/portrety/ktm/czech-pub-highlander-001-hires.webp';
+import KtmPub2Img from '../assets/zmensene/portrety/ktm/czech-pub-highlander-002-hires.webp';
+import LectureImg from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.webp';
 
 const GALLERY_PHOTOS = [
     { src: ManasluSummitImg, label: 'Manáslu 8163 m',       pos: 'object-top' },
@@ -242,7 +242,7 @@ const About = ({ scrollProgress }) => {
                         style={{ y: bgY, opacity: imageOpacity }}
                         className="absolute inset-0 w-full h-full scale-110 origin-center"
                     >
-                        <img
+                        <img loading="lazy"
                             src={BaseCampImg}
                             alt="Base Camp Tents"
                             className="w-full h-full object-cover object-bottom opacity-80 filter sepia-[.2] grayscale-[.3] contrast-125 brightness-105"
@@ -261,7 +261,7 @@ const About = ({ scrollProgress }) => {
                     style={{ x: honzaX, y: honzaY, scale: honzaScale, opacity: honzaOpacity, filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.1))' }}
                     className="absolute right-0 bottom-0 w-[60%] md:w-[50%] h-[90%] md:h-[100%] z-20 pointer-events-none flex items-end justify-end"
                 >
-                    <img
+                    <img loading="lazy"
                         src={HonzaProfile}
                         alt="Honza"
                         className="w-full h-full object-contain object-right-bottom mix-blend-normal scale-[1.3] md:scale-[1.6] lg:scale-[1.8] origin-bottom-right translate-x-[15%] sm:translate-x-[25%] md:translate-x-[35%] lg:translate-x-[20%] xl:translate-x-[10%]"
@@ -336,7 +336,7 @@ const About = ({ scrollProgress }) => {
                     >
                         {/* ── Hero Banner ── */}
                         <div className="relative h-48 md:h-64 shrink-0 overflow-hidden">
-                            <img src={BaseCampImg} alt="" className="w-full h-full object-cover object-center scale-105" />
+                            <img loading="lazy" src={BaseCampImg} alt="" className="w-full h-full object-cover object-center scale-105" />
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/55 to-slate-950/95" />
                             <button
                                 onClick={() => setIsStoryOpen(false)}
@@ -369,7 +369,7 @@ const About = ({ scrollProgress }) => {
                                     <div className="w-full md:w-2/5 shrink-0 flex flex-row gap-2 self-stretch min-h-[180px]">
                                         {(story.zacatky.images?.length >= 1 ? story.zacatky.images : [StoryImg2, StoryImg1]).slice(0,2).map((src, i) => (
                                             <div key={i} className="relative rounded-2xl overflow-hidden flex-1 min-h-[180px]">
-                                                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover"
+                                                <img loading="lazy" src={src} alt="" className="absolute inset-0 w-full h-full object-cover"
                                                     style={{ objectPosition: i === 1 ? '20% 20%' : 'center 20%' }} />
                                             </div>
                                         ))}
@@ -400,7 +400,7 @@ const About = ({ scrollProgress }) => {
                                     <div className="grid grid-cols-3 gap-2 mb-6 h-48 md:h-64">
                                         {(story.hory.images?.length >= 1 ? story.hory.images : [ManasluSummitImg, SummitSelfieImg, StoryImg3]).slice(0,3).map((src, i) => (
                                             <div key={i} className="relative rounded-xl overflow-hidden">
-                                                <img src={src} alt="" className="w-full h-full object-cover object-top" />
+                                                <img loading="lazy" src={src} alt="" className="w-full h-full object-cover object-top" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                                             </div>
                                         ))}
@@ -451,7 +451,7 @@ const About = ({ scrollProgress }) => {
                                         <p className="font-sans text-slate-500 text-sm leading-relaxed italic">{story.nepal.pubText3}</p>
                                     </div>
                                     <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px]">
-                                        <img src={KtmPubImg} alt="Czech Pub Nepal" className="w-full h-full object-cover" />
+                                        <img loading="lazy" src={KtmPubImg} alt="Czech Pub Nepal" className="w-full h-full object-cover" />
                                     </div>
                                 </div>
 
@@ -460,7 +460,7 @@ const About = ({ scrollProgress }) => {
                                 {/* Hotel Kathmandu Base Camp */}
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-2/5 shrink-0 rounded-2xl overflow-hidden self-stretch min-h-[160px] order-last md:order-first">
-                                        <img src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover" style={{ objectPosition: '75% top' }} />
+                                        <img loading="lazy" src={KtmPub2Img} alt="Hotel Kathmandu Base Camp" className="w-full h-full object-cover" style={{ objectPosition: '75% top' }} />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-serif text-xl md:text-2xl text-slate-900 mb-4 leading-tight">{story.nepal.hotelTitle}</h3>
@@ -508,7 +508,7 @@ const About = ({ scrollProgress }) => {
                                         </div>
                                     </div>
                                     <div className="w-full md:w-1/3 shrink-0 relative rounded-2xl overflow-hidden self-stretch min-h-[160px]">
-                                        <img src={story.zdravi.imageUrl || ClimbersImg} alt="" className="w-full h-full object-cover" />
+                                        <img loading="lazy" src={story.zdravi.imageUrl || ClimbersImg} alt="" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                                         <blockquote className="absolute bottom-4 left-4 right-4 font-serif italic text-white text-sm leading-snug drop-shadow-lg">
                                             {story.zdravi.quote}
@@ -521,7 +521,7 @@ const About = ({ scrollProgress }) => {
                             <div className="px-6 md:px-10 py-8 md:py-10 border-b border-slate-200">
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-2/5 shrink-0 relative rounded-2xl overflow-hidden self-stretch min-h-[160px]">
-                                        <img src={story.prednasky.imageUrl || LectureImg} alt="Přednáška" className="w-full h-full object-cover" />
+                                        <img loading="lazy" src={story.prednasky.imageUrl || LectureImg} alt="Přednáška" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
                                     </div>
                                     <div className="flex-1">
@@ -552,7 +552,7 @@ const About = ({ scrollProgress }) => {
                                         onClick={() => openTeamModal('openMiriModal')}
                                         className="group relative rounded-2xl overflow-hidden cursor-pointer text-left h-48 md:h-56 transition-all duration-300 hover:shadow-xl"
                                     >
-                                        <img src={MiriLeadImg} alt="Miri Jirková" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img loading="lazy" src={MiriLeadImg} alt="Miri Jirková" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
                                             <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">{(adminTexts?.miri?.name) || 'Miri Jirková'}</p>
@@ -566,7 +566,7 @@ const About = ({ scrollProgress }) => {
                                         onClick={() => openTeamModal('openSubinModal')}
                                         className="group relative rounded-2xl overflow-hidden cursor-pointer text-left h-48 md:h-56 transition-all duration-300 hover:shadow-xl"
                                     >
-                                        <img src={SubinLeadImg} alt="Subin Thakuri" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img loading="lazy" src={SubinLeadImg} alt="Subin Thakuri" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
                                             <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">{(adminTexts?.subin?.name) || 'Subin Thakuri'}</p>
@@ -601,7 +601,7 @@ const About = ({ scrollProgress }) => {
                                             onClick={() => navigateToSection(item.target)}
                                             className="group relative rounded-xl overflow-hidden h-24 md:h-28 text-left transition-all duration-300 hover:shadow-xl hover:shadow-black/40"
                                         >
-                                            <img src={item.img} alt="" className="w-full h-full object-cover opacity-45 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500" />
+                                            <img loading="lazy" src={item.img} alt="" className="w-full h-full object-cover opacity-45 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 to-slate-800/30" />
                                             <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-end">
                                                 <p className="font-serif text-white text-sm leading-tight">{item.label}</p>
@@ -747,7 +747,7 @@ const About = ({ scrollProgress }) => {
                         </div>
 
                         <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-0 bg-slate-900">
-                            <img src={osveta.imageUrl || ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+                            <img loading="lazy" src={osveta.imageUrl || ClimbersImg} alt="Pomoc a osvěta" className="absolute inset-0 w-full h-full object-cover opacity-90" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                             <div className="absolute bottom-8 left-8 right-8 z-10">
                                 <div className="p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
@@ -805,7 +805,7 @@ const About = ({ scrollProgress }) => {
                                         onClick={() => setLightboxIdx(i)}
                                         className="group relative rounded-xl overflow-hidden aspect-square cursor-zoom-in"
                                     >
-                                        <img src={photo.src} alt="" className={`w-full h-full object-cover ${photo.pos} group-hover:scale-105 transition-transform duration-500`} />
+                                        <img loading="lazy" src={photo.src} alt="" className={`w-full h-full object-cover ${photo.pos} group-hover:scale-105 transition-transform duration-500`} />
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 animate-fade-in" />
                                     </button>
                                 ))}
@@ -846,7 +846,7 @@ const About = ({ scrollProgress }) => {
                         onClick={(e) => e.stopPropagation()}
                         className="flex flex-col items-center px-14 md:px-20 max-w-[95vw]"
                     >
-                        <img
+                        <img loading="lazy"
                             src={GALLERY_PHOTOS[lightboxIdx].src}
                             alt=""
                             className="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl"

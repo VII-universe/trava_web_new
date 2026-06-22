@@ -7,15 +7,15 @@ import { loadContent } from '../data/adminStore';
 import { resolveImageSrc } from '../data/imageStore';
 import EventCalendar from './EventCalendar';
 
-import PjjImg    from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.jpg';
-import HorkyImg  from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.jpg';
-import LangosImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240715_133229.jpg';
-import AudyImg   from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
-import FormanImg from '../assets/zmensene/kathmandu/dsc08157.jpg';
-import JesteImg  from '../assets/zmensene/projekty/jeste_jsme_neskoncili/20240806_151350.jpg';
-import NehaImg   from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07645.jpg';
-import DalsiImg  from '../assets/zmensene/skupinky/whatsapp_image_2025-06-15_at_18_53_30__2_.jpg';
-import TourImg   from '../assets/zmensene/portrety/prednasky/1r2a2034.jpg';
+import PjjImg    from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6384-edit.webp';
+import HorkyImg  from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240728_131841.webp';
+import LangosImg from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/20240715_133229.webp';
+import AudyImg   from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.webp';
+import FormanImg from '../assets/zmensene/kathmandu/dsc08157.webp';
+import JesteImg  from '../assets/zmensene/projekty/jeste_jsme_neskoncili/20240806_151350.webp';
+import NehaImg   from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc07645.webp';
+import DalsiImg  from '../assets/zmensene/skupinky/whatsapp_image_2025-06-15_at_18_53_30__2_.webp';
+import TourImg   from '../assets/zmensene/portrety/prednasky/1r2a2034.webp';
 
 function ModalSlider({ images, fallback, className = '' }) {
     const all = images?.length ? images : (fallback ? [fallback] : []);
@@ -198,7 +198,7 @@ const Projects = ({ scrollProgress }) => {
                                     whileTap={{ scale: 0.99 }}
                                     className="group relative text-left rounded-2xl overflow-hidden"
                                     style={{ height: 'clamp(160px, 22vh, 210px)', boxShadow: '0 16px 50px rgba(0,0,0,0.5)' }}>
-                                    <img src={resolveImageSrc(p) || p.image} alt={p.title}
+                                    <img loading="lazy" src={resolveImageSrc(p) || p.image} alt={p.title}
                                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                     <div className={`absolute inset-0 bg-gradient-to-r ${p.accentColor || 'from-slate-950/90'} via-slate-950/55 to-transparent`} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
@@ -233,7 +233,7 @@ const Projects = ({ scrollProgress }) => {
                                     whileTap={{ scale: 0.98 }}
                                     className="group relative text-left rounded-2xl overflow-hidden"
                                     style={{ height: 'clamp(110px, 15vh, 148px)', boxShadow: '0 8px 30px rgba(0,0,0,0.45)' }}>
-                                    <img src={resolveImageSrc(p) || p.image} alt={p.title}
+                                    <img loading="lazy" src={resolveImageSrc(p) || p.image} alt={p.title}
                                         className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-108 transition-all duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/40 to-transparent" />
                                     {/* Hover gold border */}
@@ -274,7 +274,7 @@ const Projects = ({ scrollProgress }) => {
                             {projects.slice(0, 6).map(p => (
                                 <button key={p.id} onClick={() => setSelected(p)}
                                     className="group relative text-left rounded-2xl overflow-hidden aspect-video">
-                                    <img src={resolveImageSrc(p) || p.image} alt={p.title}
+                                    <img loading="lazy" src={resolveImageSrc(p) || p.image} alt={p.title}
                                         className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/30 to-transparent" />
                                     <div className="absolute bottom-0 left-0 right-0 p-2.5">

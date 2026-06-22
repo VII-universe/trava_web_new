@@ -5,9 +5,9 @@ import { Calendar, X, Mail, CheckCircle2, ArrowRight, Mic, Building2, Users, Sta
 import { useLenis } from 'lenis/react';
 import { loadContent } from '../data/adminStore';
 import EventCalendar from './EventCalendar';
-import BookingBg  from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.jpg';
-import Tour50Img  from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.jpg';
-import CollabImg  from '../assets/zmensene/portrety/prednasky/dsc04123.jpg';
+import BookingBg  from '../assets/zmensene/portrety/s_miri__subinem_onghchu_nebo_sabinem/dsc06903.webp';
+import Tour50Img  from '../assets/zmensene/portrety/prednasky/honza_-_prednaska.webp';
+import CollabImg  from '../assets/zmensene/portrety/prednasky/dsc04123.webp';
 
 /* ── Témata přednášek ── */
 const TOPICS = [
@@ -194,7 +194,7 @@ const Lectures = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full pointer-events-none">
             {/* Mobil: foto nahoře + tmavý panel dole — oba jen opacity */}
             <div className="md:hidden absolute inset-0">
-                <img src={Tour50Img} className="absolute inset-0 w-full h-full object-cover object-top" alt="" />
+                <img loading="lazy" src={Tour50Img} className="absolute inset-0 w-full h-full object-cover object-top" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/40 to-slate-950" />
             </div>
             {/* Desktop: tmavý gradient */}
@@ -239,7 +239,7 @@ const Lectures = ({ scrollProgress }) => {
                         <button onClick={() => setSelectedEvent(EVENTS_DETAIL[0])}
                             className="relative rounded-2xl overflow-hidden text-left"
                             style={{ height: 66 }}>
-                            <img src={CollabImg} alt="Projekty"
+                            <img loading="lazy" src={CollabImg} alt="Projekty"
                                 className="absolute inset-0 w-full h-full object-cover object-center opacity-60" />
                             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/30" />
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent" />
@@ -292,7 +292,7 @@ const Lectures = ({ scrollProgress }) => {
                         {/* ── LEVÁ: foto hero karta ── */}
                         <div className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
                             {/* Background photo */}
-                            <img src={Tour50Img} alt="Přednáška Honza Tráva"
+                            <img loading="lazy" src={Tour50Img} alt="Přednáška Honza Tráva"
                                 className="absolute inset-0 w-full h-full object-cover object-center scale-105" />
                             {/* Rich gradient overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-800/20" />
@@ -348,7 +348,7 @@ const Lectures = ({ scrollProgress }) => {
                                 className="group relative rounded-[1.5rem] overflow-hidden flex-1 min-h-0 text-left"
                                 style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.55)' }}>
                                 {/* Background image */}
-                                <img src={CollabImg} alt="Společné projekty"
+                                <img loading="lazy" src={CollabImg} alt="Společné projekty"
                                     className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700" />
                                 {/* Gradient */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-800/10" />
@@ -388,7 +388,7 @@ const Lectures = ({ scrollProgress }) => {
                                 <button onClick={() => setShowTopics(true)}
                                     className="group relative rounded-2xl overflow-hidden text-left"
                                     style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.4)', minHeight: '100px' }}>
-                                    <img src={Tour50Img} alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500" />
+                                    <img loading="lazy" src={Tour50Img} alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent" />
                                     <div className="relative h-full flex flex-col justify-between p-4">
                                         <span className="text-[8px] font-bold uppercase tracking-widest text-gold-400">{TOPICS.length} témat</span>
@@ -580,7 +580,7 @@ const Lectures = ({ scrollProgress }) => {
                                             <div className="grid grid-cols-2 gap-3">
                                                 {TOPICS_DETAILS[selectedTopic.id]?.photos.map((photoUrl, pIdx) => (
                                                     <div key={pIdx} className="aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-                                                        <img src={photoUrl} alt={`${selectedTopic.title} ${pIdx + 1}`} className="w-full h-full object-cover" />
+                                                        <img loading="lazy" src={photoUrl} alt={`${selectedTopic.title} ${pIdx + 1}`} className="w-full h-full object-cover" />
                                                     </div>
                                                 ))}
                                             </div>

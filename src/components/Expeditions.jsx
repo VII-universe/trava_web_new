@@ -5,39 +5,39 @@ import { motion, useTransform, useScroll, AnimatePresence, useMotionValue, anima
 import { useScrollLock } from '../hooks/useScrollLock';
 import { ArrowLeft, ArrowRight, X, MapPin, Play, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import Logo14Summits from '../assets/svg/honza_trava_logo_14_negativni_V1.svg';
-import SummitImage from '../assets/summit_bg.png';
-import HonzaProfile from '../assets/honza_profile.png';
-import ClimbersImg from '../assets/climbers_bg.jpg';
+import SummitImage from '../assets/summit_bg.webp';
+import HonzaProfile from '../assets/honza_profile.webp';
+import ClimbersImg from '../assets/climbers_bg.webp';
 
-import ManasluImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.jpg';
-import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.jpg';
-import YogaImg from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.jpg';
+import ManasluImg from '../assets/zmensene/portrety/expedice_a_treky/20240728_133329.webp';
+import MeraImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06947.webp';
+import YogaImg from '../assets/zmensene/portrety/expedice_a_treky/20240723_091830.webp';
 
-import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.jpg';
-import ElbrusImg from '../assets/zmensene/portrety/expedice_a_treky/dsc_0008.jpg';
-import KiliImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06888.jpg';
-import MustangImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.jpg';
-import K2Img from '../assets/zmensene/portrety/expedice_a_treky/dsc07035.jpg';
-import EcuadorImg from '../assets/zmensene/portrety/expedice_a_treky/dsc07138.jpg';
+import AconcaImg from '../assets/zmensene/portrety/expedice_a_treky/dsc05780.webp';
+import ElbrusImg from '../assets/zmensene/portrety/expedice_a_treky/dsc_0008.webp';
+import KiliImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06888.webp';
+import MustangImg from '../assets/zmensene/portrety/expedice_a_treky/dsc06330.webp';
+import K2Img from '../assets/zmensene/portrety/expedice_a_treky/dsc07035.webp';
+import EcuadorImg from '../assets/zmensene/portrety/expedice_a_treky/dsc07138.webp';
 
-import PolaroidBaseCamp from '../assets/zmensene/portrety/expedice_a_treky/20240709_160740.jpg';
-import PolaroidCesta from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.jpg';
-import PolaroidVrchol from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.jpg';
+import PolaroidBaseCamp from '../assets/zmensene/portrety/expedice_a_treky/20240709_160740.webp';
+import PolaroidCesta from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6158.webp';
+import PolaroidVrchol from '../assets/zmensene/portrety/expedice_a_treky/20240801_142543.webp';
 
 // Miri Assets
-import MiriLead from '../assets/zmensene/portrety/miri/dsc05711.jpg';
-import MiriGallery1 from '../assets/zmensene/portrety/miri/dsc05687.jpg';
-import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.jpg';
-import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.jpg';
+import MiriLead from '../assets/zmensene/portrety/miri/dsc05711.webp';
+import MiriGallery1 from '../assets/zmensene/portrety/miri/dsc05687.webp';
+import MiriGallery2 from '../assets/zmensene/portrety/miri/dsc07672.webp';
+import MiriGallery3 from '../assets/zmensene/portrety/miri/dsc05775.webp';
 
 // Subin Assets
-import SubinLead from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.jpg';
-import SubinGallery1 from '../assets/subin/709821647_27683722964561782_5900556086665768720_n.jpg';
-import SubinGallery2 from '../assets/subin/708222255_27683721301228615_6923514414452475433_n.jpg';
-import SubinGallery3 from '../assets/subin/726900823_27973041375629938_2489518176787229142_n.jpg';
-import SubinGallery4 from '../assets/subin/703890808_27563455109921902_6801214269235911091_n.jpg';
-import SubinGallery5 from '../assets/subin/709756548_27683698914564187_8442966694392456609_n.jpg';
-import SubinGallery6 from '../assets/subin/726808686_27973041822296560_7565319684635736943_n.jpg';
+import SubinLead from '../assets/subin/707796720_27683721587895253_2782571953717255680_n.webp';
+import SubinGallery1 from '../assets/subin/709821647_27683722964561782_5900556086665768720_n.webp';
+import SubinGallery2 from '../assets/subin/708222255_27683721301228615_6923514414452475433_n.webp';
+import SubinGallery3 from '../assets/subin/726900823_27973041375629938_2489518176787229142_n.webp';
+import SubinGallery4 from '../assets/subin/703890808_27563455109921902_6801214269235911091_n.webp';
+import SubinGallery5 from '../assets/subin/709756548_27683698914564187_8442966694392456609_n.webp';
+import SubinGallery6 from '../assets/subin/726808686_27973041822296560_7565319684635736943_n.webp';
 
 function ModalSlider({ images, fallback, className = '', children }) {
     const all = images?.length ? images : (fallback ? [fallback] : []);
@@ -47,7 +47,7 @@ function ModalSlider({ images, fallback, className = '', children }) {
     const next = () => setIdx(i => (i + 1) % all.length);
     return (
         <div className={`relative overflow-hidden ${className}`}>
-            <img src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
+            <img loading="lazy" src={all[idx]} alt="" className="w-full h-full object-cover transition-opacity duration-300" />
             {children}
             {all.length > 1 && <>
                 <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/40 hover:bg-black/70 text-white rounded-full transition-colors z-10">
@@ -676,13 +676,13 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                             className="absolute bottom-0 left-0 right-0 cursor-pointer" style={{ height:114 }}
                             onClick={() => { onRegionClick(hoveredRegion); setHovered(null); setAutoCycling(false); }}>
                             <div className="absolute inset-0 overflow-hidden">
-                                <img src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition:'center 40%' }} />
+                                <img loading="lazy" src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition:'center 40%' }} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#04070e] via-[#04070e]/90 to-[#04070e]/60" />
                             </div>
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/70 to-transparent" />
                             <div className="absolute inset-0 flex items-center gap-3 px-4">
                                 <div className="w-[68px] h-[88px] rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-lg">
-                                    <img src={hoveredRegion.image} alt={hoveredRegion.name} className="w-full h-full object-cover" />
+                                    <img loading="lazy" src={hoveredRegion.image} alt={hoveredRegion.name} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-1.5">
@@ -1089,7 +1089,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                     >
                         {/* Foto pozadí s gradient overlay */}
                         <div className="absolute inset-0 overflow-hidden">
-                            <img src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition: 'center 40%' }} />
+                            <img loading="lazy" src={hoveredRegion.image} alt="" className="absolute inset-0 w-full h-full object-cover scale-105" style={{ objectPosition: 'center 40%' }} />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#1a1008] via-[#1a1008]/92 to-[#1a1008]/65" />
                         </div>
 
@@ -1100,7 +1100,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                         <div className="absolute inset-0 flex items-center gap-3 px-4">
                             {/* Thumbnail */}
                             <div className="w-[72px] h-[90px] rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-lg">
-                                <img src={hoveredRegion.image} alt={hoveredRegion.name} className="w-full h-full object-cover" />
+                                <img loading="lazy" src={hoveredRegion.image} alt={hoveredRegion.name} className="w-full h-full object-cover" />
                             </div>
 
                             {/* Text */}
@@ -1234,7 +1234,7 @@ function MapModal({ regions, onClose, onOpenRegion }) {
                                                  style={{ boxShadow: 'inset 0 0 60px rgba(6,9,15,0.55)' }} />
                                         </>
                                     ) : (
-                                        <img src={selected.image} alt={selected.name} className="w-full h-full object-cover opacity-60" />
+                                        <img loading="lazy" src={selected.image} alt={selected.name} className="w-full h-full object-cover opacity-60" />
                                     )}
                                     {/* Mobile back */}
                                     <button onClick={handleBack}
@@ -1496,10 +1496,10 @@ const Expeditions = ({ scrollProgress }) => {
 
                             {/* Hero — logo + label — jako Hotel/Pub */}
                             <div className="relative shrink-0" style={{ flex: '0 0 40%' }}>
-                                <img src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
+                                <img loading="lazy" src={SummitImage} className="absolute inset-0 w-full h-full object-cover brightness-40 object-[50%_30%]" alt="" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/30 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
-                                    <img src={Logo14Summits} alt="14 Summits" className="h-32 w-auto object-contain object-left -ml-2 mb-1 drop-shadow-lg opacity-95 pointer-events-none" />
+                                    <img loading="lazy" src={Logo14Summits} alt="14 Summits" className="h-32 w-auto object-contain object-left -ml-2 mb-1 drop-shadow-lg opacity-95 pointer-events-none" />
                                     <div className="inline-flex items-center gap-1 text-gold-400 mb-1 bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded-full">
                                         <span className="text-[9px] uppercase tracking-widest font-bold">04 — Expedice (4500 m)</span>
                                     </div>
@@ -1599,7 +1599,7 @@ const Expeditions = ({ scrollProgress }) => {
                                             onClick={() => setSelectedCategory(cat)}
                                             className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.12] active:scale-[0.96] transition-transform"
                                         >
-                                            <img src={cat.image} className="absolute inset-0 w-full h-full object-cover brightness-[0.5]" alt={cat.label} />
+                                            <img loading="lazy" src={cat.image} className="absolute inset-0 w-full h-full object-cover brightness-[0.5]" alt={cat.label} />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                                             {/* Index */}
                                             <span className="absolute top-2.5 left-3 font-mono text-[9px] text-gold-500/60 font-bold tracking-widest leading-none">
@@ -1680,7 +1680,7 @@ const Expeditions = ({ scrollProgress }) => {
                             {/* Expedition cards */}
                             {EXPEDITIONS_DISPLAY.map((exped) => (
                                 <div key={exped.id} onClick={() => { setSelectedExped(exped); setIsOrdering(false); }} className="shrink-0 snap-start w-[62vw] aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 cursor-pointer active:scale-[0.97] transition-transform relative">
-                                    <img src={resolveImageSrc(exped) || exped.image} className="absolute inset-0 w-full h-full object-cover" alt={exped.title} />
+                                    <img loading="lazy" src={resolveImageSrc(exped) || exped.image} className="absolute inset-0 w-full h-full object-cover" alt={exped.title} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
                                     <div className="absolute top-3 right-3">
                                         <span className="text-[9px] text-gold-400 tracking-wider uppercase bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm border border-gold-500/20">{exped.difficulty}</span>
@@ -1701,7 +1701,7 @@ const Expeditions = ({ scrollProgress }) => {
                 <div className="hidden md:flex w-full h-full flex-col items-center justify-start [@media(min-height:1000px)_and_(min-width:768px)]:justify-center px-4 md:px-6 overflow-hidden">
                 <div className="w-full flex flex-col items-center origin-top transition-transform duration-300 [@media(max-height:950px)_and_(min-width:768px)]:scale-[0.88] [@media(max-height:820px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:720px)_and_(min-width:768px)]:scale-[0.72]">
                     <div className="text-center mb-0.5 md:mb-4 xl:mb-6 [@media(max-height:950px)_and_(min-width:768px)]:mb-1 relative z-10 md:pt-4 [@media(max-height:950px)_and_(min-width:768px)]:pt-2 xl:pt-6 flex flex-col items-center">
-                    <img src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-48 xl:w-64 mb-1 [@media(max-height:950px)_and_(min-width:768px)]:mb-0 drop-shadow-lg opacity-90" />
+                    <img loading="lazy" src={Logo14Summits} alt="14 Summits Logo" className="w-36 md:w-48 xl:w-64 mb-1 [@media(max-height:950px)_and_(min-width:768px)]:mb-0 drop-shadow-lg opacity-90" />
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.3em] text-xs font-bold mb-2 md:mb-2 mt-0.5 md:mt-2 [@media(max-height:950px)_and_(min-width:768px)]:mt-1 [@media(max-height:950px)_and_(min-width:768px)]:mb-1">
                         04 — Expedice (4500 m)
                     </h4>
@@ -1747,7 +1747,7 @@ const Expeditions = ({ scrollProgress }) => {
                             className="hidden lg:block absolute -top-16 lg:-left-12 xl:-left-24 z-0 lg:w-64 xl:w-80 bg-[#f8f9fa] p-3 xl:p-4 pb-12 xl:pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50 pointer-events-none"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                                <img 
+                                <img loading="lazy" 
                                     src={HonzaProfile} 
                                     className="w-full h-full object-cover object-top filter contrast-105 opacity-95 saturate-110" 
                                     alt="Honza" 
@@ -1767,7 +1767,7 @@ const Expeditions = ({ scrollProgress }) => {
                             className="hidden lg:block absolute -bottom-32 -right-24 z-0 w-80 bg-[#f8f9fa] p-4 pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                                <img 
+                                <img loading="lazy" 
                                     src={ClimbersImg} 
                                     className="w-full h-full object-cover object-center filter contrast-105 opacity-95 saturate-110" 
                                     alt="Miri" 
@@ -1788,7 +1788,7 @@ const Expeditions = ({ scrollProgress }) => {
                             className="hidden xl:block absolute -bottom-32 -left-10 z-0 w-64 bg-[#f8f9fa] p-3 pb-12 shadow-[0_15px_40px_rgba(0,0,0,0.5)] rounded-sm border border-slate-200/40"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                                <img 
+                                <img loading="lazy" 
                                     src={PolaroidBaseCamp} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Base Camp" 
@@ -1807,7 +1807,7 @@ const Expeditions = ({ scrollProgress }) => {
                             className="hidden xl:block absolute -bottom-40 right-20 z-0 w-72 bg-[#f8f9fa] p-3 pb-14 shadow-[0_20px_50px_rgba(0,0,0,0.6)] rounded-sm border border-slate-200/50"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                                <img 
+                                <img loading="lazy" 
                                     src={PolaroidCesta} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Naše Cesty" 
@@ -1826,7 +1826,7 @@ const Expeditions = ({ scrollProgress }) => {
                             className="hidden lg:block absolute -top-10 -right-24 z-0 w-56 bg-[#f8f9fa] p-2 pb-10 shadow-[0_10px_30px_rgba(0,0,0,0.4)] rounded-sm border border-slate-200/40"
                         >
                             <div className="w-full aspect-square bg-slate-200 overflow-hidden relative">
-                                <img 
+                                <img loading="lazy" 
                                     src={PolaroidVrchol} 
                                     className="w-full h-full object-cover filter contrast-105 opacity-95 saturate-110" 
                                     alt="Vrchol" 
@@ -2091,7 +2091,7 @@ const Expeditions = ({ scrollProgress }) => {
                                     </button>
 
                                     <div className="w-full md:w-5/12 h-64 md:h-auto relative shrink-0">
-                                        <img src={resolveImageSrc(selectedMoreExped) || selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
+                                        <img loading="lazy" src={resolveImageSrc(selectedMoreExped) || selectedMoreExped.image} alt={selectedMoreExped.title} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent opacity-100" />
                                         <div className="absolute bottom-6 left-6 flex flex-col gap-2">
                                             <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white text-xs font-bold font-sans tracking-widest uppercase outline outline-1 outline-white/20 inline-block w-fit">
@@ -2219,7 +2219,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                 onClick={() => { setSelectedMoreExped(exped); setIsOrdering(false); }}
                                                 className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-lg outline outline-1 outline-white/10"
                                             >
-                                                <img 
+                                                <img loading="lazy" 
                                                     src={resolveImageSrc(exped) || exped.image} 
                                                     alt={exped.alt} 
                                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
@@ -2281,7 +2281,7 @@ const Expeditions = ({ scrollProgress }) => {
                     >
                         {/* Hero */}
                         <div className="relative h-36 md:h-48 shrink-0 overflow-hidden">
-                            <img src={SummitImage} alt="" className="w-full h-full object-cover object-[50%_30%] brightness-50" />
+                            <img loading="lazy" src={SummitImage} alt="" className="w-full h-full object-cover object-[50%_30%] brightness-50" />
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/55 to-slate-950/95" />
                             <button
                                 onClick={() => setIs14Open(false)}
@@ -2495,25 +2495,25 @@ const Expeditions = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-2">
-                                <img src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </motion.div>
@@ -2599,13 +2599,13 @@ const Expeditions = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-1">
-                                <img src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={MiriGallery2} alt="Miri Trekking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img loading="lazy" src={MiriGallery2} alt="Miri Trekking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </motion.div>
@@ -2638,7 +2638,7 @@ const Expeditions = ({ scrollProgress }) => {
                         </button>
 
                         <div className="w-full md:w-5/12 h-56 md:h-auto relative shrink-0">
-                            <img src={selectedCategory.image} alt={selectedCategory.label} className="w-full h-full object-cover" />
+                            <img loading="lazy" src={selectedCategory.image} alt={selectedCategory.label} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ivory/90 via-transparent to-transparent" />
                             <div className="absolute top-5 left-5">
                                 <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg ${selectedCategory.badgeClass}`}>
@@ -2726,7 +2726,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                      style={{ boxShadow: 'inset 0 0 60px rgba(6,9,15,0.55)' }} />
                                             </>
                                         ) : (
-                                            <img src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
+                                            <img loading="lazy" src={selectedRegion.image} alt={selectedRegion.name} className="w-full h-full object-cover" />
                                         )}
                                         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0f1923]/60 via-transparent to-transparent pointer-events-none" />
                                         <div className="absolute bottom-5 left-5 flex flex-col gap-1.5 pointer-events-none">
@@ -2831,7 +2831,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                     <div className="grid grid-cols-2 gap-3">
                                                         {REGIONS_DETAILS[selectedRegion.id]?.photos.map((imgUrl, i) => (
                                                             <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 group relative bg-black/40">
-                                                                <img
+                                                                <img loading="lazy"
                                                                     src={imgUrl}
                                                                     alt={`${selectedRegion.name} ${i + 1}`}
                                                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -2888,7 +2888,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                     onClick={() => handleSelectRegion(region)}
                                                     className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-gold-500/40 transition-all duration-300 text-left"
                                                 >
-                                                    <img
+                                                    <img loading="lazy"
                                                         src={region.image}
                                                         alt={region.name}
                                                         className="w-full h-full object-cover brightness-60 group-hover:brightness-75 group-hover:scale-105 transition-all duration-600"

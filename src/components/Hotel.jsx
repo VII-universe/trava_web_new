@@ -5,26 +5,26 @@ import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Wifi, Flower2, ChevronLeft, ChevronRight, Star, Bed, Sunrise, Coffee, Images, ZoomIn, ArrowRight } from 'lucide-react';
 import { loadContent } from '../data/adminStore';
 
-import HotelBg        from '../assets/zmensene/hotel/czech-pub-highlander-006-hires.jpg';
-import HotelHero      from '../assets/zmensene/hotel/czech-pub-highlander-004-hires.jpg';
+import HotelBg        from '../assets/zmensene/hotel/czech-pub-highlander-006-hires.webp';
+import HotelHero      from '../assets/zmensene/hotel/czech-pub-highlander-004-hires.webp';
 import HotelLogoLight from '../assets/svg/honza_trava_logo_hotel_negativni_V1.svg';
 import HotelLogo      from '../assets/svg/honza_trava_logo_hotel_V1.svg';
-import H1  from '../assets/zmensene/hotel/czech-pub-highlander-005-hires.jpg';
-import H2  from '../assets/zmensene/hotel/czech-pub-highlander-007-hires.jpg';
-import H3  from '../assets/zmensene/hotel/czech-pub-highlander-008-hires.jpg';
-import H4  from '../assets/zmensene/hotel/czech-pub-highlander-009-hires.jpg';
-import H5  from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
-import H6  from '../assets/zmensene/hotel/czech-pub-highlander-011-hires.jpg';
-import H7  from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.jpg';
-import H8  from '../assets/zmensene/hotel/czech-pub-highlander-013-hires.jpg';
-import H9  from '../assets/zmensene/hotel/czech-pub-highlander-014-hires.jpg';
-import H10 from '../assets/zmensene/hotel/czech-pub-highlander-015-hires.jpg';
-import H11 from '../assets/zmensene/hotel/czech-pub-highlander-016-hires.jpg';
-import H12 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.jpg';
-import H13 from '../assets/zmensene/hotel/image00023.jpg';
-import H14 from '../assets/zmensene/hotel/image00024.jpg';
-import H15 from '../assets/zmensene/hotel/image00025.jpg';
-import H16 from '../assets/zmensene/hotel/image00026.jpg';
+import H1  from '../assets/zmensene/hotel/czech-pub-highlander-005-hires.webp';
+import H2  from '../assets/zmensene/hotel/czech-pub-highlander-007-hires.webp';
+import H3  from '../assets/zmensene/hotel/czech-pub-highlander-008-hires.webp';
+import H4  from '../assets/zmensene/hotel/czech-pub-highlander-009-hires.webp';
+import H5  from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.webp';
+import H6  from '../assets/zmensene/hotel/czech-pub-highlander-011-hires.webp';
+import H7  from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.webp';
+import H8  from '../assets/zmensene/hotel/czech-pub-highlander-013-hires.webp';
+import H9  from '../assets/zmensene/hotel/czech-pub-highlander-014-hires.webp';
+import H10 from '../assets/zmensene/hotel/czech-pub-highlander-015-hires.webp';
+import H11 from '../assets/zmensene/hotel/czech-pub-highlander-016-hires.webp';
+import H12 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.webp';
+import H13 from '../assets/zmensene/hotel/image00023.webp';
+import H14 from '../assets/zmensene/hotel/image00024.webp';
+import H15 from '../assets/zmensene/hotel/image00025.webp';
+import H16 from '../assets/zmensene/hotel/image00026.webp';
 
 const galleryImages = [H1, H2, H3, H4, H5, H6, H7, H8, H9, H10, H11, H12, H13, H14, H15, H16];
 
@@ -375,7 +375,7 @@ const Hotel = ({ scrollProgress }) => {
                         <div className="md:w-[46%] shrink-0 flex flex-col gap-0.5 bg-slate-900 min-h-[40vh] md:min-h-0">
                             {/* Hero */}
                             <div className="relative flex-1 min-h-[200px]">
-                                <img src={HotelHero} alt="Hotel Kathmandu Base Camp" className="absolute inset-0 w-full h-full object-cover" />
+                                <img loading="lazy" src={HotelHero} alt="Hotel Kathmandu Base Camp" className="absolute inset-0 w-full h-full object-cover" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
                                 <div className="absolute bottom-4 left-4 right-4">
                                     <span className="inline-flex items-center gap-1.5 text-gold-400 bg-slate-950/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2">
@@ -401,7 +401,7 @@ const Hotel = ({ scrollProgress }) => {
                         <div className="flex-1 flex flex-col overflow-y-auto overscroll-contain" data-lenis-prevent>
                             {/* Horní lišta */}
                             <div className="flex items-center justify-between px-6 md:px-8 pt-6 pb-4 shrink-0 border-b border-slate-100">
-                                <img src={HotelLogo} alt="Hotel KBC" className="h-10 w-auto object-contain" />
+                                <img loading="lazy" src={HotelLogo} alt="Hotel KBC" className="h-10 w-auto object-contain" />
                                 <button onClick={() => setDetailOpen(false)}
                                     className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
                                     <X className="w-4 h-4" />

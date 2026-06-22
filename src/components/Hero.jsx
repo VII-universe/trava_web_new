@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import EverestImage from '../assets/mount_everest_ivory.png';
+import EverestImage from '../assets/mount_everest_ivory.webp';
 import LogoMain from '../assets/svg/honza_trava_logo_V1.svg';
 import { loadContent } from '../data/adminStore';
 
@@ -45,6 +45,8 @@ const Hero = ({ scrollProgress }) => {
                 <img
                     src={EverestImage}
                     alt="Mount Everest"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover object-center opacity-40 mix-blend-multiply filter contrast-125 saturate-50"
                     style={{
                         maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',

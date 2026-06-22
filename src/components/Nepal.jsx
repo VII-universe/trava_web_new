@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { MapPin, X, ExternalLink, Wifi, Home, Coffee, Utensils, Beer, ChevronLeft, ChevronRight } from 'lucide-react';
-import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.jpg';
-import HotelImg2 from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.jpg';
-import HotelImg3 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.jpg';
-import HotelImg4 from '../assets/zmensene/hotel/czech-pub-highlander-022-hires.jpg';
+import HotelImg1 from '../assets/zmensene/hotel/czech-pub-highlander-010-hires.webp';
+import HotelImg2 from '../assets/zmensene/hotel/czech-pub-highlander-012-hires.webp';
+import HotelImg3 from '../assets/zmensene/hotel/czech-pub-highlander-017-hires.webp';
+import HotelImg4 from '../assets/zmensene/hotel/czech-pub-highlander-022-hires.webp';
 
-import PubImg1 from '../assets/zmensene/pub/prostory/czech-pub-highlander-035-hires.jpg';
-import PubImg2 from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hires.jpg';
-import PubImg3 from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.jpg';
-import PubImg4 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.jpg';
-import PubBgImg from '../assets/zmensene/kathmandu/_mg_0642.jpg';
+import PubImg1 from '../assets/zmensene/pub/prostory/czech-pub-highlander-035-hires.webp';
+import PubImg2 from '../assets/zmensene/pub/prostory/czech-pub-highlander-040-hires.webp';
+import PubImg3 from '../assets/zmensene/pub/prostory/czech-pub-highlander-045-hires.webp';
+import PubImg4 from '../assets/zmensene/pub/prostory/czech-pub-highlander-050-hires.webp';
+import PubBgImg from '../assets/zmensene/kathmandu/_mg_0642.webp';
 import HotelLogo from '../assets/svg/honza_trava_logo_hotel_V1.svg';
 import PubLogo from '../assets/svg/honza_trava_logo_pub_V1.svg';
 
@@ -97,7 +97,7 @@ const Nepal = ({ scrollProgress }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 mb-6 md:mb-8">
                         {/* Hotel Text */}
                         <div className="flex flex-col">
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img loading="lazy" src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
                             <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Náš hotel v centru Thamelu je tvůj skutečný základní tábor. Místo, kde ze sebe smyješ prach, dáš si horkou sprchu a vydechneš. Čisté pokoje s wifinou, rodinná atmosféra a střešní terasa. Domluvíš se tu česky.
                             </p>
@@ -111,7 +111,7 @@ const Nepal = ({ scrollProgress }) => {
 
                         {/* Pub Text */}
                         <div className="flex flex-col">
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img loading="lazy" src={PubLogo} alt="Czech Pub Logo" className="h-[155px] md:h-[220px] lg:h-[280px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-16 lg:-mt-24 -ml-4 md:-ml-8 -mb-10 md:-mb-16 lg:-mb-20 self-start drop-shadow-sm pointer-events-none scale-110 md:scale-125 origin-left" />
                             <p className="font-sans text-slate-800 text-sm md:text-lg leading-relaxed flex-1 mt-2 md:mt-6">
                                 Středobod českého vesmíru v Nepálu. Místo, kde se potkávají trekaři, expedice i sólisti. Načepujeme české i nepálské pivo a naservírujeme bramborový salát jako od mámy nebo nejlepší smažák v Káthmándú. Ty nejlepší cesty se nedají uspěchat.
                             </p>
@@ -133,7 +133,7 @@ const Nepal = ({ scrollProgress }) => {
                         >
                             {allImages.map((src, idx) => (
                                 <div key={idx} className="min-w-[160px] md:min-w-[200px] cursor-pointer group relative flex-shrink-0" onClick={() => setSelectedImage(src)}>
-                                    <img src={src} className="w-full h-32 md:h-40 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Nepal gallery" />
+                                    <img loading="lazy" src={src} className="w-full h-32 md:h-40 object-cover rounded-xl shadow-sm border border-white group-hover:scale-105 transition-transform" alt="Nepal gallery" />
                                     <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-xl transition-colors pointer-events-none" />
                                 </div>
                             ))}
@@ -162,7 +162,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={HotelImg1} className="w-full h-full object-cover" alt="Hotel Kathmandu Base Camp" />
+                            <img loading="lazy" src={HotelImg1} className="w-full h-full object-cover" alt="Hotel Kathmandu Base Camp" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Hotel Kathmandu<br/>Base Camp</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
@@ -184,7 +184,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img loading="lazy" src={HotelLogo} alt="Hotel Kathmandu Base Camp Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
                             <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Tvůj základní tábor před výpravou</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
@@ -210,7 +210,7 @@ const Nepal = ({ scrollProgress }) => {
                             <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
                                 {hotelImages.map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
+                                        <img loading="lazy" src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
                                     </div>
                                 ))}
@@ -243,7 +243,7 @@ const Nepal = ({ scrollProgress }) => {
                     >
                         {/* Left image area */}
                         <div className="md:w-[45%] h-64 md:h-auto relative">
-                            <img src={PubImg1} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
+                            <img loading="lazy" src={PubImg1} className="w-full h-full object-cover" alt="Czech Pub Nepal" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
                                 <h3 className="text-white font-serif text-3xl md:text-4xl mb-3 leading-tight">Czech Pub<br/>Nepal</h3>
                                 <div className="flex items-center text-gold-400 gap-2 mb-2">
@@ -265,7 +265,7 @@ const Nepal = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            <img src={PubLogo} alt="Czech Pub Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
+                            <img loading="lazy" src={PubLogo} alt="Czech Pub Logo" className="h-[160px] md:h-[180px] lg:h-[230px] max-w-[150%] w-auto object-contain object-left -mt-10 md:-mt-12 lg:-mt-16 -ml-4 md:-ml-8 -mb-10 md:-mb-12 self-start pointer-events-none scale-110 md:scale-125 origin-left" />
                             <h2 className="font-serif text-2xl md:text-3xl text-slate-900 mb-3 md:mb-4 lg:-mt-2 relative z-10 mt-2 md:mt-4">Místo, kde se potkávají dobrodruzi</h2>
 
                             <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
@@ -291,7 +291,7 @@ const Nepal = ({ scrollProgress }) => {
                             <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
                                 {pubImages.map((src, i) => (
                                     <div key={i} className="cursor-pointer group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-slate-200" onClick={() => setSelectedImage(src)}>
-                                        <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
+                                        <img loading="lazy" src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Gallery item" />
                                         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors pointer-events-none" />
                                     </div>
                                 ))}

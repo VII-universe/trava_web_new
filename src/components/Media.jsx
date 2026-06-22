@@ -6,10 +6,10 @@ import {
     Play, Mic, FileText, X,
     ExternalLink, Tv, Radio, Newspaper, Globe, Headphones, ArrowRight
 } from 'lucide-react';
-import ClimbersImg from '../assets/climbers_bg.jpg';
-import HonzaImg from '../assets/honza_profile.png';
-import BaseCampImg from '../assets/base_camp_bg.jpg';
-import SummitImg from '../assets/summit_bg.png';
+import ClimbersImg from '../assets/climbers_bg.webp';
+import HonzaImg from '../assets/honza_profile.webp';
+import BaseCampImg from '../assets/base_camp_bg.webp';
+import SummitImg from '../assets/summit_bg.webp';
 
 const MEDIA_DATA_DEF = {
     video: [

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, Tag } from 'lucide-react';
 import { useScrollLock } from '../hooks/useScrollLock';
-import IcefallImage from '../assets/icefall_bg.jpg';
+import IcefallImage from '../assets/icefall_bg.webp';
 import SingingRockLogo from '../assets/svg/singingrock_logo.svg';
 import RockPointLogo from '../assets/svg/rockpoint_logo.svg';
-import YateLogo from '../assets/svg/yate_logo.jpg';
-import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.png';
+import YateLogo from '../assets/svg/yate_logo.webp';
+import MoreThanHoneyLogo from '../assets/svg/morethanhoney_logo.webp';
 
 const CURRENT_PARTNERS = [
     { name: 'PROGRESS',        logo: null,               discount: null,          logoClass: '' },
@@ -93,7 +93,7 @@ const Partners = ({ scrollProgress }) => {
                                         className="relative group bg-white rounded-2xl border border-slate-200 p-3 md:p-4 flex flex-col items-center justify-center gap-2 min-h-[80px] md:min-h-[90px] shadow-sm hover:shadow-md hover:border-gold-300 transition-all duration-200"
                                     >
                                         {p.logo ? (
-                                            <img
+                                            <img loading="lazy"
                                                 src={p.logo}
                                                 alt={p.name}
                                                 className={`max-h-10 md:max-h-12 max-w-full object-contain ${p.logoClass}`}
@@ -149,7 +149,7 @@ const Partners = ({ scrollProgress }) => {
                     >
                         {/* Hero */}
                         <div className="relative h-36 md:h-44 shrink-0 overflow-hidden">
-                            <img src={IcefallImage} alt="" className="w-full h-full object-cover object-center" />
+                            <img loading="lazy" src={IcefallImage} alt="" className="w-full h-full object-cover object-center" />
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950/95" />
                             <button
                                 onClick={() => setIsModalOpen(false)}
@@ -193,7 +193,7 @@ const Partners = ({ scrollProgress }) => {
                                         className="relative bg-white rounded-2xl border border-slate-200 p-4 flex flex-col items-center gap-3 shadow-sm"
                                     >
                                         {p.logo ? (
-                                            <img
+                                            <img loading="lazy"
                                                 src={p.logo}
                                                 alt={p.name}
                                                 className={`max-h-12 max-w-full object-contain ${p.logoClass}`}
