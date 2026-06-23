@@ -260,7 +260,7 @@ const Contact = ({ scrollProgress }) => {
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-start pt-16 md:justify-center md:pt-0">
 
-                <div className="text-center mb-3 md:mb-16 lg:mb-20 [@media(max-height:900px)_and_(min-width:768px)]:!mb-4">
+                <div className="text-center mb-3 md:mb-6 lg:mb-8">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-1 md:mb-4">
                         Kontakt
                     </h4>
@@ -272,7 +272,7 @@ const Contact = ({ scrollProgress }) => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-12 lg:gap-20 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 lg:gap-12 items-stretch">
 
                     {/* Left Column: Contact Info */}
                     <div className="hidden lg:flex lg:col-span-5 flex-col justify-between">
@@ -320,23 +320,6 @@ const Contact = ({ scrollProgress }) => {
                                 </a>
                             </div>
 
-                            {/* Newsletter card */}
-                            <div className="mt-6 p-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-left pointer-events-auto">
-                                <h5 className="text-gold-500 text-xs tracking-widest uppercase font-bold mb-2">Newsletter</h5>
-                                <p className="text-slate-400 text-xs mb-3 font-sans leading-relaxed">Dostávejte novinky a termíny přednášek přímo do e-mailu.</p>
-                                <form onSubmit={(e) => { e.preventDefault(); alert('Děkujeme za přihlášení k odběru newsletteru!'); e.target.reset(); }} className="flex gap-2">
-                                    <input
-                                        type="email"
-                                        placeholder="Váš e-mail"
-                                        required
-                                        className="flex-1 bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                    />
-                                    <button type="submit" className="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold uppercase text-[10px] tracking-wider rounded-xl active:scale-95 transition-transform flex items-center gap-1">
-                                        Odeslat <ArrowRight className="w-3.5 h-3.5 pointer-events-none" />
-                                    </button>
-                                </form>
-                            </div>
-
                             <button
                                 onClick={() => setContactOpen(true)}
                                 className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-white/8 hover:bg-white/15 border border-white/15 hover:border-white/30 rounded-xl text-white text-sm font-bold uppercase tracking-wider transition-all pointer-events-auto"
@@ -379,10 +362,10 @@ const Contact = ({ scrollProgress }) => {
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-8 lg:p-10 [@media(max-height:900px)_and_(min-width:768px)]:!p-5 shadow-2xl relative overflow-hidden group/form">
+                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-6 lg:p-7 shadow-2xl relative overflow-hidden group/form">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-1000" />
 
-                        <form className="relative space-y-4 md:space-y-8 [@media(max-height:900px)_and_(min-width:768px)]:!space-y-3">
+                        <form className="relative space-y-3 md:space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                                 <div className="relative">
                                     <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'name' ? '-top-6 text-xs text-gold-500' : 'top-3 text-base text-slate-500'}`}>
@@ -408,26 +391,26 @@ const Contact = ({ scrollProgress }) => {
                                 </div>
                             </div>
 
-                            <div className="relative pt-4">
-                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'subject' ? 'top-0 text-xs text-gold-500' : 'top-5 text-base text-slate-500'}`}>
+                            <div className="relative pt-2">
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'subject' ? 'top-0 text-xs text-gold-500' : 'top-4 text-base text-slate-500'}`}>
                                     Předmět / O co jde?
                                 </label>
                                 <input
                                     type="text"
                                     onFocus={() => setFocusedInput('subject')}
                                     onBlur={(e) => setFocusedInput(e.target.value ? 'subject' : null)}
-                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 text-white focus:border-gold-500 focus:outline-none transition-colors"
+                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-4 text-white focus:border-gold-500 focus:outline-none transition-colors"
                                 />
                             </div>
 
-                            <div className="relative pt-4">
-                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'message' ? 'top-0 text-xs text-gold-500' : 'top-5 text-base text-slate-500'}`}>
+                            <div className="relative pt-2">
+                                <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'message' ? 'top-0 text-xs text-gold-500' : 'top-4 text-base text-slate-500'}`}>
                                     Vaše zpráva
                                 </label>
                                 <textarea
                                     onFocus={() => setFocusedInput('message')}
                                     onBlur={(e) => setFocusedInput(e.target.value ? 'message' : null)}
-                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 min-h-[50px] md:min-h-[80px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
+                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-4 min-h-[42px] md:min-h-[55px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
                                 />
                             </div>
 
@@ -442,16 +425,28 @@ const Contact = ({ scrollProgress }) => {
                                 </label>
                             </div>
 
-                            <button type="button" className="group w-full md:w-auto mt-6 flex items-center justify-center gap-4 bg-white text-slate-900 py-3 md:py-4 px-8 md:px-10 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-50 hover:text-white transition-all duration-300 shadow-md">
+                            <button type="button" className="group w-full md:w-auto flex items-center justify-center gap-4 bg-white text-slate-900 py-2.5 px-8 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gold-50 hover:text-white transition-all duration-300 shadow-md">
                                 Odeslat zprávu
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform pointer-events-none" />
                             </button>
                         </form>
+
+                        {/* Newsletter */}
+                        <div className="mt-4 pt-4 border-t border-white/10 pointer-events-auto">
+                            <p className="text-gold-500 text-[10px] tracking-widest uppercase font-bold mb-2">Odběr newsletteru</p>
+                            <form onSubmit={(e) => { e.preventDefault(); alert('Děkujeme za přihlášení!'); e.target.reset(); }} className="flex gap-2">
+                                <input type="email" placeholder="Váš e-mail" required
+                                    className="flex-1 bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-500 transition-colors" />
+                                <button type="submit" className="shrink-0 px-4 py-2 bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold uppercase text-[10px] tracking-wider rounded-xl active:scale-95 transition-transform">
+                                    Odeslat
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
                 {/* Footer text */}
-                <div className="mt-8 md:mt-12 pt-6 [@media(max-height:900px)_and_(min-width:768px)]:!mt-3 [@media(max-height:900px)_and_(min-width:768px)]:!pt-3 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-slate-600 text-[10px] md:text-xs font-mono uppercase tracking-widest">
+                <div className="mt-5 md:mt-7 pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-slate-600 text-[10px] md:text-xs font-mono uppercase tracking-widest">
                     <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
                         <p>© {new Date().getFullYear()} Jan Trávníček. Všechna práva vyhrazena.</p>
                         <span className="hidden md:inline text-slate-700">·</span>
