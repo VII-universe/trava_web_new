@@ -105,7 +105,7 @@ const Hotel = ({ scrollProgress }) => {
             if (from > 0 || from < -halfW) { mobX.set(0); from = 0; }
             const dist = halfW + from;
             mobCtrl.current = fmAnimate(mobX, -halfW, {
-                duration: dist > 0 ? 36 * (dist / halfW) : 36,
+                duration: dist > 0 ? 70 * (dist / halfW) : 70,
                 ease: 'linear',
                 onComplete: () => { mobX.set(0); run(); },
             });
@@ -126,7 +126,7 @@ const Hotel = ({ scrollProgress }) => {
             if (from > 0 || from < -halfW) { dskX.set(0); from = 0; }
             const dist = halfW + from;
             dskCtrl.current = fmAnimate(dskX, -halfW, {
-                duration: dist > 0 ? 38 * (dist / halfW) : 38,
+                duration: dist > 0 ? 75 * (dist / halfW) : 75,
                 ease: 'linear',
                 onComplete: () => { dskX.set(0); run(); },
             });
