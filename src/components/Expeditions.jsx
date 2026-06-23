@@ -619,7 +619,7 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
 
                 {/* SVG overlay — POI markery na Google Maps */}
                 <svg viewBox={calibVB} className="absolute inset-0 w-full h-full" style={{ display:'block' }}>
-                    {NEPAL_REGION_PATHS.map(r => {
+                    {[...NEPAL_REGION_PATHS].sort((a, b) => a.id === hovered ? 1 : b.id === hovered ? -1 : 0).map(r => {
                         const isHov = hovered === r.id;
                         const reg = regions.find(x => x.id === r.id);
                         return (
