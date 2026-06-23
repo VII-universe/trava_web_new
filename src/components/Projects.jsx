@@ -314,20 +314,28 @@ const Projects = ({ scrollProgress }) => {
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
-                        <div className="overflow-y-auto p-4 grid grid-cols-2 md:grid-cols-3 gap-3" data-lenis-prevent>
-                            {projects.map(p => (
-                                <button key={p.id} onClick={() => { setShowAllProjects(false); setSelected(p); }}
-                                    className="group text-left rounded-2xl overflow-hidden border border-white/8 bg-white/5 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-                                    <div className="w-full aspect-video overflow-hidden">
-                                        <img loading="lazy" src={resolveImageSrc(p) || p.image} alt={p.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100" />
-                                    </div>
-                                    <div className="p-3">
-                                        <h3 className="font-serif text-sm text-white group-hover:text-gold-400 transition-colors">{p.title}</h3>
-                                        <p className="text-slate-500 text-[10px] mt-0.5">{p.subtitle}</p>
-                                    </div>
-                                </button>
-                            ))}
+                        <div className="overflow-y-auto p-3 md:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3" data-lenis-prevent>
+                            {projects.map(p => {
+                                const imgSrc = resolveImageSrc(p) || p.image;
+                                return (
+                                    <button key={p.id} onClick={() => { setShowAllProjects(false); setSelected(p); }}
+                                        className="group text-left rounded-2xl overflow-hidden border border-white/8 bg-white/5 hover:bg-white/10 hover:border-gold-500/40 transition-all">
+                                        <div className="w-full aspect-[16/9] sm:aspect-video overflow-hidden bg-slate-800">
+                                            {imgSrc
+                                                ? <img loading="lazy" src={imgSrc} alt={p.title}
+                                                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                                                : <div className="w-full h-full flex items-center justify-center">
+                                                    <span className="font-serif text-slate-500 text-xs text-center px-4">{p.title}</span>
+                                                  </div>
+                                            }
+                                        </div>
+                                        <div className="p-3">
+                                            <h3 className="font-serif text-sm text-white group-hover:text-gold-400 transition-colors leading-snug">{p.title}</h3>
+                                            <p className="text-slate-500 text-[10px] mt-0.5">{p.subtitle}</p>
+                                        </div>
+                                    </button>
+                                );
+                            })}
                         </div>
                     </motion.div>
                 </motion.div>
