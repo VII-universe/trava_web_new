@@ -141,11 +141,8 @@ function App() {
           <Altimeter scrollProgress={smoothProgress} />
           <SnowOverlay scrollProgress={smoothProgress} />
 
-          {/* Cloud transitions between sections — z-5, vždy za section contentem */}
+          {/* Cloud transitions between sections */}
           <CloudLayer scrollProgress={smoothProgress} />
-
-          {/* Sections wrapper — z-10 = nad mraky (z-5), pod LogoShowcase/Nav (z-80+) */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 10 }}>
 
           {/* Phase 1: Hero (0.00 - 0.11) */}
           <Hero scrollProgress={smoothProgress} />
@@ -191,8 +188,6 @@ function App() {
 
           {/* Phase 11: Kontakt (0.90 - 1.0) */}
           <Contact scrollProgress={smoothProgress} />
-
-          </div>{/* /sections wrapper */}
         </div>
       </div>
 

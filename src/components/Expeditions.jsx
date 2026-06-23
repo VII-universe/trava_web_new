@@ -642,17 +642,17 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                                 {/* Label background pill */}
                                 {reg && (
                                     <rect
-                                        x={r.cx - reg.name.length * 6.5} y={r.cy + 34}
-                                        width={reg.name.length * 13} height={22}
-                                        rx="6" fill="rgba(0,0,0,0.55)" style={{ pointerEvents:'none' }}
+                                        x={r.cx - reg.name.length * 9} y={r.cy + 36}
+                                        width={reg.name.length * 18} height={30}
+                                        rx="8" fill="rgba(0,0,0,0.6)" style={{ pointerEvents:'none' }}
                                     />
                                 )}
                                 {/* Label */}
                                 {reg && (
-                                    <text x={r.cx} y={r.cy + 50} textAnchor="middle"
-                                        fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(255,255,255,0.95)'}
-                                        fontSize={isHov ? 20 : 17} fontFamily="sans-serif" fontWeight="700"
-                                        style={{ transition:'font-size 0.15s,fill 0.15s', pointerEvents:'none', letterSpacing:'0.03em' }}>
+                                    <text x={r.cx} y={r.cy + 58} textAnchor="middle"
+                                        fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(255,255,255,0.97)'}
+                                        fontSize={isHov ? 30 : 26} fontFamily="sans-serif" fontWeight="700"
+                                        style={{ transition:'font-size 0.15s,fill 0.15s', pointerEvents:'none', letterSpacing:'0.02em' }}>
                                         {reg.name}
                                     </text>
                                 )}

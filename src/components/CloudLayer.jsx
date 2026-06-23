@@ -350,8 +350,8 @@ const CloudLayer = ({ scrollProgress }) => {
 
     return (
         <>
-            {/* Mraky — za section contentem (z-5) */}
-            <div style={{ position: 'fixed', inset: 0, zIndex: 5, pointerEvents: 'none', overflow: 'hidden' }}>
+            {/* Mraky — přechodové dekorace mezi sekcemi (z-75) */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 75, pointerEvents: 'none', overflow: 'hidden' }}>
                 {BANDS.map((band) =>
                     band.cls.map((cl, i) => (
                         <CloudImg key={`${band.sIn}-${i}`} band={band} cl={cl} scrollProgress={scrollProgress} isMobile={isMobile} />
