@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../hooks/useScrollLock';
+import { loadContent } from '../data/adminStore';
 import { ShoppingBag, ExternalLink, X, ArrowRight, BookOpen, Camera, Shirt, Gem, Heart } from 'lucide-react';
 import IcefallBg   from '../assets/icefall_bg.jpg';
 import KalendarImg from '../assets/zmensene/portrety/expedice_a_treky/pjj_manaslu_2022_nikonz30_6564-edit.jpg';
@@ -95,9 +96,33 @@ const CATEGORIES = [
     },
 ];
 
+const PRODUCT_CATEGORY_MAP = {
+    med: 'sladke', tuba: 'sladke',
+    kalendar: 'kalendare', foto: 'kalendare',
+    kniha: 'knihy',
+    tricko: 'tricka',
+    naramek: 'naramky',
+};
+
 const Eshop = ({ scrollProgress }) => {
     const [active, setActive] = useState(null);
     useScrollLock(!!active);
+
+    const adminProducts = loadContent('products', null);
+    const categoriesDisplay = adminProducts?.length
+        ? CATEGORIES.map(cat => {
+            const catProd = adminProducts.find(p => PRODUCT_CATEGORY_MAP[p.id] === cat.id);
+            if (!catProd) return cat;
+            const adminItems = adminProducts
+                .filter(p => PRODUCT_CATEGORY_MAP[p.id] === cat.id)
+                .map(p => ({ name: p.name, detail: p.subtitle || p.tag || '' }));
+            return {
+                ...cat,
+                ...(catProd.desc ? { desc: catProd.desc } : {}),
+                ...(adminItems.length ? { items: adminItems } : {}),
+            };
+        })
+        : CATEGORIES;
 
     const containerOpacity = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], [0, 1, 1, 0]);
     const containerY      = useTransform(scrollProgress, [0.53, 0.56, 0.62, 0.65], ['-120%', '0%', '0%', '130%']);
@@ -139,7 +164,7 @@ const Eshop = ({ scrollProgress }) => {
 
                 {/* Category pills — mobile */}
                 <div className="flex flex-col gap-2.5 shrink-0">
-                    {CATEGORIES.map(cat => (
+                    {categoriesDisplay.map(cat => (
                         <button key={cat.id} onClick={() => setActive(cat)}
                             className="group relative flex items-center gap-3 bg-white border border-slate-100 rounded-2xl p-3 text-left active:scale-[0.98] transition-all shadow-sm overflow-hidden">
                             <div className="absolute inset-0 overflow-hidden rounded-2xl">
@@ -210,7 +235,7 @@ const Eshop = ({ scrollProgress }) => {
 
                     {/* Right: 3 category cards stacked */}
                     <div className="flex flex-col gap-3">
-                        {CATEGORIES.map((cat, i) => (
+                        {categoriesDisplay.map((cat, i) => (
                             <button key={cat.id} onClick={() => setActive(cat)}
                                 className="group relative text-left rounded-2xl overflow-hidden transition-all duration-400 hover:-translate-y-0.5"
                                 style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.10)', height: '86px' }}

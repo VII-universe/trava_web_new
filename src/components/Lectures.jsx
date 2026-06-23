@@ -171,6 +171,22 @@ const Lectures = ({ scrollProgress }) => {
     const [selectedTopic, setSelectedTopic]   = useState(null);
     const [calendarOpen, setCalendarOpen]     = useState(false);
 
+    const adminLectures = loadContent('lectures', null);
+    const topicsDisplay = adminLectures?.length
+        ? TOPICS.map(t => {
+            const a = adminLectures.find(l => l.id === t.id);
+            return a ? { ...t, title: a.title || t.title, subtitle: a.subtitle || t.subtitle } : t;
+        })
+        : TOPICS;
+    const topicDetailsDisplay = { ...TOPICS_DETAILS };
+    if (adminLectures?.length) {
+        adminLectures.forEach(a => {
+            if (topicDetailsDisplay[a.id] && a.desc) {
+                topicDetailsDisplay[a.id] = { ...topicDetailsDisplay[a.id], description: a.desc };
+            }
+        });
+    }
+
     const handleGoToMerch = () => {
         setShowTopics(false);
         setSelectedTopic(null);
@@ -391,7 +407,7 @@ const Lectures = ({ scrollProgress }) => {
                                     <img src={Tour50Img} alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent" />
                                     <div className="relative h-full flex flex-col justify-between p-4">
-                                        <span className="text-[8px] font-bold uppercase tracking-widest text-gold-400">{TOPICS.length} témat</span>
+                                        <span className="text-[8px] font-bold uppercase tracking-widest text-gold-400">{topicsDisplay.length} témat</span>
                                         <div>
                                             <p className="font-serif text-white text-[15px] leading-tight mb-1">Témata přednášek</p>
                                             <span className="inline-flex items-center gap-1 text-[9px] text-slate-400 group-hover:text-gold-400 font-bold uppercase tracking-widest transition-colors">
@@ -538,14 +554,14 @@ const Lectures = ({ scrollProgress }) => {
                                     <div className="space-y-6">
                                         <div>
                                             <h4 className="font-serif text-lg text-slate-900 mb-2 font-bold">Anotace přednášky</h4>
-                                            <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">{TOPICS_DETAILS[selectedTopic.id]?.description}</p>
+                                            <p className="font-sans text-slate-700 text-sm md:text-base leading-relaxed">{topicDetailsDisplay[selectedTopic.id]?.description}</p>
                                         </div>
                                         
                                         {/* Materials to download */}
                                         <div>
                                             <h4 className="font-serif text-lg text-slate-900 mb-3 font-bold">Materiály ke stažení</h4>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                                {TOPICS_DETAILS[selectedTopic.id]?.downloads.map((dl, idx) => (
+                                                {topicDetailsDisplay[selectedTopic.id]?.downloads.map((dl, idx) => (
                                                     <a
                                                         key={idx}
                                                         href={dl.url}
@@ -560,11 +576,11 @@ const Lectures = ({ scrollProgress }) => {
                                         </div>
 
                                         {/* Recommended Merch */}
-                                        {TOPICS_DETAILS[selectedTopic.id]?.merch && (
+                                        {topicDetailsDisplay[selectedTopic.id]?.merch && (
                                             <div className="p-5 bg-gold-50 border border-gold-200/60 rounded-2xl">
                                                 <h5 className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-700 mb-1">Doporučený Merch k přednášce</h5>
-                                                <h4 className="font-serif text-base text-gold-950 font-bold mb-1">{TOPICS_DETAILS[selectedTopic.id].merch.title}</h4>
-                                                <p className="font-sans text-xs text-gold-800 leading-relaxed mb-4">{TOPICS_DETAILS[selectedTopic.id].merch.desc}</p>
+                                                <h4 className="font-serif text-base text-gold-950 font-bold mb-1">{topicDetailsDisplay[selectedTopic.id].merch.title}</h4>
+                                                <p className="font-sans text-xs text-gold-800 leading-relaxed mb-4">{topicDetailsDisplay[selectedTopic.id].merch.desc}</p>
                                                 <button
                                                     onClick={handleGoToMerch}
                                                     className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold uppercase tracking-widest text-[10px] rounded-lg transition-all"
@@ -578,7 +594,7 @@ const Lectures = ({ scrollProgress }) => {
                                         <div>
                                             <h4 className="font-serif text-lg text-slate-900 mb-3 font-bold">Fotografie z přednášky / cest</h4>
                                             <div className="grid grid-cols-2 gap-3">
-                                                {TOPICS_DETAILS[selectedTopic.id]?.photos.map((photoUrl, pIdx) => (
+                                                {topicDetailsDisplay[selectedTopic.id]?.photos.map((photoUrl, pIdx) => (
                                                     <div key={pIdx} className="aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
                                                         <img src={photoUrl} alt={`${selectedTopic.title} ${pIdx + 1}`} className="w-full h-full object-cover" />
                                                     </div>
@@ -594,13 +610,13 @@ const Lectures = ({ scrollProgress }) => {
                                 <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
                                     <div>
                                         <h3 className="font-serif text-2xl md:text-3xl text-slate-900">Přednášky & Témata</h3>
-                                        <p className="text-slate-400 text-[10px] uppercase tracking-widest mt-0.5">{TOPICS.length} přednášek · klikněte pro detail</p>
+                                        <p className="text-slate-400 text-[10px] uppercase tracking-widest mt-0.5">{topicsDisplay.length} přednášek · klikněte pro detail</p>
                                     </div>
                                     <button onClick={() => setShowTopics(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition"><X className="w-5 h-5" /></button>
                                 </div>
                                 <div className="flex-1 overflow-y-auto p-6 overscroll-contain" data-lenis-prevent>
                                     <div className="grid grid-cols-1 gap-2">
-                                        {TOPICS.map((t, i) => (
+                                        {topicsDisplay.map((t, i) => (
                                             <button
                                                 key={t.id}
                                                 onClick={() => setSelectedTopic(t)}
