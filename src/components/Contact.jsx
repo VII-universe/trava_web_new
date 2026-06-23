@@ -258,7 +258,7 @@ const Contact = ({ scrollProgress }) => {
             className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden"
         >
             {/* Content Container */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-center origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-100 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-start pt-16 md:justify-center md:pt-0 origin-center transition-transform duration-300 [@media(max-width:767px)]:scale-100 [@media(max-height:1000px)_and_(min-width:768px)]:scale-[0.90] [@media(max-height:850px)_and_(min-width:768px)]:scale-[0.80] [@media(max-height:750px)_and_(min-width:768px)]:scale-[0.70] [@media(max-height:650px)_and_(min-width:768px)]:scale-[0.60]">
 
                 <div className="text-center mb-3 md:mb-16 lg:mb-20">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-1 md:mb-4">
@@ -379,11 +379,11 @@ const Contact = ({ scrollProgress }) => {
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden group/form">
+                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden group/form">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-1000" />
 
-                        <form className="relative space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <form className="relative space-y-4 md:space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                                 <div className="relative">
                                     <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'name' ? '-top-6 text-xs text-gold-500' : 'top-3 text-base text-slate-500'}`}>
                                         Jméno a příjmení
@@ -427,7 +427,7 @@ const Contact = ({ scrollProgress }) => {
                                 <textarea
                                     onFocus={() => setFocusedInput('message')}
                                     onBlur={(e) => setFocusedInput(e.target.value ? 'message' : null)}
-                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 min-h-[80px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
+                                    className="w-full bg-transparent border-b border-white/20 pb-2 pt-5 min-h-[50px] md:min-h-[80px] text-white focus:border-gold-500 focus:outline-none transition-colors resize-none"
                                 />
                             </div>
 
