@@ -2498,17 +2498,29 @@ const Expeditions = ({ scrollProgress }) => {
 
                         {/* Right Gallery — mobile: slideshow, desktop: grid */}
                         <div className="w-full md:w-1/2 bg-slate-900 flex-shrink-0 flex flex-col">
-                            {/* Mobile slideshow */}
-                            <div className="md:hidden relative h-56 overflow-hidden flex-shrink-0">
-                                {SUBIN_IMGS.map((img, i) => (
-                                    <img
-                                        key={i}
-                                        src={img}
-                                        alt={`Subin ${i + 1}`}
-                                        className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${i === subinSlide ? 'opacity-100' : 'opacity-0'}`}
-                                    />
-                                ))}
-                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5">
+                            {/* Mobile: 3 fotky najednou, sada se střídá */}
+                            <div className="md:hidden relative h-56 overflow-hidden flex-shrink-0 bg-slate-900">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={subinSlide}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.55 }}
+                                        className="absolute inset-0 grid grid-cols-2 grid-rows-[3fr_2fr] gap-1 p-1"
+                                    >
+                                        <div className="col-span-2 relative rounded-xl overflow-hidden">
+                                            <img src={SUBIN_IMGS[subinSlide % SUBIN_IMGS.length]} alt="" className="w-full h-full object-cover object-top" />
+                                        </div>
+                                        <div className="relative rounded-xl overflow-hidden">
+                                            <img src={SUBIN_IMGS[(subinSlide + 1) % SUBIN_IMGS.length]} alt="" className="w-full h-full object-cover object-top" />
+                                        </div>
+                                        <div className="relative rounded-xl overflow-hidden">
+                                            <img src={SUBIN_IMGS[(subinSlide + 2) % SUBIN_IMGS.length]} alt="" className="w-full h-full object-cover object-top" />
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
+                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10">
                                     {SUBIN_IMGS.map((_, i) => (
                                         <button
                                             key={i}
