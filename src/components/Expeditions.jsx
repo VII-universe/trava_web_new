@@ -2485,29 +2485,29 @@ const Expeditions = ({ scrollProgress }) => {
 
                         {/* Right Gallery Grid */}
                         <div
-                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 auto-rows-[minmax(0,160px)] md:auto-rows-[minmax(0,180px)] gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
+                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 auto-rows-[minmax(0,180px)] md:auto-rows-[minmax(0,180px)] gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
                             data-lenis-prevent
                         >
                             <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-2">
                                 <img src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </motion.div>
@@ -2596,10 +2596,10 @@ const Expeditions = ({ scrollProgress }) => {
                                 <img src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={MiriGallery2} alt="Miri Trekking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={MiriGallery2} alt="Miri Trekking" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </motion.div>
