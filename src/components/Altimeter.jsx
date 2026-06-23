@@ -77,7 +77,7 @@ const Altimeter = ({ scrollProgress }) => {
     };
 
     return (
-        <div className="fixed right-3 md:right-5 bottom-3 md:bottom-4 z-[100] flex flex-col items-end pointer-events-none select-none">
+        <div className="hidden md:flex fixed right-3 md:right-5 bottom-3 md:bottom-4 z-[100] flex-col items-end pointer-events-none select-none">
 
             {/* Soft vignette behind the altimeter */}
             <motion.div
