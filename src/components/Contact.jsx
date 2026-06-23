@@ -259,13 +259,12 @@ const Contact = ({ scrollProgress }) => {
         >
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-12 pointer-events-auto h-full flex flex-col justify-start pt-16 md:justify-center md:pt-0">
-                <div className="w-full [@media(max-height:900px)_and_(min-width:768px)]:[zoom:0.82]">
 
-                <div className="text-center mb-3 md:mb-16 lg:mb-20">
+                <div className="text-center mb-3 md:mb-16 lg:mb-20 [@media(max-height:900px)_and_(min-width:768px)]:!mb-4">
                     <h4 className="text-gold-500 font-sans uppercase tracking-[0.25em] text-xs font-bold mb-1 md:mb-4">
                         Kontakt
                     </h4>
-                    <h2 className="font-serif text-2xl md:text-5xl lg:text-7xl text-white mb-2 md:mb-6">
+                    <h2 className="font-serif text-2xl md:text-5xl lg:text-7xl text-white mb-2 md:mb-6 [@media(max-height:900px)_and_(min-width:768px)]:!text-4xl [@media(max-height:900px)_and_(min-width:768px)]:!mb-1">
                         Pojďme do toho.
                     </h2>
                     <p className="hidden md:block font-sans text-slate-400 text-sm md:text-lg lg:text-xl max-w-2xl mx-auto font-light">
@@ -380,10 +379,10 @@ const Contact = ({ scrollProgress }) => {
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden group/form">
+                    <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-8 lg:p-10 [@media(max-height:900px)_and_(min-width:768px)]:!p-5 shadow-2xl relative overflow-hidden group/form">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-1000" />
 
-                        <form className="relative space-y-4 md:space-y-8">
+                        <form className="relative space-y-4 md:space-y-8 [@media(max-height:900px)_and_(min-width:768px)]:!space-y-3">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                                 <div className="relative">
                                     <label className={`absolute left-0 transition-all duration-300 ${focusedInput === 'name' ? '-top-6 text-xs text-gold-500' : 'top-3 text-base text-slate-500'}`}>
@@ -452,7 +451,7 @@ const Contact = ({ scrollProgress }) => {
                 </div>
 
                 {/* Footer text */}
-                <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-slate-600 text-[10px] md:text-xs font-mono uppercase tracking-widest">
+                <div className="mt-8 md:mt-12 pt-6 [@media(max-height:900px)_and_(min-width:768px)]:!mt-3 [@media(max-height:900px)_and_(min-width:768px)]:!pt-3 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-slate-600 text-[10px] md:text-xs font-mono uppercase tracking-widest">
                     <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
                         <p>© {new Date().getFullYear()} Jan Trávníček. Všechna práva vyhrazena.</p>
                         <span className="hidden md:inline text-slate-700">·</span>
@@ -460,7 +459,6 @@ const Contact = ({ scrollProgress }) => {
                     </div>
                     <p className="text-slate-700">Designed for the summit.</p>
                 </div>
-                </div>{/* /zoom wrapper */}
             </div>
         </motion.div>
 
