@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { supabase } from '../lib/supabase';
 import { motion, useTransform, AnimatePresence } from 'framer-motion';
 import CloudA from '../assets/cloud_a.png';
 import CloudB from '../assets/cloud_b.png';
@@ -220,10 +221,52 @@ const headerV = {
     exit:    { opacity: 0, y: -8, transition: { duration: 0.15 } },
 };
 
+const NewsletterForm = () => {
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
+    const inputRef = useRef(null);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if (!email || status === 'loading') return;
+        setStatus('loading');
+        try {
+            const { error } = await supabase.from('newsletter_subscribers').insert({ email });
+            setStatus(error ? 'error' : 'success');
+        } catch {
+            setStatus('error');
+        }
+    };
+
+    if (status === 'success') return (
+        <div className="text-center py-3">
+            <p className="font-sans text-gold-600 text-sm font-semibold">Přihlášeno! Těšte se na novinky.</p>
+        </div>
+    );
+
+    return (
+        <form onSubmit={submit} className="flex gap-2 w-full max-w-sm mx-auto" style={{ pointerEvents: 'auto' }}>
+            <input
+                ref={inputRef}
+                type="email"
+                required
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="váš@email.cz"
+                className="flex-1 min-w-0 px-4 py-2.5 rounded-xl bg-white/90 border border-slate-200 text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-400/50"
+            />
+            <button type="submit" disabled={status === 'loading'}
+                className="shrink-0 px-4 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-white text-sm font-bold uppercase tracking-wider transition-colors disabled:opacity-60">
+                {status === 'loading' ? '…' : 'Odebírat'}
+            </button>
+        </form>
+    );
+};
+
 const LogoShowcase = ({ scrollProgress }) => {
-    const opacity = useTransform(scrollProgress, [0.680, 0.690, 0.722, 0.740], [0, 1, 1, 0]);
+    const opacity = useTransform(scrollProgress, [0.680, 0.690, 0.738, 0.752], [0, 1, 1, 0]);
     const scale   = useTransform(scrollProgress, [0.680, 0.692], [0.94, 1]);
-    const y       = useTransform(scrollProgress, [0.680, 0.690, 0.722, 0.740], ['18px', '0px', '0px', '-12px']);
+    const y       = useTransform(scrollProgress, [0.680, 0.690, 0.738, 0.752], ['18px', '0px', '0px', '-12px']);
 
     /* Sledujeme kdy je showcase viditelný → spouštíme stagger */
     const [visible, setVisible] = useState(false);
@@ -238,7 +281,7 @@ const LogoShowcase = ({ scrollProgress }) => {
     return (
         <motion.div
             style={{ opacity, scale, y, position: 'absolute', inset: 0, pointerEvents: 'none' }}
-            className="flex items-center justify-center pl-4 pr-[96px] py-4 md:p-8"
+            className="flex items-center justify-center p-4 md:p-8"
         >
             <div className="w-full max-w-[720px]">
                 {/* Header — animovaný příjezd */}
@@ -332,6 +375,25 @@ const LogoShowcase = ({ scrollProgress }) => {
                                     </div>
                                 </motion.div>
                             ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Newsletter */}
+                <AnimatePresence>
+                    {visible && (
+                        <motion.div
+                            key="newsletter"
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0, transition: { delay: 0.45, duration: 0.4 } }}
+                            exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
+                            className="mt-5 md:mt-6 text-center"
+                        >
+                            <p className="font-mono text-slate-500 text-[10px] uppercase tracking-[0.3em] mb-3">
+                                Odběr novinek
+                            </p>
+                            <NewsletterForm />
+                            {/* error hint */}
                         </motion.div>
                     )}
                 </AnimatePresence>
