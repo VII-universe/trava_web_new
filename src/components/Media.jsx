@@ -364,7 +364,7 @@ const Media = ({ scrollProgress }) => {
 
             {/* ── Desktop layout ── */}
             <div className="hidden md:flex w-full h-full items-center justify-center px-8 lg:px-16 xl:px-20 pointer-events-auto">
-                <div className="w-full max-w-6xl flex flex-col gap-5 lg:gap-7">
+                <div className="w-full max-w-6xl flex flex-col gap-5 lg:gap-7 [@media(max-height:900px)_and_(min-width:768px)]:[zoom:0.82]">
 
                     {/* Desktop header */}
                     <div className="text-center shrink-0">
