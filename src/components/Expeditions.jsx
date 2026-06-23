@@ -527,7 +527,7 @@ function computeGMapViewBox(W, H) {
 }
 
 function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = null, useGoogleMaps = false }) {
-    const [mapMode, setMapMode] = useState(useGoogleMaps ? 'gmaps' : 'svg');
+    const [mapMode, setMapMode] = useState('gmaps'); // eslint-disable-line no-unused-vars
     const [hovered, setHovered] = useState(null);
     const hoveredRegion = hovered ? regions.find(r => r.id === hovered) : null;
 
@@ -607,23 +607,6 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
 
         return (
             <div ref={gmContainerRef} className="relative w-full h-full rounded-2xl overflow-hidden bg-[#0a1520] border border-[#4a6a80]/30 select-none shadow-2xl">
-                {/* View Selector Toggle Group (Kreslená / Google Maps) */}
-                <div className="absolute top-3 right-3 z-30 flex bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-0.5 pointer-events-auto">
-                    <button
-                        type="button"
-                        onClick={() => { setMapMode('svg'); setAutoCycling(false); }}
-                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'svg' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
-                    >
-                        Kreslená
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => { setMapMode('gmaps'); setAutoCycling(false); }}
-                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${mapMode === 'gmaps' ? 'bg-gold-500 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'}`}
-                    >
-                        Google Maps
-                    </button>
-                </div>
                 {/* Google Maps iframe */}
                 <iframe src={gmUrl} className="absolute inset-0 w-full h-full border-0"
                     loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mapa Nepálu"
@@ -634,37 +617,38 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                 <div className="absolute inset-0 pointer-events-none"
                      style={{ boxShadow: 'inset 0 0 80px rgba(4,7,14,0.65)' }} />
 
-                {/* SVG overlay — kalibrovaný viewBox přesně odpovídá Google Maps */}
+                {/* SVG overlay — POI markery na Google Maps */}
                 <svg viewBox={calibVB} className="absolute inset-0 w-full h-full" style={{ display:'block' }}>
                     {NEPAL_REGION_PATHS.map(r => {
                         const isHov = hovered === r.id;
-                        const isDim = hovered && !isHov;
+                        const reg = regions.find(x => x.id === r.id);
                         return (
-                            <path key={r.id} d={r.path}
-                                fill={isHov ? 'rgba(212,175,55,0.2)' : isDim ? 'rgba(0,0,0,0.15)' : 'rgba(212,175,55,0.04)'}
-                                stroke={isHov ? 'rgba(212,175,55,0.9)' : 'rgba(212,175,55,0.3)'}
-                                strokeWidth={isHov ? 2.5 : 1.2}
-                                filter={isHov ? 'drop-shadow(0 0 8px rgba(212,175,55,0.5))' : undefined}
-                                style={{ cursor:'pointer', transition:'fill 0.2s,stroke 0.2s', WebkitTapHighlightColor:'transparent' }}
+                            <g key={r.id}
+                                style={{ cursor:'pointer', WebkitTapHighlightColor:'transparent' }}
                                 onMouseEnter={() => !isMobile && setHovered(r.id)}
                                 onMouseLeave={() => !isMobile && setHovered(null)}
                                 onClick={() => handleRegionClick(r.id)}
-                            />
-                        );
-                    })}
-                    {hoveredRegion && (() => {
-                        const rp = NEPAL_REGION_PATHS.find(r => r.id === hovered);
-                        if (!rp) return null;
-                        const tx = Math.min(Math.max(rp.cx, 65), 755);
-                        const ty = rp.cy < 75 ? rp.cy + 25 : rp.cy - 10;
-                        return (
-                            <g style={{ pointerEvents:'none' }}>
-                                <text x={tx} y={ty+1} textAnchor="middle" fill="rgba(0,0,0,0.7)" fontSize="15" fontFamily="Georgia,serif" fontWeight="700">{hoveredRegion.name}</text>
-                                <text x={tx} y={ty} textAnchor="middle" fill="white" fontSize="15" fontFamily="Georgia,serif" fontWeight="700" style={{ filter:'drop-shadow(0 1px 4px rgba(0,0,0,0.95))' }}>{hoveredRegion.name}</text>
-                                <text x={tx} y={ty+14} textAnchor="middle" fill="rgba(212,175,55,0.85)" fontSize="9" fontFamily="monospace" fontWeight="700" letterSpacing="0.08em">{hoveredRegion.subtitle?.toUpperCase()}</text>
+                            >
+                                {/* Outer pulse ring */}
+                                {isHov && <circle cx={r.cx} cy={r.cy} r={18} fill="rgba(212,175,55,0.15)" stroke="rgba(212,175,55,0.5)" strokeWidth="1" />}
+                                {/* Pin dot */}
+                                <circle cx={r.cx} cy={r.cy} r={isHov ? 9 : 7}
+                                    fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(212,175,55,0.85)'}
+                                    stroke="white" strokeWidth={isHov ? 2.5 : 1.8}
+                                    style={{ filter: isHov ? 'drop-shadow(0 0 6px rgba(212,175,55,0.8))' : 'drop-shadow(0 1px 3px rgba(0,0,0,0.7))', transition:'r 0.15s,fill 0.15s' }}
+                                />
+                                {/* Label */}
+                                {reg && (
+                                    <text x={r.cx} y={r.cy + 20} textAnchor="middle"
+                                        fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(255,255,255,0.75)'}
+                                        fontSize={isHov ? 11 : 9} fontFamily="sans-serif" fontWeight="700"
+                                        style={{ filter:'drop-shadow(0 1px 3px rgba(0,0,0,0.9))', transition:'font-size 0.15s,fill 0.15s', pointerEvents:'none' }}>
+                                        {reg.name}
+                                    </text>
+                                )}
                             </g>
                         );
-                    })()}
+                    })}
                 </svg>
 
                 {/* Slide-up preview panel */}
@@ -2599,7 +2583,7 @@ const Expeditions = ({ scrollProgress }) => {
                             data-lenis-prevent
                         >
                             <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-1">
-                                <img src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src={MiriLead} alt="Miri in Mountains" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                             </div>
                             <div className="relative rounded-2xl overflow-hidden group">
                                 <img src={MiriGallery1} alt="Miri Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
