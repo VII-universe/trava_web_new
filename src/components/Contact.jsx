@@ -91,7 +91,7 @@ function ContactModal({ onClose }) {
                                     <span className="text-sm text-white truncate">@honzatrava</span>
                                 </div>
                             </a>
-                            <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.facebook.com/HonzaTravaTravnicek" target="_blank" rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-blue-500/15 border border-white/8 hover:border-blue-500/30 rounded-2xl transition-all group">
                                 <Facebook className="w-4 h-4 text-blue-400 shrink-0 pointer-events-none" />
                                 <div className="min-w-0">
@@ -312,7 +312,7 @@ const Contact = ({ scrollProgress }) => {
                                 <a href="https://www.instagram.com/honzatravatravnicek" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Instagram">
                                     <Instagram className="w-5 h-5 pointer-events-none" />
                                 </a>
-                                <a href="https://www.facebook.com/honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Facebook">
+                                <a href="https://www.facebook.com/HonzaTravaTravnicek" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white hover:text-slate-900 transition-all duration-300 hover:scale-110" title="Facebook">
                                     <Facebook className="w-5 h-5 pointer-events-none" />
                                 </a>
                                 <a href="https://www.youtube.com/@honzatrava" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-300 hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-300 hover:scale-110" title="YouTube">

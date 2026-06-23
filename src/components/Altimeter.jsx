@@ -86,7 +86,7 @@ const Altimeter = ({ scrollProgress }) => {
             />
 
             {/* Axis with section labels */}
-            <div className="relative flex items-start h-[calc(100vh-220px)] md:h-[min(calc(100vh-300px),780px)]">
+            <div className="relative flex items-start h-[calc(100vh-310px)] md:h-[min(calc(100vh-300px),780px)]">
 
                 {/* Section labels column */}
                 <div className="relative mr-2 h-full" style={{ width: 68 }}>

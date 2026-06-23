@@ -100,7 +100,7 @@ const Pub = ({ scrollProgress }) => {
             if (from > 0 || from < -halfW) { mobX.set(0); from = 0; }
             const dist = halfW + from;
             mobCtrl.current = fmAnimate(mobX, -halfW, {
-                duration: dist > 0 ? 18 * (dist / halfW) : 18,
+                duration: dist > 0 ? 36 * (dist / halfW) : 36,
                 ease: 'linear',
                 onComplete: () => { mobX.set(0); run(); },
             });
@@ -121,7 +121,7 @@ const Pub = ({ scrollProgress }) => {
             if (from > 0 || from < -halfW) { dskX.set(0); from = 0; }
             const dist = halfW + from;
             dskCtrl.current = fmAnimate(dskX, -halfW, {
-                duration: dist > 0 ? 18 * (dist / halfW) : 18,
+                duration: dist > 0 ? 36 * (dist / halfW) : 36,
                 ease: 'linear',
                 onComplete: () => { dskX.set(0); run(); },
             });
