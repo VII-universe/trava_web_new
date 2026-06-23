@@ -2796,7 +2796,7 @@ const Expeditions = ({ scrollProgress }) => {
                                                     {REGIONS_DETAILS[selectedRegion.id]?.itinerary.map((item, idx) => (
                                                         <div key={idx} className="flex gap-4 p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-left">
                                                             <div className="shrink-0">
-                                                                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 bg-gold-500/20 text-gold-300 border border-gold-500/30 rounded-md">
+                                                                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 bg-gold-500/25 text-white border border-gold-500/40 rounded-md">
                                                                     {item.day}
                                                                 </span>
                                                             </div>
