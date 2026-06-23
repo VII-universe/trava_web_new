@@ -237,8 +237,8 @@ const LogoShowcase = ({ scrollProgress }) => {
 
     return (
         <motion.div
-            style={{ opacity, scale, y, position: 'fixed', inset: 0, zIndex: 80, pointerEvents: 'none' }}
-            className="flex items-center justify-center p-4 md:p-8"
+            style={{ opacity, scale, y, position: 'absolute', inset: 0, pointerEvents: 'none' }}
+            className="flex items-center justify-center pl-4 pr-[96px] py-4 md:p-8"
         >
             <div className="w-full max-w-[720px]">
                 {/* Header — animovaný příjezd */}
@@ -255,7 +255,7 @@ const LogoShowcase = ({ scrollProgress }) => {
                             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-500/50" />
                             <div className="shrink-0 flex items-center gap-2">
                                 <div className="w-1 h-1 rounded-full bg-gold-500" />
-                                <p className="font-mono text-gold-600 text-[9px] md:text-[10px] uppercase tracking-[0.45em] font-bold whitespace-nowrap">
+                                <p className="font-mono text-gold-700 text-[12px] md:text-[13px] uppercase tracking-[0.35em] md:tracking-[0.45em] font-bold whitespace-nowrap drop-shadow-sm">
                                     Pod jednou střechou
                                 </p>
                                 <div className="w-1 h-1 rounded-full bg-gold-500" />
@@ -287,7 +287,7 @@ const LogoShowcase = ({ scrollProgress }) => {
                                         transition: { type: 'spring', damping: 18, stiffness: 320 },
                                     }}
                                     whileTap={{ scale: 0.97, transition: { duration: 0.12 } }}
-                                    className="relative bg-white/82 backdrop-blur-2xl border border-white/65 rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center gap-3 md:gap-4 overflow-hidden cursor-default"
+                                    className="relative bg-white/97 backdrop-blur-2xl border border-slate-200/90 rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center gap-3 md:gap-4 overflow-hidden cursor-default"
                                     style={{ boxShadow: '0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07)' }}
                                 >
                                     {/* Gold top accent — zesiluje při hoveru přes CSS */}
@@ -327,8 +327,8 @@ const LogoShowcase = ({ scrollProgress }) => {
 
                                     {/* Text */}
                                     <div className="text-center relative z-10">
-                                        <p className="font-serif text-slate-800 text-sm md:text-base leading-tight font-medium">{name}</p>
-                                        <p className="text-gold-600 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] mt-1">{tag}</p>
+                                        <p className="font-serif text-slate-800 text-sm md:text-base leading-tight font-semibold">{name}</p>
+                                        <p className="text-gold-600 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mt-1">{tag}</p>
                                     </div>
                                 </motion.div>
                             ))}
@@ -349,14 +349,20 @@ const CloudLayer = ({ scrollProgress }) => {
     }, []);
 
     return (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 75, pointerEvents: 'none', overflow: 'hidden', willChange: 'transform', transform: 'translateZ(0)' }}>
-            {BANDS.map((band) =>
-                band.cls.map((cl, i) => (
-                    <CloudImg key={`${band.sIn}-${i}`} band={band} cl={cl} scrollProgress={scrollProgress} isMobile={isMobile} />
-                ))
-            )}
-            <LogoShowcase scrollProgress={scrollProgress} />
-        </div>
+        <>
+            {/* Mraky — za section contentem (z-5) */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 5, pointerEvents: 'none', overflow: 'hidden' }}>
+                {BANDS.map((band) =>
+                    band.cls.map((cl, i) => (
+                        <CloudImg key={`${band.sIn}-${i}`} band={band} cl={cl} scrollProgress={scrollProgress} isMobile={isMobile} />
+                    ))
+                )}
+            </div>
+            {/* LogoShowcase — nad section contentem (z-80), pod Nav/Altimeter (z-100) */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 80, pointerEvents: 'none' }}>
+                <LogoShowcase scrollProgress={scrollProgress} />
+            </div>
+        </>
     );
 };
 

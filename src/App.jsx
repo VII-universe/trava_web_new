@@ -110,7 +110,7 @@ function App() {
               </svg>
             </a>
             <a
-              href="https://www.facebook.com/honzatrava"
+              href="https://www.facebook.com/HonzaTravaTravnicek"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-slate-800/10 bg-white/70 backdrop-blur-md shadow-md flex items-center justify-center text-slate-700 hover:bg-gold-500 hover:border-gold-500 hover:text-white hover:scale-110 transition-all duration-300"
@@ -141,8 +141,11 @@ function App() {
           <Altimeter scrollProgress={smoothProgress} />
           <SnowOverlay scrollProgress={smoothProgress} />
 
-          {/* Cloud transitions between sections */}
+          {/* Cloud transitions between sections — z-5, vždy za section contentem */}
           <CloudLayer scrollProgress={smoothProgress} />
+
+          {/* Sections wrapper — z-10 = nad mraky (z-5), pod LogoShowcase/Nav (z-80+) */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 10 }}>
 
           {/* Phase 1: Hero (0.00 - 0.11) */}
           <Hero scrollProgress={smoothProgress} />
@@ -188,6 +191,8 @@ function App() {
 
           {/* Phase 11: Kontakt (0.90 - 1.0) */}
           <Contact scrollProgress={smoothProgress} />
+
+          </div>{/* /sections wrapper */}
         </div>
       </div>
 

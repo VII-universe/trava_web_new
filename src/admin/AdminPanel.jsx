@@ -25,7 +25,6 @@ const DEF_PARTNERS = [
   { id:'ternua',        name:'Ternua',          partnership:'Oděvní partner',       discount:'',            websiteUrl:'https://www.ternua.com',         website:'ternua.com',         quote:'Oblečení, které kryje záda, ne jen tělo.', description:'Ternua je baskická značka technického outdoorového oblečení. Bundy a vrstvy, které jsou doma jak v pětitisícovkách, tak na lezeních v Krkonoších.', collaboration:['Oděvní partner všech expedic 2023+','Testování kolekce v podmínkách osmitisícovek','Ambasadorská spolupráce a obsah pro sociální sítě'] },
   { id:'lowa',          name:'Lowa',            partnership:'Partner obuvi',        discount:'',            websiteUrl:'https://www.lowa.cz',            website:'lowa.cz',            quote:'Každý krok záleží.',                  description:'Lowa je německý výrobce prémiových horských bot. Jejich expediční boty jsem nosil na nejnáročnějších výstupech — K2, Manáslu i Annapurna I.', collaboration:['Expediční boty Lowa na všech osmitisícovkách','Testování a zpětná vazba pro vývoj nových modelů','Doporučení v obsahu a na přednáškách'] },
   { id:'rafiki',        name:'Rafiki Climbing', partnership:'Lezecký partner',      discount:'',            websiteUrl:'https://www.rafikisports.com',   website:'rafikisports.com',   quote:'Drž se pevně.',                       description:'Rafiki Climbing nabízí lezecké oblečení pro outdoor i indoor prostředí. Jejich produkty jsou navrženy pro maximální pohyblivost a výkon.', collaboration:['Lezecké oblečení pro indoor i outdoor prostředí','Doporučení produktů v obsahu o lezení','Spolupráce na lezeckých videích'] },
-  { id:'gerald',        name:'Gerald Hořejšek', partnership:'Mediální partner',     discount:'',            websiteUrl:'',                               website:'',                   quote:'Obraz, který stojí za tisíc slov.',   description:'Gerald Hořejšek je přední český mediální profesionál. Spolupráce zahrnuje mediální servis, PR a komunikaci pro všechny projekty Honzy Trávy.', collaboration:['Mediální a PR servis pro všechny projekty','Koordinace s médii a tiskové zprávy','Strategická komunikace a budování značky'] },
 ];
 
 const DEF_EXPEDITIONS = [
@@ -1611,7 +1610,7 @@ const DEF_SITE_TEXTS = {
     phone: '+420 776 359 536',
     bookingEmail: 'booking@honzatrava.cz',
     instagram: 'https://www.instagram.com/honzatravatravnicek',
-    facebook: 'https://www.facebook.com/honzatrava',
+    facebook: 'https://www.facebook.com/HonzaTravaTravnicek',
     youtube: 'https://www.youtube.com/@honzatrava',
     address: 'Plzeň, Česká republika',
     ico: '68234581',

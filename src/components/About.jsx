@@ -566,7 +566,7 @@ const About = ({ scrollProgress }) => {
                                         onClick={() => openTeamModal('openSubinModal')}
                                         className="group relative rounded-2xl overflow-hidden cursor-pointer text-left h-48 md:h-56 transition-all duration-300 hover:shadow-xl"
                                     >
-                                        <img src={SubinLeadImg} alt="Subin Thakuri" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src={SubinLeadImg} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
                                             <p className="font-serif text-white text-base md:text-lg leading-tight mb-0.5">{(adminTexts?.subin?.name) || 'Subin Thakuri'}</p>
