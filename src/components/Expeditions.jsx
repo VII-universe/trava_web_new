@@ -630,19 +630,29 @@ function NepalMap({ regions, onRegionClick, isMobile = false, focusRegionId = nu
                                 onClick={() => handleRegionClick(r.id)}
                             >
                                 {/* Outer pulse ring */}
-                                {isHov && <circle cx={r.cx} cy={r.cy} r={18} fill="rgba(212,175,55,0.15)" stroke="rgba(212,175,55,0.5)" strokeWidth="1" />}
+                                {isHov && <circle cx={r.cx} cy={r.cy} r={40} fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.45)" strokeWidth="2" />}
+                                {/* Large invisible tap target */}
+                                <circle cx={r.cx} cy={r.cy} r={30} fill="transparent" />
                                 {/* Pin dot */}
-                                <circle cx={r.cx} cy={r.cy} r={isHov ? 9 : 7}
-                                    fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(212,175,55,0.85)'}
-                                    stroke="white" strokeWidth={isHov ? 2.5 : 1.8}
-                                    style={{ filter: isHov ? 'drop-shadow(0 0 6px rgba(212,175,55,0.8))' : 'drop-shadow(0 1px 3px rgba(0,0,0,0.7))', transition:'r 0.15s,fill 0.15s' }}
+                                <circle cx={r.cx} cy={r.cy} r={isHov ? 26 : 20}
+                                    fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(212,175,55,0.88)'}
+                                    stroke="white" strokeWidth={isHov ? 5 : 4}
+                                    style={{ filter: isHov ? 'drop-shadow(0 0 10px rgba(212,175,55,0.9))' : 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))', transition:'r 0.15s,fill 0.15s' }}
                                 />
+                                {/* Label background pill */}
+                                {reg && (
+                                    <rect
+                                        x={r.cx - reg.name.length * 6.5} y={r.cy + 34}
+                                        width={reg.name.length * 13} height={22}
+                                        rx="6" fill="rgba(0,0,0,0.55)" style={{ pointerEvents:'none' }}
+                                    />
+                                )}
                                 {/* Label */}
                                 {reg && (
-                                    <text x={r.cx} y={r.cy + 20} textAnchor="middle"
-                                        fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(255,255,255,0.75)'}
-                                        fontSize={isHov ? 11 : 9} fontFamily="sans-serif" fontWeight="700"
-                                        style={{ filter:'drop-shadow(0 1px 3px rgba(0,0,0,0.9))', transition:'font-size 0.15s,fill 0.15s', pointerEvents:'none' }}>
+                                    <text x={r.cx} y={r.cy + 50} textAnchor="middle"
+                                        fill={isHov ? 'rgba(212,175,55,1)' : 'rgba(255,255,255,0.95)'}
+                                        fontSize={isHov ? 20 : 17} fontFamily="sans-serif" fontWeight="700"
+                                        style={{ transition:'font-size 0.15s,fill 0.15s', pointerEvents:'none', letterSpacing:'0.03em' }}>
                                         {reg.name}
                                     </text>
                                 )}
