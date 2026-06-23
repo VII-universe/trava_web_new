@@ -238,7 +238,7 @@ const Lectures = ({ scrollProgress }) => {
                         {/* Event teaser */}
                         <button onClick={() => setSelectedEvent(EVENTS_DETAIL[0])}
                             className="relative rounded-2xl overflow-hidden text-left"
-                            style={{ height: 66 }}>
+                            style={{ height: 132 }}>
                             <img src={CollabImg} alt="Projekty"
                                 className="absolute inset-0 w-full h-full object-cover object-center opacity-60" />
                             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/30" />
