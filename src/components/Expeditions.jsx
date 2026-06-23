@@ -39,6 +39,11 @@ import SubinGallery4 from '../assets/subin/703890808_27563455109921902_680121426
 import SubinGallery5 from '../assets/subin/709756548_27683698914564187_8442966694392456609_n.jpg';
 import SubinGallery6 from '../assets/subin/726808686_27973041822296560_7565319684635736943_n.jpg';
 
+const SUBIN_IMGS = [
+    SubinLead, SubinGallery1, SubinGallery2, SubinGallery3,
+    SubinGallery4, SubinGallery5, SubinGallery6,
+];
+
 function ModalSlider({ images, fallback, className = '', children }) {
     const all = images?.length ? images : (fallback ? [fallback] : []);
     const [idx, setIdx] = useState(0);
@@ -1353,6 +1358,7 @@ const Expeditions = ({ scrollProgress }) => {
     const [isOrdering, setIsOrdering] = useState(false);
     const [isMiriOpen, setIsMiriOpen] = useState(false);
     const [isSubinOpen, setIsSubinOpen] = useState(false);
+    const [subinSlide, setSubinSlide] = useState(0);
     const [miriSource, setMiriSource] = useState(null);
     const [subinSource, setSubinSource] = useState(null);
     const [is14Open, setIs14Open] = useState(false);
@@ -1374,6 +1380,13 @@ const Expeditions = ({ scrollProgress }) => {
 
     // Prevent body scroll when modal is open
     useScrollLock(selectedExped || showAllExpeditions || selectedMoreExped || isMiriOpen || isSubinOpen || selectedCategory || isRegionsOpen || is14Open || isMapModalOpen);
+
+    // Subin gallery auto-advance on mobile
+    useEffect(() => {
+        if (!isSubinOpen) { setSubinSlide(0); return; }
+        const t = setInterval(() => setSubinSlide(i => (i + 1) % SUBIN_IMGS.length), 3500);
+        return () => clearInterval(t);
+    }, [isSubinOpen]);
 
     // Allow external components (About story modal) to open team modals
     useEffect(() => {
@@ -2483,31 +2496,54 @@ const Expeditions = ({ scrollProgress }) => {
                             )}
                         </div>
 
-                        {/* Right Gallery Grid */}
-                        <div
-                            className="w-full md:w-1/2 bg-slate-900 grid grid-cols-2 auto-rows-[minmax(0,180px)] md:auto-rows-[minmax(0,180px)] gap-1.5 md:gap-3 p-1.5 md:p-3 overflow-y-auto overscroll-contain"
-                            data-lenis-prevent
-                        >
-                            <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-2">
-                                <img src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                        {/* Right Gallery — mobile: slideshow, desktop: grid */}
+                        <div className="w-full md:w-1/2 bg-slate-900 flex-shrink-0 flex flex-col">
+                            {/* Mobile slideshow */}
+                            <div className="md:hidden relative h-56 overflow-hidden flex-shrink-0">
+                                {SUBIN_IMGS.map((img, i) => (
+                                    <img
+                                        key={i}
+                                        src={img}
+                                        alt={`Subin ${i + 1}`}
+                                        className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${i === subinSlide ? 'opacity-100' : 'opacity-0'}`}
+                                    />
+                                ))}
+                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5">
+                                    {SUBIN_IMGS.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setSubinSlide(i)}
+                                            className={`w-1.5 h-1.5 rounded-full transition-all ${i === subinSlide ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}`}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative rounded-2xl overflow-hidden group">
-                                <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                            {/* Desktop grid */}
+                            <div
+                                className="hidden md:grid grid-cols-2 auto-rows-[minmax(0,180px)] gap-3 p-3 overflow-y-auto overscroll-contain flex-1"
+                                data-lenis-prevent
+                            >
+                                <div className="relative rounded-2xl overflow-hidden group col-span-2 row-span-2">
+                                    <img src={SubinLead} alt="Subin Thakuri" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery1} alt="Subin v horách" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery2} alt="Subin na expedici" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery3} alt="Subin s týmem" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery4} alt="Subin v Nepálu" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery5} alt="Subin na trase" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
+                                <div className="relative rounded-2xl overflow-hidden group">
+                                    <img src={SubinGallery6} alt="Subin v Himálaji" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                                </div>
                             </div>
                         </div>
                     </motion.div>
