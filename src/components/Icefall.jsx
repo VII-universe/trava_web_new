@@ -209,7 +209,7 @@ const FLAGS = [
 ];
 
 const PAST_PARTNER_NAMES = [
-    'Ternua', 'Lowa', 'Rafiki Climbing', 'Nikon CZ/SK', 'Auto Moto Horejsek Group',
+    'Ternua', 'Lowa', 'Rafiki Climbing', 'Nikon CZ/SK',
 ];
 
 const SECONDARY_PARTNERS = [
@@ -421,15 +421,8 @@ const Flag = ({ flag, index, onSelect }) => {
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/30 z-10 pointer-events-none mix-blend-multiply" />
                     <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none mix-blend-multiply" />
 
-                    {/* Hover text over the logo without square background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center pointer-events-none">
-                        <span className="text-white font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
-                            Zobrazit <ExternalLink className="w-3 h-3" />
-                        </span>
-                    </div>
-
                     {/* Logo */}
-                    <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-60 transition-all duration-300 pointer-events-none">
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         {flag.logo}
                     </div>
                 </div>
@@ -510,7 +503,6 @@ function applyAdminOverrides(base, adminArr) {
 const Icefall = ({ scrollProgress }) => {
     const adminPartners = loadContent('partners', null);
     const FLAGS_DISPLAY = applyAdminOverrides(FLAGS, adminPartners);
-    const SECONDARY_DISPLAY = applyAdminOverrides(SECONDARY_PARTNERS, adminPartners);
     const [selectedFlag, setSelectedFlag] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isInfoOpen, setIsInfoOpen] = useState(false);
@@ -592,19 +584,19 @@ const Icefall = ({ scrollProgress }) => {
                             onClick={() => setIsInfoOpen(true)}
                             className="group mt-3 md:mt-4 hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 hover:bg-gold-600 text-white font-bold uppercase tracking-[0.15em] text-[10px] rounded-xl transition-all duration-300 backdrop-blur-sm border border-white/20 pointer-events-auto"
                         >
-                            O spolupráci více <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                            Více o spolupráci <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </button>
                     </div>
 
                     {/* ── Desktop: single rope (hidden on mobile) ── */}
                     <div className="absolute z-20 pointer-events-auto hidden md:block" style={{ top: '36%', left: 0, right: 0 }}>
-                        <motion.div style={{ skewY: ropeSkew, transformOrigin: 'center' }} className="w-full">
+                        <div className="w-full">
                             <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 40, display: 'block' }}>
-                                <path d="M0,24 C240,4 480,36 720,20 C960,4 1200,36 1440,20" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round" />
-                                <path d="M0,22 C240,2 480,34 720,18 C960,2 1200,34 1440,18" fill="none" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round" />
-                                <path d="M0,20 C240,0 480,32 720,16 C960,0 1200,32 1440,16" fill="none" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round" />
+                                <line x1="0" y1="24" x2="1440" y2="24" stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeLinecap="round" />
+                                <line x1="0" y1="22" x2="1440" y2="22" stroke="rgba(195,175,135,0.95)" strokeWidth="3.5" strokeLinecap="round" />
+                                <line x1="0" y1="20" x2="1440" y2="20" stroke="rgba(255,245,220,0.5)" strokeWidth="1" strokeLinecap="round" />
                             </svg>
-                        </motion.div>
+                        </div>
                         <div className="relative w-full" style={{ height: 260, marginTop: -4 }}>
                             <style>{flagStyles}</style>
                             {FLAGS_DISPLAY.map((flag, i) => (
@@ -619,14 +611,14 @@ const Icefall = ({ scrollProgress }) => {
 
                         {/* Hlavní partneři — 2 řady */}
                         {[
-                            { flags: FLAGS_DISPLAY.slice(0, 3), angle: -1.2 },
-                            { flags: FLAGS_DISPLAY.slice(3, 6), angle: 1 },
+                            { flags: FLAGS_DISPLAY.slice(0, 3) },
+                            { flags: FLAGS_DISPLAY.slice(3, 6) },
                         ].map((row, rowIdx) => (
-                            <div key={rowIdx} style={{ transform: `rotate(${row.angle}deg)`, marginBottom: 2 }}>
+                            <div key={rowIdx} style={{ marginBottom: 2 }}>
                                 <svg viewBox="0 0 400 22" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ width: '100%', height: 20, display: 'block' }}>
-                                    <path d="M0,14 C133,4 266,18 400,10" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
-                                    <path d="M0,12 C133,2 266,16 400,8" fill="none" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
-                                    <path d="M0,10 C133,0 266,14 400,6" fill="none" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="0" y1="14" x2="400" y2="14" stroke="rgba(0,0,0,0.12)" strokeWidth="4" strokeLinecap="round" />
+                                    <line x1="0" y1="12" x2="400" y2="12" stroke="rgba(195,175,135,0.98)" strokeWidth="3" strokeLinecap="round" />
+                                    <line x1="0" y1="10" x2="400" y2="10" stroke="rgba(255,245,220,0.6)" strokeWidth="1" strokeLinecap="round" />
                                 </svg>
                                 <div className="relative w-full" style={{ height: 112, marginTop: -2 }}>
                                     {row.flags.map((flag, i) => {
@@ -658,20 +650,19 @@ const Icefall = ({ scrollProgress }) => {
                         <div className="flex justify-center mt-3">
                             <button onClick={() => setIsInfoOpen(true)}
                                 className="group inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/80 text-white font-bold uppercase tracking-[0.15em] text-[10px] rounded-xl backdrop-blur-sm border border-white/20 pointer-events-auto">
-                                O spolupráci více <ArrowRight className="w-3.5 h-3.5" />
+                                Více o spolupráci <ArrowRight className="w-3.5 h-3.5" />
                             </button>
                         </div>
 
-                        {/* Sekundární partneři — pills úplně dole */}
+                        {/* Partneři z minulosti — pills, non-clickable */}
                         <div className="mt-5 flex flex-col items-center gap-2">
-                            <span className="text-[8px] font-sans font-bold uppercase tracking-[0.28em] text-slate-500">Také spolupracujeme</span>
+                            <span className="text-[8px] font-sans font-bold uppercase tracking-[0.28em] text-slate-500">Dříve také</span>
                             <div className="flex gap-2 justify-center flex-wrap">
-                                {SECONDARY_DISPLAY.map((flag) => (
-                                    <button key={flag.id}
-                                        onClick={() => setSelectedFlag(flag)}
+                                {PAST_PARTNER_NAMES.map((name) => (
+                                    <span key={name}
                                         className="px-3 py-1.5 rounded-full bg-white/90 border border-slate-200 shadow-sm text-[10px] font-bold font-sans text-slate-700 uppercase tracking-wider">
-                                        {flag.name}
-                                    </button>
+                                        {name}
+                                    </span>
                                 ))}
                             </div>
                         </div>
@@ -751,7 +742,7 @@ const Icefall = ({ scrollProgress }) => {
                                 {/* Current partners */}
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="w-4 h-px bg-gold-400 shrink-0" />
-                                    <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Aktuální spolupráce</h3>
+                                    <h3 className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">Aktuální spolupráce & slevové kódy</h3>
                                 </div>
                                 <div className="flex flex-wrap gap-2 mb-6">
                                     {FLAGS_DISPLAY.map((f) => (
